@@ -1,0 +1,409 @@
+{
+  "entity": {
+    "name": "Finexa",
+    "scope_note": "Établissement de paiement agréé par l'ACPR, 50 salariés, présent en France, en Belgique et en Espagne. Fournit une plateforme de paiement en nuage à des commerçants et édite un SDK d'encaissement intégré dans leurs applications.",
+    "answers": {
+      "secteur": "infra_numerique",
+      "effectif": "moyenne",
+      "chiffre_affaires": "10a50",
+      "bilan": "10a43",
+      "etablissement_ue": "oui",
+      "etats_membres": "deux_cinq",
+      "donnees_perso": "oui",
+      "role_rgpd": "les_deux",
+      "donnees_sensibles": "non",
+      "suivi_grande_echelle": "oui",
+      "autorite_publique": "non",
+      "transferts_hors_ue": "oui",
+      "base_consentement": "non",
+      "type_taille_independante": [
+        "aucun"
+      ],
+      "services_ict": "oui",
+      "type_fournisseur_num": [
+        "cloud"
+      ],
+      "criticite_service": "modere",
+      "entite_critique": "incertain",
+      "entite_financiere": "oui",
+      "type_financier": "paiement",
+      "dora_regime_simplifie": "non",
+      "dora_tlpt": "non",
+      "tiers_ict_critiques": "oui",
+      "cra_roles": [
+        "fabricant"
+      ],
+      "cra_categorie": "defaut",
+      "cra_exclu": "non",
+      "incidents_recents": "recent",
+      "certification": "demarche"
+    },
+    "coverage": {
+      "GOV-02": {
+        "level": "partiel",
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "GOV-04": {
+        "level": "partiel",
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "REP-03": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DON-04": {
+        "level": "en_place",
+        "owner": "DPO",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "GOV-01": {
+        "level": "partiel",
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "PRO-02": {
+        "level": "en_place",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "PRO-05": {
+        "level": "partiel",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DET-01": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DET-03": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DON-01": {
+        "level": "partiel",
+        "owner": "DPO",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "RSK-01": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "PRO-03": {
+        "level": "partiel",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "PRO-04": {
+        "level": "en_place",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DET-02": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "REP-01": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "REP-02": {
+        "level": "partiel",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "RES-03": {
+        "level": "partiel",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "TIE-02": {
+        "level": "absent",
+        "owner": "Achats",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "TIE-03": {
+        "level": "partiel",
+        "owner": "Achats",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DOC-02": {
+        "level": "absent",
+        "owner": "Conformité",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DOC-03": {
+        "level": "partiel",
+        "owner": "Conformité",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "PRO-01": {
+        "level": "en_place",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "RES-01": {
+        "level": "absent",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "TIE-01": {
+        "level": "absent",
+        "owner": "Achats",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "GOV-03": {
+        "level": "partiel",
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "HIE-01": {
+        "level": "partiel",
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "PRO-06": {
+        "level": "en_place",
+        "owner": "DSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "RSK-02": {
+        "level": "en_place",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DON-02": {
+        "level": "en_place",
+        "owner": "DPO",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      },
+      "DON-03": {
+        "level": "en_place",
+        "owner": "DPO",
+        "updatedAt": "2026-09-23T14:05:31.062Z"
+      }
+    },
+    "measures": {},
+    "weights": {},
+    "contacts": [
+      {
+        "id": "c-rssi",
+        "role": "rssi",
+        "name": "Karim Benali",
+        "title": "Responsable de la sécurité des systèmes d’information",
+        "email": "rssi@finexa.example",
+        "phone": "+33 1 84 00 00 11"
+      },
+      {
+        "id": "c-dpo",
+        "role": "dpo",
+        "name": "Claire Morel",
+        "title": "Déléguée à la protection des données",
+        "email": "dpo@finexa.example",
+        "phone": "+33 1 84 00 00 12"
+      },
+      {
+        "id": "c-dir",
+        "role": "direction",
+        "name": "Thomas Lefèvre",
+        "title": "Directeur général délégué",
+        "email": "direction@finexa.example",
+        "phone": "+33 1 84 00 00 10"
+      },
+      {
+        "id": "c-jur",
+        "role": "juridique",
+        "name": "Inès Garnier",
+        "title": "Responsable conformité",
+        "email": "conformite@finexa.example",
+        "phone": "+33 1 84 00 00 13"
+      }
+    ],
+    "profile": {
+      "mode": "client",
+      "legalName": "Finexa SAS",
+      "siren": "000 000 000",
+      "group": "Indépendant",
+      "address": "Paris",
+      "missionRef": "CAD-2026-014",
+      "objective": "Établir les textes applicables avant l'audit ACPR de 2027 et arbitrer le budget conformité de l'exercice.",
+      "startDate": "2026-09-07",
+      "reportDate": "2026-10-16",
+      "lead": "Consultant du cabinet",
+      "sponsor": "Thomas Lefèvre, directeur général délégué",
+      "stakeholders": [
+        {
+          "id": "s1",
+          "name": "Karim Benali",
+          "role": "RSSI",
+          "email": "rssi@finexa.example"
+        },
+        {
+          "id": "s2",
+          "name": "Claire Morel",
+          "role": "DPO",
+          "email": "dpo@finexa.example"
+        },
+        {
+          "id": "s3",
+          "name": "Inès Garnier",
+          "role": "Conformité",
+          "email": "conformite@finexa.example"
+        }
+      ]
+    },
+    "notes": [
+      {
+        "id": "n1",
+        "tag": "verifier",
+        "text": "Confirmer que l'agrément ACPR ne couvre pas aussi l'émission de monnaie électronique : cela changerait le type d'entité financière.",
+        "anchor": {
+          "kind": "question",
+          "id": "type_financier",
+          "label": "Type d'entité financière"
+        },
+        "resolved": false,
+        "createdAt": "2026-09-18T10:00:00.000Z",
+        "updatedAt": "2026-09-18T10:00:00.000Z"
+      },
+      {
+        "id": "n2",
+        "tag": "hypothese",
+        "text": "Le SDK d'encaissement est distribué gratuitement mais intégré à une offre payante : retenu comme mis sur le marché au sens du CRA.",
+        "anchor": {
+          "kind": "question",
+          "id": "cra_roles",
+          "label": "Produits comportant des éléments numériques"
+        },
+        "resolved": false,
+        "createdAt": "2026-09-18T10:00:00.000Z",
+        "updatedAt": "2026-09-18T10:00:00.000Z"
+      },
+      {
+        "id": "n3",
+        "tag": "preuve",
+        "text": "Obtenir le registre des prestataires TIC tenu par les Achats (format et date de dernière mise à jour).",
+        "anchor": {
+          "kind": "theme",
+          "id": "TIE-02",
+          "label": "Registre et cartographie des tiers"
+        },
+        "resolved": false,
+        "createdAt": "2026-09-18T10:00:00.000Z",
+        "updatedAt": "2026-09-18T10:00:00.000Z"
+      },
+      {
+        "id": "n4",
+        "tag": "decision",
+        "text": "Le DPO et le RSSI restent deux fonctions distinctes ; le RSSI devient point de contact DORA.",
+        "anchor": {
+          "kind": "theme",
+          "id": "GOV-02",
+          "label": "Fonction dédiée et point de contact"
+        },
+        "resolved": false,
+        "createdAt": "2026-09-18T10:00:00.000Z",
+        "updatedAt": "2026-09-18T10:00:00.000Z"
+      }
+    ],
+    "public_snapshot": {
+      "generatedAt": "2026-09-23T14:05:31.063Z",
+      "sectorLabel": "Infrastructure numérique",
+      "score": 57,
+      "scores": {
+        "RGPD": 61,
+        "NIS2": 55,
+        "DORA": 56,
+        "CRA": 63
+      },
+      "verdicts": [
+        {
+          "regulation": "RGPD",
+          "status": "applicable",
+          "qualification": "Responsable soumis à désignation d'un délégué"
+        },
+        {
+          "regulation": "NIS2",
+          "status": "applicable",
+          "qualification": "Entité importante"
+        },
+        {
+          "regulation": "DORA",
+          "status": "applicable",
+          "qualification": "Entité financière"
+        },
+        {
+          "regulation": "CRA",
+          "status": "applicable",
+          "qualification": "Fabricant — produit par défaut"
+        }
+      ],
+      "domains": [
+        {
+          "domain": "gouvernance",
+          "label": "Gouvernance",
+          "score": 50,
+          "themes": 5
+        },
+        {
+          "domain": "risques",
+          "label": "Risques",
+          "score": 100,
+          "themes": 2
+        },
+        {
+          "domain": "protection",
+          "label": "Protection",
+          "score": 83,
+          "themes": 6
+        },
+        {
+          "domain": "detection",
+          "label": "Détection",
+          "score": 100,
+          "themes": 3
+        },
+        {
+          "domain": "reponse",
+          "label": "Réponse",
+          "score": 83,
+          "themes": 3
+        },
+        {
+          "domain": "resilience",
+          "label": "Résilience",
+          "score": 10,
+          "themes": 5
+        },
+        {
+          "domain": "tiers",
+          "label": "Tiers",
+          "score": 13,
+          "themes": 4
+        },
+        {
+          "domain": "donnees",
+          "label": "Données",
+          "score": 88,
+          "themes": 4
+        },
+        {
+          "domain": "documentation",
+          "label": "Documentation",
+          "score": 17,
+          "themes": 3
+        }
+      ],
+      "themesTotal": 35,
+      "themesCovered": 14,
+      "nis2Category": "importante"
+    }
+  }
+}

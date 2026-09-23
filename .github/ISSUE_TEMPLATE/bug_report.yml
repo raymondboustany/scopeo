@@ -1,0 +1,46 @@
+name: Anomalie
+description: Un comportement inattendu de l'application.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Merci de prendre le temps de signaler ce problème. N'incluez aucune donnée réelle d'entreprise.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Ce qui se passe, et ce que vous attendiez.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire
+      placeholder: |
+        1. Ouvrir la démonstration Finexa
+        2. Aller sur « Qualification »
+        3. …
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Mode d'installation
+      options: [Docker Compose, Docker, Sans Docker (archive, start.bat / start.sh), Installation depuis les sources]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: v1.0.0
+  - type: input
+    id: env
+    attributes:
+      label: Système et navigateur
+      placeholder: Windows 11, Chrome 140
+  - type: textarea
+    id: logs
+    attributes:
+      label: Journaux ou captures
+      render: shell

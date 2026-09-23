@@ -1,0 +1,31 @@
+name: Évolution réglementaire
+description: Un texte, une date, une autorité ou une interprétation à mettre à jour dans le corpus.
+labels: [corpus]
+body:
+  - type: dropdown
+    id: regulation
+    attributes:
+      label: Texte concerné
+      multiple: true
+      options: [RGPD, NIS 2, DORA, CRA, ReCyF (ANSSI), Transposition française, Autre]
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Ce qui a changé
+      description: Nouvelle date, acte d'exécution publié, obligation modifiée, erreur constatée…
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source officielle
+      description: Lien vers EUR-Lex, Légifrance, le site de l'autorité… Une source officielle est indispensable.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Écrans ou règles concernés
+      description: Qualification, obligation, croisement, échéancier, délais de notification…

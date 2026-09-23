@@ -1,0 +1,16 @@
+.git
+.github
+.claude
+node_modules
+dist
+release
+docs
+texts
+server/.venv
+server/data
+server/tests
+**/__pycache__
+**/.pytest_cache
+*.db
+*.db-*
+*.log

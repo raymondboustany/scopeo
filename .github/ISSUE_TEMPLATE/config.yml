@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question ou discussion
+    url: https://github.com/raymondboustany/scopeo/discussions
+    about: Posez vos questions d'usage ou proposez une idée ouverte dans les Discussions.
+  - name: Signaler une vulnérabilité
+    url: https://github.com/raymondboustany/scopeo/security/advisories/new
+    about: Ne publiez pas de vulnérabilité dans une issue publique — voir SECURITY.md.

@@ -1,0 +1,45 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Serveur local (Python)
+server/.venv/
+server/data/
+__pycache__/
+.pytest_cache/
+*.db
+*.db-shm
+*.db-wal
+
+# Réglages locaux d'outils
+.claude/
+.env
+.env.*
+
+# Référentiel ANSSI : document de travail, référencé par lien (voir texts/README.md)
+texts/ReCyF_*.pdf
+
+# Artefacts de publication
+release/
+*.zip

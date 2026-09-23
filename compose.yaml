@@ -1,0 +1,23 @@
+# Scopeo — démarrage avec Docker Compose
+#
+#   docker compose up -d        puis ouvrir http://localhost:8000
+#
+# Pour construire l'image à partir des sources plutôt que la télécharger :
+#   docker compose build && docker compose up -d
+
+services:
+  scopeo:
+    image: ghcr.io/raymondboustany/scopeo:latest
+    build: .
+    pull_policy: missing
+    container_name: scopeo
+    restart: unless-stopped
+    # Accessible depuis ce poste uniquement : l'application n'a pas
+    # d'authentification. Voir SECURITY.md avant de l'exposer sur un réseau.
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - scopeo-data:/data
+
+volumes:
+  scopeo-data:

@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+*.pdf binary
+*.png binary
+*.gif binary
+*.webp binary
+
+# Statistiques de langage GitHub : les textes officiels et les données ne sont pas du code
+texts/** linguist-vendored
+server/app/demo_seed.json linguist-generated

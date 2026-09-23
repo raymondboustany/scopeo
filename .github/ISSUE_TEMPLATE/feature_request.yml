@@ -1,0 +1,26 @@
+name: Suggestion
+description: Une amélioration ou une nouvelle fonctionnalité.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Scopeo est un outil de **cadrage et de diagnostic en amont**. Les fonctions d'audit
+        (vérification de preuves, maturité certifiante) et de suivi continu relèvent d'autres outils.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Besoin
+      description: Quel problème cette suggestion résout-elle, et pour qui ?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposition
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées

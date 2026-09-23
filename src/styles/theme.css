@@ -1,0 +1,463 @@
+/* ==========================================================================
+   Scopeo — thème clair par défaut, sombre en option
+   Surfaces pleines, badges remplis, aucun contour lumineux. Un seul accent
+   violet, réservé à l'action principale, au focus et au score. Geist pour
+   l'interface, Geist Mono pour toute référence normative.
+   ========================================================================== */
+
+@import 'tailwindcss';
+
+@source "../";
+
+/* --------------------------------------------------------------------------
+   1. Valeurs — thème clair par défaut, thème sombre en option
+   -------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --c-paper:         #f5f6f8;
+  --c-surface:       #ffffff;
+  --c-sunken:        #f1f3f6;
+  --c-raised:        #f8f9fb;
+  --c-chrome:        #ffffff;
+  --c-overlay:       #eceef3;
+  --c-stage:         #ecebfb;
+
+  /* Encre */
+  --c-ink:           #111827;
+  --c-ink-2:         #4b5563;
+  --c-ink-3:         #6b7280;
+  --c-ink-4:         #9ca3af;
+  --c-ink-inv:       #ffffff;
+
+  /* Filets */
+  --c-rule:          #e8eaef;
+  --c-rule-2:        #dde1e8;
+  --c-rule-3:        #c7cdd6;
+
+  /* Accent unique */
+  --c-accent:        #6d4aed;
+  --c-accent-hover:  #5b39dc;
+  --c-accent-ink:    #ffffff;
+  --c-accent-wash:   rgb(109 74 237 / 0.1);
+  --c-accent-line:   rgb(109 74 237 / 0.3);
+  --c-accent-strong: #5433cf;
+
+  --c-brass:         #9a730e;
+  --c-brass-wash:    rgb(214 160 30 / 0.16);
+  --c-brass-line:    rgb(154 115 14 / 0.3);
+
+  /* Référentiels : teinte pleine (graphiques), fond et encre (badges) */
+  --c-rgpd:          #3d68bf;
+  --c-rgpd-wash:     #e5ecf9;
+  --c-rgpd-line:     rgb(61 104 191 / 0.3);
+  --c-rgpd-ink:      #2a4f96;
+  --c-nis2:          #0a8f9c;
+  --c-nis2-wash:     #dcf2f3;
+  --c-nis2-line:     rgb(10 143 156 / 0.3);
+  --c-nis2-ink:      #056a74;
+  --c-dora:          #a67c00;
+  --c-dora-wash:     #f7eed2;
+  --c-dora-line:     rgb(166 124 0 / 0.3);
+  --c-dora-ink:      #7a5a00;
+  --c-cra:           #a8336e;
+  --c-cra-wash:      #f7e3ed;
+  --c-cra-line:      rgb(168 51 110 / 0.3);
+  --c-cra-ink:       #85234f;
+
+  /* Statuts — vert en place, orange partiel, rouge absent */
+  --c-positive:      #13925b;
+  --c-positive-wash: #e0f4ea;
+  --c-positive-line: rgb(19 146 91 / 0.3);
+  --c-caution:       #c97a00;
+  --c-caution-wash:  #fdf0da;
+  --c-caution-line:  rgb(201 122 0 / 0.32);
+  --c-critical:      #d33a2f;
+  --c-critical-wash: #fde6e3;
+  --c-critical-line: rgb(211 58 47 / 0.3);
+  --c-neutral:       #6b7280;
+  --c-neutral-wash:  #eef0f3;
+  --c-neutral-line:  rgb(107 114 128 / 0.25);
+
+  --s-card:  0 1px 2px rgb(16 24 40 / 0.05);
+  --s-pop:   0 10px 28px -8px rgb(16 24 40 / 0.18);
+  --s-modal: 0 28px 64px -16px rgb(16 24 40 / 0.3);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --c-paper:         #0b0d11;
+  --c-surface:       #13161c;
+  --c-sunken:        #0e1115;
+  --c-raised:        #191d24;
+  --c-chrome:        #0f1216;
+  --c-overlay:       #222730;
+  --c-stage:         #141726;
+
+  --c-ink:           #e8eaee;
+  --c-ink-2:         #a4aab5;
+  --c-ink-3:         #737a87;
+  --c-ink-4:         #4f5560;
+  --c-ink-inv:       #0b0d11;
+
+  --c-rule:          #1f232a;
+  --c-rule-2:        #292e37;
+  --c-rule-3:        #383e49;
+
+  --c-accent:        #8467ff;
+  --c-accent-hover:  #9a82ff;
+  --c-accent-ink:    #ffffff;
+  --c-accent-wash:   rgb(132 103 255 / 0.16);
+  --c-accent-line:   rgb(132 103 255 / 0.4);
+  --c-accent-strong: #b3a2ff;
+
+  --c-brass:         #d4a72c;
+  --c-brass-wash:    rgb(212 167 44 / 0.14);
+  --c-brass-line:    rgb(212 167 44 / 0.34);
+
+  --c-rgpd:          #4777d2;
+  --c-rgpd-wash:     rgb(71 119 210 / 0.2);
+  --c-rgpd-line:     rgb(71 119 210 / 0.4);
+  --c-rgpd-ink:      #9bb8f0;
+  --c-nis2:          #00a6b5;
+  --c-nis2-wash:     rgb(0 166 181 / 0.2);
+  --c-nis2-line:     rgb(0 166 181 / 0.4);
+  --c-nis2-ink:      #6fd6df;
+  --c-dora:          #b08505;
+  --c-dora-wash:     rgb(176 133 5 / 0.22);
+  --c-dora-line:     rgb(176 133 5 / 0.42);
+  --c-dora-ink:      #e6c160;
+  --c-cra:           #ab366e;
+  --c-cra-wash:      rgb(171 54 110 / 0.24);
+  --c-cra-line:      rgb(171 54 110 / 0.45);
+  --c-cra-ink:       #ec9cc2;
+
+  --c-positive:      #22b872;
+  --c-positive-wash: rgb(34 184 114 / 0.16);
+  --c-positive-line: rgb(34 184 114 / 0.35);
+  --c-caution:       #f59e0b;
+  --c-caution-wash:  rgb(245 158 11 / 0.15);
+  --c-caution-line:  rgb(245 158 11 / 0.35);
+  --c-critical:      #f0554a;
+  --c-critical-wash: rgb(240 85 74 / 0.15);
+  --c-critical-line: rgb(240 85 74 / 0.38);
+  --c-neutral:       #737a87;
+  --c-neutral-wash:  rgb(115 122 135 / 0.16);
+  --c-neutral-line:  rgb(115 122 135 / 0.3);
+
+  --s-card:  none;
+  --s-pop:   0 12px 32px -8px rgb(0 0 0 / 0.7);
+  --s-modal: 0 32px 80px -16px rgb(0 0 0 / 0.85);
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   2. Jetons Tailwind
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-paper:        var(--c-paper);
+  --color-surface:      var(--c-surface);
+  --color-sunken:       var(--c-sunken);
+  --color-raised:       var(--c-raised);
+  --color-chrome:       var(--c-chrome);
+  --color-overlay:      var(--c-overlay);
+
+  --color-ink:          var(--c-ink);
+  --color-ink-2:        var(--c-ink-2);
+  --color-ink-3:        var(--c-ink-3);
+  --color-ink-4:        var(--c-ink-4);
+  --color-ink-inv:      var(--c-ink-inv);
+
+  --color-rule:         var(--c-rule);
+  --color-rule-2:       var(--c-rule-2);
+  --color-rule-3:       var(--c-rule-3);
+
+  --color-accent:       var(--c-accent);
+  --color-accent-hover: var(--c-accent-hover);
+  --color-accent-ink:   var(--c-accent-ink);
+  --color-accent-wash:  var(--c-accent-wash);
+  --color-accent-line:  var(--c-accent-line);
+  --color-accent-strong: var(--c-accent-strong);
+
+  --color-brass:        var(--c-brass);
+  --color-brass-wash:   var(--c-brass-wash);
+  --color-brass-line:   var(--c-brass-line);
+
+  --color-rgpd:         var(--c-rgpd);
+  --color-rgpd-wash:    var(--c-rgpd-wash);
+  --color-rgpd-line:    var(--c-rgpd-line);
+  --color-rgpd-ink:     var(--c-rgpd-ink);
+  --color-nis2:         var(--c-nis2);
+  --color-nis2-wash:    var(--c-nis2-wash);
+  --color-nis2-line:    var(--c-nis2-line);
+  --color-nis2-ink:     var(--c-nis2-ink);
+  --color-dora:         var(--c-dora);
+  --color-dora-wash:    var(--c-dora-wash);
+  --color-dora-line:    var(--c-dora-line);
+  --color-dora-ink:     var(--c-dora-ink);
+  --color-cra:          var(--c-cra);
+  --color-cra-wash:     var(--c-cra-wash);
+  --color-cra-line:     var(--c-cra-line);
+
+  --color-positive:      var(--c-positive);
+  --color-positive-wash: var(--c-positive-wash);
+  --color-positive-line: var(--c-positive-line);
+  --color-caution:       var(--c-caution);
+  --color-caution-wash:  var(--c-caution-wash);
+  --color-caution-line:  var(--c-caution-line);
+  --color-critical:      var(--c-critical);
+  --color-critical-wash: var(--c-critical-wash);
+  --color-critical-line: var(--c-critical-line);
+  --color-neutral:       var(--c-neutral);
+  --color-neutral-wash:  var(--c-neutral-wash);
+  --color-neutral-line:  var(--c-neutral-line);
+
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --text-2xs:    0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-xs:     0.75rem;
+  --text-xs--line-height: 1.125rem;
+  --text-sm:     0.8125rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base:   0.875rem;
+  --text-base--line-height: 1.5rem;
+  --text-md:     0.9375rem;
+  --text-md--line-height: 1.625rem;
+  --text-lg:     1.0625rem;
+  --text-lg--line-height: 1.5rem;
+  --text-xl:     1.3125rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl:    1.75rem;
+  --text-2xl--line-height: 2.125rem;
+  --text-3xl:    2.5rem;
+  --text-3xl--line-height: 2.875rem;
+  --text-4xl:    3.5rem;
+  --text-4xl--line-height: 3.75rem;
+
+  --radius-xs:  3px;
+  --radius-sm:  5px;
+  --radius-md:  7px;
+  --radius-lg:  9px;
+  --radius-xl:  12px;
+
+  --shadow-card:  var(--s-card);
+  --shadow-pop:   var(--s-pop);
+  --shadow-modal: var(--s-modal);
+
+  --animate-led: led 2.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.2s linear infinite;
+}
+
+:root {
+  --rail: 15rem;
+  --rail-collapsed: 4.25rem;
+  --bar: 3.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base
+   -------------------------------------------------------------------------- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--c-rule);
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    background: var(--c-paper);
+  }
+
+  body {
+    background: var(--c-paper);
+    color: var(--c-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv11" 1, "ss01" 1;
+  }
+
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--c-accent-wash);
+    color: var(--c-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-rule-2) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--c-rule-2);
+    border: 3px solid var(--c-paper);
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Motifs
+   -------------------------------------------------------------------------- */
+@layer components {
+  .label-caps {
+    font-size: var(--text-2xs);
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--c-ink-3);
+  }
+
+  .ref {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  /* Citation du texte officiel : filet coloré, ton légèrement plus doux */
+  .citation {
+    font-size: var(--text-md);
+    line-height: 1.7;
+    color: var(--c-ink-2);
+    border-left: 2px solid var(--c-rule-3);
+    padding-left: 1rem;
+    font-style: italic;
+  }
+
+  /* Carte : surface pleine et filet d'un pixel, sans ombre ni halo */
+  .card-glow {
+    background: var(--c-surface);
+    border: 1px solid var(--c-rule);
+    box-shadow: var(--s-card);
+  }
+
+  .hatch {
+    background-image: repeating-linear-gradient(-45deg, var(--c-rule) 0 1px, transparent 1px 7px);
+  }
+
+  /* Fond des pages d'entrée : un dégradé vertical à peine perceptible,
+     assez pour donner de la profondeur sans effet de halo. */
+  .stage {
+    background: linear-gradient(180deg, var(--c-stage) 0%, var(--c-paper) 60%);
+  }
+}
+
+/* LED : pulsation douce, jamais agressive */
+@keyframes led {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--led-color, var(--c-critical)); }
+  50% { opacity: 0.55; box-shadow: 0 0 0 5px transparent; }
+}
+
+/* Graphes : apparition des nœuds, tracé des liens, halo du jalon proche */
+@keyframes node-in {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes link-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes halo {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+.svg-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-in 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.svg-draw {
+  stroke-dasharray: 1;
+  animation: link-draw 700ms ease-out both;
+}
+.svg-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: halo 1.8s ease-out infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Impression — le rapport sort sur fond blanc
+   -------------------------------------------------------------------------- */
+@media print {
+  :root {
+    --c-paper: #ffffff;
+    --c-surface: #ffffff;
+    --c-sunken: #f4f4f7;
+    --c-raised: #ffffff;
+    --c-chrome: #ffffff;
+    --c-ink: #111118;
+    --c-ink-2: #3c3c4a;
+    --c-ink-3: #6a6a7a;
+    --c-ink-4: #9a9aa8;
+    --c-rule: #e3e3ea;
+    --c-rule-2: #d0d0da;
+    --c-rule-3: #b0b0bd;
+    color-scheme: light;
+  }
+  html { font-size: 10.5pt; }
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .print-break { break-before: page; }
+  .print-avoid { break-inside: avoid; }
+  @page { margin: 16mm 14mm; }
+}
