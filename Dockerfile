@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # --- 1. Compilation de l'interface ------------------------------------------
-FROM node:22-alpine AS web
+FROM node:25-alpine AS web
 WORKDIR /build
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
