@@ -124,7 +124,7 @@ export default function QualificationPage() {
                 >
                   {isDone && !isCurrent ? <Check size={11} className="text-positive" /> : null}
                   {s.label}
-                  <span className={cn('font-mono text-2xs', isCurrent ? 'text-accent-ink/70' : 'text-ink-4')}>
+                  <span className={cn('font-mono text-2xs', isCurrent ? 'text-accent-ink' : 'text-ink-4')}>
                     {s.done}/{s.total}
                   </span>
                 </button>

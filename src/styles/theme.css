@@ -24,15 +24,23 @@
 
   /* Encre */
   --c-ink:           #111827;
-  --c-ink-2:         #4b5563;
-  --c-ink-3:         #6b7280;
-  --c-ink-4:         #9ca3af;
+  --c-ink-2:         #3d4551;
+  --c-ink-3:         #575d68;
+  --c-ink-4:         #626a79;
   --c-ink-inv:       #ffffff;
 
-  /* Filets */
-  --c-rule:          #e8eaef;
-  --c-rule-2:        #dde1e8;
-  --c-rule-3:        #c7cdd6;
+  /* Filets : séparation des conteneurs ; « edge » : contour des contrôles (3:1 au moins) */
+  --c-rule:          #e1e4ea;
+  --c-rule-2:        #d3d8e0;
+  --c-rule-3:        #b4bbc7;
+  --c-edge:          #7f8796;
+
+  /* Couleurs de texte des statuts et de l'accent : plus soutenues que les remplissages, pour tenir 4,5:1 */
+  --c-positive-text: #0f7147;
+  --c-caution-text:  #8e5700;
+  --c-critical-text: #b73027;
+  --c-brass-text:    #7e5e0b;
+  --c-accent-text:   #6540ec;
 
   /* Accent unique */
   --c-accent:        #6d4aed;
@@ -98,19 +106,26 @@
   --c-overlay:       #222730;
   --c-stage:         #141726;
 
-  --c-ink:           #e8eaee;
-  --c-ink-2:         #a4aab5;
-  --c-ink-3:         #737a87;
-  --c-ink-4:         #4f5560;
+  --c-ink:           #f0f2f5;
+  --c-ink-2:         #c3c8d0;
+  --c-ink-3:         #a4aab4;
+  --c-ink-4:         #8f96a3;
   --c-ink-inv:       #0b0d11;
 
-  --c-rule:          #1f232a;
-  --c-rule-2:        #292e37;
-  --c-rule-3:        #383e49;
+  --c-rule:          #272c35;
+  --c-rule-2:        #343a45;
+  --c-rule-3:        #474e5b;
+  --c-edge:          #68707e;
+
+  --c-positive-text: #2cc47f;
+  --c-caution-text:  #f59e0b;
+  --c-critical-text: #f47d74;
+  --c-brass-text:    #d4a72c;
+  --c-accent-text:   #a691ff;
 
   --c-accent:        #8467ff;
   --c-accent-hover:  #9a82ff;
-  --c-accent-ink:    #ffffff;
+  --c-accent-ink:    #0b0d11;
   --c-accent-wash:   rgb(132 103 255 / 0.16);
   --c-accent-line:   rgb(132 103 255 / 0.4);
   --c-accent-strong: #b3a2ff;
@@ -222,6 +237,7 @@
   --color-critical:      var(--c-critical);
   --color-critical-wash: var(--c-critical-wash);
   --color-critical-line: var(--c-critical-line);
+  --color-edge:          var(--c-edge);
   --color-neutral:       var(--c-neutral);
   --color-neutral-wash:  var(--c-neutral-wash);
   --color-neutral-line:  var(--c-neutral-line);
@@ -269,6 +285,23 @@
   --rail-collapsed: 4.25rem;
   --bar: 3.5rem;
 }
+
+/* --------------------------------------------------------------------------
+   2 bis. Lisibilité du texte coloré
+   Les couleurs vives servent aux remplissages (barres, pastilles). Utilisées
+   en texte, elles prennent une variante qui tient au moins 4,5:1 sur les fonds
+   où elles apparaissent, dans les deux thèmes.
+   -------------------------------------------------------------------------- */
+.text-positive { color: var(--c-positive-text); }
+.text-caution  { color: var(--c-caution-text); }
+.text-critical { color: var(--c-critical-text); }
+.text-brass    { color: var(--c-brass-text); }
+.text-accent   { color: var(--c-accent-text); }
+.text-rgpd     { color: var(--c-rgpd-ink); }
+.text-nis2     { color: var(--c-nis2-ink); }
+.text-dora     { color: var(--c-dora-ink); }
+.text-cra      { color: var(--c-cra-ink); }
+.text-aiact    { color: var(--c-aiact-ink); }
 
 /* --------------------------------------------------------------------------
    3. Base

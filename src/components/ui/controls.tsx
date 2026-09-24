@@ -21,7 +21,7 @@ const VARIANTS: Record<ButtonVariant, string> = {
   primary:
     'bg-accent text-accent-ink border-accent hover:bg-accent-hover hover:border-accent-hover disabled:bg-overlay disabled:border-rule-2 disabled:text-ink-4 disabled:shadow-none',
   secondary:
-    'bg-surface text-ink border-rule-2 shadow-card hover:bg-raised hover:border-rule-3 disabled:text-ink-4 disabled:hover:bg-surface',
+    'bg-surface text-ink border-edge shadow-card hover:bg-raised hover:border-ink-3 disabled:text-ink-4 disabled:hover:bg-surface',
   ghost:
     'bg-transparent text-ink-2 border-transparent hover:bg-raised hover:text-ink disabled:text-ink-4 disabled:hover:bg-transparent',
   danger:
@@ -152,8 +152,8 @@ export function Select({
       <RadixSelect.Trigger
         aria-label={ariaLabel}
         className={cn(
-          'inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-rule-2 bg-raised px-3 text-sm text-ink transition-colors',
-          'hover:border-rule-3 data-[placeholder]:text-ink-3',
+          'inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-edge bg-raised px-3 text-sm text-ink transition-colors',
+          'hover:border-ink-3 data-[placeholder]:text-ink-3',
           className,
         )}
       >
@@ -198,8 +198,8 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
       <input
         ref={ref}
         className={cn(
-          'h-9 w-full rounded-md border border-rule-2 bg-raised px-3 text-sm text-ink transition-colors focus:border-accent-line',
-          'placeholder:text-ink-4 hover:border-rule-3',
+          'h-9 w-full rounded-md border border-edge bg-raised px-3 text-sm text-ink transition-colors focus:border-accent-line',
+          'placeholder:text-ink-4 hover:border-ink-3',
           className,
         )}
         {...props}
@@ -215,8 +215,8 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        'w-full rounded-md border border-rule-2 bg-raised px-3 py-2 text-sm leading-relaxed text-ink transition-colors focus:border-accent-line',
-        'placeholder:text-ink-4 hover:border-rule-3',
+        'w-full rounded-md border border-edge bg-raised px-3 py-2 text-sm leading-relaxed text-ink transition-colors focus:border-accent-line',
+        'placeholder:text-ink-4 hover:border-ink-3',
         className,
       )}
       {...props}
@@ -262,14 +262,14 @@ export function OptionList({
               'flex w-full items-start gap-3 rounded-md border px-3.5 py-3 text-left transition-all',
               selected
                 ? 'border-accent-line bg-accent-wash'
-                : 'border-rule-2 bg-raised hover:border-rule-3 hover:bg-overlay',
+                : 'border-edge bg-raised hover:border-ink-3 hover:bg-overlay',
             )}
           >
             <span
               className={cn(
                 'mt-0.5 flex size-4 shrink-0 items-center justify-center border',
                 multiple ? 'rounded-xs' : 'rounded-full',
-                selected ? 'border-accent bg-accent' : 'border-rule-3 bg-paper',
+                selected ? 'border-accent bg-accent' : 'border-edge bg-paper',
               )}
               aria-hidden
             >
@@ -312,7 +312,7 @@ export function Switch({
       checked={checked}
       onCheckedChange={onCheckedChange}
       aria-label={label}
-      className="relative h-5 w-9 shrink-0 rounded-full border border-rule-2 bg-overlay transition-colors data-[state=checked]:border-accent data-[state=checked]:bg-accent"
+      className="relative h-5 w-9 shrink-0 rounded-full border border-edge bg-overlay transition-colors data-[state=checked]:border-accent data-[state=checked]:bg-accent"
     >
       <RadixSwitch.Thumb className="block size-3.5 translate-x-0.5 rounded-full bg-ink transition-transform data-[state=checked]:translate-x-[17px]" />
     </RadixSwitch.Root>

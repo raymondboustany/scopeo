@@ -59,7 +59,7 @@ export function NoteComposer({ onSubmit, autoFocus = false, compact = false }: {
           }
         }}
         placeholder={tr("Ex. : confirmer que l'agrément ACPR couvre aussi l'émission de monnaie électronique", 'E.g. confirm that the ACPR licence also covers e-money issuance')}
-        className="w-full resize-none rounded-md border border-rule-2 bg-surface px-3 py-2 text-sm text-ink placeholder:text-ink-4 focus:border-accent-line"
+        className="w-full resize-none rounded-md border border-edge bg-surface px-3 py-2 text-sm text-ink placeholder:text-ink-4 focus:border-accent-line"
       />
       <div className="flex items-center justify-between">
         <span className="text-[10px] text-ink-4">{tr('Ctrl + Entrée pour ajouter', 'Ctrl + Enter to add')}</span>

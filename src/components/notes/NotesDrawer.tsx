@@ -42,7 +42,7 @@ export function NotesButton() {
       >
         <NotebookPen size={17} />
         {pending > 0 ? (
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-caution px-1 font-mono text-[9px] font-bold text-white">
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-caution px-1 font-mono text-[9px] font-bold text-[#141008]">
             {pending}
           </span>
         ) : null}
@@ -131,7 +131,7 @@ export function NotesDrawer() {
                       )}
                     >
                       {f === 'ouvertes' ? tr('Ouvertes', 'Open') : f === 'toutes' ? tr('Toutes', 'All') : TAG_META[f].label}
-                      <span className="ml-1 font-mono text-[10px] opacity-70">{counts(f)}</span>
+                      <span className="ml-1 font-mono text-[10px]">{counts(f)}</span>
                     </button>
                   ))}
                 </div>

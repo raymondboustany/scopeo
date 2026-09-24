@@ -83,7 +83,8 @@ export default function TrustSettingsPage() {
               href={url}
               target="_blank"
               rel="noreferrer"
-              className={`inline-flex h-8 items-center gap-1.5 rounded-md border border-rule-2 bg-raised px-3 text-xs font-medium text-ink hover:bg-overlay ${enabled ? '' : 'pointer-events-none opacity-40'}`}
+              aria-disabled={!enabled}
+              className={`inline-flex h-8 items-center gap-1.5 rounded-md border border-edge bg-raised px-3 text-xs font-medium text-ink hover:bg-overlay ${enabled ? '' : 'pointer-events-none opacity-40'}`}
             >
               <ExternalLink size={13} /> {tr('Ouvrir', 'Open')}
             </a>

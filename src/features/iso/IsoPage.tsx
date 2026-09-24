@@ -177,7 +177,7 @@ function Decision({
   const shown = value.applicability ? value : inherited ?? {}
   const muted = !value.applicability && Boolean(inherited?.applicability)
   return (
-    <div className={cn('space-y-2', muted && 'opacity-60')}>
+    <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-1.5" role="radiogroup" aria-label={tr(`Applicabilité : ${label}`, `Applicability: ${label}`)}>
         {APPLICABILITY.map((a) => (
           <button
@@ -229,7 +229,7 @@ function Decision({
           </>
         ) : null}
       </div>
-      {muted ? <p className="text-[10px] text-ink-4">{tr('Hérité de la saisie du thème', 'Inherited from the theme entry')}</p> : null}
+      {muted ? <p className="text-2xs text-ink-3">{tr('Hérité de la saisie du thème', 'Inherited from the theme entry')}</p> : null}
     </div>
   )
 }
