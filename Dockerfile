@@ -11,7 +11,7 @@ COPY src ./src
 RUN npx vite build
 
 # --- 2. Serveur d'exécution -------------------------------------------------
-FROM python:3.12-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 LABEL org.opencontainers.image.title="Scopeo" \
       org.opencontainers.image.description="Cadrage et diagnostic réglementaire RGPD, NIS2, DORA et CRA" \
