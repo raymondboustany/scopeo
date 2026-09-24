@@ -1,4 +1,4 @@
 fastapi==0.141.1
-sqlmodel==0.0.46
+sqlmodel==0.0.47
 uvicorn==0.53.0
 bcrypt==5.0.0

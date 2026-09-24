@@ -15,11 +15,11 @@ Open source regulatory scoping and gap assessment platform for the **GDPR**, **N
 
 **English** · [Français](#français)
 
-[Quick start](#quick-start) · [Features](#features) · [Sample reports](#sample-reports) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
+[How it works](#how-it-works) · [Quick start](#quick-start) · [Features](#features) · [Sample reports](#sample-reports) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 <br>
 
-<img src="docs/assets/en/hero.jpg" alt="Scopeo dashboard in light and dark themes" width="100%">
+<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, assessment, ISO 27001, corpus, notification, reports, dark theme" width="100%">
 
 </div>
 
@@ -44,11 +44,29 @@ Scopeo answers them in a few hours of interviews, with reasoning that can be che
 
 ---
 
-## See it in action
+## How it works
 
-<p align="center">
-  <img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, assessment, ISO 27001, corpus, notification, reports, dark theme" width="100%">
-</p>
+Five steps, in order. Each one feeds the next, and every screen stays available at any time.
+
+```mermaid
+flowchart LR
+  A["<b>1. Scope</b><br/>35 questions, each tied<br/>to an article"] --> B["<b>2. Assess</b><br/>40 unified requirements,<br/>one answer for all texts"]
+  B --> C["<b>3. Prioritise</b><br/>scored order and<br/>four-wave roadmap"]
+  C --> D["<b>4. Prepare reporting</b><br/>authorities, deadlines,<br/>escalation chain"]
+  D --> E["<b>5. Report</b><br/>executive summary, full<br/>report, quick-reference sheet"]
+  A -. determines .-> T[("Applicable texts<br/>GDPR, NIS2 (ReCyF), DORA,<br/>CRA, AI Act")]
+  T -.-> B
+  I(["Optional<br/>ISO 27001 initiative"]) -. pre-fills .-> B
+```
+
+## Who it is for
+
+| Profile | What the platform brings |
+|---|---|
+| Consultants and advisory firms | Scope a client in a few interviews, with reasoning that holds up article by article, and deliver board-ready reports. |
+| CISO, DPO and compliance teams | See which texts apply, where one action covers several of them, and where to start. |
+| Management | A two-page summary: exposure, priorities and decisions to take. |
+| Legal counsel | The legal basis of every verdict, official quotations and caveats. |
 
 ---
 
@@ -288,11 +306,11 @@ Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD
 
 [English](#scopeo) · **Français**
 
-[Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Rapports d'exemple](#rapports-dexemple) · [Feuille de route](ROADMAP.md) · [Contribuer](CONTRIBUTING.md)
+[Comment ça marche](#comment-ça-marche) · [Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Rapports d'exemple](#rapports-dexemple) · [Feuille de route](ROADMAP.md) · [Contribuer](CONTRIBUTING.md)
 
 <br>
 
-<img src="docs/assets/fr/hero.jpg" alt="Tableau de bord de Scopeo en thème clair et en thème sombre" width="100%">
+<img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, évaluation, ISO 27001, corpus, signalement, rapports, thème sombre" width="100%">
 
 </div>
 
@@ -317,11 +335,29 @@ Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiabl
 
 ---
 
-## En action
+## Comment ça marche
 
-<p align="center">
-  <img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, évaluation, ISO 27001, corpus, signalement, rapports, thème sombre" width="100%">
-</p>
+Cinq étapes, dans l'ordre. Chacune alimente la suivante, et chaque écran reste accessible à tout moment.
+
+```mermaid
+flowchart LR
+  A["<b>1. Qualifier</b><br/>35 questions, chacune<br/>rattachée à un article"] --> B["<b>2. Évaluer</b><br/>40 exigences unifiées,<br/>une réponse pour tous les textes"]
+  B --> C["<b>3. Prioriser</b><br/>ordre justifié et feuille<br/>de route en quatre vagues"]
+  C --> D["<b>4. Préparer le signalement</b><br/>autorités, délais,<br/>chaîne d'escalade"]
+  D --> E["<b>5. Restituer</b><br/>note au comité, rapport<br/>complet, fiche réflexe"]
+  A -. établit .-> T[("Textes applicables<br/>RGPD, NIS2 (ReCyF), DORA,<br/>CRA, AI Act")]
+  T -.-> B
+  I(["Facultatif<br/>démarche ISO 27001"]) -. pré-remplit .-> B
+```
+
+## À qui elle s'adresse
+
+| Profil | Ce que la plateforme apporte |
+|---|---|
+| Consultants et cabinets de conseil | Cadrer un client en quelques entretiens, avec un raisonnement qui tient article par article, et remettre des livrables prêts pour une direction. |
+| RSSI, DPO et équipes conformité | Savoir quels textes s'appliquent, où une action en couvre plusieurs, et par quoi commencer. |
+| Direction | Une note de deux pages : exposition, priorités et décisions à prendre. |
+| Juristes | Le fondement de chaque verdict, les citations officielles et les réserves. |
 
 ---
 

@@ -19,7 +19,7 @@ type ButtonSize = 'sm' | 'md'
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    'bg-accent text-accent-ink border-transparent shadow-[var(--s-top),var(--s-xs)] hover:bg-accent-hover disabled:bg-overlay disabled:text-ink-4 disabled:shadow-none',
+    'bg-accent text-accent-ink border-accent shadow-xs hover:border-accent-hover hover:bg-accent-hover disabled:border-rule disabled:bg-overlay disabled:text-ink-4 disabled:shadow-none',
   secondary:
     'bg-surface text-ink border-rule-2 shadow-xs hover:border-rule-3 hover:bg-raised disabled:text-ink-4 disabled:hover:bg-surface',
   ghost:

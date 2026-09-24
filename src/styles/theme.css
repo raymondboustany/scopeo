@@ -104,7 +104,6 @@
   --s-panel: 0 1px 3px rgb(16 18 24 / 0.05), 0 0 0 1px rgb(16 18 24 / 0.02);
   --s-pop:   0 2px 6px rgb(16 18 24 / 0.06), 0 12px 32px -8px rgb(16 18 24 / 0.16);
   --s-modal: 0 4px 12px rgb(16 18 24 / 0.08), 0 32px 72px -16px rgb(16 18 24 / 0.3);
-  --s-top:   inset 0 1px 0 rgb(255 255 255 / 0.6);
 
   color-scheme: light;
 }
@@ -188,7 +187,6 @@
   --s-panel: 0 0 0 1px rgb(255 255 255 / 0.02);
   --s-pop:   0 0 0 1px rgb(255 255 255 / 0.04), 0 16px 40px -8px rgb(0 0 0 / 0.7);
   --s-modal: 0 0 0 1px rgb(255 255 255 / 0.05), 0 32px 80px -16px rgb(0 0 0 / 0.85);
-  --s-top:   inset 0 1px 0 rgb(255 255 255 / 0.12);
 
   color-scheme: dark;
 }

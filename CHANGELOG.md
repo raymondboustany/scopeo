@@ -6,15 +6,19 @@
 
 ## [Non publié]
 
+## [2.1.0] - 2026-09-24
+
 ### English
 
 - Redesigned light and dark themes: application frame with an inset content panel, refined neutral grays, hairline borders and soft layered shadows, clearer selected states, badges with a fine tinted outline, consistent buttons, fields, tabs and dialogs. Every text keeps a contrast of at least 4.5:1, checked by an automated test.
-- README visuals redone in high definition: framed product shots, a light and dark hero image, and a full-colour animated walkthrough.
+- README redone: full-colour animated walkthrough in high definition, framed screenshots, a "How it works" diagram and a "Who it is for" table.
+- Dependencies updated (security fix in the test tooling, minor updates).
 
 ### Français
 
 - Refonte des thèmes clair et sombre : cadre d'application avec panneau de contenu encastré, gris neutres affinés, filets fins et ombres douces superposées, sélections plus lisibles, pastilles au contour teinté, boutons, champs, onglets et fenêtres harmonisés. Chaque texte garde un contraste d'au moins 4,5:1, vérifié par un test automatique.
-- Visuels du README refaits en haute définition : captures mises en scène, image d'en-tête en thème clair et sombre, et visite animée en couleurs réelles.
+- README refait : visite animée en couleurs réelles et en haute définition, captures mises en scène, schéma « Comment ça marche » et tableau « À qui elle s'adresse ».
+- Dépendances mises à jour (correctif de sécurité de l'outillage de test, mises à jour mineures).
 
 ## [2.0.0] - 2026-09-24
 
@@ -134,6 +138,7 @@ Première version publique.
 
 - État du droit arrêté au 23 septembre 2026.
 
-[Non publié]: https://github.com/raymondboustany/scopeo/compare/v2.0.0...HEAD
+[Non publié]: https://github.com/raymondboustany/scopeo/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/raymondboustany/scopeo/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/raymondboustany/scopeo/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/raymondboustany/scopeo/releases/tag/v1.0.0
