@@ -14,41 +14,41 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Surfaces */
-  --c-paper:         #f5f6f8;
+  --c-paper:         #e6eaf1;
   --c-surface:       #ffffff;
-  --c-sunken:        #f1f3f6;
-  --c-raised:        #f8f9fb;
-  --c-chrome:        #ffffff;
-  --c-overlay:       #eceef3;
-  --c-stage:         #ecebfb;
+  --c-sunken:        #edf0f5;
+  --c-raised:        #f6f8fb;
+  --c-chrome:        #f4f6fa;
+  --c-overlay:       #dde3ec;
+  --c-stage:         #e3e2f7;
 
   /* Encre */
   --c-ink:           #111827;
   --c-ink-2:         #3d4551;
   --c-ink-3:         #575d68;
-  --c-ink-4:         #626a79;
+  --c-ink-4:         #59616f;
   --c-ink-inv:       #ffffff;
 
   /* Filets : séparation des conteneurs ; « edge » : contour des contrôles (3:1 au moins) */
-  --c-rule:          #e1e4ea;
-  --c-rule-2:        #d3d8e0;
-  --c-rule-3:        #b4bbc7;
-  --c-edge:          #7f8796;
+  --c-rule:          #d2d8e2;
+  --c-rule-2:        #c1c9d6;
+  --c-rule-3:        #a6b0c0;
+  --c-edge:          #6f798b;
 
   /* Couleurs de texte des statuts et de l'accent : plus soutenues que les remplissages, pour tenir 4,5:1 */
   --c-positive-text: #0f7147;
   --c-caution-text:  #8e5700;
   --c-critical-text: #b73027;
-  --c-brass-text:    #7e5e0b;
-  --c-accent-text:   #6540ec;
+  --c-brass-text:    #745409;
+  --c-accent-text:   #5128ea;
 
   /* Accent unique */
   --c-accent:        #6d4aed;
   --c-accent-hover:  #5b39dc;
   --c-accent-ink:    #ffffff;
-  --c-accent-wash:   rgb(109 74 237 / 0.1);
-  --c-accent-line:   rgb(109 74 237 / 0.3);
-  --c-accent-strong: #5433cf;
+  --c-accent-wash:   rgb(109 74 237 / 0.15);
+  --c-accent-line:   rgb(109 74 237 / 0.5);
+  --c-accent-strong: #4a2bc4;
 
   --c-brass:         #9a730e;
   --c-brass-wash:    rgb(214 160 30 / 0.16);
@@ -90,7 +90,7 @@
   --c-neutral-wash:  #eef0f3;
   --c-neutral-line:  rgb(107 114 128 / 0.25);
 
-  --s-card:  0 1px 2px rgb(16 24 40 / 0.05);
+  --s-card:  0 1px 2px rgb(16 24 40 / 0.08), 0 1px 3px rgb(16 24 40 / 0.05);
   --s-pop:   0 10px 28px -8px rgb(16 24 40 / 0.18);
   --s-modal: 0 28px 64px -16px rgb(16 24 40 / 0.3);
 
@@ -302,6 +302,22 @@
 .text-dora     { color: var(--c-dora-ink); }
 .text-cra      { color: var(--c-cra-ink); }
 .text-aiact    { color: var(--c-aiact-ink); }
+
+/* Toute pastille ou zone teintée reçoit un cadre de sa couleur (composé avec les anneaux et ombres Tailwind, sans les écraser) : sans lui, le
+   texte semble flotter sur un fond à peine différent de la page (thème clair). */
+.bg-positive-wash { box-shadow: inset 0 0 0 1px var(--c-positive-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-caution-wash  { box-shadow: inset 0 0 0 1px var(--c-caution-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-critical-wash { box-shadow: inset 0 0 0 1px var(--c-critical-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-brass-wash    { box-shadow: inset 0 0 0 1px var(--c-brass-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-accent-wash   { box-shadow: inset 0 0 0 1px var(--c-accent-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-neutral-wash  { box-shadow: inset 0 0 0 1px var(--c-neutral-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+/* Zones creusées (bandeaux, boutons de choix, cadres de saisie) : un filet les détache du fond de page. */
+.bg-sunken        { box-shadow: inset 0 0 0 1px var(--c-rule-2), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-rgpd-wash     { box-shadow: inset 0 0 0 1px var(--c-rgpd-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-nis2-wash     { box-shadow: inset 0 0 0 1px var(--c-nis2-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-dora-wash     { box-shadow: inset 0 0 0 1px var(--c-dora-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-cra-wash      { box-shadow: inset 0 0 0 1px var(--c-cra-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
+.bg-aiact-wash    { box-shadow: inset 0 0 0 1px var(--c-aiact-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
 
 /* --------------------------------------------------------------------------
    3. Base

@@ -29,7 +29,7 @@ export function RegChip({
       className={cn(
         'inline-flex items-center gap-1.5 rounded-md font-semibold whitespace-nowrap',
         size === 'sm' ? 'h-5 px-1.5 text-[10px]' : 'h-6 px-2 text-2xs',
-        muted ? 'bg-overlay text-ink-3' : cn(s.wash, s.text),
+        muted ? 'bg-overlay text-ink-3 shadow-[inset_0_0_0_1px_var(--c-rule-2)]' : cn(s.wash, s.text),
         className,
       )}
     >
@@ -51,7 +51,7 @@ export function FrameworkNote({ className }: { className?: string }) {
 type Tone = 'neutral' | 'accent' | 'positive' | 'caution' | 'critical' | 'brass'
 
 const TONE: Record<Tone, string> = {
-  neutral: 'bg-overlay text-ink-2',
+  neutral: 'bg-overlay text-ink-2 shadow-[inset_0_0_0_1px_var(--c-rule-2)]',
   accent: 'bg-accent-wash text-accent-strong',
   positive: 'bg-positive-wash text-positive',
   caution: 'bg-caution-wash text-caution',

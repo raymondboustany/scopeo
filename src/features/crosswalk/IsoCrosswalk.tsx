@@ -19,7 +19,7 @@ const SUMMARY: Record<IsoThemeSummary, { label: string; tone: string; dot: strin
   partiel: { label: tr('Partiel', 'Partial'), tone: 'bg-caution-wash text-caution', dot: 'bg-caution' },
   ecart: { label: tr('Non mis en œuvre', 'Not implemented'), tone: 'bg-critical-wash text-critical', dot: 'bg-critical' },
   exclu: { label: tr('Exclu', 'Excluded'), tone: 'bg-critical-wash text-critical', dot: 'bg-critical' },
-  non_renseigne: { label: tr('À renseigner', 'To fill in'), tone: 'bg-overlay text-ink-3', dot: 'bg-rule-3' },
+  non_renseigne: { label: tr('À renseigner', 'To fill in'), tone: 'bg-overlay text-ink-2 shadow-[inset_0_0_0_1px_var(--c-rule-3)]', dot: 'bg-ink-4' },
 }
 
 /** Libellés courts, pour tenir dans la cellule étroite de la matrice. */
@@ -41,7 +41,7 @@ const CONTROL_STATUS: Record<IsoControlStatus, { label: string; dot: string }> =
 
 export function IsoHeader() {
   return (
-    <span className="inline-flex h-5 items-center gap-1 whitespace-nowrap rounded-md bg-overlay px-1.5 text-[10px] font-medium text-ink-2">
+    <span className="inline-flex h-5 items-center gap-1 whitespace-nowrap rounded-md bg-surface px-1.5 text-[10px] font-medium text-ink shadow-[inset_0_0_0_1px_var(--c-rule-3)]">
       <BadgeCheck size={10} className="shrink-0" /> ISO 27001
     </span>
   )
@@ -59,7 +59,7 @@ export function IsoCell({ view }: { view: IsoThemeView }) {
   if (view.kind === 'structurel') {
     return (
       <Tooltip content={view.structural ? ISO_STRUCTURAL_LABEL[view.structural] : ''}>
-        <span className="text-2xs text-ink-4">{tr('Hors ISO', 'Outside ISO')}</span>
+        <span className="inline-flex whitespace-nowrap rounded-xs border border-dashed border-rule-3 px-1 py-0.5 text-[10px] font-medium text-ink-3">{tr('Hors ISO', 'Outside ISO')}</span>
       </Tooltip>
     )
   }
@@ -84,7 +84,7 @@ export function IsoCell({ view }: { view: IsoThemeView }) {
         className={cn(
           'inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-xs px-1 py-0.5 text-[10px] font-medium',
           s.tone,
-          tentative && 'border border-dashed border-rule-3',
+          tentative && 'border border-dashed border-ink-4',
         )}
       >
         <span className={cn('size-1.5 shrink-0 rounded-full', s.dot)} aria-hidden />

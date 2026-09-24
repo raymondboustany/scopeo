@@ -261,6 +261,7 @@ function Matrix({
                                 className="ref rounded-xs px-1 py-0.5"
                                 style={{
                                   background: `var(--c-${r.toLowerCase()}-wash)`,
+                                  boxShadow: `inset 0 0 0 1px var(--c-${r.toLowerCase()}-line)`,
                                   color: `var(--c-${r.toLowerCase()}-ink)`,
                                 }}
                               >
