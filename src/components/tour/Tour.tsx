@@ -47,13 +47,13 @@ const STEPS: Step[] = [
   {
     id: 'fiche',
     title: tr('La fiche entité', 'The entity profile'),
-    body: tr('Client ou organisation interne : société, mission, interlocuteurs, et une fois la qualification faite, la démarche ISO 27001. Ces informations ouvrent les rapports et ne sont jamais publiées.', 'Client or internal organisation: company, engagement, contacts, and once scoping is done, the ISO 27001 status. This information opens the reports and is never published.'),
+    body: tr('Client ou organisation interne : société, mission, interlocuteurs. Ces informations ouvrent les rapports et ne sont jamais publiées.', 'Client or internal organisation: company, engagement, contacts. This information opens the reports and is never published.'),
     target: 'nav-fiche',
   },
   {
     id: 'qualification',
     title: tr('Tout part de la qualification', 'Everything starts with scoping'),
-    body: tr("Une quarantaine de questions, chacune rattachée à l'article qu'elle sert à établir. Si une réponse change, la plateforme montre ce qui apparaît et ce qui disparaît dans le périmètre.", 'About forty questions, each tied to the article it helps establish. If an answer changes, the platform shows what enters and leaves the scope.'),
+    body: tr("Une trentaine de questions, chacune rattachée à l'article qu'elle sert à établir, puis une question facultative sur votre démarche ISO 27001. Si une réponse change, la plateforme montre ce qui apparaît et ce qui disparaît dans le périmètre.", 'About thirty questions, each tied to the article it helps establish, then an optional question on your ISO 27001 status. If an answer changes, the platform shows what enters and leaves the scope.'),
     target: 'nav-qualification',
   },
   {

@@ -12,6 +12,7 @@ import type {
 } from '@/types/domain'
 import { CROSSWALK } from '@/data/crosswalk'
 import {
+  ISO_CLAUSE_BY_ID,
   ISO_CONTROLS,
   ISO_CONTROL_BY_ID,
   ISO_MAPPING_BY_THEME,
@@ -271,4 +272,67 @@ export function isoOverlap(regulation: RegulationId, ctx: IsoContext): IsoOverla
       })
       return { obligation: o, category: covered ? ('couvert' as const) : ('ecart' as const), controls }
     })
+}
+
+// ---------------------------------------------------------------------------
+// Vue par exigence unifiée, pour la carte de croisement
+// ---------------------------------------------------------------------------
+
+/** État d'un contrôle au regard de la démarche déclarée. */
+export type IsoControlStatus = 'mis_en_oeuvre' | 'partiel' | 'non_mis_en_oeuvre' | 'exclu' | 'non_renseigne'
+
+/** Synthèse d'une exigence : ce que la démarche ISO en dit. */
+export type IsoThemeSummary = 'couvert' | 'partiel' | 'ecart' | 'exclu' | 'non_renseigne'
+
+export interface IsoThemeView {
+  themeId: string
+  /** Hors champ par nature, sans correspondance, ou correspondance à afficher. */
+  kind: 'structurel' | 'aucune' | 'correspondance'
+  structural?: IsoStructuralCategory
+  /** Correspondance établie, ou simple piste à faire valider. */
+  confidence?: 'etablie' | 'a_valider'
+  controls: { id: string; title: string; status: IsoControlStatus }[]
+  summary: IsoThemeSummary
+  capReason?: string
+  note?: string
+}
+
+function controlStatus(entry: IsoControlEntry): IsoControlStatus {
+  if (entry.applicability === 'non_applicable') return 'exclu'
+  if (entry.applicability !== 'applicable') return 'non_renseigne'
+  if (entry.implementation === 'mis_en_oeuvre') return 'mis_en_oeuvre'
+  if (entry.implementation === 'partiel') return 'partiel'
+  if (entry.implementation === 'non_mis_en_oeuvre') return 'non_mis_en_oeuvre'
+  return 'non_renseigne'
+}
+
+/** Ce que la démarche ISO déclarée dit d'une exigence unifiée, contrôle par contrôle. */
+export function isoThemeView(themeId: string, ctx: IsoContext): IsoThemeView {
+  const structural = ISO_STRUCTURAL_THEMES[themeId]
+  if (structural) return { themeId, kind: 'structurel', structural, controls: [], summary: 'non_renseigne' }
+  const mapping = ISO_MAPPING_BY_THEME.get(themeId)
+  if (!mapping) return { themeId, kind: 'aucune', controls: [], summary: 'non_renseigne' }
+
+  const controls = mapping.controls.map((id) => ({
+    id,
+    title: ISO_CONTROL_BY_ID.get(id)?.title ?? ISO_CLAUSE_BY_ID.get(id)?.title ?? id,
+    status: controlStatus(controlState(id, ctx.profile, ctx.assessment)),
+  }))
+  const statuses = controls.map((c) => c.status)
+  let summary: IsoThemeSummary
+  if (statuses.every((x) => x === 'non_renseigne')) summary = 'non_renseigne'
+  else if (statuses.every((x) => x === 'mis_en_oeuvre')) summary = 'couvert'
+  else if (statuses.some((x) => x === 'exclu') && !statuses.some((x) => x === 'mis_en_oeuvre' || x === 'partiel')) summary = 'exclu'
+  else if (statuses.some((x) => x === 'mis_en_oeuvre' || x === 'partiel')) summary = 'partiel'
+  else summary = 'ecart'
+
+  return {
+    themeId,
+    kind: 'correspondance',
+    confidence: mapping.confidence,
+    controls,
+    summary,
+    capReason: capFor(mapping, ctx) ? mapping.capReason : undefined,
+    note: mapping.note,
+  }
 }

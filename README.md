@@ -79,7 +79,7 @@ Overall and per-framework coverage, a five-step scoping path, alerts on upcoming
 <td width="50%" valign="top">
 
 ### Optional ISO 27001 module
-Declare the 93 Annex A controls by theme or one by one, or import a Statement of Applicability. Matching NIS2, DORA and CRA requirements are pre-filled and stay editable; an alert flags controls marked not applicable where a text still requires them; a chart splits each framework into what ISO covers, what it could cover, and what lies outside its scope. The module can always be skipped.
+At the end of the scoping questionnaire, one optional question asks where the entity stands: certified, compliant without certification, partial, or no initiative. For a certified or compliant entity, the platform offers to pre-fill the matching requirements, flags them "Filled in via ISO 27001" and asks you to check them; each one stays editable. For a partial or non-existent initiative, you can fill in the ISO checklist (even for a few points) or tick the requirements directly. A dedicated module holds the 93 Annex A controls, Statement of Applicability import and alerts on excluded controls. The crosswalk map shows the ISO controls next to each requirement.
 
 </td>
 </tr>
@@ -103,7 +103,7 @@ Notification duties apply before compliance work is done. The platform names the
 </tr>
 </table>
 
-**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation and a four-wave roadmap · interactive timeline · entity profile (client or internal scoping) · interview notes and log · Trust Center (read-only public view, currently local only) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes · guided tour · password-protected profiles.
+**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation and a four-wave roadmap · interactive timeline · entity profile (client or internal scoping) · interview notes and log · Trust Center (read-only public view, currently local only) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · in-app feedback (problem or idea) · English and French interface · light and dark themes · guided tour · password-protected profiles.
 
 <details>
 <summary>Dark theme preview</summary>
@@ -250,9 +250,15 @@ All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) ru
 
 ---
 
+## Feedback
+
+Something wrong, missing or worth adding? Use the speech-bubble button in the top bar of the platform: pick the type of report (problem, idea, error in the regulatory content), review the message, then either open a pre-filled GitHub issue or copy the text to send it through any channel. Nothing is sent automatically and no scoping data is ever attached. Security vulnerabilities go through the private reporting described in [SECURITY.md](SECURITY.md).
+
+---
+
 ## Contributing
 
-Contributions are welcome, especially **corpus updates**, to be reported with an official source through the "Regulatory update" issue template. Every change goes through a pull request reviewed and approved by the maintainer. See the [contributing guide](CONTRIBUTING.md).
+Contributions are welcome, especially **corpus updates**, to be reported with an official source through the "Regulatory update" issue template. Every change proposed by a contributor goes through a pull request reviewed and approved by the maintainer. See the [contributing guide](CONTRIBUTING.md).
 
 ## Licence
 
@@ -264,7 +270,7 @@ Code released under the [MIT](LICENSE) licence. Regulatory texts remain the prop
 
 <div align="center">
 
-## Français
+# Scopeo (français)
 
 **Savoir ce qui s'applique, et par quoi commencer.**
 
@@ -272,66 +278,107 @@ Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD
 
 [English](#scopeo) · **Français**
 
+[Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Rapports d'exemple](#rapports-dexemple) · [Feuille de route](ROADMAP.md) · [Contribuer](CONTRIBUTING.md)
+
+<br>
+
 <img src="docs/assets/demo-fr.gif" alt="Parcours : connexion, tableau de bord, qualification, croisements, évaluation, ISO 27001" width="100%">
 
 </div>
 
-### Pourquoi
+---
 
-Cinq textes européens encadrent désormais la sécurité, les données et les systèmes d'IA des organisations. Ils se recouvrent, divergent parfois, et l'un prime sur l'autre dans certains cas (DORA sur NIS2 pour les entités financières, par exemple). Avant d'engager un budget de conformité, une organisation doit savoir quels textes s'appliquent et à quel titre, ce qu'ils exigent précisément, où une seule action en satisfait plusieurs, et par quoi commencer.
+## Pourquoi
+
+Cinq textes européens encadrent désormais la sécurité, les données et les systèmes d'IA des organisations. Ils se recouvrent, divergent parfois, et l'un prime sur l'autre dans certains cas (DORA sur NIS2 pour les entités financières, par exemple). Avant d'engager un budget de conformité, une organisation doit répondre à quatre questions :
+
+1. **Quels textes s'appliquent**, et à quel titre ?
+2. **Qu'exigent-ils précisément** ?
+3. **Où une seule action en satisfait-elle plusieurs** ?
+4. **Par quoi commencer** ?
 
 Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiable article par article, et produit les livrables attendus par une direction.
 
-> **Positionnement.** La plateforme intervient **en amont** : cadrage et diagnostic. Elle ne vérifie pas de preuves et ne pilote pas la conformité dans la durée.
+> **Positionnement.** La plateforme intervient **en amont** : cadrage et diagnostic. Elle ne vérifie pas de preuves et ne pilote pas la conformité dans la durée ; ces rôles reviennent à un audit et à une plateforme de suivi, qui peuvent prendre le relais.
 >
 > **Aide au cadrage, pas un avis juridique.** Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus.
 >
-> **Appliquée à la France.** NIS2 est lu à travers le Référentiel Cyber France (ReCyF) de l'ANSSI, et les autorités désignées sont les autorités françaises.
+> **Appliquée à la France.** NIS2 est lu à travers le Référentiel Cyber France (ReCyF) de l'ANSSI, et les autorités désignées sont les autorités françaises (CNIL, ANSSI, ACPR, AMF).
 
-### Fonctionnalités
+---
+
+## Fonctionnalités
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### Qualification démontrée
-35 questions, chacune rattachée à l'article qu'elle établit. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre.
+### Qualification démontrée
+35 questions, chacune rattachée à l'article qu'elle établit. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre quand une réponse change.
 
 </td>
 <td width="50%"><img src="docs/assets/fr/qualification.png" alt="Qualification et comparateur avant / après"></td>
 </tr>
 <tr>
+<td width="50%"><img src="docs/assets/fr/dashboard.png" alt="Tableau de bord"></td>
+<td width="50%" valign="top">
+
+### Diagnostic en un coup d'œil
+Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes sur les échéances réglementaires proches, priorités et faiblesses par domaine.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### Exigences mutualisées
+40 exigences unifiées relient les obligations des cinq textes. La vue **Mutualisation** montre les combinaisons de textes qu'une action unique permet de couvrir ; les divergences et hiérarchies sont nommées, avec la règle qui commande.
+
+</td>
 <td width="50%"><img src="docs/assets/fr/mutualisation.png" alt="Vue Mutualisation des croisements"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/fr/iso-overlap.png" alt="Module ISO 27001 : contrôles exclus et recoupement par référentiel"></td>
 <td width="50%" valign="top">
 
-#### Exigences mutualisées
-40 exigences unifiées relient les obligations des cinq textes. La vue **Mutualisation** montre les combinaisons de textes couvertes par une action unique ; divergences et hiérarchies sont nommées, avec la règle qui commande.
+### Module ISO 27001 facultatif
+À la fin du questionnaire de qualification, une question facultative demande où en est l'entité : certifiée, conforme sans certification, partielle ou aucune démarche. Pour une entité certifiée ou conforme, la plateforme propose de pré-remplir les exigences correspondantes, les signale « Renseigné via ISO 27001 » et invite à les vérifier ; chacune reste modifiable. Pour une démarche partielle ou inexistante, vous pouvez remplir la checklist ISO (même sur quelques points) ou cocher directement les exigences. Un module dédié porte les 93 contrôles de l'annexe A, l'import d'une déclaration d'applicabilité et les alertes sur les contrôles exclus. La carte de croisement affiche les contrôles ISO en face de chaque exigence.
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-#### Module ISO 27001 facultatif
-Déclaration des 93 contrôles de l'annexe A par thème ou contrôle par contrôle, ou import d'une déclaration d'applicabilité. Les exigences NIS2, DORA et CRA correspondantes sont pré-remplies et restent modifiables ; une alerte signale les contrôles exclus alors qu'un texte les impose ; un graphique répartit chaque référentiel entre ce qu'ISO couvre, ce qu'il pourrait couvrir et ce qui échappe à son champ. Le module reste toujours contournable.
+### NIS2 détaillé par le ReCyF
+Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité. Un certificat ISO 27001 valide sur tout le périmètre est reconnu pour les objectifs 2 et 16, comme le prévoit le ReCyF.
 
 </td>
-<td width="50%"><img src="docs/assets/fr/iso-overlap.png" alt="Module ISO 27001 : contrôles exclus et recoupement"></td>
-</tr>
-<tr>
 <td width="50%"><img src="docs/assets/fr/corpus.png" alt="Corpus réglementaire"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/fr/signalement.png" alt="Qui notifier en cas d'incident"></td>
 <td width="50%" valign="top">
 
-#### NIS2 détaillé par le ReCyF
-Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité.
+### Qui notifier, dès aujourd'hui
+Les obligations de notification s'appliquent avant même la mise en conformité. La plateforme désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA, autorité de surveillance du marché pour l'IA), leurs délais et la chaîne d'escalade interne, et produit une **fiche réflexe** d'une page.
 
 </td>
 </tr>
 </table>
 
-**Et aussi :** évaluation à trois états · priorisation et feuille de route en quatre vagues · échéancier interactif · qui notifier en cas d'incident et fiche réflexe · notes d'entretien · Trust Center (démonstration, en local pour l'instant) · recherche transverse · interface en français et en anglais · thème clair et sombre · profils protégés par mot de passe.
+**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable et feuille de route en quatre vagues · échéancier interactif · fiche entité (cadrage d'un client ou cadrage interne) · notes et journal d'entretien · Trust Center (vue publique en lecture seule, pour l'instant en local uniquement) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · signalement intégré (problème ou idée) · interface en français et en anglais · thèmes clair et sombre · parcours guidé · profils protégés par mot de passe.
 
-### Rapports d'exemple
+<details>
+<summary>Aperçu du thème sombre</summary>
+<br>
+<img src="docs/assets/fr/dashboard-dark.png" alt="Tableau de bord en thème sombre">
+</details>
+
+---
+
+## Rapports d'exemple
+
+Trois livrables PDF, générés à partir de l'entité de démonstration fictive *Finexa* :
 
 | Document | Destinataires | Format |
 |---|---|---|
@@ -339,9 +386,15 @@ Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version 
 | [Rapport de cadrage complet](docs/samples/rapport-cadrage-finexa.pdf) | Conseil, RSSI, DPO, équipe projet | 6 à 12 pages |
 | [Fiche réflexe incident](docs/samples/fiche-reflexe-finexa.pdf) | Diffusion interne | 1 page |
 
-### Démarrage rapide
+---
 
-Le [guide d'installation](docs/installation.md) détaille chaque étape. En bref, avec Docker Desktop :
+## Démarrage rapide
+
+> **Première installation ?** Le [guide d'installation pas à pas](docs/installation.md) détaille chaque étape, sans prérequis technique.
+
+### Docker Compose (recommandé)
+
+Prérequis : [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash
 mkdir scopeo && cd scopeo
@@ -349,21 +402,127 @@ curl -o compose.yaml https://raw.githubusercontent.com/raymondboustany/scopeo/ma
 docker compose up -d
 ```
 
-Ouvrez ensuite **http://localhost:8000**. Sans Docker, téléchargez l'archive portable de la [dernière version](https://github.com/raymondboustany/scopeo/releases/latest) et lancez `start.bat` ou `./start.sh`.
+Ouvrez ensuite **http://localhost:8000**. Les données sont conservées dans le volume Docker `scopeo-data`.
 
-À l'accueil, **Mode invité** ouvre la démonstration *Finexa*, effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez un profil protégé par mot de passe, puis une entité.
+### Sans Docker
 
-### Confidentialité et sécurité
+Prérequis : [Python 3.11+](https://www.python.org/downloads/).
+
+1. Téléchargez `scopeo-vX.Y.Z-portable.zip` depuis la [dernière version](https://github.com/raymondboustany/scopeo/releases/latest) et décompressez-la.
+2. Lancez `start.bat` (Windows, double-clic) ou `./start.sh` (macOS, Linux).
+
+### Depuis les sources
+
+Prérequis : Node.js 20+, Python 3.11+, Git.
+
+```bash
+git clone https://github.com/raymondboustany/scopeo.git
+cd scopeo
+npm install
+npm run setup      # environnement Python du serveur
+npm run dev        # http://localhost:5173, avec rechargement automatique
+```
+
+<details>
+<summary>Commandes et configuration</summary>
+<br>
+
+| Commande | Rôle |
+|---|---|
+| `npm run dev` | API avec rechargement et interface Vite, arrêtées ensemble |
+| `npm start` | Compilation, puis service de la plateforme sur http://127.0.0.1:8000 |
+| `npm test` · `npm run test:server` | Tests des moteurs (Vitest) · tests de l'API (pytest) |
+| `npm run lint` · `npm run typecheck` | Contrôles statiques |
+| `npm run demo:build` | Régénère l'entité de démonstration |
+
+| Variable d'environnement | Défaut | Rôle |
+|---|---|---|
+| `SCOPEO_PORT` | `8000` | Port du serveur |
+| `SCOPEO_HOST` | `127.0.0.1` | Adresse d'écoute |
+| `SCOPEO_DATA_DIR` | `server/data` (`/data` sous Docker) | Dossier de la base SQLite |
+| `SCOPEO_COOKIE_SECURE` | désactivé | Marque le cookie de session `Secure` derrière HTTPS |
+
+</details>
+
+### Premiers pas
+
+À l'accueil, **Mode invité** ouvre la démonstration *Finexa*, un établissement de paiement de 50 salariés déjà qualifié et évalué ; elle est effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez un profil protégé par mot de passe, puis une entité. Le changement de langue se trouve dans la barre du haut.
+
+---
+
+## Référentiel
+
+| | |
+|---|---|
+| Textes | RGPD, NIS2 (ReCyF), DORA, CRA, AI Act |
+| Obligations | 95 (RGPD 21, NIS2 22, DORA 22, CRA 12, AI Act 18) |
+| Exigences élémentaires | 348, avec preuves attendues, échéances et palier de sanction |
+| Exigences unifiées | 40, dont 7 divergences et 1 hiérarchie |
+| Détail NIS2 (ReCyF v2.5) | 20 objectifs, 152 mesures |
+| ISO/IEC 27001:2022 | 93 contrôles de l'annexe A (intitulés publics uniquement), reliés par thème |
+| Questions de qualification | 35, chacune rattachée à l'article qu'elle établit |
+
+<details>
+<summary>État des textes et délais de notification retenus</summary>
+<br>
+
+| Texte | Référence | État au 24 septembre 2026 |
+|---|---|---|
+| RGPD | Règlement (UE) 2016/679 | Applicable depuis le 25 mai 2018 |
+| NIS2 | Directive (UE) 2022/2555 | Non transposée en France ; projet de loi résilience examiné à partir du 7 octobre 2026. Exigences détaillées par le ReCyF v2.5, document de travail susceptible d'évoluer avant le décret d'application |
+| DORA | Règlement (UE) 2022/2554 | Applicable depuis le 17 janvier 2025 |
+| CRA | Règlement (UE) 2024/2847 | Signalement (art. 14) depuis le 11 septembre 2026 ; application complète le 11 décembre 2027 |
+| AI Act | Règlement (UE) 2024/1689, modifié par le règlement (UE) 2026/1744 | Pratiques interdites et maîtrise de l'IA depuis le 2 février 2025 ; application générale depuis le 2 août 2026 ; systèmes à haut risque le 2 décembre 2027 (annexe III) et le 2 août 2028 (annexe I) |
+
+| Régime | Délais | Fondement |
+|---|---|---|
+| RGPD | 72 h après la prise de connaissance | art. 33 |
+| NIS2 | alerte 24 h · notification 72 h · rapport final 1 mois | art. 23 § 4 |
+| DORA | notification initiale 4 h après classification comme majeur, au plus tard 24 h après détection · rapport intermédiaire 72 h · rapport final 1 mois | art. 19, règlement délégué (UE) 2025/301 |
+| CRA | alerte 24 h · notification 72 h · rapport final 14 jours après correctif (vulnérabilité) ou 1 mois (incident) | art. 14 |
+| AI Act | incident grave : 15 jours, 10 jours en cas de décès, 2 jours pour une infraction étendue ou une infrastructure critique | art. 73 |
+
+</details>
+
+Les textes officiels sont conservés en PDF dans [texts/](texts/README.md), avec leurs conditions de réutilisation. Les évolutions du corpus sont consignées dans le [journal des modifications](CHANGELOG.md).
+
+---
+
+## Architecture
+
+```
+┌──────────────────────────────┐        ┌───────────────────────────┐
+│ Interface : React, TypeScript│  /api  │ Serveur : FastAPI         │
+│ Moteurs réglementaires       │ ─────► │ Persistance SQLite        │
+│ Rapports PDF                 │        │ Profils et sessions       │
+└──────────────────────────────┘        └───────────────────────────┘
+```
+
+Toute la logique réglementaire (qualification, périmètre, priorisation, délais, correspondance ISO) s'exécute dans l'interface à partir des réponses enregistrées : une évolution du corpus s'applique donc immédiatement à toutes les entités existantes. Le serveur conserve les données et gère l'authentification.
+
+**Pile technique :** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt · Vitest, pytest.
+
+---
+
+## Confidentialité et sécurité
 
 - Les données ne quittent pas le poste : aucune télémétrie, aucun appel à un service tiers.
-- Chaque profil est protégé par un mot de passe haché avec bcrypt, jamais conservé en clair. La session est tenue côté serveur et révoquée à la déconnexion.
-- Le Trust Center est encore une fonction de démonstration, utilisable en local uniquement ; le partage en ligne arrivera dans une prochaine mise à jour.
-- Voir [SECURITY.md](SECURITY.md) avant toute exposition sur un réseau.
+- Chaque profil est protégé par un mot de passe, haché avec bcrypt et jamais conservé en clair. La session est tenue côté serveur, portée par un cookie `HttpOnly` et `SameSite=Strict`, et révoquée à la déconnexion.
+- Le serveur écoute sur `127.0.0.1` par défaut. Lisez [SECURITY.md](SECURITY.md) avant de l'exposer sur un réseau.
+- Le Trust Center est encore une fonction de démonstration : il ne fonctionne qu'en local pour l'instant. Le partage en ligne arrivera dans une prochaine mise à jour.
 
-### Contribuer
+---
 
-Les contributions sont bienvenues, en particulier les mises à jour du corpus avec une source officielle. Toute modification passe par une pull request relue et approuvée par le mainteneur. Voir le [guide de contribution](CONTRIBUTING.md).
+## Retours
 
-### Licence
+Un problème, un manque, une idée ? Utilisez le bouton en forme de bulle dans la barre du haut de la plateforme : choisissez la nature du signalement (problème, idée, erreur dans le contenu réglementaire), relisez le message, puis ouvrez une issue GitHub pré-remplie ou copiez le texte pour l'envoyer par le canal de votre choix. Rien n'est envoyé automatiquement et aucune donnée de cadrage n'est jamais jointe. Les failles de sécurité passent par le signalement privé décrit dans [SECURITY.md](SECURITY.md).
 
-Code publié sous licence [MIT](LICENSE). Les textes réglementaires restent la propriété de leurs auteurs ; voir [texts/README.md](texts/README.md).
+---
+
+## Contribuer
+
+Les contributions sont bienvenues, en particulier les **mises à jour du corpus**, à signaler avec une source officielle via le modèle d'issue « Évolution réglementaire ». Toute modification proposée par un contributeur passe par une pull request relue et approuvée par le mainteneur. Consultez le [guide de contribution](CONTRIBUTING.md).
+
+## Licence
+
+Code publié sous licence [MIT](LICENSE). Les textes réglementaires restent la propriété de leurs auteurs ; leurs conditions de réutilisation figurent dans [texts/README.md](texts/README.md). Les intitulés des contrôles ISO/IEC 27001 sont cités tels qu'ils sont documentés publiquement ; le texte de la norme n'est pas reproduit.

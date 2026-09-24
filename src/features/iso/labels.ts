@@ -15,3 +15,6 @@ export function namedList(ids: RegulationId[]): string {
   if (names.length <= 1) return names.join('')
   return `${names.slice(0, -1).join(', ')} ${tr('et', 'and')} ${names[names.length - 1]}`
 }
+
+/** « 8.15 » → « A.8.15 » ; « C6.1 » → « Clause 6.1 ». */
+export const controlLabel = (id: string) => (id.startsWith('C') ? id.replace('C', 'Clause ') : `A.${id}`)

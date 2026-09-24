@@ -14,6 +14,7 @@ import { CROSSWALK_BY_ID } from '@/data/crosswalk'
 import { REGULATIONS } from '@/data/regulations'
 import { effectiveControl, isoOverlap, isoProgress, perimeterIsPartial, type IsoOverlapCategory } from '@/engines/iso'
 import { IsoBadge } from './IsoBadge'
+import { IsoDeclaration } from './IsoDeclaration'
 import { parseSoa, type SoaParseResult } from './soa'
 import { ISO_STATUS_OPTIONS } from '@/features/iso/labels'
 import {
@@ -101,16 +102,14 @@ export default function IsoPage() {
         }
       />
 
+      <IsoDeclaration showFollowUp={false} />
+
       <Card>
         <div className="grid gap-6 p-5 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
             label={tr('Statut déclaré', 'Declared status')}
             value={<span className="text-lg">{ISO_STATUS_OPTIONS.find((o) => o.value === iso?.status)?.label ?? tr('Non renseigné', 'Not provided')}</span>}
-            hint={
-              <Link to="/app/fiche" className="text-accent hover:underline">
-                {tr('Modifier dans la fiche entité', 'Edit in the entity profile')}
-              </Link>
-            }
+            hint={iso?.status === 'certifie' && iso.validUntil ? tr(`Valide jusqu'au ${formatDate(iso.validUntil)}`, `Valid until ${formatDate(iso.validUntil)}`) : undefined}
           />
           <Stat
             label={tr('Contrôles renseignés', 'Controls filled in')}

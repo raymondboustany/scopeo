@@ -182,7 +182,7 @@ function Qualified() {
       <Journey />
 
       {/* Score et verdicts */}
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         <Reveal>
           <Card className="h-full" >
             <div data-tour="score-ring" className="flex h-full flex-col gap-6 p-6 md:flex-row md:items-center">
@@ -308,7 +308,7 @@ function Qualified() {
       <PreparationSummary />
 
       {/* Domaines et priorités */}
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-2">
         <Reveal index={4}>
           <Card className="h-full">
             <CardHeader title={tr('Couverture par domaine', 'Coverage by domain')} subtitle={tr('Part des exigences en place, partiel compté pour moitié', 'Share of requirements in place, partial counts for half')} icon={<ShieldHalf size={16} />} />

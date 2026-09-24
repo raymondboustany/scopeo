@@ -227,9 +227,9 @@ export function SectionRule({
 }) {
   return (
     <div className={cn('flex items-center gap-3', className)}>
-      <span className="label-caps shrink-0">{children}</span>
-      <span className="h-px flex-1 bg-rule" aria-hidden />
-      {aside ? <span className="shrink-0 text-2xs text-ink-3">{aside}</span> : null}
+      <span className="label-caps min-w-0 shrink-0 max-w-full">{children}</span>
+      <span className="h-px min-w-3 flex-1 bg-rule" aria-hidden />
+      {aside ? <span className="min-w-0 shrink text-right text-2xs text-ink-3">{aside}</span> : null}
     </div>
   )
 }

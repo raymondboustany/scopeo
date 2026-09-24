@@ -12,8 +12,8 @@ services:
     pull_policy: missing
     container_name: scopeo
     restart: unless-stopped
-    # Accessible depuis ce poste uniquement : l'application n'a pas
-    # d'authentification. Voir SECURITY.md avant de l'exposer sur un réseau.
+    # Accessible depuis ce poste uniquement. Voir SECURITY.md avant de l'exposer
+    # sur un réseau (chiffrement TLS nécessaire).
     ports:
       - "127.0.0.1:8000:8000"
     volumes:

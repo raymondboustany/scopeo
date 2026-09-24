@@ -6,6 +6,7 @@ import {
   isoRecyfEquivalence,
   isoSuggestionFor,
   isoSuggestions,
+  isoThemeView,
   mergeCoverage,
   type IsoContext,
 } from './iso'
@@ -171,5 +172,32 @@ describe('équivalence ReCyF', () => {
     expect(isoRecyfEquivalence({ status: 'conforme' }, RECYF_OBJECTIVES)).toEqual({})
     expect(isoRecyfEquivalence({ ...certified, validUntil: '2020-01-01' }, RECYF_OBJECTIVES)).toEqual({})
     expect(isoRecyfEquivalence({ ...certified, perimeter: 'partiel' }, RECYF_OBJECTIVES)).toEqual({})
+  })
+})
+
+describe('vue par exigence pour la carte de croisement', () => {
+  it('signale ce qui est hors du champ de la norme par nature', () => {
+    expect(isoThemeView('REP-02', ctx(allImplemented)).kind).toBe('structurel')
+    expect(isoThemeView('GOV-01', ctx(allImplemented)).structural).toBe('dirigeants')
+  })
+
+  it('résume une exigence dont tous les contrôles sont mis en œuvre comme couverte', () => {
+    const v = isoThemeView('DET-01', ctx(allImplemented))
+    expect(v.kind).toBe('correspondance')
+    expect(v.summary).toBe('couvert')
+    expect(v.controls.length).toBeGreaterThan(0)
+  })
+
+  it('résume une exigence dont le contrôle est exclu comme exclue', () => {
+    const a: IsoAssessment = { themes: {}, controls: { '8.15': { applicability: 'non_applicable' }, '8.17': { applicability: 'non_applicable' } }, detailed: [] }
+    expect(isoThemeView('DET-01', ctx(a)).summary).toBe('exclu')
+  })
+
+  it('reste « non renseigné » tant que rien n’est déclaré', () => {
+    expect(isoThemeView('DET-01', ctx({ themes: {}, controls: {}, detailed: [] })).summary).toBe('non_renseigne')
+  })
+
+  it('garde une correspondance à valider comme simple piste', () => {
+    expect(isoThemeView('RES-02', ctx(allImplemented)).confidence).toBe('a_valider')
   })
 })

@@ -263,7 +263,7 @@ export default function AssessmentPage() {
                                         )}
                                       >
                                         <span className="inline-flex items-center gap-1 rounded-md bg-positive-wash px-1.5 text-[10px] font-medium text-positive">
-                                          <BadgeCheck size={10} /> {tr('Pré-rempli ISO 27001', 'Pre-filled from ISO 27001')}
+                                          <BadgeCheck size={10} /> {tr('Renseigné via ISO 27001', 'Filled in via ISO 27001')}
                                         </span>
                                       </Tooltip>
                                     ) : null}

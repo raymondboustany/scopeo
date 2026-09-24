@@ -23,6 +23,7 @@ import { REGULATION_ORDER, REGULATIONS } from '@/data/regulations'
 import { cn, formatEur } from '@/lib/utils'
 import type { Answers, Question, RegulationId } from '@/types/domain'
 import { FrameworkNote } from '@/components/ui/primitives'
+import { IsoDeclaration } from '@/features/iso/IsoDeclaration'
 import { LOCALE, tr } from '@/i18n'
 
 export default function QualificationPage() {
@@ -167,6 +168,12 @@ export default function QualificationPage() {
                 </Button>
               </div>
             </Card>
+          ) : null}
+
+          {complete ? (
+            <div className="mt-4">
+              <IsoDeclaration />
+            </div>
           ) : null}
 
           {complete ? (

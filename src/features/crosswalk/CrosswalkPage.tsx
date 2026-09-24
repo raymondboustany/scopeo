@@ -21,6 +21,8 @@ import { RecyfPanel } from '@/components/recyf/RecyfPanel'
 import { cn } from '@/lib/utils'
 import { DOMAINS, type CrosswalkRelation, type CrosswalkTheme, type MeasureStatus, type RegulationId } from '@/types/domain'
 import { tr } from '@/i18n'
+import { isoThemeView, type IsoContext } from '@/engines/iso'
+import { IsoCell, IsoHeader, IsoThemeSection } from './IsoCrosswalk'
 
 const CrosswalkOverlap = lazy(() => import('./CrosswalkOverlap'))
 
@@ -104,11 +106,11 @@ export default function CrosswalkPage() {
           {themes.length === 0 ? (
             <EmptyState title={tr('Aucun croisement ne correspond aux filtres', 'No theme matches the filters')} />
           ) : (
-            <div className="grid gap-5 xl:grid-cols-[1fr_26rem]">
-              <Matrix themes={themes} regs={activeRegs} selectedId={selectedId} onSelect={select} />
+            <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_23rem]">
+              <Matrix themes={themes} regs={activeRegs} selectedId={selectedId} onSelect={select} iso={scoping.qualified ? scoping.iso.context : undefined} />
               <div className="min-w-0">
                 {selected ? (
-                  <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.measureStatuses} showAnssi={!scoping.doraPrevails} />
+                  <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.measureStatuses} showAnssi={!scoping.doraPrevails} iso={scoping.qualified ? scoping.iso.context : undefined} />
                 ) : (
                   <Card className="p-5">
                     <div className="hatch mb-3 h-6 rounded-xs opacity-30" aria-hidden />
@@ -135,7 +137,7 @@ export default function CrosswalkPage() {
           </Suspense>
           {selected ? (
             <div className="mt-5 max-w-3xl">
-              <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.measureStatuses} showAnssi={!scoping.doraPrevails} />
+              <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.measureStatuses} showAnssi={!scoping.doraPrevails} iso={scoping.qualified ? scoping.iso.context : undefined} />
             </div>
           ) : null}
         </TabPanel>
@@ -172,11 +174,13 @@ function Matrix({
   regs,
   selectedId,
   onSelect,
+  iso,
 }: {
   themes: CrosswalkTheme[]
   regs: RegulationId[]
   selectedId: string | null
   onSelect: (id: string) => void
+  iso?: IsoContext
 }) {
   const byDomain = DOMAINS.map((d) => ({ domain: d, items: themes.filter((t) => t.domain === d) })).filter(
     (g) => g.items.length > 0,
@@ -191,11 +195,16 @@ function Matrix({
               {tr('Exigence unifiée', 'Unified requirement')}
             </th>
             {regs.map((r) => (
-              <th key={r} scope="col" className="w-[5.75rem] px-2 py-2.5">
+              <th key={r} scope="col" className="w-[4.75rem] px-1.5 py-2.5">
                 <RegChip id={r} size="sm" />
               </th>
             ))}
-            <th scope="col" className="label-caps w-[5.5rem] px-3 py-2.5 text-right font-semibold">
+            {iso ? (
+              <th scope="col" className="w-[5.25rem] px-1.5 py-2.5">
+                <IsoHeader />
+              </th>
+            ) : null}
+            <th scope="col" className="label-caps w-[4.5rem] px-2 py-2.5 text-right font-semibold">
               {tr('Nature', 'Type')}
             </th>
           </tr>
@@ -205,7 +214,7 @@ function Matrix({
           <tbody key={group.domain}>
             <tr>
               <th
-                colSpan={regs.length + 2}
+                colSpan={regs.length + 2 + (iso ? 1 : 0)}
                 scope="colgroup"
                 className="border-y border-rule bg-sunken px-3 py-1.5 text-left"
               >
@@ -234,7 +243,7 @@ function Matrix({
                     const m = t.mappings.find((x) => x.regulation === r)
                     if (!m) {
                       return (
-                        <td key={r} className="px-2 py-2.5 text-center">
+                        <td key={r} className="px-1.5 py-2.5 text-center">
                           <span className="text-ink-4" aria-label={tr('Non couvert par ce texte', 'Not covered by this text')}>
                             ·
                           </span>
@@ -243,7 +252,7 @@ function Matrix({
                     }
                     const articles = m.obligationIds.map((id) => shortRef(id))
                     return (
-                      <td key={r} className="px-2 py-2.5 align-top">
+                      <td key={r} className="px-1.5 py-2.5 align-top">
                         <Tooltip content={m.requirement}>
                           <span className="flex flex-wrap gap-1">
                             {articles.map((a, i) => (
@@ -264,7 +273,13 @@ function Matrix({
                     )
                   })}
 
-                  <td className="px-3 py-2.5 text-right">
+                  {iso ? (
+                    <td className="px-1.5 py-2.5 align-top">
+                      <IsoCell view={isoThemeView(t.id, iso)} />
+                    </td>
+                  ) : null}
+
+                  <td className="px-2 py-2.5 text-right">
                     {t.relation === 'recouvrement' ? (
                       <span className="text-2xs text-ink-4">{tr('Recouvr.', 'Overlap')}</span>
                     ) : (
@@ -291,12 +306,14 @@ function ThemeDetail({
   nis2Category,
   statuses,
   showAnssi,
+  iso,
 }: {
   theme: CrosswalkTheme
   activeRegs: RegulationId[]
   nis2Category: 'essentielle' | 'importante' | null
   statuses?: Record<string, MeasureStatus>
   showAnssi: boolean
+  iso?: IsoContext
 }) {
   // Les exigences ReCyF n'ont de sens que si NIS2 porte ce thème et concerne l'entité.
   const recyf = t.mappings.some((m) => m.regulation === 'NIS2') && activeRegs.includes('NIS2') && showAnssi ? recyfForTheme(t.recyf, nis2Category) : []
@@ -403,6 +420,8 @@ function ThemeDetail({
               })}
             </ul>
           </section>
+
+          {iso ? <IsoThemeSection view={isoThemeView(t.id, iso)} /> : null}
 
           <RecyfPanel objectives={recyf} statuses={statuses} compact />
 

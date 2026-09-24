@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BadgeCheck, Briefcase, Building, Building2, CalendarRange, Lock, Plus, Trash2, TriangleAlert, Users } from 'lucide-react'
-import { Input, LinkButton, SegmentedControl, Textarea } from '@/components/ui/controls'
+import { Briefcase, Building, Building2, CalendarRange, Lock, Plus, Trash2, Users } from 'lucide-react'
+import { Input, SegmentedControl, Textarea } from '@/components/ui/controls'
 import { Callout, Card, CardHeader, PageHeader, Tag } from '@/components/ui/primitives'
 import { useScoping } from '@/lib/hooks'
 import { useEntityEditor } from '@/lib/queries'
 import { cn, uid } from '@/lib/utils'
 import { NextStep } from '@/components/layout/NextStep'
-import { IsoBadge } from '@/features/iso/IsoBadge'
-import { ISO_STATUS_OPTIONS, namedList } from '@/features/iso/labels'
-import { isoProgress } from '@/engines/iso'
 import { tr } from '@/i18n'
-import type { EntityProfile, IsoPerimeter, IsoProfile, Stakeholder } from '@/types/domain'
+import type { EntityProfile, Stakeholder } from '@/types/domain'
 
 const ROLE_SUGGESTIONS = [
   tr('Direction générale', 'Chief executive'),
@@ -32,12 +29,9 @@ const ROLE_SUGGESTIONS = [
  * mission, interlocuteurs), une équipe cadre sa propre organisation (projet,
  * équipe). Les données sont les mêmes ; elles alimentent la page de garde et
  * le contexte des rapports, et ne sont jamais publiées par le Trust Center.
- *
- * La démarche ISO 27001 n'apparaît qu'une fois la qualification terminée :
- * la question de périmètre qu'elle pose dépend des textes retenus.
  */
 export default function EntityProfilePage() {
-  const { entity, readOnly, qualified } = useScoping()
+  const { entity, readOnly } = useScoping()
   const edit = useEntityEditor()
   if (!entity) return null
   const profile: EntityProfile = entity.profile ?? {}
@@ -178,8 +172,6 @@ export default function EntityProfilePage() {
         </Card>
       </div>
 
-      {qualified ? <IsoSection iso={profile.iso27001} readOnly={readOnly} onChange={(iso) => set('iso27001', iso)} /> : null}
-
       <Card>
         <CardHeader
           title={client ? tr('Interlocuteurs', 'Contacts') : tr('Équipe projet', 'Project team')}
@@ -253,113 +245,5 @@ export default function EntityProfilePage() {
         hint={tr("Une quarantaine de questions, chacune rattachée à l'article qu'elle établit", 'About forty questions, each tied to the article it establishes')}
       />
     </div>
-  )
-}
-
-/* ==========================================================================
-   Démarche ISO/IEC 27001
-   ========================================================================== */
-
-function IsoSection({ iso, readOnly, onChange }: { iso: IsoProfile | undefined; readOnly: boolean; onChange: (iso: IsoProfile) => void }) {
-  const { applicable, entity } = useScoping()
-  const status = iso?.status
-  const current = iso ?? {}
-  const asksPerimeter = status === 'certifie' || status === 'conforme' || status === 'partiel'
-  const named = namedList(applicable)
-  const stale =
-    iso?.perimeter &&
-    iso.perimeterRegulations &&
-    (iso.perimeterRegulations.length !== applicable.length || iso.perimeterRegulations.some((r) => !applicable.includes(r)))
-  const progress = isoProgress(entity?.iso_controls)
-
-  return (
-    <Card>
-      <CardHeader
-        title={tr('Démarche ISO/IEC 27001', 'ISO/IEC 27001 status')}
-        subtitle={tr(
-          "Facultatif. Renseignée, elle pré-remplit l'évaluation des exigences qui ont un contrôle ISO correspondant.",
-          'Optional. When filled in, it pre-fills the assessment of requirements that have a matching ISO control.',
-        )}
-        icon={<BadgeCheck size={16} />}
-        aside={<IsoBadge iso={iso} size="sm" />}
-      />
-      <div className="space-y-5 p-5">
-        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4" role="radiogroup" aria-label={tr('Statut ISO 27001', 'ISO 27001 status')}>
-          {ISO_STATUS_OPTIONS.map((o) => (
-            <button
-              key={o.value}
-              type="button"
-              role="radio"
-              aria-checked={status === o.value}
-              disabled={readOnly}
-              onClick={() => onChange({ ...current, status: o.value, ...(o.value === 'aucune' ? { perimeter: undefined, perimeterRegulations: undefined } : {}) })}
-              className={cn(
-                'rounded-lg px-3 py-2.5 text-left transition-colors disabled:cursor-not-allowed',
-                status === o.value ? 'bg-accent-wash ring-2 ring-accent' : 'bg-sunken hover:bg-overlay',
-              )}
-            >
-              <span className={cn('block text-sm font-medium', status === o.value ? 'text-accent-strong' : 'text-ink')}>{o.label}</span>
-              <span className="block text-2xs text-ink-3">{o.hint}</span>
-            </button>
-          ))}
-        </div>
-
-        {status === 'certifie' ? (
-          <label className="block max-w-xs">
-            <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Date de fin de validité du certificat', 'Certificate expiry date')}</span>
-            <Input type="date" disabled={readOnly} value={current.validUntil ?? ''} onChange={(e) => onChange({ ...current, validUntil: e.target.value })} />
-          </label>
-        ) : null}
-
-        {asksPerimeter ? (
-          <div className="rounded-lg bg-sunken p-4">
-            <p className="text-sm font-medium text-ink">
-              {tr(
-                `La démarche ISO 27001 couvre-t-elle l'intégralité du périmètre concerné par ${named}, ou seulement une partie ?`,
-                `Does the ISO 27001 initiative cover the entire scope concerned by ${named}, or only part of it?`,
-              )}
-            </p>
-            <p className="mt-1 text-2xs text-ink-3">
-              {tr(
-                "Périmètre de certification, systèmes, sites et activités inclus. Une couverture partielle désactive le pré-remplissage automatique : chaque exigence est alors à évaluer à la main.",
-                'Certification scope, systems, sites and activities included. Partial coverage turns off automatic pre-filling: each requirement must then be assessed by hand.',
-              )}
-            </p>
-            <div className="mt-3">
-              <SegmentedControl<IsoPerimeter>
-                ariaLabel={tr('Couverture du périmètre', 'Scope coverage')}
-                value={current.perimeter as IsoPerimeter}
-                onChange={(v) => !readOnly && onChange({ ...current, perimeter: v, perimeterRegulations: applicable })}
-                options={[
-                  { value: 'integral', label: tr("L'intégralité du périmètre", 'The entire scope') },
-                  { value: 'partiel', label: tr('Une partie seulement', 'Only part of it') },
-                ]}
-              />
-            </div>
-            {stale ? (
-              <p className="mt-3 flex items-start gap-2 text-2xs text-caution">
-                <TriangleAlert size={12} className="mt-0.5 shrink-0" />
-                {tr(
-                  'Les textes applicables ont changé depuis cette réponse. Vérifiez qu’elle vaut toujours pour le périmètre actuel, puis confirmez-la.',
-                  'The applicable texts have changed since this answer. Check that it still holds for the current scope, then confirm it.',
-                )}
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-4">
-          <p className="text-xs text-ink-3">
-            {tr(
-              `Détail des 93 contrôles de l'annexe A : ${progress.assessed} renseigné${progress.assessed > 1 ? 's' : ''}. Module facultatif : vous pouvez aussi évaluer directement les exigences NIS2, DORA et CRA.`,
-              `Detail of the 93 Annex A controls: ${progress.assessed} filled in. Optional module: you can also assess NIS2, DORA and CRA requirements directly.`,
-            )}
-          </p>
-          <LinkButton to="/app/iso27001" size="sm" icon={<ArrowRight size={13} />}>
-            {tr('Détailler les contrôles', 'Detail the controls')}
-          </LinkButton>
-        </div>
-      </div>
-    </Card>
   )
 }

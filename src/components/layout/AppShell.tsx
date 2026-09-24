@@ -30,6 +30,7 @@ import { useCurrentEntity, useCurrentUser, useEntities, useLogout, useSaveStatus
 import { useScoping } from '@/lib/hooks'
 import { tr } from '@/i18n'
 import { Tour } from '@/components/tour/Tour'
+import { FeedbackButton } from '@/components/feedback/FeedbackDialog'
 
 const ROLE_LABEL: Record<string, string> = {
   consultant: tr('Consultant', 'Consultant'),
@@ -374,6 +375,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </button>
             </Tooltip>
             <NotesButton />
+            <FeedbackButton />
             <LanguageToggle />
             <ThemeToggle />
             <UserMenu />

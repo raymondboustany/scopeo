@@ -14,7 +14,7 @@ RUN npx vite build
 FROM python:3.12-slim AS runtime
 
 LABEL org.opencontainers.image.title="Scopeo" \
-      org.opencontainers.image.description="Cadrage et diagnostic réglementaire RGPD, NIS2, DORA et CRA" \
+      org.opencontainers.image.description="Regulatory scoping platform for the GDPR, NIS2 (ReCyF), DORA, the CRA and the AI Act" \
       org.opencontainers.image.licenses="MIT"
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -28,10 +28,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY server/app ./app
 COPY --from=web /build/dist /app/dist
 
-RUN useradd --system --uid 10001 erm \
+RUN useradd --system --uid 10001 scopeo \
  && mkdir -p /data \
- && chown -R erm /data
-USER erm
+ && chown -R scopeo /data
+USER scopeo
 
 VOLUME ["/data"]
 EXPOSE 8000
