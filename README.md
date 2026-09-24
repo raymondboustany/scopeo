@@ -46,19 +46,16 @@ Scopeo answers them in a few hours of interviews, with reasoning that can be che
 
 ## How it works
 
-Five steps, in order. Each one feeds the next, and every screen stays available at any time.
+Scopeo follows the course of a scoping engagement, from the first interview to the deliverables.
 
-```mermaid
-flowchart LR
-  A["<b>1. Scope</b><br/>which texts apply,<br/>and why"] --> B["<b>2. Assess</b><br/>one answer per<br/>unified requirement"]
-  B --> C["<b>3. Prioritise</b><br/>scored order,<br/>four-wave roadmap"]
-  C --> D["<b>4. Prepare reporting</b><br/>who to notify,<br/>how fast"]
-  D --> E["<b>5. Report</b><br/>three PDF<br/>deliverables"]
-  classDef step fill:#f4f1ff,stroke:#6547e8,stroke-width:1.5px,color:#17132b
-  class A,B,C,D,E step
-```
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/en/flow-dark.svg">
+    <img src="docs/assets/en/flow-light.svg" alt="Scope, Assess, Prioritise, Prepare reporting, Report" width="100%">
+  </picture>
+</p>
 
-Step 1 establishes the applicable texts (GDPR, NIS2 (ReCyF), DORA, CRA, AI Act), which drive every following screen. The optional ISO 27001 module, offered at the end of step 1, can pre-fill part of step 2.
+The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI Act); each following step builds on that result. The optional ISO 27001 module, offered at the end of the first step, can pre-fill part of the assessment.
 
 ## Who it is for
 
@@ -77,7 +74,7 @@ Step 1 establishes the applicable texts (GDPR, NIS2 (ReCyF), DORA, CRA, AI Act),
 <tr>
 <td width="50%" valign="top">
 
-### Scoping you can defend
+### Scoping, article by article
 35 questions, each tied to the article it establishes. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
 
 </td>
@@ -106,7 +103,7 @@ Overall and per-framework coverage, a five-step scoping path, alerts on upcoming
 <td width="50%" valign="top">
 
 ### Optional ISO 27001 module
-At the end of the scoping questionnaire, one optional question asks where the entity stands: certified, compliant without certification, partial, or no initiative. For a certified or compliant entity, the platform offers to pre-fill the matching requirements, flags them "Filled in via ISO 27001" and asks you to check them; each one stays editable. For a partial or non-existent initiative, you can fill in the ISO checklist (even for a few points) or tick the requirements directly. A dedicated module holds the 93 Annex A controls, Statement of Applicability import and alerts on excluded controls. The crosswalk map shows the ISO controls next to each requirement.
+An optional question at the end of scoping records the entity's ISO 27001 status. For a certified or compliant entity, the matching NIS2, DORA and CRA requirements can be pre-filled; they are flagged as such and remain editable. A dedicated module covers the 93 Annex A controls, Statement of Applicability import and alerts on excluded controls; the crosswalk map shows the ISO controls next to each requirement.
 
 </td>
 </tr>
@@ -123,14 +120,14 @@ Under the NIS2 requirements, the **152 measures of ANSSI's ReCyF** (v2.5, March 
 <td width="50%"><img src="docs/assets/en/signalement.jpg" alt="Who to notify in case of an incident"></td>
 <td width="50%" valign="top">
 
-### Who to notify, starting today
+### Incident notification readiness
 Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, and produces a one-page **incident quick-reference sheet**.
 
 </td>
 </tr>
 </table>
 
-**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation and a four-wave roadmap · interactive timeline · entity profile (client or internal scoping) · interview notes and log · Trust Center (read-only public view, currently local only) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · in-app feedback (problem or idea) · English and French interface · light and dark themes · guided tour · password-protected profiles.
+**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in four phases, from 0 to 3 months to beyond 12 months · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes · password-protected profiles.
 
 <details>
 <summary>Dark theme preview</summary>
@@ -212,7 +209,7 @@ npm run dev        # http://localhost:5173, with hot reload
 
 ### First steps
 
-On the home page, choose **Guest mode** to explore the *Finexa* demo, a 50-person payment institution already scoped and assessed; it is erased on sign-out. To scope your own organisation or a client, create a password-protected profile, then an entity. The language switch sits in the top bar.
+On the home page, choose **Guest mode** to explore the *Finexa* demo, a 50-person payment institution already scoped and assessed; it is erased on sign-out. To scope your own organisation or a client, create a password-protected profile, then an entity.
 
 ---
 
@@ -281,7 +278,7 @@ All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) ru
 
 ## Feedback
 
-Something wrong, missing or worth adding? Use the speech-bubble button in the top bar of the platform: pick the type of report (problem, idea, error in the regulatory content), review the message, then either open a pre-filled GitHub issue or copy the text to send it through any channel. Nothing is sent automatically and no scoping data is ever attached. Security vulnerabilities go through the private reporting described in [SECURITY.md](SECURITY.md).
+To report a problem or suggest an improvement, use the feedback button in the platform's top bar. Choose the type of report (problem, idea, error in the regulatory content), review the message, then open a pre-filled GitHub issue or copy it to send through another channel. Nothing is sent automatically and no scoping data is attached. Security vulnerabilities must be reported privately, as described in [SECURITY.md](SECURITY.md).
 
 ---
 
@@ -338,19 +335,16 @@ Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiabl
 
 ## Comment ça marche
 
-Cinq étapes, dans l'ordre. Chacune alimente la suivante, et chaque écran reste accessible à tout moment.
+Scopeo suit le déroulé d'une mission de cadrage, du premier entretien aux livrables.
 
-```mermaid
-flowchart LR
-  A["<b>1. Qualifier</b><br/>quels textes s'appliquent,<br/>et pourquoi"] --> B["<b>2. Évaluer</b><br/>une réponse par<br/>exigence unifiée"]
-  B --> C["<b>3. Prioriser</b><br/>ordre justifié, feuille<br/>de route en quatre vagues"]
-  C --> D["<b>4. Préparer le signalement</b><br/>qui notifier,<br/>dans quel délai"]
-  D --> E["<b>5. Restituer</b><br/>trois livrables<br/>PDF"]
-  classDef step fill:#f4f1ff,stroke:#6547e8,stroke-width:1.5px,color:#17132b
-  class A,B,C,D,E step
-```
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/fr/flow-dark.svg">
+    <img src="docs/assets/fr/flow-light.svg" alt="Qualifier, Évaluer, Prioriser, Préparer le signalement, Restituer" width="100%">
+  </picture>
+</p>
 
-L'étape 1 établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, CRA, AI Act), qui commandent tous les écrans suivants. Le module ISO 27001 facultatif, proposé à la fin de l'étape 1, peut pré-remplir une partie de l'étape 2.
+La première étape établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, CRA, AI Act) ; chacune des suivantes s'appuie sur ce résultat. Le module ISO 27001 facultatif, proposé à la fin de la première étape, peut pré-remplir une partie de l'évaluation.
 
 ## À qui elle s'adresse
 
@@ -369,7 +363,7 @@ L'étape 1 établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, CRA, AI Ac
 <tr>
 <td width="50%" valign="top">
 
-### Qualification démontrée
+### Qualification, article par article
 35 questions, chacune rattachée à l'article qu'elle établit. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre quand une réponse change.
 
 </td>
@@ -398,7 +392,7 @@ Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes su
 <td width="50%" valign="top">
 
 ### Module ISO 27001 facultatif
-À la fin du questionnaire de qualification, une question facultative demande où en est l'entité : certifiée, conforme sans certification, partielle ou aucune démarche. Pour une entité certifiée ou conforme, la plateforme propose de pré-remplir les exigences correspondantes, les signale « Renseigné via ISO 27001 » et invite à les vérifier ; chacune reste modifiable. Pour une démarche partielle ou inexistante, vous pouvez remplir la checklist ISO (même sur quelques points) ou cocher directement les exigences. Un module dédié porte les 93 contrôles de l'annexe A, l'import d'une déclaration d'applicabilité et les alertes sur les contrôles exclus. La carte de croisement affiche les contrôles ISO en face de chaque exigence.
+Une question facultative, en fin de qualification, recueille la situation de l'entité au regard d'ISO 27001. Pour une entité certifiée ou conforme, les exigences NIS2, DORA et CRA correspondantes peuvent être pré-remplies ; elles sont signalées comme telles et restent modifiables. Un module dédié couvre les 93 contrôles de l'annexe A, l'import d'une déclaration d'applicabilité et les alertes sur les contrôles exclus ; la carte de croisement affiche les contrôles ISO en face de chaque exigence.
 
 </td>
 </tr>
@@ -415,14 +409,14 @@ Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version 
 <td width="50%"><img src="docs/assets/fr/signalement.jpg" alt="Qui notifier en cas d'incident"></td>
 <td width="50%" valign="top">
 
-### Qui notifier, dès aujourd'hui
+### Préparation au signalement d'incident
 Les obligations de notification s'appliquent avant même la mise en conformité. La plateforme désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA, autorité de surveillance du marché pour l'IA), leurs délais et la chaîne d'escalade interne, et produit une **fiche réflexe** d'une page.
 
 </td>
 </tr>
 </table>
 
-**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable et feuille de route en quatre vagues · échéancier interactif · fiche entité (cadrage d'un client ou cadrage interne) · notes et journal d'entretien · Trust Center (vue publique en lecture seule, pour l'instant en local uniquement) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · signalement intégré (problème ou idée) · interface en français et en anglais · thèmes clair et sombre · parcours guidé · profils protégés par mot de passe.
+**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable · feuille de route en quatre phases, de 0 à 3 mois à plus de 12 mois · échéancier réglementaire · fiche entité · notes d'entretien · Trust Center en lecture seule (local pour l'instant) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · interface en français et en anglais · thèmes clair et sombre · profils protégés par mot de passe.
 
 <details>
 <summary>Aperçu du thème sombre</summary>
@@ -504,7 +498,7 @@ npm run dev        # http://localhost:5173, avec rechargement automatique
 
 ### Premiers pas
 
-À l'accueil, **Mode invité** ouvre la démonstration *Finexa*, un établissement de paiement de 50 salariés déjà qualifié et évalué ; elle est effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez un profil protégé par mot de passe, puis une entité. Le changement de langue se trouve dans la barre du haut.
+À l'accueil, **Mode invité** ouvre la démonstration *Finexa*, un établissement de paiement de 50 salariés déjà qualifié et évalué ; elle est effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez un profil protégé par mot de passe, puis une entité.
 
 ---
 
@@ -573,7 +567,7 @@ Toute la logique réglementaire (qualification, périmètre, priorisation, déla
 
 ## Retours
 
-Un problème, un manque, une idée ? Utilisez le bouton en forme de bulle dans la barre du haut de la plateforme : choisissez la nature du signalement (problème, idée, erreur dans le contenu réglementaire), relisez le message, puis ouvrez une issue GitHub pré-remplie ou copiez le texte pour l'envoyer par le canal de votre choix. Rien n'est envoyé automatiquement et aucune donnée de cadrage n'est jamais jointe. Les failles de sécurité passent par le signalement privé décrit dans [SECURITY.md](SECURITY.md).
+Pour signaler un problème ou proposer une amélioration, utilisez le bouton de retour dans la barre du haut de la plateforme. Choisissez la nature du signalement (problème, idée, erreur dans le contenu réglementaire), relisez le message, puis ouvrez une issue GitHub pré-remplie ou copiez-le pour l'envoyer par un autre canal. Rien n'est envoyé automatiquement et aucune donnée de cadrage n'est jointe. Les failles de sécurité se signalent en privé, comme décrit dans [SECURITY.md](SECURITY.md).
 
 ---
 

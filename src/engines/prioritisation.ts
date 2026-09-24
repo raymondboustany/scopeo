@@ -373,7 +373,7 @@ export function prioritise({
 export const WAVES = [
   {
     n: 1 as const,
-    label: tr('Vague 1', 'Wave 1'),
+    label: tr('Phase 1', 'Phase 1'),
     horizon: tr('0 à 3 mois', '0 to 3 months'),
     intent: tr(
       "Éteindre l'exposition la plus grave et poser les prérequis dont tout le reste dépend.",
@@ -382,7 +382,7 @@ export const WAVES = [
   },
   {
     n: 2 as const,
-    label: tr('Vague 2', 'Wave 2'),
+    label: tr('Phase 2', 'Phase 2'),
     horizon: tr('3 à 6 mois', '3 to 6 months'),
     intent: tr(
       'Traiter les exigences à fort effet de levier une fois les fondations en place.',
@@ -391,13 +391,13 @@ export const WAVES = [
   },
   {
     n: 3 as const,
-    label: tr('Vague 3', 'Wave 3'),
+    label: tr('Phase 3', 'Phase 3'),
     horizon: tr('6 à 12 mois', '6 to 12 months'),
     intent: tr("Consolider et formaliser, en vue d'un contrôle.", 'Consolidate and formalise, ready for an inspection.'),
   },
   {
     n: 4 as const,
-    label: tr('Vague 4', 'Wave 4'),
+    label: tr('Phase 4', 'Phase 4'),
     horizon: tr('Au-delà de 12 mois', 'Beyond 12 months'),
     intent: tr('Approfondir, et anticiper les régimes non encore exigibles.', 'Go further, and prepare for regimes not yet in force.'),
   },

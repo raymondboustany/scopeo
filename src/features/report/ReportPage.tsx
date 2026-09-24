@@ -51,7 +51,7 @@ const KINDS: {
       tr('Qualification détaillée, fondements et réserves', 'Detailed scoping, legal bases and caveats'),
       tr('Périmètre, couverture par domaine, écarts, démarche ISO 27001', 'Scope, coverage by domain, gaps, ISO 27001 status'),
       tr('Points de friction entre textes', 'Friction points between texts'),
-      tr('Plan de traitement par vagues, nuage priorité / charge', 'Treatment plan by wave, priority / effort chart'),
+      tr('Plan de traitement par phases, nuage priorité / charge', 'Treatment plan by phase, priority / effort chart'),
       tr('Signalement, échéancier, journal d’entretien, méthode', 'Reporting, timeline, interview log, method'),
     ],
   },

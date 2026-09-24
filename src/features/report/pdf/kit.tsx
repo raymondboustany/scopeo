@@ -446,7 +446,7 @@ export function PriorityScatter({ items, width = 507, height = 170 }: { items: {
           {WAVE_HEX.map((c, i) => (
             <View key={c} style={[S.row, { alignItems: 'center', gap: 3 }]}>
               <View style={{ width: 7, height: 7, borderRadius: 3.5, backgroundColor: c }} />
-              <Text style={[S.small, { fontSize: 7 }]}>{tr('Vague', 'Wave')} {i + 1}</Text>
+              <Text style={[S.small, { fontSize: 7 }]}>{tr('Phase', 'Phase')} {i + 1}</Text>
             </View>
           ))}
         </View>

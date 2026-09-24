@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1004" height="188" viewBox="0 0 1004 188" role="img" aria-label="Qualifier → Évaluer → Prioriser → Préparer le signalement → Restituer">
+<defs><filter id="s" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#0e1014" flood-opacity="0.06"/></filter></defs>
+<rect x="10" y="10" width="176" height="162" rx="12" fill="#ffffff" stroke="#dfe2e8" filter="url(#s)"/>
+<circle cx="40" cy="40" r="13" fill="#6547e8"/>
+<text x="40" y="45" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">1</text>
+<text x="27" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">Qualifier</text>
+<text x="27" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">Textes applicables</text>
+<text x="27" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">et fondements</text>
+<path d="M192 91.0 H206" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M201 86.0 L206 91.0 L201 96.0" fill="none" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="212" y="10" width="176" height="162" rx="12" fill="#ffffff" stroke="#dfe2e8" filter="url(#s)"/>
+<circle cx="242" cy="40" r="13" fill="#6547e8"/>
+<text x="242" y="45" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">2</text>
+<text x="229" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">Évaluer</text>
+<text x="229" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">L'existant, exigence</text>
+<text x="229" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">par exigence</text>
+<path d="M394 91.0 H408" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M403 86.0 L408 91.0 L403 96.0" fill="none" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="414" y="10" width="176" height="162" rx="12" fill="#ffffff" stroke="#dfe2e8" filter="url(#s)"/>
+<circle cx="444" cy="40" r="13" fill="#6547e8"/>
+<text x="444" y="45" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">3</text>
+<text x="431" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">Prioriser</text>
+<text x="431" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">Ordre de traitement</text>
+<text x="431" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">en quatre phases</text>
+<path d="M596 91.0 H610" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M605 86.0 L610 91.0 L605 96.0" fill="none" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="616" y="10" width="176" height="162" rx="12" fill="#ffffff" stroke="#dfe2e8" filter="url(#s)"/>
+<circle cx="646" cy="40" r="13" fill="#6547e8"/>
+<text x="646" y="45" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">4</text>
+<text x="633" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">Préparer le</text>
+<text x="633" y="97" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">signalement</text>
+<text x="633" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">Qui notifier,</text>
+<text x="633" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">et dans quel délai</text>
+<path d="M798 91.0 H812" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M807 86.0 L812 91.0 L807 96.0" fill="none" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="818" y="10" width="176" height="162" rx="12" fill="#ffffff" stroke="#dfe2e8" filter="url(#s)"/>
+<circle cx="848" cy="40" r="13" fill="#6547e8"/>
+<text x="848" y="45" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">5</text>
+<text x="835" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">Restituer</text>
+<text x="835" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">Trois livrables PDF</text>
+<text x="835" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">pour décider</text>
+</svg>

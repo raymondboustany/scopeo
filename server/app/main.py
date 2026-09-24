@@ -147,7 +147,7 @@ async def lifespan(_app: FastAPI):
     yield
 
 
-app = FastAPI(title="Scopeo", version="2.1.0", lifespan=lifespan)
+app = FastAPI(title="Scopeo", version="2.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

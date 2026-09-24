@@ -6,19 +6,19 @@
 
 ## [Non publié]
 
-## [2.1.0] - 2026-09-24
-
 ### English
 
 - Redesigned light and dark themes: application frame with an inset content panel, refined neutral grays, hairline borders and soft layered shadows, clearer selected states, badges with a fine tinted outline, consistent buttons, fields, tabs and dialogs. Every text keeps a contrast of at least 4.5:1, checked by an automated test.
-- README redone: full-colour animated walkthrough in high definition, framed screenshots, a "How it works" diagram and a "Who it is for" table.
+- README redone: full-colour animated walkthrough in high definition, framed screenshots, a "How it works" diagram and a "Who it is for" table; wording reviewed.
 - Dependencies updated (security fix in the test tooling, minor updates).
+- The treatment plan is organised in "phases" (0 to 3 months, 3 to 6 months, 6 to 12 months, beyond 12 months) instead of "waves".
 
 ### Français
 
 - Refonte des thèmes clair et sombre : cadre d'application avec panneau de contenu encastré, gris neutres affinés, filets fins et ombres douces superposées, sélections plus lisibles, pastilles au contour teinté, boutons, champs, onglets et fenêtres harmonisés. Chaque texte garde un contraste d'au moins 4,5:1, vérifié par un test automatique.
-- README refait : visite animée en couleurs réelles et en haute définition, captures mises en scène, schéma « Comment ça marche » et tableau « À qui elle s'adresse ».
+- README refait : visite animée en couleurs réelles et en haute définition, captures mises en scène, schéma « Comment ça marche » et tableau « À qui elle s'adresse » ; textes relus.
 - Dépendances mises à jour (correctif de sécurité de l'outillage de test, mises à jour mineures).
+- Le plan de traitement est organisé en « phases » (0 à 3 mois, 3 à 6 mois, 6 à 12 mois, au-delà de 12 mois) plutôt qu'en « vagues ».
 
 ## [2.0.0] - 2026-09-24
 
@@ -80,7 +80,7 @@ First public release.
 - Before / after comparator: obligations that enter or leave the scope when an answer changes.
 - Corpus of 77 obligations and 287 elementary requirements; 35 crosswalk themes (overlaps, divergences, precedence) and a "Shared actions" view.
 - ANSSI implementation detail (ReCyF v2.5) under the NIS2 requirements, filtered by entity category.
-- Three-state assessment, overall and per-framework score, adjustable prioritisation and a four-wave roadmap.
+- Three-state assessment, overall and per-framework score, adjustable prioritisation and a four-phase roadmap.
 - Interactive regulatory timeline.
 
 #### Incident notification readiness
@@ -114,7 +114,7 @@ Première version publique.
 - Comparateur avant / après : obligations qui entrent ou sortent du périmètre lorsqu'une réponse change.
 - Corpus de 77 obligations et 287 exigences élémentaires ; 35 croisements (recouvrements, divergences, hiérarchies) et vue « Mutualisation ».
 - Détail d'implémentation ANSSI (ReCyF v2.5) sous les exigences NIS2, filtré selon la catégorie d'entité.
-- Évaluation à trois états, score global et par référentiel, priorisation pondérable et feuille de route en quatre vagues.
+- Évaluation à trois états, score global et par référentiel, priorisation pondérable et feuille de route en quatre phases.
 - Échéancier réglementaire interactif.
 
 #### Préparation au signalement
@@ -138,7 +138,6 @@ Première version publique.
 
 - État du droit arrêté au 23 septembre 2026.
 
-[Non publié]: https://github.com/raymondboustany/scopeo/compare/v2.1.0...HEAD
-[2.1.0]: https://github.com/raymondboustany/scopeo/compare/v2.0.0...v2.1.0
+[Non publié]: https://github.com/raymondboustany/scopeo/compare/v2.0.0...HEAD
 [2.0.0]: https://github.com/raymondboustany/scopeo/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/raymondboustany/scopeo/releases/tag/v1.0.0

@@ -192,8 +192,8 @@ export function buildReportData(s: Scoping): ReportData {
   if (wave1.length > 0)
     decisions.push(
       tr(
-        `Valider la vague 1 (${wave1.length} exigence${wave1.length > 1 ? 's' : ''}, 0 à 3 mois) et le budget associé.`,
-        `Approve wave 1 (${wave1.length} requirement${wave1.length > 1 ? 's' : ''}, 0 to 3 months) and its budget.`,
+        `Valider la phase 1 (${wave1.length} exigence${wave1.length > 1 ? 's' : ''}, 0 à 3 mois) et le budget associé.`,
+        `Approve phase 1 (${wave1.length} requirement${wave1.length > 1 ? 's' : ''}, 0 to 3 months) and its budget.`,
       ),
     )
   if (tracking && unowned > 0)

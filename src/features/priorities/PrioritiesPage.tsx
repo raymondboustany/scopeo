@@ -162,11 +162,11 @@ export default function PrioritiesPage() {
           </Card>
 
           <Callout tone="neutral" className="mt-4" title={tr('Ce que la pondération ne change pas', 'What weighting does not change')}>
-            {tr("Les dépendances techniques restent respectées quelle que soit la pondération : une exigence dont un prérequis n'est pas traité est repoussée d'une vague, même si son score la place en tête. On ne sécurise pas un système qu'on n'a pas recensé.", 'Technical dependencies are respected whatever the weighting: a requirement whose prerequisite is not handled is pushed back one wave, even if its score puts it first. You cannot secure a system you have not inventoried.')}
+            {tr("Les dépendances techniques restent respectées quelle que soit la pondération : une exigence dont un prérequis n'est pas traité est repoussée d'une phase, même si son score la place en tête. On ne sécurise pas un système qu'on n'a pas recensé.", 'Technical dependencies are respected whatever the weighting: a requirement whose prerequisite is not handled is pushed back one phase, even if its score puts it first. You cannot secure a system you have not inventoried.')}
           </Callout>
 
           <Card className="mt-4 p-4">
-            <div className="label-caps mb-2">{tr('Répartition par vague', 'Breakdown by wave')}</div>
+            <div className="label-caps mb-2">{tr('Répartition par phase', 'Breakdown by phase')}</div>
             <ul className="space-y-2">
               {WAVES.map((w) => {
                 const count = scoping.prioritised.filter((p) => p.wave === w.n).length
@@ -190,7 +190,7 @@ export default function PrioritiesPage() {
         </aside>
       </div>
       <div className="mt-6">
-        <NextStep to="/app/feuille-de-route" label={tr('Planifier : la feuille de route', 'Plan: the roadmap')} hint={tr('Les exigences réparties en quatre vagues', 'Requirements split into four waves')} />
+        <NextStep to="/app/feuille-de-route" label={tr('Planifier : la feuille de route', 'Plan: the roadmap')} hint={tr('Les exigences réparties en quatre phases', 'Requirements split into four phases')} />
       </div>
     </>
   )
@@ -263,7 +263,7 @@ function RankRow({
         </span>
 
         <span className="w-14 shrink-0 text-right">
-          <span className="ref text-ink-3">{tr('Vague', 'Wave')} {item.wave}</span>
+          <span className="ref text-ink-3">{tr('Phase', 'Phase')} {item.wave}</span>
         </span>
       </button>
     </li>
@@ -282,7 +282,7 @@ function ScoreBreakdown({ item }: { item: PrioritisedItem }) {
           <Sigma size={13} className="text-accent" />
           <h2 className="text-base font-semibold text-ink">{tr('Composition du score', 'Score breakdown')}</h2>
           <span className="ref ml-auto text-ink-3">
-            {tr(`${item.theme.code} · rang ${item.rank} · vague ${item.wave}`, `${item.theme.code} · rank ${item.rank} · wave ${item.wave}`)}
+            {tr(`${item.theme.code} · rang ${item.rank} · phase ${item.wave}`, `${item.theme.code} · rank ${item.rank} · phase ${item.wave}`)}
           </span>
         </div>
       </div>
@@ -304,7 +304,7 @@ function ScoreBreakdown({ item }: { item: PrioritisedItem }) {
         </ul>
 
         {item.blockedBy.length > 0 ? (
-          <Callout tone="caution" className="mt-4" title={tr("Repoussée d'une vague", 'Pushed back one wave')}>
+          <Callout tone="caution" className="mt-4" title={tr("Repoussée d'une phase", 'Pushed back one phase')}>
             {tr('Cette exigence dépend de', 'This requirement depends on')}{' '}
             {item.blockedBy.map((id, i) => (
               <span key={id}>
@@ -315,8 +315,8 @@ function ScoreBreakdown({ item }: { item: PrioritisedItem }) {
               </span>
             ))}
             {tr(
-              `, classée avant elle. L'ordonnancement la déplace donc en vague ${item.wave}, malgré son score.`,
-              `, ranked ahead of it. Sequencing therefore moves it to wave ${item.wave}, despite its score.`,
+              `, classée avant elle. L'ordonnancement la déplace donc en phase ${item.wave}, malgré son score.`,
+              `, ranked ahead of it. Sequencing therefore moves it to phase ${item.wave}, despite its score.`,
             )}
           </Callout>
         ) : null}

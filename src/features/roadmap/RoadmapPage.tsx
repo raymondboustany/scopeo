@@ -63,7 +63,7 @@ export default function RoadmapPage() {
 
   const exportCsv = () => {
     const rows = [
-      [tr('Rang', 'Rank'), tr('Vague', 'Wave'), tr('Horizon', 'Horizon'), 'Code', tr('Exigence', 'Requirement'), tr('Textes', 'Texts'), tr('Couverture', 'Coverage'), tr('Charge', 'Effort'), tr('Responsable', 'Owner'), tr('Échéance', 'Due date'), 'Action'],
+      [tr('Rang', 'Rank'), tr('Phase', 'Phase'), tr('Horizon', 'Horizon'), 'Code', tr('Exigence', 'Requirement'), tr('Textes', 'Texts'), tr('Couverture', 'Coverage'), tr('Charge', 'Effort'), tr('Responsable', 'Owner'), tr('Échéance', 'Due date'), 'Action'],
       ...scoping.prioritised.map((p) => {
         const entry = scoping.coverage[p.themeId]
         const wave = WAVES.find((w) => w.n === p.wave)
@@ -101,7 +101,7 @@ export default function RoadmapPage() {
       <PageHeader
         eyebrow={profile.name}
         title={tr('Feuille de route', 'Roadmap')}
-        lead={tr("L'ordre de traitement découpé en quatre vagues, en respectant les antériorités techniques. Chaque vague est un engagement de séquence, pas une promesse de date : les horizons sont indicatifs.", 'The treatment order split into four waves, respecting technical prerequisites. Each wave is a sequencing commitment, not a date promise: horizons are indicative.')}
+        lead={tr("L'ordre de traitement découpé en quatre phases, en respectant les antériorités techniques. Chaque phase est un engagement de séquence, pas une promesse de date : les horizons sont indicatifs.", 'The treatment order split into four phases, respecting technical prerequisites. Each phase is a sequencing commitment, not a date promise: horizons are indicative.')}
         actions={
           <Button icon={<Download size={13} />} onClick={exportCsv}>
             {tr('Exporter en CSV', 'Export as CSV')}
@@ -148,7 +148,7 @@ export default function RoadmapPage() {
             <p className="mt-2 max-w-2xl text-sm text-ink-2">{wave.intent}</p>
 
             {wave.items.length === 0 ? (
-              <p className="mt-3 text-sm text-ink-3">{tr('Aucune exigence dans cette vague.', 'No requirement in this wave.')}</p>
+              <p className="mt-3 text-sm text-ink-3">{tr('Aucune exigence dans cette phase.', 'No requirement in this phase.')}</p>
             ) : (
               <ul className="mt-3 grid gap-2 lg:grid-cols-2">
                 {wave.items.map((item) => (
