@@ -22,6 +22,8 @@ import { STATUS_LABEL, qualify } from '@/engines/qualification'
 import { REGULATION_ORDER, REGULATIONS } from '@/data/regulations'
 import { cn, formatEur } from '@/lib/utils'
 import type { Answers, Question, RegulationId } from '@/types/domain'
+import { FrameworkNote } from '@/components/ui/primitives'
+import { LOCALE, tr } from '@/i18n'
 
 export default function QualificationPage() {
   const { entity, readOnly } = useScoping()
@@ -70,13 +72,13 @@ export default function QualificationPage() {
     <>
       <PageHeader
         eyebrow={entity.name}
-        title="Qualification réglementaire"
-        lead="Chaque question sert à établir une condition d'application précise, dont l'article est indiqué. Le verdict se recalcule à mesure que les réponses arrivent, et le comparateur montre ce qui entre et sort du périmètre."
+        title={tr('Qualification réglementaire', 'Regulatory scoping')}
+        lead={tr("Chaque question sert à établir une condition d'application précise, dont l'article est indiqué. Le verdict se recalcule à mesure que les réponses arrivent, et le comparateur montre ce qui entre et sort du périmètre.", 'Each question establishes a specific condition of application, with its article shown. The verdict updates as answers come in, and the comparator shows what enters and leaves the scope.')}
         actions={
           readOnly ? (
             simulated ? (
               <Button variant="ghost" icon={<RotateCcw size={13} />} onClick={() => setSimulated(null)}>
-                Annuler la simulation
+                {tr('Annuler la simulation', 'Cancel the simulation')}
               </Button>
             ) : null
           ) : (
@@ -84,26 +86,25 @@ export default function QualificationPage() {
               variant="ghost"
               icon={<RotateCcw size={13} />}
               onClick={() => {
-                if (window.confirm('Effacer toutes les réponses de cette entité ? Une version est conservée pour comparaison.')) edit({ answers: {} })
+                if (window.confirm(tr('Effacer toutes les réponses de cette entité ? Une version est conservée pour comparaison.', "Erase all of this entity's answers? A version is kept for comparison."))) edit({ answers: {} })
               }}
             >
-              Réinitialiser
+              {tr('Réinitialiser', 'Reset')}
             </Button>
           )
         }
       />
 
       {readOnly ? (
-        <Callout tone="accent" className="mb-5" title="Démonstration — mode simulation">
-          Modifiez librement les réponses : le verdict et le comparateur se recalculent, mais rien n'est enregistré. Pour conserver vos
-          changements, copiez la démonstration depuis la page Entités.
+        <Callout tone="accent" className="mb-5" title={tr('Démonstration en mode simulation', 'Demo in simulation mode')}>
+          {tr("Modifiez librement les réponses : le verdict et le comparateur se recalculent, mais rien n'est enregistré. Pour conserver vos changements, copiez la démonstration depuis la page Entités.", 'Change the answers freely: the verdict and the comparator update, but nothing is saved. To keep your changes, copy the demo from the Entities page.')}
         </Callout>
       ) : null}
 
       <div className="grid gap-6 lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_26rem]">
         {/* Questionnaire --------------------------------------------- */}
         <div className="min-w-0">
-          <nav className="mb-5 flex flex-wrap gap-1.5" aria-label="Sections du questionnaire">
+          <nav className="mb-5 flex flex-wrap gap-1.5" aria-label={tr('Sections du questionnaire', 'Questionnaire sections')}>
             {sections.map((s, i) => {
               const isCurrent = i === sectionIndex
               const isDone = s.done === s.total
@@ -151,17 +152,17 @@ export default function QualificationPage() {
 
               <div className="flex items-center justify-between gap-3 border-t border-rule bg-sunken px-5 py-3">
                 <Button icon={<ChevronLeft size={13} />} disabled={sectionIndex === 0} onClick={() => setSectionIndex((i) => Math.max(0, i - 1))}>
-                  Précédent
+                  {tr('Précédent', 'Previous')}
                 </Button>
                 <span className="text-2xs text-ink-3">
-                  Section {sectionIndex + 1} sur {sections.length}
+                  {tr(`Section ${sectionIndex + 1} sur ${sections.length}`, `Section ${sectionIndex + 1} of ${sections.length}`)}
                 </span>
                 <Button
                   variant="primary"
                   disabled={sectionIndex >= sections.length - 1}
                   onClick={() => setSectionIndex((i) => Math.min(sections.length - 1, i + 1))}
                 >
-                  Suivant
+                  {tr('Suivant', 'Next')}
                   <ChevronRight size={13} />
                 </Button>
               </div>
@@ -169,14 +170,15 @@ export default function QualificationPage() {
           ) : null}
 
           {complete ? (
-            <Callout tone="positive" className="mt-4" title="Questionnaire complet">
-              La qualification s'applique à tout l'outil : corpus restreint au périmètre, détail ANSSI filtré selon la catégorie NIS 2, score et
-              ordre de traitement calculés.
+            <Callout tone="positive" className="mt-4" title={tr('Questionnaire complet', 'Questionnaire complete')}>
+              {tr("La qualification s'applique à toute la plateforme : corpus restreint au périmètre, exigences NIS2 (ReCyF) filtrées selon la catégorie de l'entité, score et ordre de traitement calculés. Le module ISO 27001 devient disponible.", "Scoping now applies across the platform: corpus restricted to the scope, NIS2 (ReCyF) requirements filtered by the entity's category, score and treatment order computed. The ISO 27001 module becomes available.")}
             </Callout>
           ) : (
             <Callout tone="neutral" className="mt-4">
-              {missing} réponse{missing > 1 ? 's' : ''} manquante{missing > 1 ? 's' : ''} avant que la qualification puisse être établie.
-              Certaines questions n'apparaissent qu'en fonction des réponses précédentes.
+              {tr(
+                `${missing} réponse${missing > 1 ? 's' : ''} manquante${missing > 1 ? 's' : ''} avant que la qualification puisse être établie. Certaines questions n'apparaissent qu'en fonction des réponses précédentes.`,
+                `${missing} answer${missing > 1 ? 's' : ''} missing before scoping can be established. Some questions only appear depending on previous answers.`,
+              )}
             </Callout>
           )}
         </div>
@@ -188,16 +190,16 @@ export default function QualificationPage() {
             baselineId={baselineId}
             onBaseline={setBaselineId}
             options={[
-              { value: 'ouverture', label: `Ouverture de la page (${new Date(opening.at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })})` },
+              { value: 'ouverture', label: tr(`Ouverture de la page (${new Date(opening.at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })})`, `Page opened (${new Date(opening.at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })})`) },
               ...revisions.map((r) => ({
                 value: r.id,
-                label: `Version du ${new Date(r.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}`,
+                label: tr(`Version du ${new Date(r.created_at).toLocaleString(LOCALE, { dateStyle: 'short', timeStyle: 'short' })}`, `Version of ${new Date(r.created_at).toLocaleString(LOCALE, { dateStyle: 'short', timeStyle: 'short' })}`),
               })),
             ]}
           />
 
           <div>
-            <SectionRule>Verdict</SectionRule>
+            <SectionRule>{tr('Verdict', 'Verdict')}</SectionRule>
             {qualification ? (
               <div className="mt-3 space-y-3">
                 {REGULATION_ORDER.map((id) => (
@@ -207,7 +209,7 @@ export default function QualificationPage() {
             ) : (
               <Card className="mt-3 p-4">
                 <div className="hatch mb-3 h-6 rounded-xs opacity-30" aria-hidden />
-                <p className="text-sm text-ink-3">Le verdict apparaîtra ici dès que toutes les questions requises auront été renseignées.</p>
+                <p className="text-sm text-ink-3">{tr('Le verdict apparaîtra ici dès que toutes les questions requises auront été renseignées.', 'The verdict will appear here once all required questions have been answered.')}</p>
               </Card>
             )}
           </div>
@@ -215,7 +217,7 @@ export default function QualificationPage() {
         </aside>
       </div>
       <div className="mt-6">
-        {complete ? <NextStep to="/app/evaluation" label="Évaluer l'existant" hint="Une réponse par exigence unifiée, valable pour tous les textes" /> : null}
+        {complete ? <NextStep to="/app/evaluation" label={tr("Évaluer l'existant", 'Assess the current state')} hint={tr('Une réponse par exigence unifiée, valable pour tous les textes', 'One answer per unified requirement, valid for all texts')} /> : null}
       </div>
     </>
   )
@@ -244,18 +246,18 @@ function Comparator({
     <Card className="overflow-hidden">
       <div className="flex items-center gap-2 border-b border-rule px-4 py-3">
         <GitCompareArrows size={15} className="text-accent" />
-        <span className="text-sm font-semibold text-ink">Avant / après</span>
-        {moved > 0 ? <Tag tone="accent">{moved} mouvement{moved > 1 ? 's' : ''}</Tag> : null}
+        <span className="text-sm font-semibold text-ink">{tr('Avant / après', 'Before / after')}</span>
+        {moved > 0 ? <Tag tone="accent">{tr(`${moved} mouvement${moved > 1 ? 's' : ''}`, `${moved} change${moved > 1 ? 's' : ''}`)}</Tag> : null}
       </div>
       <div className="space-y-3 px-4 py-3">
         <label className="block">
-          <span className="mb-1 block text-2xs text-ink-3">Comparer à</span>
-          <Select value={baselineId} onValueChange={onBaseline} options={options} ariaLabel="Point de comparaison" />
+          <span className="mb-1 block text-2xs text-ink-3">{tr('Comparer à', 'Compare with')}</span>
+          <Select value={baselineId} onValueChange={onBaseline} options={options} ariaLabel={tr('Point de comparaison', 'Comparison point')} />
         </label>
 
         {diff.answers.length === 0 ? (
           <p className="text-xs leading-relaxed text-ink-3">
-            Aucune réponse modifiée depuis ce point. Changez une réponse : les obligations qui entrent ou sortent du périmètre s'afficheront ici.
+            {tr("Aucune réponse modifiée depuis ce point. Changez une réponse : les obligations qui entrent ou sortent du périmètre s'afficheront ici.", 'No answer changed since this point. Change an answer: obligations entering or leaving the scope will appear here.')}
           </p>
         ) : (
           <div className="space-y-3">
@@ -273,7 +275,7 @@ function Comparator({
             </ul>
 
             {!diff.comparable ? (
-              <p className="text-xs leading-relaxed text-ink-3">La comparaison du périmètre suppose un questionnaire complet des deux côtés.</p>
+              <p className="text-xs leading-relaxed text-ink-3">{tr('La comparaison du périmètre suppose un questionnaire complet des deux côtés.', 'Comparing the scope requires a complete questionnaire on both sides.')}</p>
             ) : (
               <>
                 {diff.verdicts.length > 0 ? (
@@ -285,7 +287,7 @@ function Comparator({
                         <ArrowRight size={10} className="text-ink-4" />
                         <span className="font-medium text-ink">{STATUS_LABEL[v.after.status]}</span>
                         {v.after.qualification && v.after.qualification !== v.before.qualification ? (
-                          <span className="text-ink-2">— {v.after.qualification}</span>
+                          <span className="text-ink-2">· {v.after.qualification}</span>
                         ) : null}
                       </div>
                     ))}
@@ -293,8 +295,8 @@ function Comparator({
                 ) : null}
 
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <DeltaStat label="Obligations" plus={diff.added.length} minus={diff.removed.length} />
-                  <DeltaStat label="Exigences unifiées" plus={diff.themesAdded.length} minus={diff.themesRemoved.length} />
+                  <DeltaStat label={tr('Obligations', 'Obligations')} plus={diff.added.length} minus={diff.removed.length} />
+                  <DeltaStat label={tr('Exigences unifiées', 'Unified requirements')} plus={diff.themesAdded.length} minus={diff.themesRemoved.length} />
                   <div className="rounded-sm bg-sunken px-2 py-2">
                     <div
                       className={cn(
@@ -305,7 +307,7 @@ function Comparator({
                       {diff.requirementDelta > 0 ? '+' : ''}
                       {diff.requirementDelta}
                     </div>
-                    <div className="text-[10px] text-ink-3">exigences élémentaires</div>
+                    <div className="text-[10px] text-ink-3">{tr('exigences élémentaires', 'elementary requirements')}</div>
                   </div>
                 </div>
 
@@ -325,13 +327,13 @@ function Comparator({
                           )}
                         >
                           {kind === 'add' ? (
-                            <Plus size={11} className="mt-0.5 shrink-0 text-caution" aria-label="Apparaît" />
+                            <Plus size={11} className="mt-0.5 shrink-0 text-caution" aria-label={tr('Apparaît', 'Enters')} />
                           ) : (
-                            <Minus size={11} className="mt-0.5 shrink-0 text-positive" aria-label="Disparaît" />
+                            <Minus size={11} className="mt-0.5 shrink-0 text-positive" aria-label={tr('Disparaît', 'Leaves')} />
                           )}
                           <span className="min-w-0">
                             <span className="font-mono text-ink-3">
-                              {o.regulation === 'NIS2' ? 'NIS 2' : o.regulation} {o.shortRef ?? o.article}
+                              {REGULATIONS[o.regulation].shortName} {o.shortRef ?? o.article}
                             </span>{' '}
                             <span className="text-ink">{o.title}</span>
                           </span>
@@ -341,7 +343,7 @@ function Comparator({
                     {moves.length > LIMIT ? (
                       <li>
                         <button onClick={() => setShowAll((v) => !v)} className="text-2xs text-accent hover:underline">
-                          {showAll ? 'Réduire' : `Voir les ${moves.length} obligations`}
+                          {showAll ? tr('Réduire', 'Show less') : tr(`Voir les ${moves.length} obligations`, `See all ${moves.length} obligations`)}
                         </button>
                       </li>
                     ) : null}
@@ -401,8 +403,8 @@ function QuestionField({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-2">
             <h3 className="text-sm font-medium text-ink">{question.question}</h3>
-            {!question.required ? <Tag>Facultatif</Tag> : null}
-            {changed ? <Tag tone="accent">Modifiée</Tag> : null}
+            {!question.required ? <Tag>{tr('Facultatif', 'Optional')}</Tag> : null}
+            {changed ? <Tag tone="accent">{tr('Modifiée', 'Changed')}</Tag> : null}
             <NoteButton className="ml-auto" anchor={{ kind: 'question', id: question.id, label: question.question }} />
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-2">
@@ -411,7 +413,7 @@ function QuestionField({
               <Tooltip content={question.help}>
                 <button
                   className="inline-flex items-center text-ink-4 hover:text-accent"
-                  aria-label="Précisions sur cette question"
+                  aria-label={tr('Précisions sur cette question', 'More about this question')}
                 >
                   <Info size={12} />
                 </button>
@@ -485,8 +487,9 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
               {STATUS_LABEL[verdict.status]}
             </span>
           </span>
+          {id === 'NIS2' ? <FrameworkNote className="mt-1 block" /> : null}
           <span className="mt-1.5 block text-sm font-medium text-ink">
-            {verdict.qualification ?? 'Non applicable'}
+            {verdict.qualification ?? tr('Non applicable', 'Not applicable')}
           </span>
         </span>
         <ChevronRight
@@ -498,7 +501,7 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
       {open ? (
         <div className="space-y-3 border-t border-rule px-3.5 py-3">
           <div>
-            <div className="label-caps mb-1.5">Fondement examiné</div>
+            <div className="label-caps mb-1.5">{tr('Fondement examiné', 'Legal basis examined')}</div>
             <ul className="space-y-2">
               {verdict.basis.map((b) => (
                 <li key={b.article} className="flex gap-2">
@@ -507,7 +510,7 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
                       'mt-1 size-1.5 shrink-0 rounded-full',
                       b.met ? 'bg-positive' : 'bg-rule-3',
                     )}
-                    aria-label={b.met ? 'Condition remplie' : 'Condition non remplie'}
+                    aria-label={b.met ? tr('Condition remplie', 'Condition met') : tr('Condition non remplie', 'Condition not met')}
                   />
                   <span className="min-w-0">
                     <span className="ref block text-ink-3">{b.article}</span>
@@ -521,10 +524,10 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
 
           {verdict.exposure ? (
             <div className="rounded-sm bg-sunken px-3 py-2.5">
-              <div className="label-caps">Exposition</div>
+              <div className="label-caps">{tr('Exposition', 'Exposure')}</div>
               <div className="mt-1 flex items-baseline gap-2">
                 <span className="font-mono text-base font-medium tabular text-ink">
-                  {verdict.exposure.maxEur !== null ? formatEur(verdict.exposure.maxEur) : 'Régime national'}
+                  {verdict.exposure.maxEur !== null ? formatEur(verdict.exposure.maxEur) : tr('Régime national', 'National regime')}
                 </span>
               </div>
               <p className="mt-1 text-2xs leading-relaxed text-ink-3">{verdict.exposure.formula}</p>
@@ -533,7 +536,7 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
 
           {verdict.caveats.length > 0 ? (
             <div>
-              <div className="label-caps mb-1.5">Réserves</div>
+              <div className="label-caps mb-1.5">{tr('Réserves', 'Caveats')}</div>
               <ul className="space-y-1.5">
                 {verdict.caveats.map((c, i) => (
                   <li key={i} className="border-l-2 border-caution-line pl-2.5 text-xs leading-relaxed text-ink-2">
@@ -551,7 +554,7 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
               rel="noreferrer"
               className="ref text-accent hover:underline"
             >
-              {reg.reference} — EUR-Lex ↗
+              {reg.reference} · EUR-Lex ↗
             </a>
           </div>
         </div>

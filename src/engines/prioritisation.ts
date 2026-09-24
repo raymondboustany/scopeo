@@ -10,7 +10,9 @@ import type {
   RegulationId,
 } from '@/types/domain'
 import { CROSSWALK } from '@/data/crosswalk'
+import { REGULATIONS } from '@/data/regulations'
 import { applicableRegulations } from './qualification'
+import { tr } from '@/i18n'
 
 /**
  * Moteur de priorisation.
@@ -31,24 +33,39 @@ export const DEFAULT_WEIGHTS: PriorityWeights = {
 
 export const WEIGHT_LABELS: Record<keyof PriorityWeights, { label: string; hint: string }> = {
   exposition: {
-    label: 'Exposition juridique',
-    hint: "Gravité de la sanction encourue et mise en cause personnelle des dirigeants.",
+    label: tr('Exposition juridique', 'Legal exposure'),
+    hint: tr(
+      'Gravité de la sanction encourue et mise en cause personnelle des dirigeants.',
+      'Severity of the penalty and personal liability of management.',
+    ),
   },
   ecart: {
-    label: 'Écart constaté',
-    hint: "Distance entre l'attendu réglementaire et l'état déclaré lors de l'évaluation.",
+    label: tr('Écart constaté', 'Observed gap'),
+    hint: tr(
+      "Distance entre l'attendu réglementaire et l'état déclaré lors de l'évaluation.",
+      'Distance between what regulation expects and the state reported in the assessment.',
+    ),
   },
   levier: {
-    label: 'Effet de levier',
-    hint: "Nombre de textes qu'une action unique permet de satisfaire simultanément.",
+    label: tr('Effet de levier', 'Leverage'),
+    hint: tr(
+      "Nombre de textes qu'une action unique permet de satisfaire simultanément.",
+      'Number of texts a single action satisfies at once.',
+    ),
   },
   echeance: {
-    label: 'Urgence calendaire',
-    hint: "Proximité d'une échéance réglementaire ou caractère immédiatement exigible.",
+    label: tr('Urgence calendaire', 'Time pressure'),
+    hint: tr(
+      "Proximité d'une échéance réglementaire ou caractère immédiatement exigible.",
+      'How close a regulatory deadline is, or whether it already applies.',
+    ),
   },
   effort: {
-    label: 'Faible charge',
-    hint: "Favorise les actions rapides à mettre en œuvre, à valeur réglementaire égale.",
+    label: tr('Faible charge', 'Low effort'),
+    hint: tr(
+      'Favorise les actions rapides à mettre en œuvre, à valeur réglementaire égale.',
+      'Favours quick wins when regulatory value is equal.',
+    ),
   },
 }
 
@@ -60,10 +77,10 @@ const COVERAGE_GAP: Record<CoverageLevel, number> = {
 }
 
 export const COVERAGE_LABEL: Record<CoverageLevel, string> = {
-  non_evalue: 'Non évalué',
-  absent: 'Absent',
-  partiel: 'Partiellement en place',
-  en_place: 'En place',
+  non_evalue: tr('Non évalué', 'Not assessed'),
+  absent: tr('Absent', 'Missing'),
+  partiel: tr('Partiellement en place', 'Partly in place'),
+  en_place: tr('En place', 'In place'),
 }
 
 export const COVERAGE_ORDER: CoverageLevel[] = ['non_evalue', 'absent', 'partiel', 'en_place']
@@ -108,10 +125,18 @@ const REGULATION_EXPOSURE: Record<RegulationId, number> = {
   NIS2: 1,
   DORA: 0.9,
   CRA: 0.9,
+  AIACT: 0.95,
 }
 
 /** Thèmes CRA déjà exigibles : le signalement de l'article 14 depuis le 11 septembre 2026. */
 const CRA_ALREADY_APPLICABLE = new Set(['REP-01', 'REP-02', 'REP-03', 'DET-03'])
+
+/**
+ * Thèmes AI Act déjà exigibles : pratiques interdites et maîtrise de l'IA
+ * depuis le 2 février 2025, transparence depuis le 2 août 2026. Le reste
+ * dépend du calendrier des systèmes à haut risque.
+ */
+const AI_ALREADY_APPLICABLE = new Set(['IA-02', 'GOV-04', 'IA-03', 'IA-01'])
 
 interface PrioritiseInput {
   qualification: QualificationResult | null
@@ -120,13 +145,15 @@ interface PrioritiseInput {
   obligations: Obligation[]
 }
 
+const regName = (r: RegulationId) => REGULATIONS[r].shortName
+
 function themeRegulations(theme: CrosswalkTheme, applicable: RegulationId[]): RegulationId[] {
   return theme.mappings.map((m) => m.regulation).filter((r) => applicable.includes(r))
 }
 
 /** Un thème est-il directement exigible, ou relève-t-il de l'anticipation ? */
 function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | null): { raw: number; why: string } {
-  if (!qualification) return { raw: 0.5, why: 'Qualification non réalisée : urgence moyenne par défaut.' }
+  if (!qualification) return { raw: 0.5, why: tr('Qualification non réalisée : urgence moyenne par défaut.', 'Scoping not done: medium urgency by default.') }
 
   const regs = theme.mappings.map((m) => m.regulation)
   const statuses = regs.map((r) => qualification.verdicts[r].status)
@@ -138,7 +165,10 @@ function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | n
   if (immediate) {
     return {
       raw: 1,
-      why: "Le thème relève d'un texte directement applicable et déjà en vigueur : la dette est immédiate et opposable.",
+      why: tr(
+        "Le thème relève d'un texte directement applicable et déjà en vigueur : la dette est immédiate et opposable.",
+        'The theme falls under a directly applicable text already in force: the gap is immediate and enforceable.',
+      ),
     }
   }
 
@@ -146,7 +176,10 @@ function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | n
   if (nis2Applicable) {
     return {
       raw: 0.7,
-      why: "NIS 2 n'est pas encore transposée en France, mais le ReCyF en fixe le contenu attendu : la préparation ne peut être différée sans risque.",
+      why: tr(
+        "NIS2 n'est pas encore transposée en France, mais le ReCyF en fixe le contenu attendu : la préparation ne peut être différée sans risque.",
+        'NIS2 is not yet transposed in France, but the ReCyF sets out what is expected: preparation cannot be safely postponed.',
+      ),
     }
   }
 
@@ -154,17 +187,43 @@ function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | n
   if (craApplicable && CRA_ALREADY_APPLICABLE.has(theme.id)) {
     return {
       raw: 1,
-      why: "Le signalement des vulnérabilités exploitées et des incidents graves est exigible au titre du CRA depuis le 11 septembre 2026.",
+      why: tr(
+        'Le signalement des vulnérabilités exploitées et des incidents graves est exigible au titre du CRA depuis le 11 septembre 2026.',
+        'Reporting of exploited vulnerabilities and severe incidents has applied under the CRA since 11 September 2026.',
+      ),
     }
   }
   if (craApplicable) {
     return {
       raw: 0.55,
-      why: "Exigence du CRA applicable au 11 décembre 2027 : l'échéance est fixée, et la mise en conformité d'un produit demande plusieurs cycles de développement.",
+      why: tr(
+        "Exigence du CRA applicable au 11 décembre 2027 : l'échéance est fixée, et la mise en conformité d'un produit demande plusieurs cycles de développement.",
+        'CRA requirement applicable from 11 December 2027: the date is fixed, and bringing a product into compliance takes several development cycles.',
+      ),
     }
   }
 
-  return { raw: 0.5, why: 'Aucune échéance ferme identifiée ; exigence permanente.' }
+  const aiApplicable = regs.includes('AIACT') && qualification.verdicts.AIACT.status === 'applicable'
+  if (aiApplicable && AI_ALREADY_APPLICABLE.has(theme.id)) {
+    return {
+      raw: 1,
+      why: tr(
+        "Obligation de l'AI Act déjà applicable : pratiques interdites et maîtrise de l'IA depuis le 2 février 2025, transparence depuis le 2 août 2026.",
+        'AI Act obligation already in force: prohibited practices and AI literacy since 2 February 2025, transparency since 2 August 2026.',
+      ),
+    }
+  }
+  if (aiApplicable) {
+    return {
+      raw: 0.55,
+      why: tr(
+        "Exigence de l'AI Act applicable au 2 décembre 2027 pour les systèmes à haut risque de l'annexe III, depuis l'Omnibus IA.",
+        'AI Act requirement applicable from 2 December 2027 for Annex III high-risk systems, following the AI Omnibus.',
+      ),
+    }
+  }
+
+  return { raw: 0.5, why: tr('Aucune échéance ferme identifiée ; exigence permanente.', 'No firm deadline identified; ongoing requirement.') }
 }
 
 function expositionOf(
@@ -172,7 +231,7 @@ function expositionOf(
   regs: RegulationId[],
   qualification: QualificationResult | null,
 ): { raw: number; why: string } {
-  if (regs.length === 0) return { raw: 0, why: 'Aucun texte applicable ne porte ce thème.' }
+  if (regs.length === 0) return { raw: 0, why: tr('Aucun texte applicable ne porte ce thème.', 'No applicable text carries this theme.') }
 
   const base = Math.max(...regs.map((r) => REGULATION_EXPOSURE[r]))
   const isGovernance = theme.domain === 'gouvernance'
@@ -183,8 +242,11 @@ function expositionOf(
   const raw = Math.min(1, base + bonus)
 
   const why = directorLiability
-    ? "Thème de gouvernance sous NIS 2 pour une entité essentielle : l'autorité peut interdire temporairement l'exercice de fonctions dirigeantes, ce qui place l'exposition au niveau maximal."
-    : `Sanction la plus élevée portée par ${regs.join(', ')} sur ce thème.`
+    ? tr(
+        "Thème de gouvernance sous NIS2 pour une entité essentielle : l'autorité peut interdire temporairement l'exercice de fonctions dirigeantes, ce qui place l'exposition au niveau maximal.",
+        'Governance theme under NIS2 for an essential entity: the authority may temporarily ban individuals from management functions, which puts exposure at its maximum.',
+      )
+    : tr(`Sanction la plus élevée portée par ${regs.map(regName).join(', ')} sur ce thème.`, `Highest penalty carried by ${regs.map(regName).join(', ')} on this theme.`)
 
   return { raw, why }
 }
@@ -233,8 +295,11 @@ export function prioritise({
           weighted: (gapRaw * weights.ecart) / totalWeight,
           rationale:
             level === 'non_evalue'
-              ? "Thème non évalué : traité comme un écart probable tant que l'état n'est pas établi."
-              : `État déclaré : ${COVERAGE_LABEL[level].toLowerCase()}.`,
+              ? tr(
+                  "Thème non évalué : traité comme un écart probable tant que l'état n'est pas établi.",
+                  'Theme not assessed: treated as a likely gap until its state is established.',
+                )
+              : tr(`État déclaré : ${COVERAGE_LABEL[level].toLowerCase()}.`, `Reported state: ${COVERAGE_LABEL[level].toLowerCase()}.`),
         },
         {
           key: 'levier',
@@ -243,8 +308,14 @@ export function prioritise({
           weighted: (levierRaw * weights.levier) / totalWeight,
           rationale:
             regs.length > 1
-              ? `Une action unique satisfait ${regs.length} textes applicables : ${regs.join(', ')}.`
-              : `Le thème ne concerne qu'un seul texte applicable : ${regs[0] ?? '—'}.`,
+              ? tr(
+                  `Une action unique satisfait ${regs.length} textes applicables : ${regs.map(regName).join(', ')}.`,
+                  `A single action satisfies ${regs.length} applicable texts: ${regs.map(regName).join(', ')}.`,
+                )
+              : tr(
+                  `Le thème ne concerne qu'un seul texte applicable : ${regs[0] ? regName(regs[0]) : 'aucun'}.`,
+                  `The theme concerns a single applicable text: ${regs[0] ? regName(regs[0]) : 'none'}.`,
+                ),
         },
         {
           key: 'echeance',
@@ -258,7 +329,10 @@ export function prioritise({
           label: WEIGHT_LABELS.effort.label,
           raw: effortRaw,
           weighted: (effortRaw * weights.effort) / totalWeight,
-          rationale: `Charge de mise en œuvre estimée à ${theme.effort} sur 5 ; à valeur égale, les actions légères passent devant.`,
+          rationale: tr(
+            `Charge de mise en œuvre estimée à ${theme.effort} sur 5 ; à valeur égale, les actions légères passent devant.`,
+            `Estimated effort ${theme.effort} out of 5; at equal value, lighter actions come first.`,
+          ),
         },
       ]
 
@@ -297,10 +371,36 @@ export function prioritise({
 }
 
 export const WAVES = [
-  { n: 1 as const, label: 'Vague 1', horizon: '0 à 3 mois', intent: "Éteindre l'exposition la plus grave et poser les prérequis dont tout le reste dépend." },
-  { n: 2 as const, label: 'Vague 2', horizon: '3 à 6 mois', intent: "Traiter les exigences à fort effet de levier une fois les fondations en place." },
-  { n: 3 as const, label: 'Vague 3', horizon: '6 à 12 mois', intent: "Consolider et formaliser, en vue d'un contrôle." },
-  { n: 4 as const, label: 'Vague 4', horizon: 'Au-delà de 12 mois', intent: "Approfondir, et anticiper les régimes non encore exigibles." },
+  {
+    n: 1 as const,
+    label: tr('Vague 1', 'Wave 1'),
+    horizon: tr('0 à 3 mois', '0 to 3 months'),
+    intent: tr(
+      "Éteindre l'exposition la plus grave et poser les prérequis dont tout le reste dépend.",
+      'Remove the most serious exposure and lay the groundwork everything else depends on.',
+    ),
+  },
+  {
+    n: 2 as const,
+    label: tr('Vague 2', 'Wave 2'),
+    horizon: tr('3 à 6 mois', '3 to 6 months'),
+    intent: tr(
+      'Traiter les exigences à fort effet de levier une fois les fondations en place.',
+      'Tackle high-leverage requirements once the foundations are in place.',
+    ),
+  },
+  {
+    n: 3 as const,
+    label: tr('Vague 3', 'Wave 3'),
+    horizon: tr('6 à 12 mois', '6 to 12 months'),
+    intent: tr("Consolider et formaliser, en vue d'un contrôle.", 'Consolidate and formalise, ready for an inspection.'),
+  },
+  {
+    n: 4 as const,
+    label: tr('Vague 4', 'Wave 4'),
+    horizon: tr('Au-delà de 12 mois', 'Beyond 12 months'),
+    intent: tr('Approfondir, et anticiper les régimes non encore exigibles.', 'Go further, and prepare for regimes not yet in force.'),
+  },
 ]
 
 /** Part de couverture, de 0 à 1, pondérée par le niveau déclaré. */

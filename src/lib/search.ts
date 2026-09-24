@@ -3,6 +3,9 @@ import { ALL_OBLIGATIONS } from '@/engines/corpus'
 import { CROSSWALK } from '@/data/crosswalk'
 import { RECYF_OBJECTIVES } from '@/data/recyf'
 import { TIMELINE } from '@/data/timeline'
+import { ISO_CONTROLS, ISO_THEME_META } from '@/data/iso27001'
+import { REGULATIONS } from '@/data/regulations'
+import { COLON, tr } from '@/i18n'
 
 /**
  * Index de recherche transverse.
@@ -26,7 +29,7 @@ function buildRecords(): SearchRecord[] {
       id: o.id,
       kind: 'obligation',
       title: o.title,
-      reference: `${o.regulation === 'NIS2' ? 'NIS 2' : o.regulation} · ${o.article}`,
+      reference: `${REGULATIONS[o.regulation].shortName} · ${o.article}`,
       body: [o.statement, o.quote ?? '', ...o.requirements.map((r) => r.text)].join(' '),
       route: `/app/corpus?obligation=${encodeURIComponent(o.id)}`,
       tag: o.regulation,
@@ -38,7 +41,7 @@ function buildRecords(): SearchRecord[] {
       id: t.id,
       kind: 'theme',
       title: t.title,
-      reference: `Croisement · ${t.code}`,
+      reference: `${tr('Croisement', 'Crosswalk')} · ${t.code}`,
       body: [t.summary, t.unifiedAction, ...t.mappings.map((m) => m.requirement)].join(' '),
       route: `/app/croisements?theme=${encodeURIComponent(t.id)}`,
       tag: t.relation,
@@ -49,8 +52,8 @@ function buildRecords(): SearchRecord[] {
     records.push({
       id: `RECYF-${o.n}`,
       kind: 'recyf',
-      title: `Objectif ${o.n} — ${o.title}`,
-      reference: `Détail d'implémentation ANSSI · ${o.scope === 'EE' ? 'entités essentielles' : 'toutes entités'}`,
+      title: `${tr('Objectif', 'Objective')} ${o.n}${COLON}${o.title}`,
+      reference: `NIS2 (ReCyF) · ${o.scope === 'EE' ? tr('entités essentielles', 'essential entities') : tr('toutes entités', 'all entities')}`,
       body: [o.statement, ...o.measures.map((m) => `${m.id} ${m.text}`)].join(' '),
       route: `/app/corpus?recyf=${o.n}`,
       tag: o.pillar,
@@ -62,10 +65,22 @@ function buildRecords(): SearchRecord[] {
       id: e.id,
       kind: 'echeance',
       title: e.title,
-      reference: `Échéancier · ${e.date}`,
+      reference: `${tr('Échéancier', 'Timeline')} · ${e.date}`,
       body: e.detail,
       route: `/app/echeancier?event=${e.id}`,
       tag: e.regulation,
+    })
+  }
+
+  for (const c of ISO_CONTROLS) {
+    records.push({
+      id: `ISO-${c.id}`,
+      kind: 'iso',
+      title: c.title,
+      reference: `ISO/IEC 27001 · A.${c.id} · ${ISO_THEME_META[c.theme].label}`,
+      body: c.title,
+      route: `/app/iso27001?controle=${c.id}`,
+      tag: c.theme,
     })
   }
 

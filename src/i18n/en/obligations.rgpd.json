@@ -1,0 +1,302 @@
+{
+  "RGPD-A5": {
+    "chapter": "Chapter II: Principles",
+    "title": "Principles relating to processing",
+    "statement": "Base each processing operation on the six core principles and be able to demonstrate compliance with them at any time. This last point, accountability, turns a principle into a burden of proof: it is not for the regulator to establish the breach, but for the organisation to establish its compliance.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A5-R1": "Process data lawfully, fairly and transparently in relation to the data subject.",
+      "RGPD-A5-R2": "Collect for specified, explicit and legitimate purposes, and not process further in an incompatible way.",
+      "RGPD-A5-R3": "Limit data to what is adequate, relevant and strictly necessary (minimisation).",
+      "RGPD-A5-R4": "Keep data accurate and up to date, and erase or rectify inaccurate data without delay.",
+      "RGPD-A5-R5": "Set and apply retention periods limited to the purpose pursued.",
+      "RGPD-A5-R6": "Ensure integrity and confidentiality through appropriate technical and organisational measures.",
+      "RGPD-A5-R7": "Build and maintain the evidence needed to demonstrate compliance with all these principles."
+    },
+    "deadline": "Ongoing requirement, enforceable at any time",
+    "evidence": ["Data protection policy approved by management", "Retention policy and retention schedule by data category", "Records of periodic review of processing"],
+    "guidance": ["Key data protection principles"]
+  },
+  "RGPD-A6": {
+    "chapter": "Chapter II: Principles",
+    "title": "Lawfulness of processing",
+    "statement": "Identify, for each processing operation, one of the six legal bases, document it and apply it consistently. A legal basis cannot be switched during processing to regularise after the fact.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A6-R1": "Assign a single, explicit legal basis to each processing purpose.",
+      "RGPD-A6-R2": "Document the balancing test when the basis is legitimate interest (Art. 6(1)(f)).",
+      "RGPD-A6-R3": "Check that any further processing is compatible with the original purpose (Art. 6(4))."
+    },
+    "deadline": "To be established before each processing starts",
+    "evidence": ["Record of processing stating the legal basis", "Balancing tests for legitimate interests"]
+  },
+  "RGPD-A7": {
+    "chapter": "Chapter II: Principles",
+    "title": "Conditions for consent",
+    "statement": "Where processing relies on consent, be able to show that the person consented, present the request in a distinguishable and intelligible way, and make withdrawal as easy as giving consent.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A7-R1": "Keep proof of consent: timestamp, scope, version of the text shown.",
+      "RGPD-A7-R2": "Present the consent request separately from other terms, in clear and plain language.",
+      "RGPD-A7-R3": "Offer a withdrawal mechanism as easy as the collection mechanism."
+    },
+    "deadline": "Ongoing requirement",
+    "evidence": ["Consent log", "Screenshots of consent collection and withdrawal interfaces"],
+    "conditions": ["Processing based on consent"]
+  },
+  "RGPD-A9": {
+    "chapter": "Chapter II: Principles",
+    "title": "Processing of special categories of data",
+    "statement": "Processing sensitive data is prohibited in principle. It only becomes possible under one of the ten exhaustively listed exceptions, which must be identified and documented in addition to the Article 6 legal basis.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A9-R1": "List processing involving health, biometric or genetic data, or data revealing origin, opinions, beliefs, trade union membership, sex life or sexual orientation.",
+      "RGPD-A9-R2": "Identify for each the Article 9(2) exception relied on, in addition to the Article 6 basis.",
+      "RGPD-A9-R3": "Strengthen security measures in proportion to the sensitivity of the data."
+    },
+    "deadline": "Ongoing requirement",
+    "evidence": ["Inventory of sensitive data processing", "Justification of the exception relied on"],
+    "conditions": ["Processing of sensitive data"]
+  },
+  "RGPD-A12-14": {
+    "article": "Articles 12 to 14",
+    "chapter": "Chapter III: Rights of the data subject",
+    "title": "Transparency and information to individuals",
+    "statement": "Inform individuals at the time of collection, or within a month when data is obtained indirectly, with concise, transparent, intelligible and easily accessible information.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A12-R1": "Provide the controller's identity, purposes, legal bases, recipients, retention periods and rights.",
+      "RGPD-A12-R2": "Inform at the time of direct collection, or within one month at most for indirect collection (Art. 14(3)).",
+      "RGPD-A12-R3": "Mention transfers outside the Union and the related safeguards where relevant."
+    },
+    "deadline": "At collection, or within one month for indirect collection",
+    "evidence": ["Privacy notices per collection point", "Dated and versioned privacy policy"]
+  },
+  "RGPD-A15-22": {
+    "article": "Articles 15 to 22",
+    "chapter": "Chapter III: Rights of the data subject",
+    "title": "Exercise of data subject rights",
+    "statement": "Set up a procedure to answer requests for access, rectification, erasure, restriction, portability and objection within one month, extendable by two months for complex requests.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A15-R1": "Publish a channel for receiving requests and log every request received.",
+      "RGPD-A15-R2": "Verify the requester's identity without collecting excessive data.",
+      "RGPD-A15-R3": "Reply within one month, extendable by two months with a reasoned notice to the person.",
+      "RGPD-A15-R4": "Provide portable data in a structured, commonly used and machine-readable format (Art. 20).",
+      "RGPD-A15-R5": "Frame automated individual decisions and provide for human intervention (Art. 22)."
+    },
+    "deadline": "One month from receipt, extendable by two months",
+    "evidence": ["Documented request-handling procedure", "Log of requests and response times"],
+    "guidance": ["Responding to a subject access request"]
+  },
+  "RGPD-A24": {
+    "chapter": "Chapter IV: Controller and processor",
+    "title": "Responsibility of the controller",
+    "statement": "Implement appropriate technical and organisational measures to ensure and demonstrate compliance, and review and update them where necessary. This is the governance foundation from which the record, impact assessments and internal policies flow.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A24-R1": "Define an internal data protection policy approved at management level.",
+      "RGPD-A24-R2": "Assign identified data protection roles and responsibilities.",
+      "RGPD-A24-R3": "Review and update the measures at a defined frequency."
+    },
+    "deadline": "Ongoing requirement, with periodic review",
+    "evidence": ["Data protection policy", "Responsibility matrix", "Review minutes"]
+  },
+  "RGPD-A25": {
+    "chapter": "Chapter IV: Controller and processor",
+    "title": "Data protection by design and by default",
+    "statement": "Build data protection safeguards into processing from the design stage, and ensure that by default only the data needed for each purpose is processed, in volume, extent, retention period and accessibility.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A25-R1": "Build a data protection checkpoint into the project life cycle.",
+      "RGPD-A25-R2": "Apply the most protective configuration by default: minimisation, short retention, restricted access.",
+      "RGPD-A25-R3": "Use pseudonymisation and minimisation from the design stage where the purpose allows."
+    },
+    "deadline": "At each design or redesign of a processing operation",
+    "evidence": ["Data protection milestone in the project methodology", "Documented default settings"]
+  },
+  "RGPD-A26": {
+    "chapter": "Chapter IV: Controller and processor",
+    "title": "Joint controllers",
+    "statement": "Where two entities jointly determine purposes and means, set out by agreement how obligations are shared, notably the exercise of rights and information to individuals, and make the essence of it available to data subjects.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A26-R1": "Identify processing under joint controllership.",
+      "RGPD-A26-R2": "Formalise a joint controllership agreement allocating obligations.",
+      "RGPD-A26-R3": "Publish the essence of this agreement for data subjects."
+    },
+    "deadline": "Before the joint processing starts",
+    "evidence": ["Signed joint controllership agreements"]
+  },
+  "RGPD-A27": {
+    "chapter": "Chapter IV: Controller and processor",
+    "title": "Representatives of organisations not established in the Union",
+    "statement": "An organisation not established in the Union but subject to the regulation under Article 3(2) must designate in writing a representative in the Union, in one of the Member States where the data subjects are.",
+    "appliesTo": ["Controller outside the Union", "Processor outside the Union"],
+    "requirements": {
+      "RGPD-A27-R1": "Designate in writing a representative established in the Union.",
+      "RGPD-A27-R2": "Mention this representative in the information given to data subjects."
+    },
+    "deadline": "As soon as processing falls under Article 3(2)",
+    "evidence": ["Representation mandate", "Updated privacy notices"],
+    "conditions": ["Organisation not established in the Union"]
+  },
+  "RGPD-A28": {
+    "chapter": "Chapter IV: Controller and processor",
+    "title": "Contracts with processors",
+    "statement": "Only use processors providing sufficient guarantees, and govern the relationship with a written contract containing the eight mandatory terms of Article 28(3). Missing clauses are among the most frequent findings in inspections.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A28-R1": "Assess the processor's guarantees before contracting.",
+      "RGPD-A28-R2": "Set out in the contract the subject matter, duration, nature, purpose, data types and categories of data subjects.",
+      "RGPD-A28-R3": "Provide for documented instructions, confidentiality, security, assistance, deletion at the end of the contract and audit.",
+      "RGPD-A28-R4": "Frame sub-processing with written authorisation and flow-down of the same obligations."
+    },
+    "deadline": "Before any processing is entrusted to a third party",
+    "evidence": ["Data processing agreements or amendments", "Processor assessment grid", "List of authorised sub-processors"],
+    "guidance": ["Guidelines 07/2020 on the concepts of controller and processor"]
+  },
+  "RGPD-A30": {
+    "chapter": "Chapter IV: Controller and processor",
+    "title": "Records of processing activities",
+    "statement": "Keep a written record of all processing activities and make it available to the supervisory authority on request. The exemption for organisations with fewer than 250 employees is in practice ineffective as soon as there is a risk, non-occasional processing or sensitive data.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A30-R1": "List each activity with purposes, categories of data subjects and data, recipients and retention periods.",
+      "RGPD-A30-R2": "Mention transfers to third countries and the applicable safeguards.",
+      "RGPD-A30-R3": "Describe in general terms the security measures applied to each processing operation.",
+      "RGPD-A30-R4": ["Keep a separate record for processing carried out on behalf of third parties.", "If the organisation acts as a processor"]
+    },
+    "deadline": "Record kept up to date at all times",
+    "evidence": ["Dated record of processing", "Record of processing carried out as a processor"],
+    "guidance": ["The record of processing activities"]
+  },
+  "RGPD-A32": {
+    "chapter": "Chapter IV, Section 2: Security",
+    "title": "Security of processing",
+    "statement": "Implement technical and organisational measures ensuring a level of security appropriate to the risk, and have a process for regularly testing and evaluating their effectiveness. This is the article that overlaps most directly with NIS2 and DORA.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A32-R1": "Implement pseudonymisation and encryption of data where appropriate.",
+      "RGPD-A32-R2": "Ensure the ongoing confidentiality, integrity, availability and resilience of systems and services.",
+      "RGPD-A32-R3": "Be able to restore availability of and access to data in a timely manner after an incident.",
+      "RGPD-A32-R4": "Regularly test, assess and evaluate the effectiveness of the measures.",
+      "RGPD-A32-R5": "Ensure that anyone acting under authority only processes data on instructions."
+    },
+    "deadline": "Ongoing requirement, with regular evaluation",
+    "evidence": ["Information security policy", "Security test and audit reports", "Security risk analysis"],
+    "guidance": ["Personal data security guide"]
+  },
+  "RGPD-A33": {
+    "chapter": "Chapter IV, Section 2: Security",
+    "title": "Notification of a breach to the supervisory authority",
+    "statement": "Notify the supervisory authority of any personal data breach within 72 hours of becoming aware of it, unless the breach is unlikely to result in a risk to rights and freedoms. Every breach, notified or not, must be documented internally.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A33-R1": "Have a breach qualification procedure and an identified point of contact.",
+      "RGPD-A33-R2": "Notify the authority within 72 hours, or justify any delay.",
+      "RGPD-A33-R3": "For a processor: alert the controller without undue delay.",
+      "RGPD-A33-R4": "Document every breach, including those not notified, with the facts, effects and measures taken."
+    },
+    "deadline": "72 hours after becoming aware",
+    "evidence": ["Breach management procedure", "Internal breach register", "CNIL notification acknowledgements"],
+    "guidance": ["Guidelines 9/2022 on personal data breach notification"]
+  },
+  "RGPD-A34": {
+    "chapter": "Chapter IV, Section 2: Security",
+    "title": "Communication of a breach to data subjects",
+    "statement": "Where the breach is likely to result in a high risk to rights and freedoms, inform the data subjects without undue delay, in clear and plain language. Encryption rendering the data unintelligible exempts from this communication.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A34-R1": "Assess whether the risk to data subjects is high.",
+      "RGPD-A34-R2": "Communicate the nature of the breach, the likely consequences and the measures taken.",
+      "RGPD-A34-R3": "Use a public communication where individual notice would involve disproportionate effort."
+    },
+    "deadline": "Without undue delay once a high risk is established",
+    "evidence": ["Templates for communicating with data subjects", "Risk-level analysis per breach"]
+  },
+  "RGPD-A35": {
+    "chapter": "Chapter IV, Section 3: Impact assessment",
+    "title": "Data protection impact assessment",
+    "statement": "Carry out an impact assessment before any processing likely to result in a high risk, notably systematic evaluation, large-scale processing of sensitive data, or large-scale systematic monitoring of a publicly accessible area.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A35-R1": "Identify processing requiring an impact assessment, in light of the supervisory authority's list.",
+      "RGPD-A35-R2": "Describe the processing, assess necessity and proportionality, evaluate risks and define measures.",
+      "RGPD-A35-R3": "Seek the data protection officer's advice where there is one.",
+      "RGPD-A35-R4": "Review the assessment when the risk changes."
+    },
+    "deadline": "Before high-risk processing starts",
+    "evidence": ["Impact assessments carried out", "List of processing subject to assessment"],
+    "guidance": ["PIA software and impact assessment method"]
+  },
+  "RGPD-A36": {
+    "chapter": "Chapter IV, Section 3: Impact assessment",
+    "title": "Prior consultation of the supervisory authority",
+    "statement": "Where the impact assessment concludes that a high residual risk cannot be mitigated, consult the supervisory authority before starting the processing. The authority has eight weeks, extendable by six.",
+    "appliesTo": ["Controller"],
+    "requirements": {
+      "RGPD-A36-R1": "Identify high residual risks at the end of the impact assessment.",
+      "RGPD-A36-R2": "Refer to the authority and suspend implementation until it replies."
+    },
+    "deadline": "Before implementation, reply within 8 weeks extendable by 6",
+    "evidence": ["Referrals to the authority and replies received"]
+  },
+  "RGPD-A37-39": {
+    "article": "Articles 37 to 39",
+    "chapter": "Chapter IV, Section 4: Data protection officer",
+    "title": "Designation and tasks of the data protection officer",
+    "statement": "Designate a DPO where the organisation is a public authority, or where its core activities involve regular and systematic monitoring on a large scale, or large-scale processing of sensitive data. The DPO must be involved in all data protection matters and receive no instructions on how to carry out their tasks.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A37-R1": "Decide and document whether or not to designate a DPO.",
+      "RGPD-A37-R2": "Publish the DPO's contact details and communicate them to the supervisory authority.",
+      "RGPD-A37-R3": "Guarantee independence, absence of conflict of interest and reporting to the highest level.",
+      "RGPD-A37-R4": "Give the DPO the resources needed to carry out their tasks."
+    },
+    "deadline": "Designation declared to the CNIL, ongoing role",
+    "evidence": ["DPO engagement letter", "CNIL designation acknowledgement", "Annual activity reports"]
+  },
+  "RGPD-A40-43": {
+    "article": "Articles 40 to 43",
+    "chapter": "Chapter IV, Section 5: Codes of conduct and certification",
+    "title": "Codes of conduct and certification",
+    "statement": "Adhering to an approved code of conduct or obtaining an approved certification is an element for demonstrating compliance. These schemes are optional but can be relied on in an inspection.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A40-R1": "Assess the relevance of an approved sectoral code of conduct.",
+      "RGPD-A40-R2": "Where applicable, maintain the certification and submit to the body's monitoring."
+    },
+    "deadline": "Voluntary",
+    "evidence": ["Proof of adherence or valid certificate"]
+  },
+  "RGPD-A44-49": {
+    "article": "Articles 44 to 49",
+    "chapter": "Chapter V: Transfers to third countries",
+    "title": "Transfers outside the European Union",
+    "statement": "Only transfer data outside the Union on the basis of an adequacy decision, appropriate safeguards or, failing that, an Article 49 derogation. Since the Schrems II judgment, appropriate safeguards must be supplemented by a transfer impact assessment.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A44-R1": "Map outgoing flows, including remote access from a third country.",
+      "RGPD-A44-R2": "Identify the basis for each transfer: adequacy, standard clauses, binding corporate rules, derogation.",
+      "RGPD-A44-R3": "Carry out a transfer impact assessment evaluating the law of the destination country.",
+      "RGPD-A44-R4": "Put in place the necessary supplementary technical or contractual measures."
+    },
+    "deadline": "Before any transfer, with periodic review",
+    "evidence": ["Transfer map", "Signed standard contractual clauses", "Transfer impact assessments"],
+    "conditions": ["Transfers outside the European Union"],
+    "guidance": ["Recommendations 01/2020 on supplementary measures"]
+  },
+  "RGPD-A83": {
+    "chapter": "Chapter VIII: Remedies, liability and penalties",
+    "title": "General conditions for administrative fines",
+    "statement": "Know the two penalty tiers and the eleven adjustment criteria, to assess real exposure. Security measures, cooperation with the authority and certifications are expressly listed as mitigating circumstances.",
+    "appliesTo": ["Controller", "Processor"],
+    "requirements": {
+      "RGPD-A83-R1": "Identify the tier applicable to each category of breach.",
+      "RGPD-A83-R2": "Document the elements constituting mitigating circumstances."
+    },
+    "deadline": "Scoping element, not an obligation in itself",
+    "evidence": ["Penalty exposure analysis"]
+  }
+}

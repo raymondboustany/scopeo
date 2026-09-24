@@ -7,7 +7,7 @@ body:
     attributes:
       label: Texte concerné
       multiple: true
-      options: [RGPD, NIS 2, DORA, CRA, ReCyF (ANSSI), Transposition française, Autre]
+      options: [RGPD, NIS2 (ReCyF), DORA, CRA, AI Act, ISO 27001, Transposition française, Autre]
     validations:
       required: true
   - type: textarea

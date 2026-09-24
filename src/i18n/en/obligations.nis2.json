@@ -1,0 +1,312 @@
+{
+  "NIS2-A3": {
+    "article": "Article 3(4)",
+    "chapter": "Chapter I: General provisions",
+    "title": "Registration with the national authority",
+    "statement": "Register with the competent authority, providing name, contact details, IP ranges, sector and subsector, and the list of Member States where services covered by the directive are provided. Any change must be reported within two weeks.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A3-R1": "Determine its category (essential or important entity) and its sector.",
+      "NIS2-A3-R2": "Provide name, address, up-to-date contact details, IP ranges and sector to the competent authority.",
+      "NIS2-A3-R3": "Declare the Member States in which services covered by the directive are provided.",
+      "NIS2-A3-R4": "Report any change within two weeks at most."
+    },
+    "deadline": "Two weeks to report any change",
+    "evidence": ["ANSSI registration acknowledgement", "Entity identity sheet kept up to date"],
+    "guidance": ["My NIS2 Space portal (ANSSI)"]
+  },
+  "NIS2-A20": {
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
+    "title": "Governance and accountability of management bodies",
+    "statement": "Have risk-management measures approved by the management body, have it oversee their implementation, and train its members. This is the provision that makes managers personally accountable: breaches of Article 21 can be attributed to them, and the authority may go as far as banning them from management functions.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A20-R1": "Have the management body formally approve risk-management measures, and record this approval.",
+      "NIS2-A20-R2": "Organise periodic oversight of implementation at management level.",
+      "NIS2-A20-R3": "Have members of the management body follow cybersecurity training.",
+      "NIS2-A20-R4": "Extend equivalent training to staff on a regular basis."
+    },
+    "deadline": "Periodic approval and review, regular training",
+    "evidence": ["Approval resolution or minutes", "Monitoring dashboard presented to the executive committee", "Management training certificates"]
+  },
+  "NIS2-A21-1": {
+    "article": "Article 21(1)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Appropriate, proportionate, risk-based measures",
+    "statement": "Take appropriate and proportionate technical, operational and organisational measures to manage the risks posed to network and information systems, and to limit the impact of incidents on service recipients. Proportionality is assessed against exposure, size and the likely severity of incidents.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-1-R1": "Inventory the activities, services and information systems that contribute to their delivery.",
+      "NIS2-A21-1-R2": "Justify the level of measures chosen in light of exposure, size and criticality.",
+      "NIS2-A21-1-R3": "Adopt an all-hazards approach that also covers the physical environment."
+    },
+    "deadline": "Ongoing requirement",
+    "evidence": ["Map of activities, services and systems", "Proportionality note", "Information security policy"]
+  },
+  "NIS2-A21-2a": {
+    "article": "Article 21(2)(a)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Risk analysis and information system security policies",
+    "statement": "Have a risk analysis policy and an information system security policy that are formalised, approved and applied. The ReCyF makes them the foundation: without this documentary framework, no other objective can be demonstrated.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2a-R1": "Formalise an information security policy covering encryption, physical and logical access control, and review of measures.",
+      "NIS2-A21-2a-R2": "Define a risk analysis method and apply it to the inventoried systems.",
+      "NIS2-A21-2a-R3": "Set up and track an action plan closing the gaps identified."
+    },
+    "deadline": "Periodic review, at least annual",
+    "evidence": ["Dated and approved information security policy", "Risk analysis", "Gap-closure action plan"]
+  },
+  "NIS2-A21-2b": {
+    "article": "Article 21(2)(b)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Incident handling",
+    "statement": "Have a documented process for detecting, qualifying, handling and learning from security incidents, with identified roles and an alert chain operating around the clock.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2b-R1": "Define an incident management procedure with qualification and severity criteria.",
+      "NIS2-A21-2b-R2": "Assign handling roles and organise 24/7 coverage of the alert chain.",
+      "NIS2-A21-2b-R3": "Log every incident and carry out a lessons-learned review."
+    },
+    "deadline": "Ongoing process",
+    "evidence": ["Incident management procedure", "Incident register", "Lessons-learned reports"]
+  },
+  "NIS2-A21-2c": {
+    "article": "Article 21(2)(c)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Business continuity, backups and crisis management",
+    "statement": "Have a continuity and recovery set-up based on tested backups, defined recovery objectives, and a formalised and exercised crisis organisation.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2c-R1": "Define maximum tolerable downtime and data recovery points.",
+      "NIS2-A21-2c-R2": "Keep backups isolated from production systems and test their restoration.",
+      "NIS2-A21-2c-R3": "Formalise a cyber crisis management set-up, with backup communication means.",
+      "NIS2-A21-2c-R4": "Exercise the crisis set-up at a defined frequency."
+    },
+    "deadline": "Periodic restoration tests and crisis exercises",
+    "evidence": ["Business continuity and recovery plan", "Restoration test reports", "Crisis exercise reports"]
+  },
+  "NIS2-A21-2d": {
+    "article": "Article 21(2)(d)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Supply chain security",
+    "statement": "Address the security of relationships with direct suppliers and service providers, taking into account each one's specific vulnerabilities, the overall quality of their cybersecurity practices and their secure development procedures. Article 21(3) also requires taking into account coordinated risk assessments carried out at EU level.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2d-R1": "Map the ecosystem of suppliers and service providers and rate their criticality.",
+      "NIS2-A21-2d-R2": "Assess the specific vulnerabilities of each direct supplier and the quality of its practices.",
+      "NIS2-A21-2d-R3": "Include security requirements in contracts and check they are applied.",
+      "NIS2-A21-2d-R4": "Take into account the results of coordinated risk assessments for critical supply chains (Art. 22)."
+    },
+    "deadline": "Periodic reassessment of the ecosystem",
+    "evidence": ["Map of suppliers and their criticality", "Contractual security clauses", "Supplier assessments"]
+  },
+  "NIS2-A21-2e": {
+    "article": "Article 21(2)(e)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Security in acquisition, development and maintenance",
+    "statement": "Build security into the acquisition, development and maintenance of systems, including vulnerability handling and disclosure. This covers in-house development as well as off-the-shelf purchases.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2e-R1": "Define security requirements for acquisitions and developments.",
+      "NIS2-A21-2e-R2": "Control changes: qualification, validation and reversibility.",
+      "NIS2-A21-2e-R3": "Organise monitoring, handling and patching of vulnerabilities within defined time frames.",
+      "NIS2-A21-2e-R4": "Provide a coordinated vulnerability disclosure channel."
+    },
+    "deadline": "Ongoing process",
+    "evidence": ["Secure development policy", "Change management process", "Vulnerability and patching time tracker"]
+  },
+  "NIS2-A21-2f": {
+    "article": "Article 21(2)(f)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Assessing the effectiveness of measures",
+    "statement": "Have policies and procedures to assess the actual effectiveness of risk-management measures, not just their existence. This is where documentary compliance stops being enough.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2f-R1": "Define effectiveness indicators and a measurement frequency.",
+      "NIS2-A21-2f-R2": ["Carry out security audits and address the gaps found.", "Essential entities"],
+      "NIS2-A21-2f-R3": "Report the results to the management body."
+    },
+    "deadline": "Periodic evaluation, at least annual",
+    "evidence": ["Security indicator dashboard", "Audit reports", "Corrective action plans"]
+  },
+  "NIS2-A21-2g": {
+    "article": "Article 21(2)(g)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Cyber hygiene and cybersecurity training",
+    "statement": "Put in place basic cyber hygiene practices and a cybersecurity training programme covering all users, including service providers acting on the entity's behalf.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2g-R1": "Define rules for using IT resources and communicate them to users.",
+      "NIS2-A21-2g-R2": "Organise regular awareness sessions adapted to profiles and risks.",
+      "NIS2-A21-2g-R3": "Track participation and measure understanding."
+    },
+    "deadline": "Regular awareness",
+    "evidence": ["Signed acceptable use charter", "Awareness programme and materials", "Participation rate"]
+  },
+  "NIS2-A21-2h": {
+    "article": "Article 21(2)(h)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Cryptography and encryption",
+    "statement": "Define and apply policies and procedures on the use of cryptography and, where appropriate, encryption, which requires a key and algorithm management policy, not just turning on encryption in transit.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2h-R1": "Define a cryptography policy: algorithms, key lengths, use cases.",
+      "NIS2-A21-2h-R2": "Manage the life cycle of keys and certificates.",
+      "NIS2-A21-2h-R3": "Encrypt sensitive data at rest and in transit according to the policy."
+    },
+    "deadline": "Ongoing requirement",
+    "evidence": ["Cryptography policy", "Inventory of certificates and keys", "Encryption protocol configuration"]
+  },
+  "NIS2-A21-2i": {
+    "article": "Article 21(2)(i)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Human resources security, access control and asset management",
+    "statement": "Manage security across the people life cycle (joining, moving, leaving), apply a need-to-know access control policy, and keep an asset inventory.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2i-R1": "Formalise joiner, mover and leaver procedures, including removal of access.",
+      "NIS2-A21-2i-R2": "Apply least privilege and periodically review granted rights.",
+      "NIS2-A21-2i-R3": "Separate and specifically protect administration accounts.",
+      "NIS2-A21-2i-R4": "Keep an inventory of hardware and software assets and assign owners."
+    },
+    "deadline": "Periodic review of access rights",
+    "evidence": ["Joiner / mover / leaver procedures", "Access reviews", "Asset inventory"]
+  },
+  "NIS2-A21-2j": {
+    "article": "Article 21(2)(j)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Multi-factor authentication and secure communications",
+    "statement": "Use, where appropriate, multi-factor or continuous authentication, secured voice, video and text communications, and secured emergency communication systems within the entity.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-2j-R1": "Deploy multi-factor authentication on remote access and privileged accounts.",
+      "NIS2-A21-2j-R2": "Secure sensitive internal communication channels.",
+      "NIS2-A21-2j-R3": "Provide an emergency communication means independent of the everyday information system."
+    },
+    "deadline": "Ongoing requirement",
+    "evidence": ["Multi-factor authentication deployment scope", "Description of the backup communication means"]
+  },
+  "NIS2-A21-4": {
+    "article": "Article 21(4)",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "title": "Corrective measures when non-compliance is found",
+    "statement": "When the entity itself finds that it does not comply with the measures of paragraph 2, take all necessary, appropriate and proportionate corrective measures without undue delay.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A21-4-R1": "Organise internal detection of compliance gaps.",
+      "NIS2-A21-4-R2": "Record each gap, its correction plan and its due date."
+    },
+    "deadline": "Without undue delay once the gap is found",
+    "evidence": ["Gap register and related action plan"]
+  },
+  "NIS2-A23-1": {
+    "article": "Article 23(1)",
+    "chapter": "Chapter IV: Reporting obligations",
+    "title": "Notification of significant incidents to the CSIRT",
+    "statement": "Notify without undue delay any incident with a significant impact on service provision. An incident is significant if it has caused or may cause severe operational disruption or financial loss, or has affected others by causing considerable damage.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A23-1-R1": "Define internal criteria for qualifying a significant incident.",
+      "NIS2-A23-1-R2": "Identify the point of contact and the notification channel with the national CSIRT.",
+      "NIS2-A23-1-R3": "Provide the information needed to assess cross-border impact."
+    },
+    "deadline": "Without undue delay after becoming aware of the incident",
+    "evidence": ["Incident qualification grid", "Notification procedure", "CSIRT acknowledgements"],
+    "guidance": ["Technical implementation guidance on NIS2 measures"]
+  },
+  "NIS2-A23-4": {
+    "article": "Article 23(4)",
+    "chapter": "Chapter IV: Reporting obligations",
+    "title": "Reporting sequence: 24 hours, 72 hours, one month",
+    "statement": "Follow the three-step sequence: an early warning within 24 hours, an incident notification within 72 hours, then a final report no later than one month after that notification. Trust service providers have a single 24-hour deadline.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A23-4-R1": "Send an early warning within 24 hours, indicating any suspected malicious cause and cross-border impact.",
+      "NIS2-A23-4-R2": "Send within 72 hours an initial assessment of severity, impact and indicators of compromise.",
+      "NIS2-A23-4-R3": "Produce an intermediate report at the request of the CSIRT or authority.",
+      "NIS2-A23-4-R4": "Submit a final report within one month: detailed description, root cause, mitigation measures, cross-border impact.",
+      "NIS2-A23-4-R5": "If the incident is still ongoing, provide a progress report and then the final report one month after closure."
+    },
+    "deadline": "24 h, 72 h, 1 month",
+    "evidence": ["Timestamped notification log", "Final reports submitted"]
+  },
+  "NIS2-A23-2": {
+    "article": "Article 23(1) and (2)",
+    "chapter": "Chapter IV: Reporting obligations",
+    "title": "Informing service recipients",
+    "statement": "Inform service recipients without undue delay of significant incidents likely to affect the provision of those services, and tell them what measures they can take in response to a significant cyber threat.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A23-2-R1": "Identify the recipients to inform and the communication channels.",
+      "NIS2-A23-2-R2": "Prepare incident and cyber threat communication templates."
+    },
+    "deadline": "Without undue delay",
+    "evidence": ["Communication templates", "History of communications sent"]
+  },
+  "NIS2-A24": {
+    "chapter": "Chapter IV",
+    "title": "Use of European certification schemes",
+    "statement": "Member States may require the use of products, services or processes certified under a European cybersecurity certification scheme. Absent such a requirement, certification remains a way to demonstrate compliance.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A24-R1": "Check whether a national certification requirement exists for the sector.",
+      "NIS2-A24-R2": "Where applicable, favour qualified or certified products and services."
+    },
+    "deadline": "According to national requirements",
+    "evidence": ["List of qualified products and services selected"]
+  },
+  "NIS2-A26": {
+    "chapter": "Chapter V: Jurisdiction and registration",
+    "title": "Determining jurisdiction",
+    "statement": "Determine the competent Member State: in principle the one of establishment, but for digital service providers and managed service providers, the one of the main establishment, meaning where cybersecurity risk-management decisions are mainly taken.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A26-R1": "Identify the competent Member State and the relevant authority.",
+      "NIS2-A26-R2": "Designate a representative in the Union if the entity is not established there."
+    },
+    "deadline": "To be established before registration",
+    "evidence": ["Jurisdiction determination note", "Representation mandate where applicable"]
+  },
+  "NIS2-A27": {
+    "chapter": "Chapter V: Jurisdiction and registration",
+    "title": "European registry of digital providers",
+    "statement": "DNS service providers, domain name registries, providers of cloud computing, data centres, content delivery networks, managed and managed security services, as well as online marketplaces, search engines and social networks, submit their identification details, centralised by ENISA.",
+    "appliesTo": ["Digital service provider"],
+    "requirements": {
+      "NIS2-A27-R1": "Submit name, sector, type of entity, main establishment address and contact details.",
+      "NIS2-A27-R2": "Declare the Member States in which services are provided.",
+      "NIS2-A27-R3": "Update this information without delay when it changes."
+    },
+    "deadline": "Initial information expected since 17 January 2025",
+    "evidence": ["Confirmation of submission to the competent authority"],
+    "conditions": ["Digital service provider"]
+  },
+  "NIS2-A30": {
+    "article": "Articles 29 and 30",
+    "chapter": "Chapter VI: Information sharing",
+    "title": "Information sharing and voluntary notification",
+    "statement": "Take part, on a voluntary basis, in threat information-sharing arrangements, and report incidents or near misses that fall outside the notification obligation. A voluntary notification creates no additional obligation.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A30-R1": "Assess whether to join a sectoral sharing arrangement.",
+      "NIS2-A30-R2": "Define internal rules for sharing sensitive information."
+    },
+    "deadline": "Voluntary",
+    "evidence": ["Membership of a sectoral sharing arrangement"]
+  },
+  "NIS2-A32": {
+    "article": "Articles 32 and 33",
+    "chapter": "Chapter VII: Supervision and enforcement",
+    "title": "Being ready for supervisory measures",
+    "statement": "Essential entities are subject to ex ante supervision: on-site inspections, security audits at their own expense, requests for evidence, security scans. Important entities are subject to ex post supervision, triggered by evidence of a breach. This difference in regime is the heaviest practical consequence of the categorisation.",
+    "appliesTo": ["Essential entity", "Important entity"],
+    "requirements": {
+      "NIS2-A32-R1": "Keep compliance evidence immediately available and up to date.",
+      "NIS2-A32-R2": "Be able to respond to an audit or inspection request.",
+      "NIS2-A32-R3": ["Plan for funding audits requested by the authority.", "Essential entities"]
+    },
+    "deadline": "Evidence available at all times",
+    "evidence": ["Consolidated compliance file", "Evidence register by security objective"]
+  }
+}

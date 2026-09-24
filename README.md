@@ -4,130 +4,134 @@
 
 # Scopeo
 
-**Savoir ce qui s'applique, et par quoi commencer.**
+**Know what applies, and where to start.**
 
-Outil open source de cadrage et de diagnostic réglementaire pour le **RGPD**, **NIS 2**, **DORA** et le **Cyber Resilience Act** — sur votre poste, sans compte ni service tiers.
+Open source regulatory scoping and gap assessment platform for the **GDPR**, **NIS2**, **DORA**, the **Cyber Resilience Act** and the **AI Act**. Runs on your machine, with no third-party service.
 
 [![CI](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/v/release/raymondboustany/scopeo?label=version)](https://github.com/raymondboustany/scopeo/releases/latest)
-[![Licence MIT](https://img.shields.io/badge/licence-MIT-6d4aed)](LICENSE)
-[![Corpus](https://img.shields.io/badge/corpus-23%20sept.%202026-111827)](CHANGELOG.md)
+[![MIT licence](https://img.shields.io/badge/licence-MIT-6d4aed)](LICENSE)
+[![Corpus](https://img.shields.io/badge/corpus-24%20Sept%202026-111827)](CHANGELOG.md)
 
-[Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Rapports d'exemple](#rapports-dexemple) · [Feuille de route](ROADMAP.md) · [Contribuer](CONTRIBUTING.md)
+**English** · [Français](#français)
+
+[Quick start](#quick-start) · [Features](#features) · [Sample reports](#sample-reports) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 <br>
 
-<img src="docs/assets/demo.gif" alt="Parcours dans l'application : accueil, tableau de bord, qualification, croisements, rapports" width="100%">
+<img src="docs/assets/demo-en.gif" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, assessment, ISO 27001" width="100%">
 
 </div>
 
 ---
 
-## Pourquoi
+## Why
 
-Quatre textes européens encadrent désormais la sécurité et les données des organisations. Ils se recouvrent, divergent parfois, et l'un prime sur l'autre dans certains cas — DORA sur NIS 2 pour les entités financières, par exemple. Avant d'engager un budget de conformité, une organisation doit répondre à quatre questions :
+Five European texts now govern the security, data and AI systems of organisations. They overlap, sometimes diverge, and in some cases one overrides another (DORA over NIS2 for financial entities, for instance). Before committing a compliance budget, an organisation has to answer four questions:
 
-1. **Quels textes s'appliquent**, et à quel titre ?
-2. **Qu'exigent-ils précisément** ?
-3. **Où une seule action en satisfait-elle plusieurs** ?
-4. **Par quoi commencer** ?
+1. **Which texts apply**, and in what capacity?
+2. **What exactly do they require**?
+3. **Where does a single action satisfy several of them**?
+4. **Where to start**?
 
-Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiable article par article, et produit les livrables attendus par une direction.
+Scopeo answers them in a few hours of interviews, with reasoning that can be checked article by article, and produces the deliverables a management team expects.
 
-> **Positionnement.** L'outil intervient **en amont** : cadrage et diagnostic. Il ne vérifie pas de preuves et ne pilote pas la conformité dans la durée — ces rôles reviennent à un audit et à un outil de suivi, qui peuvent prendre le relais.
+> **Positioning.** The platform works **upstream**: scoping and diagnosis. It does not verify evidence or run compliance over time; those roles belong to an audit and a tracking platform, which can take over.
 >
-> **Outil d'aide au cadrage, pas un avis juridique.** Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus.
+> **A scoping aid, not legal advice.** Conclusions rest on the information declared and on the state of the law at the corpus date.
+>
+> **Applied to France.** NIS2 is read through ANSSI's Référentiel Cyber France (ReCyF), and the authorities named are the French ones (CNIL, ANSSI, ACPR, AMF).
 
 ---
 
-## Fonctionnalités
+## Features
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### Qualification démontrée
-Une trentaine de questions, chacune rattachée à l'article qu'elle sert à établir. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre quand une réponse change.
+### Scoping you can defend
+35 questions, each tied to the article it establishes. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
 
 </td>
-<td width="50%"><img src="docs/assets/qualification.png" alt="Qualification et comparateur avant / après"></td>
+<td width="50%"><img src="docs/assets/en/qualification.png" alt="Scoping and before / after comparator"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/dashboard.png" alt="Tableau de bord"></td>
+<td width="50%"><img src="docs/assets/en/dashboard.png" alt="Dashboard"></td>
 <td width="50%" valign="top">
 
-### Diagnostic en un coup d'œil
-Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes sur les échéances réglementaires proches, priorités et faiblesses par domaine.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### Exigences mutualisées
-35 exigences unifiées relient les obligations des quatre textes. La vue **Mutualisation** montre quelles combinaisons de textes une action unique permet de couvrir ; les divergences et hiérarchies sont nommées, avec la règle qui commande.
-
-</td>
-<td width="50%"><img src="docs/assets/mutualisation.png" alt="Vue Mutualisation des croisements"></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/assets/signalement.png" alt="Qui notifier en cas d'incident"></td>
-<td width="50%" valign="top">
-
-### Qui notifier, dès aujourd'hui
-Les obligations de notification s'appliquent avant même la mise en conformité. L'outil désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA), leurs délais et la chaîne d'escalade interne, et produit une **fiche réflexe** d'une page.
+### Diagnosis at a glance
+Overall and per-framework coverage, a five-step scoping path, alerts on upcoming regulatory deadlines, priorities and weaknesses by domain.
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-### Corpus consultable
-77 obligations et 287 exigences élémentaires, avec les preuves attendues en contrôle. Sous les exigences NIS 2, le **détail d'implémentation de l'ANSSI** (ReCyF), filtré selon la catégorie de l'entité.
+### Shared requirements
+40 unified requirements link the obligations of the five texts. The **Shared actions** view shows which combinations of texts a single action covers; divergences and precedence are named, with the rule that prevails.
 
 </td>
-<td width="50%"><img src="docs/assets/corpus.png" alt="Corpus réglementaire"></td>
+<td width="50%"><img src="docs/assets/en/mutualisation.png" alt="Shared actions view of the crosswalk"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/notes.png" alt="Journal d'entretien"></td>
+<td width="50%"><img src="docs/assets/en/iso-overlap.png" alt="ISO 27001 module: excluded controls and overlap by framework"></td>
 <td width="50%" valign="top">
 
-### Notes d'entretien
-Une note se pose sur une question, une exigence ou un article, avec une étiquette : *à vérifier*, *hypothèse*, *décision*, *preuve demandée*. Le journal d'entretien les rassemble ; le rapport complet reprend les points ouverts en annexe.
+### Optional ISO 27001 module
+Declare the 93 Annex A controls by theme or one by one, or import a Statement of Applicability. Matching NIS2, DORA and CRA requirements are pre-filled and stay editable; an alert flags controls marked not applicable where a text still requires them; a chart splits each framework into what ISO covers, what it could cover, and what lies outside its scope. The module can always be skipped.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### NIS2 detailed by the ReCyF
+Under the NIS2 requirements, the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category. A valid ISO 27001 certificate over the whole scope is recognised for objectives 2 and 16, as the ReCyF provides.
+
+</td>
+<td width="50%"><img src="docs/assets/en/corpus.png" alt="Regulatory corpus"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/en/signalement.png" alt="Who to notify in case of an incident"></td>
+<td width="50%" valign="top">
+
+### Who to notify, starting today
+Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, and produces a one-page **incident quick-reference sheet**.
 
 </td>
 </tr>
 </table>
 
-**Et aussi** — évaluation à trois états (en place, partiel, absent) · priorisation pondérable et feuille de route en quatre vagues · échéancier interactif · fiche entité (cadrage d'un client ou cadrage interne) · Trust Center : vue publique en lecture seule par lien révocable · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · thème clair et sombre · parcours guidé.
+**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation and a four-wave roadmap · interactive timeline · entity profile (client or internal scoping) · interview notes and log · Trust Center (read-only public view, currently local only) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes · guided tour · password-protected profiles.
 
 <details>
-<summary>Aperçu du thème sombre</summary>
+<summary>Dark theme preview</summary>
 <br>
-<img src="docs/assets/dashboard-dark.png" alt="Tableau de bord en thème sombre">
+<img src="docs/assets/en/dashboard-dark.png" alt="Dashboard in dark theme">
 </details>
 
 ---
 
-## Rapports d'exemple
+## Sample reports
 
-Trois livrables PDF, générés à partir de l'entité de démonstration fictive *Finexa* :
+Three PDF deliverables, generated from the fictitious demo entity *Finexa*:
 
-| Document | Destinataires | Format |
+| Document | Audience | Length |
 |---|---|---|
-| [Note au comité de direction](docs/samples/note-comex-finexa.pdf) | Direction, COMEX | 2 pages |
-| [Rapport de cadrage complet](docs/samples/rapport-cadrage-finexa.pdf) | Conseil, RSSI, DPO, équipe projet | 9 pages |
-| [Fiche réflexe incident](docs/samples/fiche-reflexe-finexa.pdf) | Diffusion interne | 1 page |
+| [Executive summary](docs/samples/executive-summary-finexa.pdf) | Management, executive committee | 2 pages |
+| [Full scoping report](docs/samples/scoping-report-finexa.pdf) | Counsel, CISO, DPO, project team | 6 to 12 pages |
+| [Incident quick-reference sheet](docs/samples/incident-quick-reference-finexa.pdf) | Internal distribution | 1 page |
 
 ---
 
-## Démarrage rapide
+## Quick start
 
-> **Première installation ?** Le [guide d'installation pas à pas](docs/installation.md) détaille chaque étape, sans prérequis technique.
+> **First install?** The [step-by-step installation guide](docs/installation.md) covers every step, with no technical prerequisite.
 
-### Docker Compose (recommandé)
+### Docker Compose (recommended)
 
-Prérequis : [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+Prerequisite: [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash
 mkdir scopeo && cd scopeo
@@ -135,145 +139,231 @@ curl -o compose.yaml https://raw.githubusercontent.com/raymondboustany/scopeo/ma
 docker compose up -d
 ```
 
-Ouvrez ensuite **http://localhost:8000**. Les données sont conservées dans le volume Docker `scopeo-data`.
+Then open **http://localhost:8000**. Data is kept in the `scopeo-data` Docker volume.
 
-### Docker
+### Without Docker
 
-```bash
-docker run -d --restart=unless-stopped -p 127.0.0.1:8000:8000 -v scopeo-data:/data --name scopeo ghcr.io/raymondboustany/scopeo:latest
-```
+Prerequisite: [Python 3.11+](https://www.python.org/downloads/).
 
-### Sans Docker
+1. Download `scopeo-vX.Y.Z-portable.zip` from the [latest release](https://github.com/raymondboustany/scopeo/releases/latest) and unzip it.
+2. Run `start.bat` (Windows, double-click) or `./start.sh` (macOS, Linux).
 
-Prérequis : [Python 3.11+](https://www.python.org/downloads/).
+### From source
 
-1. Téléchargez `scopeo-vX.Y.Z-portable.zip` depuis la [dernière version](https://github.com/raymondboustany/scopeo/releases/latest) et décompressez-la.
-2. Lancez `start.bat` (Windows, double-clic) ou `./start.sh` (macOS, Linux).
-
-Le premier lancement installe les dépendances, puis ouvre le navigateur sur l'application.
-
-### Mise à jour
-
-| Installation | Commande |
-|---|---|
-| Docker Compose | `docker compose pull && docker compose up -d` |
-| Docker | `docker pull ghcr.io/raymondboustany/scopeo:latest`, puis recréer le conteneur |
-| Sans Docker | Télécharger la nouvelle archive et y copier le dossier `server/data` |
-
-> **Sécurité** — L'application n'intègre pas d'authentification et n'écoute que sur le poste local. Lisez [SECURITY.md](SECURITY.md) avant de l'exposer sur un réseau.
-
-### Installation depuis les sources
-
-Pour contribuer ou modifier le projet. Prérequis : Node.js 20+, Python 3.11+, Git.
+Prerequisites: Node.js 20+, Python 3.11+, Git.
 
 ```bash
 git clone https://github.com/raymondboustany/scopeo.git
 cd scopeo
 npm install
-npm run setup      # environnement Python du serveur
-npm run dev        # http://localhost:5173, avec rechargement automatique
+npm run setup      # Python environment for the server
+npm run dev        # http://localhost:5173, with hot reload
 ```
 
 <details>
-<summary>Commandes et configuration avancée</summary>
+<summary>Commands and configuration</summary>
 <br>
 
-| Commande | Rôle |
+| Command | Purpose |
 |---|---|
-| `npm run dev` | API avec rechargement et interface Vite, arrêtées ensemble |
-| `npm start` | Compilation, puis service de l'application sur http://127.0.0.1:8000 |
-| `npm test` · `npm run test:server` | Tests des moteurs (Vitest) · tests de l'API (pytest) |
-| `npm run lint` · `npm run typecheck` | Contrôles statiques |
-| `npm run demo:build` | Régénère l'entité de démonstration |
-| `docker compose build` | Construit l'image Docker à partir des sources |
+| `npm run dev` | API with reload and Vite interface, stopped together |
+| `npm start` | Build, then serve the platform on http://127.0.0.1:8000 |
+| `npm test` · `npm run test:server` | Engine tests (Vitest) · API tests (pytest) |
+| `npm run lint` · `npm run typecheck` | Static checks |
+| `npm run demo:build` | Regenerate the demo entity |
 
-| Variable d'environnement | Défaut | Rôle |
+| Environment variable | Default | Purpose |
 |---|---|---|
-| `SCOPEO_PORT` | `8000` | Port du serveur |
-| `SCOPEO_HOST` | `127.0.0.1` | Adresse d'écoute |
-| `SCOPEO_DATA_DIR` | `server/data` (`/data` sous Docker) | Dossier de la base SQLite |
+| `SCOPEO_PORT` | `8000` | Server port |
+| `SCOPEO_HOST` | `127.0.0.1` | Listening address |
+| `SCOPEO_DATA_DIR` | `server/data` (`/data` under Docker) | SQLite database folder |
+| `SCOPEO_COOKIE_SECURE` | off | Mark the session cookie `Secure` when served over HTTPS |
 
 </details>
 
-### Premiers pas
+### First steps
 
-À l'accueil, choisissez **Mode invité** pour explorer la démonstration *Finexa* — un établissement de paiement de 50 salariés, déjà qualifié et évalué. Un parcours guidé présente l'outil. Pour cadrer votre propre organisation ou un client, créez un profil puis une entité.
+On the home page, choose **Guest mode** to explore the *Finexa* demo, a 50-person payment institution already scoped and assessed; it is erased on sign-out. To scope your own organisation or a client, create a password-protected profile, then an entity. The language switch sits in the top bar.
 
 ---
 
-## Référentiel
+## Reference
 
 | | |
 |---|---|
-| Textes | RGPD, NIS 2, DORA, CRA |
-| Obligations | 77 (RGPD 21, NIS 2 22, DORA 22, CRA 12) |
-| Exigences élémentaires | 287, avec preuves attendues, échéances et palier de sanction |
-| Exigences unifiées | 35, dont 6 divergences et 1 hiérarchie |
-| Détail ANSSI (ReCyF v2.5) | 20 objectifs, 152 mesures |
-| Questions de qualification | 30, chacune rattachée à l'article qu'elle établit |
+| Texts | GDPR, NIS2 (ReCyF), DORA, CRA, AI Act |
+| Obligations | 95 (GDPR 21, NIS2 22, DORA 22, CRA 12, AI Act 18) |
+| Elementary requirements | 348, with expected evidence, deadlines and penalty tier |
+| Unified requirements | 40, including 7 divergences and 1 precedence rule |
+| NIS2 detail (ReCyF v2.5) | 20 objectives, 152 measures |
+| ISO/IEC 27001:2022 | 93 Annex A controls (public titles only), mapped by theme |
+| Scoping questions | 35, each tied to the article it establishes |
 
 <details>
-<summary>État des textes et délais de notification retenus</summary>
+<summary>Status of the texts and notification deadlines</summary>
 <br>
 
-| Texte | Référence | État au 23 septembre 2026 |
+| Text | Reference | Status on 24 September 2026 |
 |---|---|---|
-| RGPD | Règlement (UE) 2016/679 | Applicable depuis le 25 mai 2018 |
-| NIS 2 | Directive (UE) 2022/2555 | Non transposée en France ; projet de loi résilience examiné à partir du 7 octobre 2026 |
-| DORA | Règlement (UE) 2022/2554 | Applicable depuis le 17 janvier 2025 |
-| CRA | Règlement (UE) 2024/2847 | Signalement (art. 14) depuis le 11 septembre 2026 ; application complète le 11 décembre 2027 |
+| GDPR | Regulation (EU) 2016/679 | Applicable since 25 May 2018 |
+| NIS2 | Directive (EU) 2022/2555 | Not yet transposed in France; resilience bill debated from 7 October 2026. Requirements detailed by the ReCyF v2.5, a working document that may change before the implementing decree |
+| DORA | Regulation (EU) 2022/2554 | Applicable since 17 January 2025 |
+| CRA | Regulation (EU) 2024/2847 | Reporting (Art. 14) since 11 September 2026; full application on 11 December 2027 |
+| AI Act | Regulation (EU) 2024/1689, amended by Regulation (EU) 2026/1744 | Prohibitions and AI literacy since 2 February 2025; general application since 2 August 2026; high-risk systems on 2 December 2027 (Annex III) and 2 August 2028 (Annex I) |
 
-| Régime | Délais | Fondement |
+| Regime | Deadlines | Basis |
 |---|---|---|
-| RGPD | 72 h après la prise de connaissance | art. 33 |
-| NIS 2 | alerte 24 h · notification 72 h · rapport final 1 mois | art. 23 § 4 |
-| DORA | notification initiale 4 h après classification comme majeur, au plus tard 24 h après détection · rapport intermédiaire 72 h · rapport final 1 mois | art. 19, règlement délégué (UE) 2025/301 |
-| CRA | alerte 24 h · notification 72 h · rapport final 14 jours après correctif (vulnérabilité) ou 1 mois (incident) | art. 14 |
+| GDPR | 72 h after awareness | Art. 33 |
+| NIS2 | early warning 24 h · notification 72 h · final report 1 month | Art. 23(4) |
+| DORA | initial notification 4 h after classification as major, at the latest 24 h after detection · intermediate report 72 h · final report 1 month | Art. 19, Delegated Regulation (EU) 2025/301 |
+| CRA | early warning 24 h · notification 72 h · final report 14 days after a fix (vulnerability) or 1 month (incident) | Art. 14 |
+| AI Act | serious incident: 15 days, 10 days in case of death, 2 days for a widespread infringement or critical infrastructure | Art. 73 |
 
 </details>
 
-Les sources et leurs conditions de réutilisation sont détaillées dans [texts/README.md](texts/README.md). Les évolutions du corpus sont consignées dans le [journal des modifications](CHANGELOG.md).
+Official texts are kept as PDF in [texts/](texts/README.md), with their reuse conditions. Corpus changes are recorded in the [changelog](CHANGELOG.md).
 
 ---
 
 ## Architecture
 
 ```
-┌──────────────────────────────┐        ┌──────────────────────────┐
-│ Interface — React, TypeScript│  /api  │ Serveur — FastAPI         │
-│ Moteurs réglementaires       │ ─────► │ Persistance SQLite        │
-│ Rapports PDF                 │        │ Aucune logique métier     │
-└──────────────────────────────┘        └──────────────────────────┘
+┌──────────────────────────────┐        ┌───────────────────────────┐
+│ Interface: React, TypeScript │  /api  │ Server: FastAPI           │
+│ Regulatory engines           │ ─────► │ SQLite persistence        │
+│ PDF reports                  │        │ Profiles and sessions     │
+└──────────────────────────────┘        └───────────────────────────┘
 ```
 
-Toute la logique réglementaire — qualification, périmètre, priorisation, délais — s'exécute dans l'interface à partir des réponses enregistrées. Une évolution du corpus s'applique ainsi immédiatement à toutes les entités existantes. Le serveur ne fait que conserver les données.
+All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) runs in the interface from the stored answers, so a corpus update applies at once to every existing entity. The server stores data and handles authentication.
 
-**Pile technique** — React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, D3, @react-pdf/renderer · FastAPI, SQLModel, SQLite · Vitest, pytest.
-
----
-
-## Confidentialité et sécurité
-
-- Les données ne quittent pas le poste : pas de compte, pas de télémétrie, pas d'appel à un service tiers.
-- Le serveur écoute par défaut sur `127.0.0.1` et n'intègre pas d'authentification. Voir [SECURITY.md](SECURITY.md).
-- Le Trust Center ne publie qu'un instantané sans donnée sensible, par lien révocable.
+**Stack:** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt · Vitest, pytest.
 
 ---
 
-## Contribuer
+## Privacy and security
 
-Les contributions sont bienvenues — en particulier les **mises à jour du corpus**, à signaler avec une source officielle via le modèle d'issue « Évolution réglementaire ». Consultez le [guide de contribution](CONTRIBUTING.md) et la [feuille de route](ROADMAP.md).
+- Data stays on the machine: no telemetry, no call to a third-party service.
+- Each profile is protected by a password, hashed with bcrypt and never stored in clear. Sessions are server-side, carried by an `HttpOnly`, `SameSite=Strict` cookie, and revoked on sign-out.
+- The server listens on `127.0.0.1` by default. Read [SECURITY.md](SECURITY.md) before exposing it on a network.
+- The Trust Center is still a demo feature: it only works locally for now. Online sharing will come in a future update.
+
+---
+
+## Contributing
+
+Contributions are welcome, especially **corpus updates**, to be reported with an official source through the "Regulatory update" issue template. Every change goes through a pull request reviewed and approved by the maintainer. See the [contributing guide](CONTRIBUTING.md).
 
 ## Licence
 
-Code publié sous licence [MIT](LICENSE). Les textes réglementaires restent la propriété de leurs auteurs ; leurs conditions de réutilisation figurent dans [texts/README.md](texts/README.md).
+Code released under the [MIT](LICENSE) licence. Regulatory texts remain the property of their authors; their reuse conditions are listed in [texts/README.md](texts/README.md). ISO/IEC 27001 control titles are cited as publicly documented; the text of the standard is not reproduced.
 
 ---
 
-<details>
-<summary><strong>English summary</strong></summary>
-<br>
+<a id="français"></a>
 
-**Scopeo** is an open-source, local-first scoping and gap-assessment tool for four EU frameworks: **GDPR**, **NIS 2**, **DORA** and the **Cyber Resilience Act**. It determines which texts apply to an organisation and why (article by article), deduplicates overlapping requirements, prioritises remediation, identifies the authorities to notify in case of an incident, and generates board-ready PDF reports. It runs entirely on your machine (FastAPI + SQLite backend, React front-end). The interface and regulatory content are currently in French, with a focus on French transposition and supervisory authorities. It provides scoping assistance and does not constitute legal advice.
+<div align="center">
 
-</details>
+## Français
+
+**Savoir ce qui s'applique, et par quoi commencer.**
+
+Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD**, **NIS2**, **DORA**, le **Cyber Resilience Act** et l'**AI Act**. Elle fonctionne sur votre poste, sans service tiers.
+
+[English](#scopeo) · **Français**
+
+<img src="docs/assets/demo-fr.gif" alt="Parcours : connexion, tableau de bord, qualification, croisements, évaluation, ISO 27001" width="100%">
+
+</div>
+
+### Pourquoi
+
+Cinq textes européens encadrent désormais la sécurité, les données et les systèmes d'IA des organisations. Ils se recouvrent, divergent parfois, et l'un prime sur l'autre dans certains cas (DORA sur NIS2 pour les entités financières, par exemple). Avant d'engager un budget de conformité, une organisation doit savoir quels textes s'appliquent et à quel titre, ce qu'ils exigent précisément, où une seule action en satisfait plusieurs, et par quoi commencer.
+
+Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiable article par article, et produit les livrables attendus par une direction.
+
+> **Positionnement.** La plateforme intervient **en amont** : cadrage et diagnostic. Elle ne vérifie pas de preuves et ne pilote pas la conformité dans la durée.
+>
+> **Aide au cadrage, pas un avis juridique.** Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus.
+>
+> **Appliquée à la France.** NIS2 est lu à travers le Référentiel Cyber France (ReCyF) de l'ANSSI, et les autorités désignées sont les autorités françaises.
+
+### Fonctionnalités
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+#### Qualification démontrée
+35 questions, chacune rattachée à l'article qu'elle établit. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre.
+
+</td>
+<td width="50%"><img src="docs/assets/fr/qualification.png" alt="Qualification et comparateur avant / après"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/fr/mutualisation.png" alt="Vue Mutualisation des croisements"></td>
+<td width="50%" valign="top">
+
+#### Exigences mutualisées
+40 exigences unifiées relient les obligations des cinq textes. La vue **Mutualisation** montre les combinaisons de textes couvertes par une action unique ; divergences et hiérarchies sont nommées, avec la règle qui commande.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+#### Module ISO 27001 facultatif
+Déclaration des 93 contrôles de l'annexe A par thème ou contrôle par contrôle, ou import d'une déclaration d'applicabilité. Les exigences NIS2, DORA et CRA correspondantes sont pré-remplies et restent modifiables ; une alerte signale les contrôles exclus alors qu'un texte les impose ; un graphique répartit chaque référentiel entre ce qu'ISO couvre, ce qu'il pourrait couvrir et ce qui échappe à son champ. Le module reste toujours contournable.
+
+</td>
+<td width="50%"><img src="docs/assets/fr/iso-overlap.png" alt="Module ISO 27001 : contrôles exclus et recoupement"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/fr/corpus.png" alt="Corpus réglementaire"></td>
+<td width="50%" valign="top">
+
+#### NIS2 détaillé par le ReCyF
+Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité.
+
+</td>
+</tr>
+</table>
+
+**Et aussi :** évaluation à trois états · priorisation et feuille de route en quatre vagues · échéancier interactif · qui notifier en cas d'incident et fiche réflexe · notes d'entretien · Trust Center (démonstration, en local pour l'instant) · recherche transverse · interface en français et en anglais · thème clair et sombre · profils protégés par mot de passe.
+
+### Rapports d'exemple
+
+| Document | Destinataires | Format |
+|---|---|---|
+| [Note au comité de direction](docs/samples/note-comex-finexa.pdf) | Direction, COMEX | 2 pages |
+| [Rapport de cadrage complet](docs/samples/rapport-cadrage-finexa.pdf) | Conseil, RSSI, DPO, équipe projet | 6 à 12 pages |
+| [Fiche réflexe incident](docs/samples/fiche-reflexe-finexa.pdf) | Diffusion interne | 1 page |
+
+### Démarrage rapide
+
+Le [guide d'installation](docs/installation.md) détaille chaque étape. En bref, avec Docker Desktop :
+
+```bash
+mkdir scopeo && cd scopeo
+curl -o compose.yaml https://raw.githubusercontent.com/raymondboustany/scopeo/main/compose.yaml
+docker compose up -d
+```
+
+Ouvrez ensuite **http://localhost:8000**. Sans Docker, téléchargez l'archive portable de la [dernière version](https://github.com/raymondboustany/scopeo/releases/latest) et lancez `start.bat` ou `./start.sh`.
+
+À l'accueil, **Mode invité** ouvre la démonstration *Finexa*, effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez un profil protégé par mot de passe, puis une entité.
+
+### Confidentialité et sécurité
+
+- Les données ne quittent pas le poste : aucune télémétrie, aucun appel à un service tiers.
+- Chaque profil est protégé par un mot de passe haché avec bcrypt, jamais conservé en clair. La session est tenue côté serveur et révoquée à la déconnexion.
+- Le Trust Center est encore une fonction de démonstration, utilisable en local uniquement ; le partage en ligne arrivera dans une prochaine mise à jour.
+- Voir [SECURITY.md](SECURITY.md) avant toute exposition sur un réseau.
+
+### Contribuer
+
+Les contributions sont bienvenues, en particulier les mises à jour du corpus avec une source officielle. Toute modification passe par une pull request relue et approuvée par le mainteneur. Voir le [guide de contribution](CONTRIBUTING.md).
+
+### Licence
+
+Code publié sous licence [MIT](LICENSE). Les textes réglementaires restent la propriété de leurs auteurs ; voir [texts/README.md](texts/README.md).

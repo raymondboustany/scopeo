@@ -5,7 +5,7 @@ const URL = 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R284
 const ANSSI = (label: string, url: string) => ({ label, issuer: 'ANSSI', url })
 
 /**
- * Obligations CRA — Règlement (UE) 2024/2847 sur la cyberrésilience.
+ * Obligations CRA : Règlement (UE) 2024/2847 sur la cyberrésilience.
  *
  * Le texte s'applique par paliers (art. 71) : le signalement de l'article 14
  * est exigible depuis le 11 septembre 2026, le reste au 11 décembre 2027.
@@ -18,7 +18,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Article 14, paragraphes 1 et 2',
     order: 1401,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Signalement des vulnérabilités activement exploitées',
     statement:
       "Notifier toute vulnérabilité activement exploitée dans un produit, simultanément au CSIRT coordinateur et à l'ENISA, par la plateforme unique de signalement : alerte précoce sous 24 heures, notification sous 72 heures, rapport final au plus tard 14 jours après la mise à disposition d'un correctif ou d'une mesure d'atténuation. Obligation exigible depuis le 11 septembre 2026, y compris pour les produits mis sur le marché avant cette date.",
@@ -32,7 +32,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
       { id: 'CRA-A14V-R4', text: "Remettre un rapport final au plus tard 14 jours après la mise à disposition du correctif : gravité, acteur malveillant le cas échéant, mise à jour déployée.", type: 'notification' },
       { id: 'CRA-A14V-R5', text: "Disposer d'un accès opérationnel à la plateforme unique de signalement de l'ENISA.", type: 'organisationnel' },
     ],
-    deadline: { kind: 'declenchee', label: "24 h — 72 h — 14 jours après correctif", hours: 24 },
+    deadline: { kind: 'declenchee', label: "24 h, 72 h, 14 jours après correctif", hours: 24 },
     evidence: ["Procédure de signalement CRA", "Accès à la plateforme unique de signalement", "Journal horodaté des notifications"],
     sanctionTier: 'CRA-T1',
     effort: 3,
@@ -40,17 +40,17 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     themes: ['REP-02', 'DET-03'],
     conditions: [{ key: 'cra_roles', op: 'has', value: ['fabricant'], label: 'Fabricant de produits comportant des éléments numériques' }],
     sourceUrl: URL,
-    guidance: [ANSSI('Cyber Resilience Act — ANSSI', 'https://cyber.gouv.fr/reglementation/cybersecurite-des-produits/cyber-resilience-act/')],
+    guidance: [ANSSI('Cyber Resilience Act : ANSSI', 'https://cyber.gouv.fr/reglementation/cybersecurite-des-produits/cyber-resilience-act/')],
   },
   {
     id: 'CRA-A14-INC',
     regulation: 'CRA',
     article: 'Article 14, paragraphes 3 et 4',
     order: 1402,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Signalement des incidents graves affectant la sécurité du produit',
     statement:
-      "Notifier tout incident grave ayant des répercussions sur la sécurité d'un produit — par exemple la compromission de l'infrastructure de mise à jour — selon la même séquence : alerte précoce sous 24 heures, notification sous 72 heures, rapport final dans un délai d'un mois après la notification.",
+      "Notifier tout incident grave ayant des répercussions sur la sécurité d'un produit (par exemple la compromission de l'infrastructure de mise à jour) selon la même séquence : alerte précoce sous 24 heures, notification sous 72 heures, rapport final dans un délai d'un mois après la notification.",
     appliesTo: ['Fabricant'],
     requirements: [
       { id: 'CRA-A14I-R1', text: "Qualifier un incident grave : atteinte à la disponibilité, à l'authenticité, à l'intégrité ou à la confidentialité de données ou fonctions sensibles, ou exécution de code malveillant dans le produit.", type: 'organisationnel' },
@@ -58,7 +58,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
       { id: 'CRA-A14I-R3', text: "Transmettre une notification d'incident sous 72 heures, avec l'évaluation initiale et les mesures d'atténuation.", type: 'notification' },
       { id: 'CRA-A14I-R4', text: "Remettre un rapport final dans le mois suivant la notification : cause profonde, mesures d'atténuation appliquées et en cours.", type: 'notification' },
     ],
-    deadline: { kind: 'declenchee', label: '24 h — 72 h — 1 mois', hours: 24 },
+    deadline: { kind: 'declenchee', label: '24 h, 72 h, 1 mois', hours: 24 },
     evidence: ["Grille de qualification des incidents graves", "Rapports d'incident transmis"],
     sanctionTier: 'CRA-T1',
     effort: 2,
@@ -72,10 +72,10 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Article 14, paragraphe 8',
     order: 1403,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Information des utilisateurs',
     statement:
-      "Après avoir eu connaissance d'une vulnérabilité activement exploitée ou d'un incident grave, informer les utilisateurs concernés — et, le cas échéant, l'ensemble des utilisateurs — des conséquences et des mesures d'atténuation ou de correction qu'ils peuvent mettre en œuvre, dans un format structuré et lisible par machine lorsque c'est approprié.",
+      "Après avoir eu connaissance d'une vulnérabilité activement exploitée ou d'un incident grave, informer les utilisateurs concernés, et le cas échéant l'ensemble des utilisateurs, des conséquences et des mesures d'atténuation ou de correction qu'ils peuvent mettre en œuvre, dans un format structuré et lisible par machine lorsque c'est approprié.",
     appliesTo: ['Fabricant'],
     requirements: [
       { id: 'CRA-A14U-R1', text: "Tenir un moyen d'atteindre les utilisateurs du produit, y compris ceux acquis par l'intermédiaire d'un distributeur.", type: 'organisationnel' },
@@ -95,10 +95,10 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Article 13, paragraphes 1 à 4',
     order: 1301,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Évaluation des risques de cybersécurité du produit',
     statement:
-      "Concevoir, développer et fabriquer le produit conformément aux exigences essentielles de l'annexe I, partie I, sur la base d'une évaluation des risques de cybersécurité documentée, fondée sur l'utilisation prévue et raisonnablement prévisible, prise en compte à chaque phase — planification, conception, développement, production, livraison, maintenance — et versée à la documentation technique.",
+      "Concevoir, développer et fabriquer le produit conformément aux exigences essentielles de l'annexe I, partie I, sur la base d'une évaluation des risques de cybersécurité documentée, fondée sur l'utilisation prévue et raisonnablement prévisible, prise en compte à chaque phase (planification, conception, développement, production, livraison, maintenance) et versée à la documentation technique.",
     quote:
       "les fabricants procèdent à une évaluation des risques de cybersécurité associés à un produit comportant des éléments numériques et tiennent compte des résultats de cette évaluation au cours des phases de planification, de conception, de développement, de production, de livraison et de maintenance",
     appliesTo: ['Fabricant'],
@@ -121,7 +121,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Annexe I, partie I',
     order: 9001,
-    chapter: 'Annexe I — Exigences essentielles de cybersécurité',
+    chapter: 'Annexe I : Exigences essentielles de cybersécurité',
     title: 'Propriétés de sécurité du produit',
     statement:
       "Mettre le produit sur le marché sans vulnérabilité exploitable connue, avec une configuration sécurisée par défaut, une protection contre les accès non autorisés, le chiffrement des données stockées et transmises, la minimisation des données et de la surface d'attaque, la journalisation des événements de sécurité et la possibilité de corriger les vulnérabilités par des mises à jour de sécurité.",
@@ -149,7 +149,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Annexe I, partie II',
     order: 9002,
-    chapter: 'Annexe I — Exigences essentielles de cybersécurité',
+    chapter: 'Annexe I : Exigences essentielles de cybersécurité',
     title: 'Gestion des vulnérabilités et nomenclature logicielle',
     statement:
       "Identifier et documenter les composants et vulnérabilités du produit, notamment par une nomenclature logicielle (SBOM) dans un format lisible par machine couvrant au moins les dépendances de premier niveau ; corriger sans délai par des mises à jour de sécurité gratuites, distribuées séparément des mises à jour fonctionnelles lorsque c'est techniquement possible ; tester régulièrement ; publier les vulnérabilités corrigées ; appliquer une politique de divulgation coordonnée.",
@@ -176,7 +176,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Article 13, paragraphes 5 et 6',
     order: 1302,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Diligence sur les composants tiers et logiciels libres',
     statement:
       "Faire preuve de diligence raisonnable lors de l'intégration de composants tiers, y compris de logiciels libres, pour qu'ils ne compromettent pas la sécurité du produit ; signaler toute vulnérabilité identifiée dans un composant à la personne qui en assure la maintenance, et y remédier.",
@@ -200,7 +200,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Article 13, paragraphes 8, 9 et 19',
     order: 1303,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: "Période d'assistance d'au moins cinq ans",
     statement:
       "Fixer une période d'assistance reflétant la durée d'utilisation attendue du produit, d'au moins cinq ans sauf utilisation prévue plus courte ; en afficher la date de fin, au moins mois et année, au moment de l'achat ; maintenir chaque mise à jour de sécurité disponible pendant dix ans ou jusqu'à la fin de la période d'assistance.",
@@ -227,10 +227,10 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Article 13, paragraphe 17',
     order: 1304,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Point de contact unique pour les utilisateurs',
     statement:
-      "Désigner un point de contact unique, facilement identifiable, permettant aux utilisateurs de communiquer directement et rapidement avec le fabricant — notamment pour signaler une vulnérabilité — par des moyens qui ne se limitent pas à des outils automatisés.",
+      "Désigner un point de contact unique, facilement identifiable, permettant aux utilisateurs de communiquer directement et rapidement avec le fabricant, notamment pour signaler une vulnérabilité, par des moyens qui ne se limitent pas à des outils automatisés.",
     appliesTo: ['Fabricant'],
     requirements: [
       { id: 'CRA-A13P-R1', text: "Désigner et publier un point de contact unique, mentionné dans les instructions de l'annexe II.", type: 'organisationnel' },
@@ -248,13 +248,13 @@ export const CRA_OBLIGATIONS: Obligation[] = [
   {
     id: 'CRA-A31-DOC',
     regulation: 'CRA',
-    article: 'Articles 13 § 12-13, 28 et 31 — Annexe VII',
+    article: 'Articles 13 § 12-13, 28 et 31, annexe VII',
     shortRef: '31 · Ann. VII',
     order: 3101,
-    chapter: 'Chapitre III — Conformité du produit',
+    chapter: 'Chapitre III : Conformité du produit',
     title: 'Documentation technique et déclaration UE de conformité',
     statement:
-      "Établir avant la mise sur le marché la documentation technique de l'annexe VII — dont l'évaluation des risques et la nomenclature logicielle — et la déclaration UE de conformité ; les tenir à disposition des autorités de surveillance du marché pendant dix ans ou pendant la période d'assistance si elle est plus longue.",
+      "Établir avant la mise sur le marché la documentation technique de l'annexe VII (dont l'évaluation des risques et la nomenclature logicielle) et la déclaration UE de conformité ; les tenir à disposition des autorités de surveillance du marché pendant dix ans ou pendant la période d'assistance si elle est plus longue.",
     appliesTo: ['Fabricant'],
     requirements: [
       { id: 'CRA-A31-R1', text: "Constituer la documentation technique de l'annexe VII pour chaque produit.", type: 'documentaire' },
@@ -273,13 +273,13 @@ export const CRA_OBLIGATIONS: Obligation[] = [
   {
     id: 'CRA-A32-CONF',
     regulation: 'CRA',
-    article: 'Articles 30 et 32 — Annexes III et IV',
+    article: 'Articles 30 et 32, annexes III et IV',
     shortRef: '32 · Ann. III',
     order: 3201,
-    chapter: 'Chapitre III — Conformité du produit',
+    chapter: 'Chapitre III : Conformité du produit',
     title: 'Évaluation de la conformité et marquage CE',
     statement:
-      "Appliquer la procédure d'évaluation de la conformité correspondant à la catégorie du produit — contrôle interne pour les produits par défaut, norme harmonisée ou tierce partie pour la classe I, tierce partie obligatoire pour la classe II, certification européenne pour les produits critiques — puis apposer le marquage CE.",
+      "Appliquer la procédure d'évaluation de la conformité correspondant à la catégorie du produit (contrôle interne pour les produits par défaut, norme harmonisée ou tierce partie pour la classe I, tierce partie obligatoire pour la classe II, certification européenne pour les produits critiques), puis apposer le marquage CE.",
     appliesTo: ['Fabricant'],
     requirements: [
       { id: 'CRA-A32-R1', text: "Déterminer la catégorie de chaque produit au regard du règlement d'exécution 2025/2392.", type: 'organisationnel' },
@@ -300,7 +300,7 @@ export const CRA_OBLIGATIONS: Obligation[] = [
     regulation: 'CRA',
     article: 'Articles 19 et 20',
     order: 1901,
-    chapter: "Chapitre II — Obligations des opérateurs économiques",
+    chapter: "Chapitre II : Obligations des opérateurs économiques",
     title: 'Obligations des importateurs et distributeurs',
     statement:
       "Ne mettre à disposition que des produits conformes : vérifier le marquage CE, la déclaration de conformité, les instructions et l'identification du fabricant ; informer sans délai le fabricant et les autorités de surveillance du marché d'une vulnérabilité ou d'un risque important ; retirer ou rappeler le produit si nécessaire.",

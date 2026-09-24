@@ -17,25 +17,27 @@ import { useScoping } from '@/lib/hooks'
 import { useEntityEditor } from '@/lib/queries'
 import { cn, formatDate } from '@/lib/utils'
 import type { RegulationId, TimelineEvent } from '@/types/domain'
+import { REG_LABEL } from '@/components/ui/tokens'
+import { COLON, LOCALE, tr } from '@/i18n'
 
 type Lane = RegulationId | 'TRANSVERSE'
 const LANES: Lane[] = [...REGULATION_ORDER, 'TRANSVERSE']
-const LANE_LABEL: Record<Lane, string> = { RGPD: 'RGPD', NIS2: 'NIS 2', DORA: 'DORA', CRA: 'CRA', TRANSVERSE: 'Transverse' }
+const LANE_LABEL: Record<Lane, string> = { ...REG_LABEL, TRANSVERSE: tr('Transverse', 'Cross-cutting') }
 const laneColor = (l: Lane) => (l === 'TRANSVERSE' ? 'var(--c-ink-3)' : REG_STYLE[l].hex)
 
 const KIND_LABEL: Record<TimelineEvent['kind'], { label: string; tone: 'neutral' | 'accent' | 'caution' | 'critical' | 'brass' }> = {
-  application: { label: 'Entrée en application', tone: 'critical' },
-  transposition: { label: 'Transposition', tone: 'caution' },
-  acte: { label: "Texte d'application", tone: 'accent' },
-  echeance: { label: 'Échéance', tone: 'brass' },
-  surveillance: { label: 'Surveillance', tone: 'neutral' },
-  projet: { label: 'En cours', tone: 'neutral' },
+  application: { label: tr('Entrée en application', 'Start of application'), tone: 'critical' },
+  transposition: { label: tr('Transposition', 'Transposition'), tone: 'caution' },
+  acte: { label: tr("Texte d'application", 'Implementing act'), tone: 'accent' },
+  echeance: { label: tr('Échéance', 'Deadline'), tone: 'brass' },
+  surveillance: { label: tr('Surveillance', 'Supervision'), tone: 'neutral' },
+  projet: { label: tr('En cours', 'In progress'), tone: 'neutral' },
 }
 
 const DAY = 86_400_000
 const LANE_H = 46
 const TOP = 34
-const LEFT = 92
+const LEFT = 116
 const HEIGHT = TOP + LANES.length * LANE_H + 18
 
 export default function TimelinePage() {
@@ -85,9 +87,9 @@ export default function TimelinePage() {
   return (
     <>
       <PageHeader
-        eyebrow="Pilotage"
-        title="Échéancier réglementaire"
-        lead="Les dates qui structurent le dispositif, y compris celles qui pèsent sur les États membres. Faites défiler pour zoomer, glissez pour vous déplacer, cliquez sur un jalon pour son détail."
+        eyebrow={tr('Pilotage', 'Steering')}
+        title={tr('Échéancier réglementaire', 'Regulatory timeline')}
+        lead={tr('Les dates qui structurent le dispositif, y compris celles qui pèsent sur les États membres. Faites défiler pour zoomer, glissez pour vous déplacer, cliquez sur un jalon pour son détail.', 'The dates that shape the framework, including those binding on Member States. Scroll to zoom, drag to move, click a milestone for details.')}
       />
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -110,8 +112,8 @@ export default function TimelinePage() {
         })}
         {qualified ? (
           <label className="ml-auto inline-flex items-center gap-2 text-xs text-ink-2">
-            <Switch checked={scopeOnly} onCheckedChange={setScopeOnly} label="Ce qui concerne l'entité" />
-            Ce qui concerne l'entité
+            <Switch checked={scopeOnly} onCheckedChange={setScopeOnly} label={tr("Ce qui concerne l'entité", 'What concerns the entity')} />
+            {tr("Ce qui concerne l'entité", 'What concerns the entity')}
           </label>
         ) : null}
       </div>
@@ -130,11 +132,11 @@ export default function TimelinePage() {
           onClick={() => select_(nearest.id)}
           className="mt-3 flex w-full items-center gap-3 rounded-md border border-accent-line bg-accent-wash px-4 py-2.5 text-left text-sm transition-colors hover:bg-accent-wash/80"
         >
-          {nearestPulses ? <Led tone="accent" label="Prochain jalon non consulté" /> : <CalendarClock size={14} className="text-accent" />}
-          <span className="text-ink-2">Prochain jalon pour {entity?.name ?? 'vous'} :</span>
+          {nearestPulses ? <Led tone="accent" label={tr('Prochain jalon non consulté', 'Next unread milestone')} /> : <CalendarClock size={14} className="text-accent" />}
+          <span className="text-ink-2">{tr(`Prochain jalon pour ${entity?.name ?? 'vous'} :`, `Next milestone for ${entity?.name ?? 'you'}:`)}</span>
           <span className="font-medium text-ink">{nearest.title}</span>
           <span className="ml-auto font-mono text-2xs text-accent">
-            {formatDate(nearest.date)} · dans {Math.max(0, Math.round((new Date(nearest.date).getTime() - now.getTime()) / DAY))} j
+            {formatDate(nearest.date)} · {tr(`dans ${Math.max(0, Math.round((new Date(nearest.date).getTime() - now.getTime()) / DAY))} j`, `in ${Math.max(0, Math.round((new Date(nearest.date).getTime() - now.getTime()) / DAY))} d`)}
           </span>
         </button>
       ) : null}
@@ -150,7 +152,7 @@ export default function TimelinePage() {
           </AnimatePresence>
 
           <Card>
-            <CardHeader title="Liste chronologique" subtitle={`${events.length} jalon${events.length > 1 ? 's' : ''} affiché${events.length > 1 ? 's' : ''}`} />
+            <CardHeader title={tr('Liste chronologique', 'Chronological list')} subtitle={tr(`${events.length} jalon${events.length > 1 ? 's' : ''} affiché${events.length > 1 ? 's' : ''}`, `${events.length} milestone${events.length > 1 ? 's' : ''} shown`)} />
             <ol className="divide-y divide-rule">
               {events.map((e) => {
                 const past = new Date(e.date).getTime() < now.getTime() - DAY / 2
@@ -161,7 +163,7 @@ export default function TimelinePage() {
                       className={cn('flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors hover:bg-raised/60', e.id === selectedId && 'bg-accent-wash')}
                     >
                       <span className={cn('w-24 shrink-0 font-mono text-2xs', past ? 'text-ink-4' : 'text-ink-2')}>{formatDate(e.date)}</span>
-                      {e.regulation === 'TRANSVERSE' ? <Tag>Transverse</Tag> : <RegChip id={e.regulation} size="sm" />}
+                      {e.regulation === 'TRANSVERSE' ? <Tag>{LANE_LABEL.TRANSVERSE}</Tag> : <RegChip id={e.regulation} size="sm" />}
                       <span className={cn('min-w-0 flex-1 truncate text-sm', past ? 'text-ink-3' : 'text-ink')}>{e.title}</span>
                       {e.id === nearest?.id && nearestPulses ? <Led tone="accent" /> : null}
                     </button>
@@ -173,8 +175,8 @@ export default function TimelinePage() {
         </div>
 
         <aside className="min-w-0">
-          <SectionRule>Charges récurrentes</SectionRule>
-          <p className="mt-2 text-xs leading-relaxed text-ink-3">Ces obligations reviennent à échéance fixe, indépendamment du calendrier législatif.</p>
+          <SectionRule>{tr('Charges récurrentes', 'Recurring duties')}</SectionRule>
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">{tr('Ces obligations reviennent à échéance fixe, indépendamment du calendrier législatif.', 'These obligations recur at fixed intervals, regardless of the legislative calendar.')}</p>
           <ul className="mt-3 space-y-2">
             {RECURRING_DUTIES.filter((d) => (scopeOnly && qualified ? applicable.includes(d.regulation) : true)).map((d) => (
               <li key={d.id}>
@@ -190,10 +192,11 @@ export default function TimelinePage() {
               </li>
             ))}
           </ul>
-          <Callout tone="caution" className="mt-4" title="NIS 2 toujours pas transposée">
-            La directive devait être transposée au 17 octobre 2024. Au {CORPUS_DATE_LONG}, le projet de loi résilience n'est pas promulgué ;
-            l'examen en séance publique s'ouvre le 7 octobre. Le ReCyF publié en mars 2026 fixe déjà le contenu attendu : le délai de mise en
-            conformité se réduira d'autant.
+          <Callout tone="caution" className="mt-4" title={tr('NIS2 toujours pas transposée', 'NIS2 still not transposed')}>
+            {tr(
+              `La directive devait être transposée au 17 octobre 2024. Au ${CORPUS_DATE_LONG}, le projet de loi résilience n'est pas promulgué ; l'examen en séance publique s'ouvre le 7 octobre. Le ReCyF publié en mars 2026 fixe déjà le contenu attendu : le délai de mise en conformité se réduira d'autant.`,
+              `The directive was due to be transposed by 17 October 2024. As of ${CORPUS_DATE_LONG}, the French resilience bill has not been enacted; the plenary debate opens on 7 October. The ReCyF published in March 2026 already sets out what is expected: the time left to comply will shrink accordingly.`,
+            )}
           </Callout>
         </aside>
       </div>
@@ -303,7 +306,7 @@ function TimelineChart({
 
   const span = x.domain()[1].getTime() - x.domain()[0].getTime()
   const ticks = x.ticks(Math.max(4, Math.floor(width / 110)))
-  const fmt = new Intl.DateTimeFormat('fr-FR', span > 5 * 365 * DAY ? { year: 'numeric' } : span > 400 * DAY ? { month: 'short', year: 'numeric' } : { day: 'numeric', month: 'short' })
+  const fmt = new Intl.DateTimeFormat(LOCALE, span > 5 * 365 * DAY ? { year: 'numeric' } : span > 400 * DAY ? { month: 'short', year: 'numeric' } : { day: 'numeric', month: 'short' })
   const visibleLanes = LANES.filter((l) => !hiddenLanes.includes(l))
   const laneY = (l: Lane) => TOP + visibleLanes.indexOf(l) * LANE_H + LANE_H / 2
   const nowX = x(now)
@@ -313,19 +316,19 @@ function TimelineChart({
   return (
     <Card className="overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rule px-4 py-2">
-        <span className="text-2xs text-ink-3">Molette ou pincement pour zoomer · glisser pour se déplacer</span>
+        <span className="text-2xs text-ink-3">{tr('Molette ou pincement pour zoomer · glisser pour se déplacer', 'Wheel or pinch to zoom · drag to move')}</span>
         <div className="flex items-center gap-1">
           <Button size="sm" variant="ghost" icon={<Crosshair size={12} />} onClick={() => focusOn(now, Math.max(t.k, 4))}>
-            Aujourd'hui
+            {tr("Aujourd'hui", 'Today')}
           </Button>
-          <Button size="sm" variant="ghost" aria-label="Dézoomer" onClick={() => zoomBy(1 / 1.6)}>
+          <Button size="sm" variant="ghost" aria-label={tr('Dézoomer', 'Zoom out')} onClick={() => zoomBy(1 / 1.6)}>
             <Minus size={13} />
           </Button>
-          <Button size="sm" variant="ghost" aria-label="Zoomer" onClick={() => zoomBy(1.6)}>
+          <Button size="sm" variant="ghost" aria-label={tr('Zoomer', 'Zoom in')} onClick={() => zoomBy(1.6)}>
             <Plus size={13} />
           </Button>
           <Button size="sm" variant="ghost" icon={<RotateCcw size={12} />} onClick={reset}>
-            Tout
+            {tr('Tout', 'All')}
           </Button>
         </div>
       </div>
@@ -336,7 +339,7 @@ function TimelineChart({
           height={h}
           className="block cursor-grab touch-none select-none active:cursor-grabbing"
           role="img"
-          aria-label={`Frise de ${events.length} jalons réglementaires`}
+          aria-label={tr(`Frise de ${events.length} jalons réglementaires`, `Timeline of ${events.length} regulatory milestones`)}
         >
           <defs>
             <clipPath id="tl-clip">
@@ -369,9 +372,9 @@ function TimelineChart({
             {/* Aujourd'hui */}
             <g transform={`translate(${nowX},0)`}>
               <line y1={TOP - 4} y2={h - 12} stroke="var(--c-accent)" strokeWidth={1.5} />
-              <rect x={-30} y={h - 16} width={60} height={14} rx={7} fill="var(--c-accent)" />
+              <rect x={-32} y={h - 16} width={64} height={14} rx={7} fill="var(--c-accent)" />
               <text y={h - 6} textAnchor="middle" style={{ fill: 'var(--c-accent-ink)', fontSize: 9, fontWeight: 600 }}>
-                aujourd'hui
+                {tr("aujourd'hui", 'today')}
               </text>
             </g>
 
@@ -429,16 +432,16 @@ function TimelineChart({
       </div>
       <div className="flex flex-wrap items-center gap-4 border-t border-rule px-4 py-2 text-2xs text-ink-3">
         <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rotate-45 rounded-[2px] bg-ink-3" /> Entrée en application
+          <span className="size-2.5 rotate-45 rounded-[2px] bg-ink-3" /> {tr('Entrée en application', 'Start of application')}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-full bg-ink-3" /> Autre jalon
+          <span className="size-2.5 rounded-full bg-ink-3" /> {tr('Autre jalon', 'Other milestone')}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-full border-2 border-ink-3 bg-overlay" /> Passé
+          <span className="size-2.5 rounded-full border-2 border-ink-3 bg-overlay" /> {tr('Passé', 'Past')}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <Led tone="accent" /> Prochain jalon non consulté
+          <Led tone="accent" /> {tr('Prochain jalon non consulté', 'Next unread milestone')}
         </span>
       </div>
     </Card>
@@ -466,11 +469,11 @@ function EventDetail({
       <div className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            {e.regulation === 'TRANSVERSE' ? <Tag>Transverse</Tag> : <RegChip id={e.regulation} />}
+            {e.regulation === 'TRANSVERSE' ? <Tag>{LANE_LABEL.TRANSVERSE}</Tag> : <RegChip id={e.regulation} />}
             <Tag tone={kind.tone}>{kind.label}</Tag>
-            {qualified ? concerns ? <Tag tone="accent">Concerne l'entité</Tag> : <Tag>Ne concerne pas l'entité</Tag> : null}
+            {qualified ? concerns ? <Tag tone="accent">{tr("Concerne l'entité", 'Concerns the entity')}</Tag> : <Tag>{tr("Ne concerne pas l'entité", 'Does not concern the entity')}</Tag> : null}
           </div>
-          <button onClick={onClose} className="rounded-md p-1 text-ink-3 hover:bg-raised hover:text-ink" aria-label="Fermer le détail">
+          <button onClick={onClose} className="rounded-md p-1 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Fermer le détail', 'Close details')}>
             <X size={14} />
           </button>
         </div>
@@ -478,16 +481,20 @@ function EventDetail({
         <div className="mt-1 flex items-center gap-2 font-mono text-xs">
           <span className="text-ink-2">{formatDate(e.date)}</span>
           <span className={days >= 0 ? 'text-accent' : 'text-ink-4'}>
-            {days === 0 ? "aujourd'hui" : days > 0 ? `dans ${days} jour${days > 1 ? 's' : ''}` : `il y a ${-days} jour${days < -1 ? 's' : ''}`}
+            {days === 0
+              ? tr("aujourd'hui", 'today')
+              : days > 0
+                ? tr(`dans ${days} jour${days > 1 ? 's' : ''}`, `in ${days} day${days > 1 ? 's' : ''}`)
+                : tr(`il y a ${-days} jour${days < -1 ? 's' : ''}`, `${-days} day${days < -1 ? 's' : ''} ago`)}
           </span>
         </div>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-2">{e.detail}</p>
         {e.appliesWhen?.length ? (
-          <p className="mt-3 text-2xs text-ink-3">Condition : {e.appliesWhen.map((c) => c.label).join(' ; ')}</p>
+          <p className="mt-3 text-2xs text-ink-3">{tr('Condition', 'Condition')}{COLON}{e.appliesWhen.map((c) => c.label).join(tr(' ; ', '; '))}</p>
         ) : null}
         {e.source ? (
           <a href={e.source} target="_blank" rel="noreferrer" className="ref mt-3 inline-block text-accent hover:underline">
-            Source ↗
+            {tr('Source', 'Source')} ↗
           </a>
         ) : null}
       </div>

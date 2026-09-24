@@ -4,12 +4,14 @@
     <path d="M3 8V3h5"/><path d="M16 3h5v5"/><path d="M21 16v5h-5"/><path d="M8 21H3v-5"/>
   </g>
   <g stroke="#7d8190" stroke-width="1">
-    <line x1="12" y1="6.5" x2="12" y2="12"/><line x1="17.5" y1="12" x2="12" y2="12"/>
-    <line x1="12" y1="17.5" x2="12" y2="12"/><line x1="6.5" y1="12" x2="12" y2="12"/>
+    <line x1="12" y1="6.5" x2="12" y2="12"/><line x1="17.2" y1="10.3" x2="12" y2="12"/>
+    <line x1="15.2" y1="16.4" x2="12" y2="12"/><line x1="8.8" y1="16.4" x2="12" y2="12"/>
+    <line x1="6.8" y1="10.3" x2="12" y2="12"/>
   </g>
-  <circle cx="12" cy="6.5" r="1.9" fill="#4777d2"/>
-  <circle cx="17.5" cy="12" r="1.9" fill="#00a6b5"/>
-  <circle cx="12" cy="17.5" r="1.9" fill="#b08505"/>
-  <circle cx="6.5" cy="12" r="1.9" fill="#ab366e"/>
+  <circle cx="12" cy="6.5" r="1.7" fill="#4777d2"/>
+  <circle cx="17.2" cy="10.3" r="1.7" fill="#00a6b5"/>
+  <circle cx="15.2" cy="16.4" r="1.7" fill="#b08505"/>
+  <circle cx="8.8" cy="16.4" r="1.7" fill="#ab366e"/>
+  <circle cx="6.8" cy="10.3" r="1.7" fill="#6f9e35"/>
   <circle cx="12" cy="12" r="2.3" fill="#7c5cff"/>
 </svg>

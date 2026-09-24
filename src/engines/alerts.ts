@@ -1,5 +1,6 @@
 import type { Answers, RegulationId, TimelineEvent } from '@/types/domain'
 import { TIMELINE } from '@/data/timeline'
+import { COLON, tr } from '@/i18n'
 
 /**
  * Alertes du tableau de bord.
@@ -52,8 +53,8 @@ export function regulatoryAlerts(
         level: upcoming && days <= 14 ? 'warning' : 'info',
         title: e.title,
         detail: upcoming
-          ? `${days === 0 ? "Aujourd'hui" : `Dans ${days} jour${days > 1 ? 's' : ''}`} — ${e.detail}`
-          : `En vigueur depuis ${days} jour${days > 1 ? 's' : ''} — ${e.detail}`,
+          ? `${days === 0 ? tr("Aujourd'hui", 'Today') : tr(`Dans ${days} jour${days > 1 ? 's' : ''}`, `In ${days} day${days > 1 ? 's' : ''}`)}${COLON}${e.detail}`
+          : `${tr(`En vigueur depuis ${days} jour${days > 1 ? 's' : ''}`, `In force for ${days} day${days > 1 ? 's' : ''}`)}${COLON}${e.detail}`,
         date,
         href: `/app/echeancier?event=${e.id}`,
         pulse: upcoming && days <= 30 && !seen.includes(id),

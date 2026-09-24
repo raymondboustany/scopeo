@@ -4,9 +4,11 @@ import { Scale } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { CoverageLevel, MeasureStatus, RegulationId } from '@/types/domain'
 import { LEVEL_STYLE, REG_LABEL, REG_STYLE } from './tokens'
+import { frameworkNote } from '@/data/regulations'
+import { LOCALE, tr } from '@/i18n'
 
 /* ==========================================================================
-   Étiquette de référentiel — une pastille ronde et un libellé en chasse fixe
+   Étiquette de référentiel : une pastille ronde et un libellé en chasse fixe
    ========================================================================== */
 
 export function RegChip({
@@ -23,6 +25,7 @@ export function RegChip({
   const s = REG_STYLE[id]
   return (
     <span
+      title={id === 'NIS2' ? frameworkNote() : undefined}
       className={cn(
         'inline-flex items-center gap-1.5 rounded-md font-semibold whitespace-nowrap',
         size === 'sm' ? 'h-5 px-1.5 text-[10px]' : 'h-6 px-2 text-2xs',
@@ -34,6 +37,11 @@ export function RegChip({
       {REG_LABEL[id]}
     </span>
   )
+}
+
+/** Mention discrète de la version du ReCyF, à côté d'un libellé NIS2. */
+export function FrameworkNote({ className }: { className?: string }) {
+  return <span className={cn('font-mono text-[10px] text-ink-4', className)}>{frameworkNote()}</span>
 }
 
 /* ==========================================================================
@@ -76,7 +84,7 @@ export function Tag({
   )
 }
 
-/** Statut à trois états — vert en place, orange partiel, rouge absent. */
+/** Statut à trois états : vert en place, orange partiel, rouge absent. */
 export function LevelPill({ level, className }: { level: CoverageLevel | MeasureStatus; className?: string }) {
   const s = LEVEL_STYLE[level]
   return (
@@ -92,7 +100,7 @@ export function Ref({ children, className }: { children: ReactNode; className?: 
 }
 
 /* ==========================================================================
-   LED — pulsation douce, uniquement pour une urgence réelle
+   LED : pulsation douce, uniquement pour une urgence réelle
    ========================================================================== */
 
 export function Led({
@@ -177,7 +185,7 @@ export function CardHeader({
   )
 }
 
-/** Carré d'icône teinté — remplace les blocs de texte par un repère visuel. */
+/** Carré d'icône teinté : remplace les blocs de texte par un repère visuel. */
 export function IconTile({
   children,
   color,
@@ -294,7 +302,7 @@ export function Callout({
   )
 }
 
-/** Mention de non-substitution — présente partout où l'outil conclut. */
+/** Mention de non-substitution, présente partout où la plateforme conclut. */
 export function Disclaimer({ className, compact = false }: { className?: string; compact?: boolean }) {
   return (
     <div
@@ -306,17 +314,20 @@ export function Disclaimer({ className, compact = false }: { className?: string;
     >
       <Scale size={compact ? 12 : 14} className="mt-0.5 shrink-0 text-ink-3" aria-hidden />
       <p>
-        <strong className="font-medium text-ink-2">Outil d'aide au cadrage, pas un avis juridique.</strong>{' '}
+        <strong className="font-medium text-ink-2">{tr("Plateforme d'aide au cadrage, pas un avis juridique.", 'A scoping aid, not legal advice.')}</strong>{' '}
         {compact
-          ? 'Les conclusions reposent sur les éléments déclarés.'
-          : "Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus ; elles ne remplacent ni l'analyse d'un conseil, ni la position de l'autorité compétente."}
+          ? tr('Les conclusions reposent sur les éléments déclarés.', 'Conclusions rely on the information provided.')
+          : tr(
+              "Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus ; elles ne remplacent ni l'analyse d'un conseil, ni la position de l'autorité compétente.",
+              'Conclusions rely on the information provided and on the law as of the corpus date; they replace neither advice from counsel nor the position of the competent authority.',
+            )}
       </p>
     </div>
   )
 }
 
 /* ==========================================================================
-   Échelle de couverture — trois états
+   Échelle de couverture : trois états
    ========================================================================== */
 
 export function Ladder({ level, size = 'md', className }: { level: CoverageLevel; size?: 'sm' | 'md'; className?: string }) {
@@ -350,7 +361,7 @@ export function AnimatedNumber({ value, suffix = '', className }: { value: numbe
   const ref = useRef<HTMLSpanElement | null>(null)
   const inView = useInView(ref, { once: true })
   const mv = useMotionValue(0)
-  const rounded = useTransform(mv, (v) => `${Math.round(v).toLocaleString('fr-FR')}${suffix}`)
+  const rounded = useTransform(mv, (v) => `${Math.round(v).toLocaleString(LOCALE)}${suffix}`)
   useEffect(() => {
     if (!inView) return
     const c = animate(mv, value, { duration: 0.9, ease: [0.22, 1, 0.36, 1] })

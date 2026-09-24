@@ -5,7 +5,7 @@ const URL = 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022R255
 const ESA = (label: string, url: string) => ({ label, issuer: 'AES', url })
 
 /**
- * Obligations DORA — Règlement (UE) 2022/2554.
+ * Obligations DORA : Règlement (UE) 2022/2554.
  *
  * Les renvois aux normes techniques sont essentiels : DORA fixe les principes,
  * les règlements délégués fixent le contenu exigible. Une obligation lue sans
@@ -17,7 +17,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 5',
     order: 5,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Gouvernance et organisation',
     statement:
       "L'organe de direction définit, approuve, supervise et répond de la mise en œuvre du cadre de gestion du risque lié aux TIC. Il porte la responsabilité finale et doit entretenir activement ses connaissances par une formation régulière, proportionnée au risque géré.",
@@ -44,7 +44,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 6',
     order: 6,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Cadre de gestion du risque lié aux TIC',
     statement:
       "Disposer d'un cadre de gestion du risque lié aux TIC solide, complet et documenté, réexaminé au moins une fois par an, ainsi qu'après chaque incident majeur et à la suite des recommandations issues des audits et du contrôle prudentiel. Une fonction de contrôle indépendante doit être identifiée.",
@@ -63,14 +63,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['RSK-01', 'GOV-01', 'DOC-01', 'HIE-01'],
     sourceUrl: URL,
-    guidance: [ESA('Règlement délégué (UE) 2024/1774 — RTS gestion du risque TIC', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R1774')],
+    guidance: [ESA('Règlement délégué (UE) 2024/1774 : RTS gestion du risque TIC', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R1774')],
   },
   {
     id: 'DORA-A7',
     regulation: 'DORA',
     article: 'Article 7',
     order: 7,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Systèmes, protocoles et outils TIC',
     statement:
       "Utiliser et maintenir des systèmes, protocoles et outils TIC fiables, dotés d'une capacité suffisante pour absorber les pics d'activité, technologiquement résilients, et suffisamment à jour. C'est l'article qui interdit, en pratique, de faire reposer une fonction critique sur une technologie obsolète ou sous-dimensionnée.",
@@ -96,10 +96,10 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 8',
     order: 8,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Identification des fonctions, actifs et dépendances',
     statement:
-      "Recenser et classer les fonctions métier, les actifs informationnels et les actifs TIC qui les soutiennent, ainsi que l'ensemble des dépendances — internes et à l'égard de tiers. Ce recensement est réexaminé au moins annuellement et à chaque changement majeur d'architecture.",
+      "Recenser et classer les fonctions métier, les actifs informationnels et les actifs TIC qui les soutiennent, ainsi que l'ensemble des dépendances, internes et à l'égard de tiers. Ce recensement est réexaminé au moins annuellement et à chaque changement majeur d'architecture.",
     appliesTo: ['Entité financière'],
     requirements: [
       { id: 'DORA-A8-R1', text: "Recenser les fonctions métier et déterminer lesquelles sont critiques ou importantes.", type: 'documentaire' },
@@ -121,7 +121,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 9',
     order: 9,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Protection et prévention',
     statement:
       "Surveiller et contrôler en continu la sécurité et le fonctionnement des systèmes TIC, et déployer les politiques, procédures et outils de protection : gestion des accès, chiffrement, cloisonnement réseau, gestion des changements, protection contre les fuites de données.",
@@ -147,7 +147,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 10',
     order: 10,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Détection des activités anormales',
     statement:
       "Disposer de mécanismes permettant de détecter rapidement les activités anormales, y compris les problèmes de performance du réseau et les incidents, et d'identifier les points uniques de défaillance. Des lignes d'alerte multiples doivent être prévues, avec des seuils et critères de déclenchement définis.",
@@ -171,7 +171,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 11',
     order: 11,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Politique de continuité des activités TIC',
     statement:
       "Mettre en place une politique de continuité des activités TIC et des plans de réponse et de rétablissement, testés au moins annuellement. Les entités autres que les microentreprises doivent disposer d'une fonction de gestion de crise et déclarer aux autorités les coûts et pertes estimés des perturbations majeures.",
@@ -196,7 +196,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 12',
     order: 12,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Sauvegarde, restauration et redondance',
     statement:
       "Définir des politiques de sauvegarde précisant le périmètre et la fréquence en fonction de la criticité, et des procédures de restauration. Les systèmes de sauvegarde doivent être physiquement et logiquement séparés du système source, et les données restaurées doivent être vérifiées dans un environnement isolé avant retour en production.",
@@ -221,7 +221,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 13',
     order: 13,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Apprentissage, évolution et sensibilisation',
     statement:
       "Recueillir les informations sur les vulnérabilités et incidents, conduire des analyses post-incident après chaque perturbation majeure, et intégrer les enseignements dans le cadre de gestion du risque. Des programmes de sensibilisation et de formation à la résilience numérique sont obligatoires pour l'ensemble du personnel et des dirigeants.",
@@ -246,7 +246,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 14',
     order: 14,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Plans de communication de crise',
     statement:
       "Disposer de plans de communication permettant de divulguer de manière responsable les incidents majeurs aux clients, contreparties et au public, et désigner au moins une personne chargée de la communication avec le public et les autorités.",
@@ -268,7 +268,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 16',
     order: 16,
-    chapter: 'Chapitre II — Gestion du risque lié aux TIC',
+    chapter: 'Chapitre II : Gestion du risque lié aux TIC',
     title: 'Cadre simplifié pour certaines entités',
     statement:
       "Les petites entreprises d'investissement non interconnectées, les établissements de paiement et de monnaie électronique exemptés et les petites institutions de retraite professionnelle sont dispensés des articles 5 à 15, mais restent tenus d'un cadre allégé : gestion documentée du risque TIC, protection, détection, continuité, tests et gestion du risque tiers.",
@@ -295,7 +295,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 17',
     order: 17,
-    chapter: 'Chapitre III — Gestion et notification des incidents',
+    chapter: 'Chapitre III : Gestion et notification des incidents',
     title: 'Processus de gestion des incidents liés aux TIC',
     statement:
       "Définir et mettre en œuvre un processus de gestion des incidents liés aux TIC permettant de les détecter, gérer et notifier, avec des indicateurs d'alerte précoce, des rôles et responsabilités identifiés, et des procédures de remontée à la direction et, le cas échéant, aux organes de résolution.",
@@ -320,7 +320,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 18',
     order: 18,
-    chapter: 'Chapitre III — Gestion et notification des incidents',
+    chapter: 'Chapitre III : Gestion et notification des incidents',
     title: 'Classification des incidents et des cybermenaces',
     statement:
       "Classer les incidents selon sept critères : nombre de clients ou contreparties touchés, réputation, durée et interruption de service, propagation géographique, pertes de données, criticité des services affectés, incidence économique. Les seuils d'importance sont fixés par le règlement délégué 2024/1772.",
@@ -337,14 +337,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['REP-01', 'REP-02'],
     sourceUrl: URL,
-    guidance: [ESA('Règlement délégué (UE) 2024/1772 — classification des incidents', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R1772')],
+    guidance: [ESA('Règlement délégué (UE) 2024/1772 : classification des incidents', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R1772')],
   },
   {
     id: 'DORA-A19',
     regulation: 'DORA',
     article: 'Article 19',
     order: 19,
-    chapter: 'Chapitre III — Gestion et notification des incidents',
+    chapter: 'Chapitre III : Gestion et notification des incidents',
     title: 'Déclaration des incidents majeurs à l\'autorité compétente',
     statement:
       "Déclarer les incidents majeurs liés aux TIC à l'autorité compétente selon trois échéances fixées par le règlement délégué 2025/301 : notification initiale, rapport intermédiaire, rapport final. La déclaration emprunte des modèles harmonisés obligatoires.",
@@ -363,14 +363,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['REP-02', 'REP-03', 'HIE-01'],
     sourceUrl: URL,
-    guidance: [ESA('Règlement délégué (UE) 2025/301 — contenu et délais de déclaration', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32025R0301')],
+    guidance: [ESA('Règlement délégué (UE) 2025/301 : contenu et délais de déclaration', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32025R0301')],
   },
   {
     id: 'DORA-A24',
     regulation: 'DORA',
     article: 'Article 24',
     order: 24,
-    chapter: 'Chapitre IV — Tests de résilience opérationnelle numérique',
+    chapter: 'Chapitre IV : Tests de résilience opérationnelle numérique',
     title: 'Programme de tests de résilience opérationnelle numérique',
     statement:
       "Établir un programme de tests solide et complet, proportionné à la taille et au profil de risque, faisant partie intégrante du cadre de gestion du risque TIC. Les tests sont conduits par des parties indépendantes, internes ou externes, et toutes les déficiences relevées doivent être corrigées selon un calendrier arrêté.",
@@ -394,7 +394,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 25',
     order: 25,
-    chapter: 'Chapitre IV — Tests de résilience opérationnelle numérique',
+    chapter: 'Chapitre IV : Tests de résilience opérationnelle numérique',
     title: 'Éventail des tests exigés',
     statement:
       "Conduire un éventail approprié de tests : évaluations de vulnérabilité, analyses de sources ouvertes, évaluations de la sécurité des réseaux, analyses des lacunes, examens de la sécurité physique, questionnaires et solutions logicielles d'analyse, examens du code source, tests de compatibilité, de performance, de bout en bout et de pénétration.",
@@ -418,7 +418,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 26',
     order: 26,
-    chapter: 'Chapitre IV — Tests de résilience opérationnelle numérique',
+    chapter: 'Chapitre IV : Tests de résilience opérationnelle numérique',
     title: 'Tests de pénétration fondés sur la menace',
     statement:
       "Les entités financières identifiées par les autorités effectuent au moins tous les trois ans un test de pénétration fondé sur la menace, sur des systèmes en production réelle supportant des fonctions critiques ou importantes. La méthodologie est alignée sur TIBER-EU et le périmètre est validé par l'autorité compétente, qui délivre ensuite une attestation.",
@@ -440,14 +440,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     themes: ['RES-04'],
     conditions: [{ key: 'dora_tlpt', op: 'eq', value: 'oui', label: "Entité identifiée pour les tests fondés sur la menace" }],
     sourceUrl: URL,
-    guidance: [ESA('Règlement délégué (UE) 2025/1190 — normes techniques TLPT', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32025R1190')],
+    guidance: [ESA('Règlement délégué (UE) 2025/1190 : normes techniques TLPT', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32025R1190')],
   },
   {
     id: 'DORA-A28',
     regulation: 'DORA',
     article: 'Article 28',
     order: 28,
-    chapter: 'Chapitre V — Gestion du risque lié aux tiers',
+    chapter: 'Chapitre V : Gestion du risque lié aux tiers',
     title: 'Principes généraux de gestion du risque lié aux prestataires TIC',
     statement:
       "Gérer le risque lié aux prestataires tiers de services TIC comme une composante intégrale du risque TIC, sous la responsabilité pleine et entière de l'entité financière. Adopter une stratégie de risque tiers, tenir un registre d'information de tous les accords contractuels, et le remettre annuellement à l'autorité compétente.",
@@ -469,14 +469,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['TIE-02', 'TIE-01', 'DOC-02'],
     sourceUrl: URL,
-    guidance: [ESA("Règlement d'exécution (UE) 2024/2956 — modèles du registre d'information", 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R2956')],
+    guidance: [ESA("Règlement d'exécution (UE) 2024/2956 : modèles du registre d'information", 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R2956')],
   },
   {
     id: 'DORA-A29',
     regulation: 'DORA',
     article: 'Article 29',
     order: 29,
-    chapter: 'Chapitre V — Gestion du risque lié aux tiers',
+    chapter: 'Chapitre V : Gestion du risque lié aux tiers',
     title: 'Évaluation préalable du risque de concentration',
     statement:
       "Avant de conclure un accord portant sur une fonction critique ou importante, évaluer le risque de concentration : recours à un prestataire difficilement substituable, recours à plusieurs prestataires liés entre eux, et conséquences d'une défaillance. Examiner les chaînes de sous-traitance et leurs incidences sur la capacité de surveillance.",
@@ -494,14 +494,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['TIE-04', 'TIE-03'],
     sourceUrl: URL,
-    guidance: [ESA('Règlement délégué (UE) 2025/532 — sous-traitance des services TIC critiques', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32025R0532')],
+    guidance: [ESA('Règlement délégué (UE) 2025/532 : sous-traitance des services TIC critiques', 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32025R0532')],
   },
   {
     id: 'DORA-A30',
     regulation: 'DORA',
     article: 'Article 30',
     order: 30,
-    chapter: 'Chapitre V — Gestion du risque lié aux tiers',
+    chapter: 'Chapitre V : Gestion du risque lié aux tiers',
     title: 'Dispositions contractuelles obligatoires',
     statement:
       "Faire figurer dans chaque contrat TIC les mentions minimales de l'article 30, paragraphe 2, et, pour les fonctions critiques ou importantes, les mentions renforcées du paragraphe 3 : niveaux de service quantitatifs, coopération aux tests de pénétration, droits d'accès et d'audit sans restriction, stratégies de sortie et périodes de transition.",
@@ -528,7 +528,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Articles 31 à 44',
     order: 31,
-    chapter: 'Chapitre V — Cadre de supervision',
+    chapter: 'Chapitre V : Cadre de supervision',
     title: 'Supervision des prestataires tiers critiques',
     statement:
       "Les prestataires tiers désignés comme critiques par les autorités européennes de surveillance relèvent d'une supervision directe européenne, conduite par un superviseur principal assisté d'équipes d'examen conjointes. Pour l'entité financière cliente, la conséquence est double : elle doit tenir compte des recommandations adressées au prestataire, et cesser d'utiliser un service lorsque le superviseur le requiert.",
@@ -552,7 +552,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 45',
     order: 45,
-    chapter: "Chapitre VI — Partage d'informations",
+    chapter: "Chapitre VI : Partage d'informations",
     title: "Partage d'informations sur les cybermenaces",
     statement:
       "Les entités financières peuvent échanger entre elles des informations et des renseignements sur les cybermenaces, au sein de communautés de confiance, dans des conditions qui protègent le caractère commercialement sensible des informations et respectent le droit des données personnelles.",

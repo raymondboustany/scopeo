@@ -27,8 +27,8 @@ def _sqlite_pragmas(dbapi_connection, _record) -> None:  # pragma: no cover - co
 
 def init_db() -> None:
     SQLModel.metadata.create_all(engine)
-    # Migration v3.1 : le suivi d'incidents réels a été retiré (l'outil cadre,
-    # il ne pilote pas une crise). La table héritée bloquerait la suppression
+    # Migration v3.1 : le suivi d'incidents réels a été retiré (la plateforme
+    # cadre, elle ne pilote pas une crise). La table héritée bloquerait la suppression
     # des entités par sa clé étrangère.
     with engine.begin() as conn:
         conn.exec_driver_sql("DROP TABLE IF EXISTS incident")
@@ -38,6 +38,12 @@ def init_db() -> None:
             conn.exec_driver_sql("ALTER TABLE entity ADD COLUMN profile JSON NOT NULL DEFAULT '{}'")
         if "notes" not in columns:
             conn.exec_driver_sql("ALTER TABLE entity ADD COLUMN notes JSON NOT NULL DEFAULT '[]'")
+        # Migration v4.0 : démarche ISO 27001 et authentification.
+        if "iso_controls" not in columns:
+            conn.exec_driver_sql("ALTER TABLE entity ADD COLUMN iso_controls JSON NOT NULL DEFAULT '{}'")
+        user_columns = {row[1] for row in conn.exec_driver_sql("PRAGMA table_info(user)")}
+        if "password_hash" not in user_columns:
+            conn.exec_driver_sql("ALTER TABLE user ADD COLUMN password_hash VARCHAR")
 
 
 def get_session() -> Iterator[Session]:

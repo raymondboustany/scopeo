@@ -1,17 +1,19 @@
 import type { RecyfObjective } from '@/types/domain'
+import { LANG, tr } from '@/i18n'
+import EN from '@/i18n/en/recyf.json'
 
 /**
- * ReCyF — Référentiel Cyber France, version 2.5 du 17 mars 2026.
+ * ReCyF : Référentiel Cyber France, version 2.5 du 17 mars 2026.
  *
- * Publié par l'ANSSI, il traduit les exigences de NIS 2 en vingt objectifs de
+ * Publié par l'ANSSI, il traduit les exigences de NIS2 en vingt objectifs de
  * sécurité et cent cinquante-deux moyens acceptables de conformité.
  *
  * Deux choses le rendent précieux pour un exercice de cadrage :
- *   — l'applicabilité est encodée dans l'identifiant de chaque mesure,
+ *   - l'applicabilité est encodée dans l'identifiant de chaque mesure,
  *     « EI/EE » valant pour toutes les entités, « EE » pour les seules
  *     entités essentielles. La qualification cesse d'être une étiquette :
  *     elle détermine quatre-vingt-quatorze mesures sur cent cinquante-deux ;
- *   — l'ANSSI y désigne les certifications et qualifications opposables lors
+ *   - l'ANSSI y désigne les certifications et qualifications opposables lors
  *     d'un contrôle, ce qui permet d'éteindre un objectif par un certificat
  *     déjà détenu.
  *
@@ -20,10 +22,16 @@ import type { RecyfObjective } from '@/types/domain'
  * « décret » signalent les points encore ouverts.
  */
 
-const ISO = "Un système de management de la sécurité de l'information certifié ISO/CEI 27001:2022 est opposable lors d'un contrôle, sur le périmètre couvert par la certification."
-const PACS = "Le recours à un prestataire d'accompagnement et de conseil en sécurité qualifié par l'ANSSI, assorti du suivi du plan d'action issu de la prestation, est opposable lors d'un contrôle."
+const ISO = tr(
+  "Un système de management de la sécurité de l'information certifié ISO/CEI 27001:2022 est opposable lors d'un contrôle, sur le périmètre couvert par la certification.",
+  'An information security management system certified to ISO/IEC 27001:2022 can be relied on during an inspection, within the scope covered by the certification.',
+)
+const PACS = tr(
+  "Le recours à un prestataire d'accompagnement et de conseil en sécurité qualifié par l'ANSSI, assorti du suivi du plan d'action issu de la prestation, est opposable lors d'un contrôle.",
+  'Using a security support and advisory provider qualified by ANSSI, together with follow-up of the resulting action plan, can be relied on during an inspection.',
+)
 
-export const RECYF_OBJECTIVES: RecyfObjective[] = [
+const RECYF_FR: RecyfObjective[] = [
   // =========================================================================
   // GOUVERNANCE
   // =========================================================================
@@ -57,7 +65,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
       { id: '2.A.2-EE', group: 'Rôles et responsabilités', text: "Désigner au moins une personne conseillant et accompagnant le dirigeant, qui devient le point de contact privilégié de l'ANSSI pour tous les sujets de sécurité numérique.", ei: false, ee: true },
       { id: '2.A.3-EI/EE', group: 'Rôles et responsabilités', text: "Définir et mettre en œuvre une organisation adaptée : responsable de la sécurité numérique, matrice de responsabilités, comitologie.", ei: true, ee: true },
       { id: '2.B.1-EI/EE', group: 'Politique de sécurité', text: "Définir et mettre en œuvre une politique de sécurité des systèmes d'information.", ei: true, ee: true },
-      { id: '2.B.2-EI/EE', group: 'Politique de sécurité', text: "La politique comprend au minimum : gouvernance et rôles du personnel interne et externe, orientations stratégiques déclinées de la stratégie globale, engagement du dirigeant sur la sécurité et sur le respect des exigences légales issues de la transposition de NIS 2, et prise en compte des spécificités sectorielles.", ei: true, ee: true },
+      { id: '2.B.2-EI/EE', group: 'Politique de sécurité', text: "La politique comprend au minimum : gouvernance et rôles du personnel interne et externe, orientations stratégiques déclinées de la stratégie globale, engagement du dirigeant sur la sécurité et sur le respect des exigences légales issues de la transposition de NIS2, et prise en compte des spécificités sectorielles.", ei: true, ee: true },
       { id: '2.B.3-EI/EE', group: 'Politique de sécurité', text: "Le dirigeant exécutif approuve la politique de sécurité des systèmes d'information.", ei: true, ee: true },
       { id: '2.B.4-EI/EE', group: 'Politique de sécurité', text: "Revoir la politique au minimum annuellement et la mettre à jour lors d'évolutions majeures de la menace ou du contexte métier, technique ou organisationnel.", ei: true, ee: true },
       { id: '2.B.5-EI/EE', group: 'Politique de sécurité', text: "Décliner la politique en politiques thématiques couvrant au minimum l'usage du chiffrement, le contrôle d'accès physique et logique, la revue de l'application des mesures et la gestion des comptes.", ei: true, ee: true },
@@ -71,7 +79,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     pillar: 'gouvernance',
     title: "Maîtrise de l'écosystème",
     statement:
-      "Tenir à jour la liste des prestataires et fournisseurs informatiques intervenant dans les activités ou services, avec le périmètre et la nature de chaque prestation, et mettre en place des processus — notamment contractuels — garantissant que ces prestations sont conformes aux obligations pesant sur l'entité, en particulier en matière de gestion des risques et de notification des incidents.",
+      "Tenir à jour la liste des prestataires et fournisseurs informatiques intervenant dans les activités ou services, avec le périmètre et la nature de chaque prestation, et mettre en place des processus, notamment contractuels, garantissant que ces prestations sont conformes aux obligations pesant sur l'entité, en particulier en matière de gestion des risques et de notification des incidents.",
     scope: 'EI+EE',
     nis2: ['Article 21, paragraphe 2, point d)', 'Article 21, paragraphe 3'],
     themes: ['TIE-01', 'TIE-02', 'TIE-03'],
@@ -87,7 +95,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     pillar: 'gouvernance',
     title: 'Intégration de la sécurité numérique dans la gestion des ressources humaines',
     statement:
-      "Définir les procédures de sensibilisation des utilisateurs — en particulier des dirigeants — et de formation des personnes occupant des fonctions à responsabilité dans le domaine numérique. Intégrer la sécurité numérique à la gestion des ressources humaines, de l'arrivée d'un personnel jusqu'à son départ.",
+      "Définir les procédures de sensibilisation des utilisateurs, en particulier des dirigeants, et de formation des personnes occupant des fonctions à responsabilité dans le domaine numérique. Intégrer la sécurité numérique à la gestion des ressources humaines, de l'arrivée d'un personnel jusqu'à son départ.",
     scope: 'EI+EE',
     nis2: ['Article 20, paragraphe 2', 'Article 21, paragraphe 2, points g) et i)'],
     themes: ['GOV-04', 'PRO-06'],
@@ -111,7 +119,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     equivalence: `${ISO} ${PACS}`,
     measures: [
       { id: '16.1-EE', text: "Définir, mettre en œuvre et maintenir à jour une gouvernance par les risques garantissant que le risque numérique est pris en compte par le dirigeant exécutif et les responsables d'activité, et que les moyens financiers, humains et techniques adéquats sont alloués.", ei: false, ee: true },
-      { id: '16.2-EE', text: "S'assurer que chaque système d'information fait l'objet d'une analyse de risques — exigence pouvant être satisfaite par une analyse par activité ou service couvrant tous les systèmes qui la supportent.", ei: false, ee: true },
+      { id: '16.2-EE', text: "S'assurer que chaque système d'information fait l'objet d'une analyse de risques ; cette exigence peut être satisfaite par une analyse par activité ou service couvrant tous les systèmes qui la supportent.", ei: false, ee: true },
       { id: '16.3-EE', text: "Fonder l'analyse sur la politique de sécurité et les spécificités sectorielles, la maîtrise de l'écosystème, la maîtrise du système d'information, l'approche par conformité et les audits. La méthode EBIOS Risk Manager peut être utilisée.", ei: false, ee: true },
       { id: '16.4-EE', text: "Valider l'analyse, accepter les risques résiduels et mettre en œuvre le plan d'action ; réexaminer l'analyse au minimum tous les trois ans et en cas d'incident ou d'évolution majeure du contexte.", ei: false, ee: true },
     ],
@@ -128,7 +136,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     equivalence: "Le recours à un prestataire d'audit de la sécurité des systèmes d'information qualifié par l'ANSSI est opposable lors d'un contrôle, dès lors que le périmètre de la prestation couvre l'application des mesures correctives.",
     measures: [
       { id: '17.1-EE', text: "Définir et mettre en œuvre un programme d'audit de l'ensemble des systèmes d'information, dont la profondeur et la fréquence tiennent compte de l'analyse de risque, de la criticité et de l'exposition de chaque système.", ei: false, ee: true },
-      { id: '17.2-EE', text: "L'audit vérifie de manière indépendante l'atteinte des objectifs réglementaires — conformité aux mesures ou mise en œuvre de mesures alternatives — et évalue le niveau de sécurité au regard des menaces et vulnérabilités connues.", ei: false, ee: true },
+      { id: '17.2-EE', text: "L'audit vérifie de manière indépendante l'atteinte des objectifs réglementaires (conformité aux mesures ou mise en œuvre de mesures alternatives) et évalue le niveau de sécurité au regard des menaces et vulnérabilités connues.", ei: false, ee: true },
       { id: '17.3-EE', text: "L'audit comprend au minimum une activité parmi : test d'intrusion couvrant les interfaces exposées, audit de configuration, audit d'architecture, audit organisationnel et physique, et le cas échéant audit de code.", ei: false, ee: true },
       { id: '17.4-EE', text: "Le rapport d'audit présente une synthèse de la conformité et du niveau de sécurité, les constats de non-conformité et les vulnérabilités identifiées, et les recommandations pour y remédier.", ei: false, ee: true },
       { id: '17.5-EE', text: "Définir et mettre en œuvre un plan d'action corrigeant les non-conformités et vulnérabilités, avec une échéance raisonnable et un responsable par action.", ei: false, ee: true },
@@ -171,7 +179,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     themes: ['PRO-05', 'PRO-03'],
     measures: [
       { id: '6.1-EI/EE', text: "Mettre en place des mesures limitant l'accès des personnes non autorisées aux locaux, salles serveurs et locaux techniques : registre des visiteurs, badges d'accès.", ei: true, ee: true },
-      { id: '6.2-EE', text: "Assurer la protection physique des locaux, salles serveurs et locaux techniques — vidéosurveillance, gardiennage, alarme — permettant de prévenir, surveiller et réagir aux accès non autorisés.", ei: false, ee: true },
+      { id: '6.2-EE', text: "Assurer la protection physique des locaux, salles serveurs et locaux techniques (vidéosurveillance, gardiennage, alarme) permettant de prévenir, surveiller et réagir aux accès non autorisés.", ei: false, ee: true },
       { id: '6.3-EE', text: "Attribuer les droits d'accès physique au regard du besoin strictement nécessaire à l'exécution des missions.", ei: false, ee: true },
       { id: '6.4-EI/EE', text: "S'assurer que les personnes externes accédant aux locaux techniques et salles serveurs sont accompagnées ou dûment autorisées.", ei: true, ee: true },
     ],
@@ -213,7 +221,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     measures: [
       { id: '8.1-EI/EE', text: "Protéger les accès effectués à travers un système d'information tiers au moyen de mécanismes de chiffrement conformes aux recommandations de l'ANSSI : réseau privé virtuel TLS ou IPSec, protocoles applicatifs chiffrés.", ei: true, ee: true },
       { id: '8.2-EI/EE', text: "Protéger ces accès, lorsqu'ils sont effectués par les personnels et prestataires autorisés, par un mécanisme d'authentification conforme aux mesures relatives à l'authentification.", ei: true, ee: true },
-      { id: '8.3-EE', text: "Le mécanisme d'authentification de ces accès est multifacteur et repose sur au moins un facteur de connaissance — par exemple une carte à puce et un code confidentiel.", ei: false, ee: true },
+      { id: '8.3-EE', text: "Le mécanisme d'authentification de ces accès est multifacteur et repose sur au moins un facteur de connaissance, par exemple une carte à puce et un code confidentiel.", ei: false, ee: true },
       { id: '8.4-EE', text: "Lorsque l'authentification multifacteur ne peut être mise en œuvre pour des raisons techniques ou opérationnelles, mettre en place des mesures réduisant le risque associé.", ei: false, ee: true },
       { id: '8.5-EE', text: "Protéger en permanence les mémoires de masse des postes et équipements mobiles permettant l'accès à distance depuis un lieu non maîtrisé, par chiffrement et authentification conformes à l'état de l'art recommandé par l'ANSSI.", ei: false, ee: true },
     ],
@@ -223,7 +231,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
     pillar: 'protection',
     title: "Protection des systèmes d'information contre les codes malveillants",
     statement:
-      "Mettre en œuvre des mécanismes de protection contre les codes malveillants sur les ressources des systèmes d'information. Les entités essentielles s'assurent en outre que seules les ressources matérielles qu'elles gèrent, ou dont elles ont confié la gestion, se connectent aux systèmes d'information — ce qui interdit en pratique l'usage d'équipements personnels.",
+      "Mettre en œuvre des mécanismes de protection contre les codes malveillants sur les ressources des systèmes d'information. Les entités essentielles s'assurent en outre que seules les ressources matérielles qu'elles gèrent, ou dont elles ont confié la gestion, se connectent aux systèmes d'information, ce qui interdit en pratique l'usage d'équipements personnels.",
     scope: 'EI+EE',
     nis2: ['Article 21, paragraphe 2, points e) et i)'],
     themes: ['PRO-01', 'PRO-04'],
@@ -233,7 +241,7 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
       { id: '9.3-EI/EE', text: "Mettre en œuvre des mesures organisationnelles ou techniques empêchant la connexion de ressources matérielles autres que celles identifiées à la mesure 9.1-EI/EE.", ei: true, ee: true },
       { id: '9.4-EE', text: "Mettre en œuvre des mesures empêchant la connexion de ressources autres que celles identifiées à la mesure 9.2-EE.", ei: false, ee: true },
       { id: '9.5-EI/EE', text: "N'autoriser que les supports amovibles réinscriptibles nécessaires aux activités et services ou au maintien en condition.", ei: true, ee: true },
-      { id: '9.6-EI/EE', text: "Doter de mécanismes de protection contre l'exécution de codes malveillants — antivirus, détection sur les terminaux — les postes, serveurs et équipements mobiles traitant des données de sources externes.", ei: true, ee: true },
+      { id: '9.6-EI/EE', text: "Doter de mécanismes de protection contre l'exécution de codes malveillants (antivirus, détection sur les terminaux) les postes, serveurs et équipements mobiles traitant des données de sources externes.", ei: true, ee: true },
       { id: '9.7-EI/EE', text: "Analyser les données provenant de sources externes dès leur réception pour y rechercher des codes malveillants : passerelle de messagerie analysant les pièces jointes, sas de décontamination pour les supports amovibles.", ei: true, ee: true },
     ],
   },
@@ -441,13 +449,47 @@ export const RECYF_OBJECTIVES: RecyfObjective[] = [
   },
 ]
 
+interface ObjectiveEn {
+  title: string
+  statement: string
+  equivalence?: string
+  measures: Record<string, string>
+}
+
+/** « Article 21, paragraphe 2, points e) et g) » → « Article 21(2)(e) and (g) ». */
+function articleEn(a: string): string {
+  return a
+    .replace(/, paragraphe (\d+)/, '($1)')
+    .replace(/, points? ([a-z])\)(?: et ([a-z])\))?/, (_, x: string, y?: string) => `(${x})${y ? ` and (${y})` : ''}`)
+}
+
+function localize(o: RecyfObjective): RecyfObjective {
+  const e = (EN.objectives as Record<string, ObjectiveEn>)[String(o.n)]
+  const groups = EN.groups as Record<string, string>
+  if (!e) return o
+  return {
+    ...o,
+    title: e.title,
+    statement: e.statement,
+    equivalence: e.equivalence ?? o.equivalence,
+    nis2: o.nis2.map(articleEn),
+    measures: o.measures.map((m) => ({
+      ...m,
+      text: e.measures[m.id] ?? m.text,
+      group: m.group ? (groups[m.group] ?? m.group) : undefined,
+    })),
+  }
+}
+
+export const RECYF_OBJECTIVES: RecyfObjective[] = LANG === 'en' ? RECYF_FR.map(localize) : RECYF_FR
+
 export const RECYF_BY_N = new Map(RECYF_OBJECTIVES.map((o) => [o.n, o]))
 
 export const RECYF_PILLARS = [
-  { id: 'gouvernance', label: 'Gouvernance', objectives: [1, 2, 3, 4, 16, 17] },
-  { id: 'protection', label: 'Protection', objectives: [5, 6, 7, 8, 9, 10, 11, 18, 19] },
-  { id: 'defense', label: 'Défense', objectives: [12, 20] },
-  { id: 'resilience', label: 'Résilience', objectives: [13, 14, 15] },
+  { id: 'gouvernance', label: tr('Gouvernance', 'Governance'), objectives: [1, 2, 3, 4, 16, 17] },
+  { id: 'protection', label: tr('Protection', 'Protection'), objectives: [5, 6, 7, 8, 9, 10, 11, 18, 19] },
+  { id: 'defense', label: tr('Défense', 'Defence'), objectives: [12, 20] },
+  { id: 'resilience', label: tr('Résilience', 'Resilience'), objectives: [13, 14, 15] },
 ] as const
 
 export const RECYF_META = {
@@ -455,6 +497,6 @@ export const RECYF_META = {
   date: '2026-03-17',
   issuer: 'ANSSI',
   url: 'https://messervices.cyber.gouv.fr/documents-ressources/20260317_NIS_V2_ReCyF_v2.5.pdf',
-  status: "Document de travail — publié avant l'adoption de la loi de transposition et de ses décrets",
+  status: tr("Document de travail, publié avant l'adoption de la loi de transposition et de ses décrets", 'Working document, published before the transposition act and its decrees were adopted'),
   totalMeasures: RECYF_OBJECTIVES.reduce((n, o) => n + o.measures.length, 0),
 }

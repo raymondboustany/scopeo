@@ -7,7 +7,7 @@ const ENISA = (label: string, url: string) => ({ label, issuer: 'ENISA', url })
 
 
 /**
- * Obligations NIS 2 — Directive (UE) 2022/2555.
+ * Obligations NIS2 : Directive (UE) 2022/2555.
  *
  * L'article 21, paragraphe 2, est éclaté en dix obligations distinctes :
  * c'est à ce niveau que se joue la mise en œuvre, et c'est à ce niveau que
@@ -19,7 +19,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 3, paragraphe 4',
     order: 3,
-    chapter: 'Chapitre I — Dispositions générales',
+    chapter: 'Chapitre I : Dispositions générales',
     title: "Enregistrement auprès de l'autorité nationale",
     statement:
       "Se déclarer auprès de l'autorité compétente en fournissant nom, coordonnées, plages d'adresses IP, secteur et sous-secteur, ainsi que la liste des États membres où des services relevant de la directive sont fournis. Toute modification doit être signalée dans un délai de deux semaines.",
@@ -27,7 +27,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
       "Les entités visées au paragraphe 3 notifient sans tarder toute modification des informations qu'elles ont communiquées [...] et, en tout état de cause, dans un délai de deux semaines à compter de la date de la modification.",
     appliesTo: ['Entité essentielle', 'Entité importante'],
     requirements: [
-      { id: 'NIS2-A3-R1', text: "Déterminer sa qualification — entité essentielle ou importante — et son secteur de rattachement.", type: 'gouvernance' },
+      { id: 'NIS2-A3-R1', text: "Déterminer sa qualification (entité essentielle ou importante) et son secteur de rattachement.", type: 'gouvernance' },
       { id: 'NIS2-A3-R2', text: "Communiquer nom, adresse, coordonnées à jour, plages d'adresses IP et secteur à l'autorité compétente.", type: 'notification' },
       { id: 'NIS2-A3-R3', text: "Déclarer les États membres dans lesquels des services relevant de la directive sont fournis.", type: 'notification' },
       { id: 'NIS2-A3-R4', text: "Signaler toute modification dans un délai maximal de deux semaines.", type: 'notification' },
@@ -39,14 +39,14 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['GOV-03'],
     sourceUrl: URL,
-    guidance: [ANSSI('Portail Mon Espace NIS 2', 'https://monespacenis2.cyber.gouv.fr')],
+    guidance: [ANSSI('Portail Mon Espace NIS2', 'https://monespacenis2.cyber.gouv.fr')],
   },
   {
     id: 'NIS2-A20',
     regulation: 'NIS2',
     article: 'Article 20',
     order: 20,
-    chapter: 'Chapitre IV — Mesures de gestion des risques et obligations d\'information',
+    chapter: 'Chapitre IV : Mesures de gestion des risques et obligations d\'information',
     title: 'Gouvernance et responsabilité des organes de direction',
     statement:
       "Faire approuver les mesures de gestion des risques par l'organe de direction, lui en faire superviser la mise en œuvre, et former ses membres. C'est la disposition qui engage personnellement les dirigeants : la violation de l'article 21 leur est imputable, et l'autorité peut aller jusqu'à leur interdire d'exercer des fonctions dirigeantes.",
@@ -73,7 +73,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 1',
     order: 2101,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: "Mesures appropriées et proportionnées, fondées sur le risque",
     statement:
       "Prendre des mesures techniques, opérationnelles et organisationnelles appropriées et proportionnées pour gérer les risques pesant sur les réseaux et systèmes d'information, et pour limiter les conséquences des incidents sur les destinataires des services. La proportionnalité s'apprécie au regard de l'exposition, de la taille et de la gravité probable des incidents.",
@@ -99,7 +99,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point a)',
     order: 2102,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: "Politiques d'analyse des risques et de sécurité des systèmes d'information",
     statement:
       "Disposer d'une politique d'analyse des risques et d'une politique de sécurité des systèmes d'information formalisées, approuvées et appliquées. Le ReCyF en fait le socle : sans ce cadre documentaire, aucun autre objectif ne peut être démontré.",
@@ -123,7 +123,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point b)',
     order: 2103,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: 'Gestion des incidents',
     statement:
       "Disposer d'un processus documenté de détection, de qualification, de traitement et de retour d'expérience sur les incidents de sécurité, avec des rôles identifiés et une chaîne d'alerte opérationnelle en continu.",
@@ -147,7 +147,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point c)',
     order: 2104,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: 'Continuité des activités, sauvegardes et gestion de crise',
     statement:
       "Disposer d'un dispositif de continuité et de reprise reposant sur des sauvegardes éprouvées, des objectifs de reprise définis, et une organisation de crise formalisée et exercée.",
@@ -172,7 +172,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point d)',
     order: 2105,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: "Sécurité de la chaîne d'approvisionnement",
     statement:
       "Traiter la sécurité des relations avec les fournisseurs et prestataires directs, en tenant compte des vulnérabilités propres à chacun, de la qualité globale de leurs pratiques de cybersécurité et de leurs procédures de développement sécurisé. L'article 21, paragraphe 3, impose en outre de prendre en compte les évaluations coordonnées des risques menées au niveau européen.",
@@ -199,7 +199,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point e)',
     order: 2106,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: "Sécurité de l'acquisition, du développement et de la maintenance",
     statement:
       "Intégrer la sécurité dans l'acquisition, le développement et la maintenance des systèmes, y compris le traitement et la divulgation des vulnérabilités. Cela couvre aussi bien le développement interne que l'achat de solutions sur étagère.",
@@ -224,10 +224,10 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point f)',
     order: 2107,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: "Évaluation de l'efficacité des mesures",
     statement:
-      "Disposer de politiques et de procédures permettant d'évaluer l'efficacité réelle des mesures de gestion des risques — et non leur seule existence. C'est le point où la conformité documentaire cesse de suffire.",
+      "Disposer de politiques et de procédures permettant d'évaluer l'efficacité réelle des mesures de gestion des risques, et non leur seule existence. C'est le point où la conformité documentaire cesse de suffire.",
     appliesTo: ['Entité essentielle', 'Entité importante'],
     requirements: [
       { id: 'NIS2-A21-2f-R1', text: "Définir des indicateurs d'efficacité et une périodicité de mesure.", type: 'documentaire' },
@@ -248,7 +248,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point g)',
     order: 2108,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: 'Cyberhygiène et formation à la cybersécurité',
     statement:
       "Mettre en place des pratiques de base de cyberhygiène et un dispositif de formation à la cybersécurité couvrant l'ensemble des utilisateurs, y compris les prestataires agissant pour le compte de l'entité.",
@@ -272,10 +272,10 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point h)',
     order: 2109,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: 'Cryptographie et chiffrement',
     statement:
-      "Définir et appliquer des politiques et procédures relatives à l'usage de la cryptographie et, le cas échéant, du chiffrement — ce qui suppose une politique de gestion des clés et des algorithmes, et pas seulement l'activation du chiffrement en transit.",
+      "Définir et appliquer des politiques et procédures relatives à l'usage de la cryptographie et, le cas échéant, du chiffrement, ce qui suppose une politique de gestion des clés et des algorithmes, et pas seulement l'activation du chiffrement en transit.",
     appliesTo: ['Entité essentielle', 'Entité importante'],
     requirements: [
       { id: 'NIS2-A21-2h-R1', text: "Définir une politique cryptographique : algorithmes, longueurs de clés, cas d'usage.", type: 'documentaire' },
@@ -296,10 +296,10 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point i)',
     order: 2110,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: "Sécurité des ressources humaines, contrôle d'accès et gestion des actifs",
     statement:
-      "Encadrer la sécurité tout au long du cycle de vie des personnes — arrivée, mobilité, départ —, appliquer une politique de contrôle d'accès fondée sur le besoin d'en connaître, et tenir un inventaire des actifs.",
+      "Encadrer la sécurité tout au long du cycle de vie des personnes (arrivée, mobilité, départ), appliquer une politique de contrôle d'accès fondée sur le besoin d'en connaître, et tenir un inventaire des actifs.",
     appliesTo: ['Entité essentielle', 'Entité importante'],
     requirements: [
       { id: 'NIS2-A21-2i-R1', text: "Formaliser les procédures d'arrivée, de mobilité et de départ, y compris la restitution des accès.", type: 'organisationnel' },
@@ -321,7 +321,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point j)',
     order: 2111,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: 'Authentification multifacteur et communications sécurisées',
     statement:
       "Recourir, selon les besoins, à l'authentification multifacteur ou continue, à des communications vocales, vidéo et textuelles sécurisées, et à des systèmes sécurisés de communication d'urgence au sein de l'entité.",
@@ -345,7 +345,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 4',
     order: 2112,
-    chapter: 'Chapitre IV — Mesures de gestion des risques',
+    chapter: 'Chapitre IV : Mesures de gestion des risques',
     title: 'Mesures correctives en cas de non-conformité constatée',
     statement:
       "Lorsque l'entité constate elle-même qu'elle ne se conforme pas aux mesures du paragraphe 2, prendre sans retard injustifié toutes les mesures correctives nécessaires, appropriées et proportionnées.",
@@ -368,7 +368,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 23, paragraphe 1',
     order: 2301,
-    chapter: "Chapitre IV — Obligations d'information",
+    chapter: "Chapitre IV : Obligations d'information",
     title: "Notification des incidents importants au CSIRT",
     statement:
       "Notifier sans retard injustifié tout incident ayant un impact important sur la fourniture des services. Un incident est important s'il a causé ou est susceptible de causer une perturbation opérationnelle grave ou des pertes financières, ou s'il a affecté d'autres personnes en causant des dommages considérables.",
@@ -388,14 +388,14 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     themes: ['REP-02', 'HIE-01'],
     recyf: [12],
     sourceUrl: URL,
-    guidance: [ENISA("Guide de mise en œuvre technique des mesures NIS 2", 'https://www.enisa.europa.eu/publications/implementation-guidance-on-nis-2-security-measures')],
+    guidance: [ENISA("Guide de mise en œuvre technique des mesures NIS2", 'https://www.enisa.europa.eu/publications/implementation-guidance-on-nis-2-security-measures')],
   },
   {
     id: 'NIS2-A23-4',
     regulation: 'NIS2',
     article: 'Article 23, paragraphe 4',
     order: 2302,
-    chapter: "Chapitre IV — Obligations d'information",
+    chapter: "Chapitre IV : Obligations d'information",
     title: "Séquence de déclaration : 24 heures, 72 heures, un mois",
     statement:
       "Respecter la séquence en trois temps : une alerte précoce dans les 24 heures, une notification d'incident dans les 72 heures, puis un rapport final au plus tard un mois après cette notification. Les prestataires de services de confiance sont soumis à un délai unique de 24 heures.",
@@ -409,7 +409,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
       { id: 'NIS2-A23-4-R4', text: "Remettre un rapport final sous un mois : description détaillée, cause profonde, mesures d'atténuation, impact transfrontière.", type: 'notification' },
       { id: 'NIS2-A23-4-R5', text: "Si l'incident est toujours en cours, fournir un rapport d'avancement puis le rapport final un mois après clôture.", type: 'notification' },
     ],
-    deadline: { kind: 'declenchee', label: "24 h — 72 h — 1 mois", hours: 24 },
+    deadline: { kind: 'declenchee', label: "24 h, 72 h, 1 mois", hours: 24 },
     evidence: ["Journal horodaté des notifications", "Rapports finaux transmis"],
     sanctionTier: 'NIS2-EE',
     effort: 3,
@@ -423,7 +423,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 23, paragraphes 1 et 2',
     order: 2303,
-    chapter: "Chapitre IV — Obligations d'information",
+    chapter: "Chapitre IV : Obligations d'information",
     title: 'Information des destinataires des services',
     statement:
       "Informer sans retard injustifié les destinataires des services des incidents importants susceptibles de nuire à la fourniture de ces services, et leur communiquer les mesures qu'ils peuvent appliquer face à une cybermenace importante.",
@@ -468,7 +468,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 26',
     order: 26,
-    chapter: 'Chapitre V — Compétence et enregistrement',
+    chapter: 'Chapitre V : Compétence et enregistrement',
     title: 'Détermination de la compétence juridictionnelle',
     statement:
       "Déterminer l'État membre compétent : en principe celui de l'établissement, mais pour les fournisseurs de services numériques et les prestataires de services gérés, celui de l'établissement principal, entendu comme le lieu où sont principalement prises les décisions relatives aux mesures de cybersécurité.",
@@ -490,7 +490,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 27',
     order: 27,
-    chapter: 'Chapitre V — Compétence et enregistrement',
+    chapter: 'Chapitre V : Compétence et enregistrement',
     title: "Registre européen des fournisseurs numériques",
     statement:
       "Les fournisseurs de services DNS, registres de noms de domaine, fournisseurs d'informatique en nuage, de centres de données, de réseaux de diffusion de contenu, de services gérés et de sécurité gérés, ainsi que les places de marché, moteurs de recherche et réseaux sociaux, transmettent leurs informations d'identification, centralisées par l'ENISA.",
@@ -514,7 +514,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Articles 29 et 30',
     order: 29,
-    chapter: 'Chapitre VI — Partage d\'informations',
+    chapter: 'Chapitre VI : Partage d\'informations',
     title: "Partage d'informations et notifications volontaires",
     statement:
       "Participer, à titre volontaire, aux dispositifs de partage d'informations sur les menaces, et signaler les incidents ou quasi-incidents qui ne relèvent pas de l'obligation de notification. Une notification volontaire n'emporte aucune obligation supplémentaire.",
@@ -536,7 +536,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Articles 32 et 33',
     order: 32,
-    chapter: "Chapitre VII — Supervision et exécution",
+    chapter: "Chapitre VII : Supervision et exécution",
     title: "Se tenir prêt aux mesures de supervision",
     statement:
       "Les entités essentielles sont soumises à une supervision a priori : inspections sur place, audits de sécurité à leurs frais, demandes de preuves, analyses de sécurité. Les entités importantes relèvent d'une supervision a posteriori, déclenchée par un indice de manquement. Cette différence de régime est la conséquence pratique la plus lourde de la qualification.",

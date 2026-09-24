@@ -1,0 +1,194 @@
+{
+  "CRA-A14-VULN": {
+    "article": "Article 14(1) and (2)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Reporting actively exploited vulnerabilities",
+    "statement": "Notify any actively exploited vulnerability in a product, simultaneously to the coordinating CSIRT and ENISA, via the single reporting platform: early warning within 24 hours, notification within 72 hours, final report no later than 14 days after a fix or mitigation is made available. This obligation has applied since 11 September 2026, including for products placed on the market before that date.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A14V-R1": "Set up monitoring so as to know without delay that a product vulnerability is being actively exploited.",
+      "CRA-A14V-R2": "Send an early warning within 24 hours, stating the Member States where the product is made available.",
+      "CRA-A14V-R3": "Send within 72 hours a notification describing the product, the nature of the exploit and the corrective or mitigating measures available.",
+      "CRA-A14V-R4": "Submit a final report no later than 14 days after the fix is available: severity, malicious actor where relevant, update deployed.",
+      "CRA-A14V-R5": "Have working access to ENISA's single reporting platform."
+    },
+    "deadline": "24 h, 72 h, 14 days after the fix",
+    "evidence": ["CRA reporting procedure", "Access to the single reporting platform", "Timestamped notification log"],
+    "conditions": ["Manufacturer of products with digital elements"],
+    "guidance": ["Cyber Resilience Act (ANSSI)"]
+  },
+  "CRA-A14-INC": {
+    "article": "Article 14(3) and (4)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Reporting severe incidents affecting product security",
+    "statement": "Notify any severe incident with an impact on the security of a product, for example a compromised update infrastructure, following the same sequence: early warning within 24 hours, notification within 72 hours, final report within one month of the notification.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A14I-R1": "Qualify a severe incident: harm to the availability, authenticity, integrity or confidentiality of sensitive data or functions, or execution of malicious code in the product.",
+      "CRA-A14I-R2": "Send an early warning within 24 hours, stating whether the incident may result from unlawful or malicious acts.",
+      "CRA-A14I-R3": "Send an incident notification within 72 hours, with the initial assessment and mitigating measures.",
+      "CRA-A14I-R4": "Submit a final report within one month of the notification: root cause, mitigation applied and ongoing."
+    },
+    "deadline": "24 h, 72 h, 1 month",
+    "evidence": ["Severe incident qualification grid", "Incident reports sent"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A14-USERS": {
+    "article": "Article 14(8)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Informing users",
+    "statement": "After becoming aware of an actively exploited vulnerability or a severe incident, inform the affected users (and, where relevant, all users) of the consequences and of the mitigating or corrective measures they can take, in a structured, machine-readable format where appropriate.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A14U-R1": "Keep a way of reaching the product's users, including those who bought through a distributor.",
+      "CRA-A14U-R2": "Prepare security advisories for users, in a structured format where appropriate."
+    },
+    "deadline": "As soon as the vulnerability or incident is known",
+    "evidence": ["Security advisory distribution channel", "Published security advisories"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A13-RISK": {
+    "article": "Article 13(1) to (4)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Product cybersecurity risk assessment",
+    "statement": "Design, develop and produce the product in line with the essential requirements of Annex I, Part I, based on a documented cybersecurity risk assessment grounded in intended and reasonably foreseeable use, taken into account at every phase (planning, design, development, production, delivery, maintenance) and included in the technical documentation.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A13R-R1": "Document a cybersecurity risk assessment per product, based on intended and reasonably foreseeable use.",
+      "CRA-A13R-R2": "State for each essential requirement of Annex I, Part I, whether it applies and how it is met.",
+      "CRA-A13R-R3": "Update the assessment throughout the support period."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Risk assessment per product", "Annex I compliance matrix"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-ANX1-P1": {
+    "article": "Annex I, Part I",
+    "chapter": "Annex I: Essential cybersecurity requirements",
+    "title": "Product security properties",
+    "statement": "Place the product on the market without known exploitable vulnerabilities, with a secure-by-default configuration, protection against unauthorised access, encryption of stored and transmitted data, minimisation of data and attack surface, logging of security events and the ability to fix vulnerabilities through security updates.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-P1-R1": "Deliver the product without known exploitable vulnerabilities.",
+      "CRA-P1-R2": "Provide a secure-by-default configuration, with the option to reset the product to its original state.",
+      "CRA-P1-R3": "Protect against unauthorised access through authentication, identity or access management mechanisms.",
+      "CRA-P1-R4": "Protect the confidentiality and integrity of stored, transmitted or processed data, notably through state-of-the-art encryption.",
+      "CRA-P1-R5": "Limit attack surfaces, including external interfaces, and only process necessary data.",
+      "CRA-P1-R6": "Record and monitor relevant internal activity, with an opt-out for the user.",
+      "CRA-P1-R7": "Allow vulnerabilities to be handled through security updates, automatic by default where appropriate."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Product security test reports", "Default configuration documentation", "Update architecture"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-ANX1-P2": {
+    "article": "Annex I, Part II",
+    "chapter": "Annex I: Essential cybersecurity requirements",
+    "title": "Vulnerability handling and software bill of materials",
+    "statement": "Identify and document the product's components and vulnerabilities, including through a machine-readable software bill of materials (SBOM) covering at least top-level dependencies; fix without delay through free security updates, distributed separately from feature updates where technically possible; test regularly; publish fixed vulnerabilities; apply a coordinated disclosure policy.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-P2-R1": "Produce a machine-readable software bill of materials covering at least top-level dependencies.",
+      "CRA-P2-R2": "Fix vulnerabilities without delay through security updates provided free of charge.",
+      "CRA-P2-R3": "Carry out effective and regular security tests and reviews.",
+      "CRA-P2-R4": "Publish information on fixed vulnerabilities once the update is available.",
+      "CRA-P2-R5": "Apply a coordinated vulnerability disclosure policy and provide a contact address.",
+      "CRA-P2-R6": "Provide mechanisms for secure distribution of updates."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Software bill of materials per version", "Coordinated disclosure policy", "Register of fixed vulnerabilities"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A13-COMP": {
+    "article": "Article 13(5) and (6)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Due diligence on third-party and open-source components",
+    "statement": "Exercise due diligence when integrating third-party components, including open-source software, so that they do not compromise the product's security; report any vulnerability found in a component to whoever maintains it, and remediate it.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A13C-R1": "Assess the security of third-party components before integrating them, including whether they are actively maintained.",
+      "CRA-A13C-R2": "Report vulnerabilities found in a component to its maintainer.",
+      "CRA-A13C-R3": "Track published vulnerabilities affecting integrated dependencies."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Third-party component integration policy", "Software composition analysis"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A13-SUPPORT": {
+    "article": "Article 13(8), (9) and (19)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Support period of at least five years",
+    "statement": "Set a support period reflecting the product's expected time in use, of at least five years unless the expected use is shorter; display its end date, at least month and year, at the time of purchase; keep each security update available for ten years or until the end of the support period.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A13S-R1": "Determine and justify each product's support period in the technical documentation.",
+      "CRA-A13S-R2": "State the end date of the support period at the time of purchase.",
+      "CRA-A13S-R3": "Keep each security update available for ten years or until the end of the support period.",
+      "CRA-A13S-R4": "Notify users of the end of the support period where technically possible."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Support period policy", "End-of-support notices on products"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A13-CONTACT": {
+    "article": "Article 13(17)",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Single point of contact for users",
+    "statement": "Designate a single, easily identifiable point of contact allowing users to communicate directly and rapidly with the manufacturer, notably to report a vulnerability, through means not limited to automated tools.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A13P-R1": "Designate and publish a single point of contact, mentioned in the Annex II instructions.",
+      "CRA-A13P-R2": "Offer at least one non-automated channel."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Security contact page", "User instructions mentioning the contact"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A31-DOC": {
+    "article": "Articles 13(12)-(13), 28 and 31, Annex VII",
+    "shortRef": "31 · Annex VII",
+    "chapter": "Chapter III: Conformity of the product",
+    "title": "Technical documentation and EU declaration of conformity",
+    "statement": "Before placing on the market, draw up the Annex VII technical documentation (including the risk assessment and the software bill of materials) and the EU declaration of conformity; keep them available to market surveillance authorities for ten years or for the support period if longer.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A31-R1": "Compile the Annex VII technical documentation for each product.",
+      "CRA-A31-R2": "Draw up the EU declaration of conformity and supply a copy, full or simplified, with the product.",
+      "CRA-A31-R3": "Keep the documentation and the declaration for at least ten years."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Technical file per product", "EU declarations of conformity"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A32-CONF": {
+    "article": "Articles 30 and 32, Annexes III and IV",
+    "shortRef": "32 · Annex III",
+    "chapter": "Chapter III: Conformity of the product",
+    "title": "Conformity assessment and CE marking",
+    "statement": "Apply the conformity assessment procedure matching the product category (internal control for default products, harmonised standard or third party for class I, mandatory third party for class II, European certification for critical products), then affix the CE marking.",
+    "appliesTo": ["Manufacturer"],
+    "requirements": {
+      "CRA-A32-R1": "Determine each product's category in light of Implementing Regulation 2025/2392.",
+      "CRA-A32-R2": "Choose and apply the corresponding conformity assessment procedure.",
+      "CRA-A32-R3": "Affix the CE marking visibly, legibly and indelibly."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Product classification", "Conformity assessment reports", "CE marking"],
+    "conditions": ["Manufacturer of products with digital elements"]
+  },
+  "CRA-A19-IMP": {
+    "article": "Articles 19 and 20",
+    "chapter": "Chapter II: Obligations of economic operators",
+    "title": "Obligations of importers and distributors",
+    "statement": "Only make compliant products available: check the CE marking, the declaration of conformity, the instructions and the manufacturer's identification; inform the manufacturer and market surveillance authorities without delay of a vulnerability or significant risk; withdraw or recall the product if necessary.",
+    "appliesTo": ["Importer", "Distributor"],
+    "requirements": {
+      "CRA-A19-R1": "Check the CE marking, documentation and instructions before making the product available.",
+      "CRA-A19-R2": "Inform the manufacturer of any vulnerability identified in a distributed product.",
+      "CRA-A19-R3": "Inform market surveillance authorities of a significant cybersecurity risk."
+    },
+    "deadline": "Applicable from 11 December 2027",
+    "evidence": ["Incoming inspection procedure", "Log of alerts sent to manufacturers"],
+    "conditions": ["Importer or distributor of digital products"]
+  }
+}

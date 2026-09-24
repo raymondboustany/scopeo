@@ -1,19 +1,21 @@
-import type { CrosswalkTheme } from '@/types/domain'
+import type { CrosswalkTheme, RegulationId } from '@/types/domain'
+import { LANG } from '@/i18n'
+import EN from '@/i18n/en/crosswalk.json'
 
 /**
- * Carte de croisement — exigences unifiées.
+ * Carte de croisement : exigences unifiées.
  *
  * Chaque thème répond à une question : « quelle action unique satisfait
  * simultanément les textes applicables, et où cette mutualisation cesse-t-elle
  * d'être possible ? »
  *
  * Trois relations sont distinguées :
- *   recouvrement — une action bien menée couvre tous les textes listés ;
- *   divergence   — même sujet, exigences inconciliables : la règle la plus
+ *   recouvrement : une action bien menée couvre tous les textes listés ;
+ *   divergence   : même sujet, exigences inconciliables : la règle la plus
  *                  stricte s'impose, et elle est nommée ;
- *   hiérarchie   — un texte prime explicitement sur l'autre (lex specialis).
+ *   hiérarchie   : un texte prime explicitement sur l'autre (lex specialis).
  */
-export const CROSSWALK: CrosswalkTheme[] = [
+const CROSSWALK_FR: CrosswalkTheme[] = [
   // ==========================================================================
   // GOUVERNANCE
   // ==========================================================================
@@ -23,9 +25,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: "Responsabilité de l'organe de direction",
     domain: 'gouvernance',
     summary:
-      "Les trois textes majeurs remontent la conformité au niveau de l'organe de direction, mais avec des conséquences juridiques très inégales. Le RGPD impose de démontrer la conformité sans viser les dirigeants personnellement ; NIS 2 rend les dirigeants responsables de la violation de l'article 21 et permet de leur interdire d'exercer ; DORA leur confie la responsabilité finale du cadre de gestion du risque TIC.",
+      "Les trois textes majeurs remontent la conformité au niveau de l'organe de direction, mais avec des conséquences juridiques très inégales. Le RGPD impose de démontrer la conformité sans viser les dirigeants personnellement ; NIS2 rend les dirigeants responsables de la violation de l'article 21 et permet de leur interdire d'exercer ; DORA leur confie la responsabilité finale du cadre de gestion du risque TIC.",
     unifiedAction:
-      "Instituer une instance de gouvernance unique — comité sécurité et conformité — qui approuve formellement les politiques, suit les indicateurs et consigne ses décisions. Une seule délibération, correctement rédigée, vaut approbation au titre des trois textes.",
+      "Instituer une instance de gouvernance unique (comité sécurité et conformité) qui approuve formellement les politiques, suit les indicateurs et consigne ses décisions. Une seule délibération, correctement rédigée, vaut approbation au titre de chacun de ces textes.",
     relation: 'divergence',
     mappings: [
       {
@@ -44,14 +46,15 @@ export const CROSSWALK: CrosswalkTheme[] = [
         regulation: 'DORA',
         obligationIds: ['DORA-A5', 'DORA-A6'],
         requirement: "L'organe de direction définit, approuve, supervise et répond du cadre de gestion du risque TIC.",
-        nuance: "Obligation de formation régulière et d'allocation budgétaire explicite — DORA est le seul texte à exiger un budget identifié.",
+        nuance: "Obligation de formation régulière et d'allocation budgétaire explicite : DORA est le seul texte à exiger un budget identifié.",
       },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A16-17'], requirement: "Le système de gestion de la qualité inclut un cadre de responsabilités couvrant la direction et le personnel.", nuance: "Aucune responsabilité personnelle des dirigeants n'est prévue : l'obligation pèse sur le fournisseur." },
     ],
     strictest: {
       regulation: 'NIS2',
       rule: "Formation obligatoire des membres de l'organe de direction et responsabilité personnelle engageable, pouvant aller jusqu'à l'interdiction d'exercer.",
       rationale:
-        "C'est le seul des trois textes à prévoir une sanction atteignant la personne physique dirigeante. Calibrer la gouvernance sur NIS 2 satisfait mécaniquement le RGPD et l'essentiel de DORA ; l'inverse n'est pas vrai.",
+        "C'est le seul texte à prévoir une sanction atteignant la personne physique dirigeante. Calibrer la gouvernance sur NIS2 satisfait mécaniquement le RGPD et l'essentiel de DORA ; l'inverse n'est pas vrai.",
     },
     recyf: [2],
     evidence: ["Charte de gouvernance sécurité et conformité", "Comptes rendus d'approbation datés", "Attestations de formation des dirigeants"],
@@ -63,7 +66,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Fonction dédiée et point de contact',
     domain: 'gouvernance',
     summary:
-      "Chaque texte impose une figure de référence, mais leurs statuts sont incompatibles : le délégué à la protection des données doit être indépendant et sans conflit d'intérêts, tandis que le point de contact NIS 2 et le responsable DORA sont des fonctions opérationnelles. Fusionner ces rôles dans une seule personne expose à un conflit d'intérêts opposable.",
+      "Chaque texte impose une figure de référence, mais leurs statuts sont incompatibles : le délégué à la protection des données doit être indépendant et sans conflit d'intérêts, tandis que le point de contact NIS2 et le responsable DORA sont des fonctions opérationnelles. Fusionner ces rôles dans une seule personne expose à un conflit d'intérêts opposable.",
     unifiedAction:
       "Cartographier les rôles exigés par chaque texte applicable et les attribuer distinctement, en documentant l'absence de conflit d'intérêts pour la fonction de délégué. Une même direction peut les coordonner, mais le délégué ne peut pas être celui qui décide des moyens du traitement.",
     relation: 'divergence',
@@ -104,9 +107,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: "Enregistrement et déclaration d'identité",
     domain: 'gouvernance',
     summary:
-      "Se faire connaître de l'autorité est une obligation propre aux textes cyber. Le RGPD a supprimé la déclaration préalable en 2018 ; NIS 2 et DORA organisent au contraire un recensement, selon des logiques opposées : déclarative et d'identité pour NIS 2, prudentielle et contractuelle pour DORA.",
+      "Se faire connaître de l'autorité est une obligation propre aux textes cyber. Le RGPD a supprimé la déclaration préalable en 2018 ; NIS2 et DORA organisent au contraire un recensement, selon des logiques opposées : déclarative et d'identité pour NIS2, prudentielle et contractuelle pour DORA.",
     unifiedAction:
-      "Constituer une fiche d'identité réglementaire unique — raison sociale, établissements, plages d'adresses IP, secteurs, États membres desservis, contacts — et la maintenir comme source unique pour toutes les déclarations. Fixer une alerte à deux semaines sur toute modification.",
+      "Constituer une fiche d'identité réglementaire unique (raison sociale, établissements, plages d'adresses IP, secteurs, États membres desservis, contacts) et la maintenir comme source unique pour toutes les déclarations. Fixer une alerte à deux semaines sur toute modification.",
     relation: 'recouvrement',
     mappings: [
       {
@@ -132,14 +135,15 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Formation et sensibilisation',
     domain: 'gouvernance',
     summary:
-      "Les quatre textes imposent de former, mais ne visent pas les mêmes publics. NIS 2 et DORA rendent la formation des dirigeants obligatoire, ce que le RGPD n'exige pas.",
+      "Tous les textes imposent de former, mais ne visent pas les mêmes publics. NIS2 et DORA rendent la formation des dirigeants obligatoire, ce que le RGPD n'exige pas.",
     unifiedAction:
-      "Bâtir un programme annuel à trois niveaux — organe de direction, personnel, profils sensibles — couvrant protection des données, cybersécurité et résilience, avec émargement et mesure d'assimilation. Un seul programme, trois parcours.",
+      "Bâtir un programme annuel à trois niveaux (organe de direction, personnel, profils sensibles) couvrant protection des données, cybersécurité et résilience, avec émargement et mesure d'assimilation. Un seul programme, trois parcours.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A24', 'RGPD-A32'], requirement: "Garantir que toute personne agissant sous autorité ne traite les données que sur instruction, ce qui suppose de l'avoir formée." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A20', 'NIS2-A21-2g'], requirement: "Formation obligatoire des membres de l'organe de direction, et cyberhygiène pour l'ensemble des utilisateurs.", nuance: "Le ReCyF étend la sensibilisation aux prestataires agissant pour le compte de l'entité." },
       { regulation: 'DORA', obligationIds: ['DORA-A5', 'DORA-A13'], requirement: "Programmes de sensibilisation et de formation obligatoires pour le personnel et l'organe de direction, proportionnés au risque." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A4', 'AIACT-A26'], requirement: "Développer la maîtrise de l'IA du personnel et former les personnes chargées du contrôle humain.", nuance: "Depuis l'Omnibus IA, l'article 4 est une obligation de moyens : il faut favoriser la maîtrise de l'IA, sans garantir un niveau individuel." },
     ],
     recyf: [4],
     evidence: ["Plan de formation annuel", "Feuilles d'émargement", "Résultats des tests de sensibilisation"],
@@ -155,15 +159,16 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Analyse de risque et approche par les risques',
     domain: 'risques',
     summary:
-      "C'est le point de mutualisation le plus rentable du dispositif : les quatre textes exigent une analyse de risque. Les périmètres diffèrent cependant — droits des personnes pour le RGPD, réseaux et systèmes pour NIS 2, fonctions critiques pour DORA, produit mis sur le marché pour le CRA.",
+      "C'est le point de mutualisation le plus rentable du dispositif : tous les textes exigent une analyse de risque. Les périmètres diffèrent cependant : droits des personnes pour le RGPD, réseaux et systèmes pour NIS2, fonctions critiques pour DORA, produit mis sur le marché pour le CRA.",
     unifiedAction:
-      "Conduire une analyse de risque unique, structurée par actif et par fonction, dont les sorties alimentent les quatre lectures : impact sur les personnes, impact sur les services, impact sur les fonctions critiques, impact sur la continuité physique. Une méthode unique — EBIOS Risk Manager s'y prête — et quatre restitutions.",
+      "Conduire une analyse de risque unique, structurée par actif et par fonction, dont les sorties alimentent les différentes lectures : impact sur les personnes, impact sur les services, impact sur les fonctions critiques, impact sur la continuité physique. Une méthode unique (EBIOS Risk Manager s'y prête) et plusieurs restitutions.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A32', 'RGPD-A35'], requirement: "Apprécier le risque pour les droits et libertés des personnes physiques et calibrer les mesures en conséquence.", nuance: "Le risque s'apprécie du point de vue de la personne concernée, non de l'organisation. C'est un renversement de perspective que les autres textes n'opèrent pas." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-1', 'NIS2-A21-2a'], requirement: "Fonder les mesures sur une approche « tous risques » couvrant l'environnement physique.", nuance: "Le ReCyF réserve l'obligation d'une méthode formelle d'analyse de risque aux entités essentielles (objectif 16)." },
       { regulation: 'DORA', obligationIds: ['DORA-A6', 'DORA-A8'], requirement: "Cadre documenté, réexaminé annuellement et après chaque incident majeur, adossé au recensement des fonctions critiques ou importantes." },
       { regulation: 'CRA', obligationIds: ['CRA-A13-RISK'], requirement: "Évaluation des risques de cybersécurité par produit, documentée et mise à jour pendant toute la période d'assistance.", nuance: "Le risque s'apprécie à l'échelle du produit et de son utilisation raisonnablement prévisible, non de l'organisation qui le fabrique." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A9', 'AIACT-A55'], requirement: "Système de gestion des risques couvrant tout le cycle de vie d'un système à haut risque, et évaluation des risques systémiques des modèles à usage général.", nuance: "Les risques à couvrir incluent les droits fondamentaux, pas seulement la sécurité de l'information." },
     ],
     recyf: [16],
     evidence: ["Méthode d'analyse de risque documentée", "Registre des risques", "Traces de réexamen"],
@@ -175,13 +180,14 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: "Analyse d'impact préalable",
     domain: 'risques',
     summary:
-      "Seul le RGPD impose une analyse d'impact préalable formelle, assortie d'une consultation de l'autorité en cas de risque résiduel élevé. Aucun autre texte n'a d'équivalent : NIS 2 et DORA raisonnent en évaluation continue, non en autorisation préalable.",
+      "Seul le RGPD impose une analyse d'impact préalable formelle, assortie d'une consultation de l'autorité en cas de risque résiduel élevé. Aucun autre texte n'a d'équivalent : NIS2 et DORA raisonnent en évaluation continue, non en autorisation préalable.",
     unifiedAction:
       "Intégrer le déclenchement d'une analyse d'impact au jalon de conception des projets, en réutilisant les livrables de l'analyse de risque générale pour la partie menaces et mesures. Seule la partie « atteinte aux droits et libertés » est spécifique au RGPD.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A35', 'RGPD-A36', 'RGPD-A9'], requirement: "Analyse d'impact obligatoire en cas de risque élevé ; consultation préalable de l'autorité si le risque résiduel demeure élevé." },
       { regulation: 'DORA', obligationIds: ['DORA-A8', 'DORA-A29'], requirement: "Évaluation préalable du risque de concentration avant tout accord portant sur une fonction critique ou importante.", nuance: "Même logique d'évaluation ex ante, mais portant sur la dépendance à un tiers et non sur les droits des personnes." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A27'], requirement: "Analyse d'impact sur les droits fondamentaux avant la première utilisation, pour les déployeurs publics et les systèmes de notation de crédit ou d'assurance.", nuance: "L'analyse peut s'appuyer sur l'analyse d'impact RGPD, mais ne s'y substitue pas : son objet est plus large." },
     ],
     evidence: ["Analyses d'impact réalisées", "Critères de déclenchement documentés"],
     effort: 3,
@@ -196,15 +202,16 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Mesures techniques et organisationnelles de sécurité',
     domain: 'protection',
     summary:
-      "Le recouvrement le plus large et le plus connu : RGPD article 32, NIS 2 article 21 et DORA article 9 exigent tous des mesures de sécurité adaptées au risque. Mais là où le RGPD s'arrête à une obligation de moyens, NIS 2 et DORA énumèrent des mesures nommées, et DORA en fixe le contenu minimal par norme technique.",
+      "Le recouvrement le plus large et le plus connu : RGPD article 32, NIS2 article 21 et DORA article 9 exigent tous des mesures de sécurité adaptées au risque. Mais là où le RGPD s'arrête à une obligation de moyens, NIS2 et DORA énumèrent des mesures nommées, et DORA en fixe le contenu minimal par norme technique.",
     unifiedAction:
-      "Établir une politique de sécurité des systèmes d'information unique, dont l'architecture épouse les dix mesures de l'article 21 § 2 de NIS 2 et les chapitres du règlement délégué 2024/1774. Cette structure couvre par construction l'article 32 du RGPD, qui est moins exigeant.",
+      "Établir une politique de sécurité des systèmes d'information unique, dont l'architecture épouse les dix mesures de l'article 21 § 2 de NIS2 et les chapitres du règlement délégué 2024/1774. Cette structure couvre par construction l'article 32 du RGPD, qui est moins exigeant.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A32'], requirement: "Mesures appropriées garantissant un niveau de sécurité adapté au risque, dont pseudonymisation et chiffrement.", nuance: "Obligation de résultat sur la finalité, de moyens sur les modalités : aucune mesure n'est nommée comme obligatoire." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-1', 'NIS2-A21-2a', 'NIS2-A21-2i'], requirement: "Dix catégories de mesures nommément énumérées à l'article 21 § 2, applicables au minimum.", nuance: "Le règlement d'exécution 2024/2690 rend ces mesures chiffrées et opposables pour les fournisseurs numériques." },
-      { regulation: 'DORA', obligationIds: ['DORA-A9', 'DORA-A7'], requirement: "Politiques, procédures et outils TIC assurant résilience, continuité, disponibilité et sécurité des données.", nuance: "Le règlement délégué 2024/1774 fixe le contenu minimal obligatoire de chaque politique — c'est le niveau de détail le plus élevé des quatre textes." },
+      { regulation: 'DORA', obligationIds: ['DORA-A9', 'DORA-A7'], requirement: "Politiques, procédures et outils TIC assurant résilience, continuité, disponibilité et sécurité des données.", nuance: "Le règlement délégué 2024/1774 fixe le contenu minimal obligatoire de chaque politique : c'est le niveau de détail le plus élevé de tous les textes." },
       { regulation: 'CRA', obligationIds: ['CRA-ANX1-P1'], requirement: "Exigences essentielles de sécurité du produit mis sur le marché (annexe I, partie I).", nuance: "Obligation de résultat portant sur le produit, pas sur le système d'information de l'entreprise." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A15', 'AIACT-A55'], requirement: "Niveau approprié d'exactitude, de robustesse et de cybersécurité, y compris contre les attaques propres à l'IA.", nuance: "Empoisonnement des données, exemples contradictoires et atteintes à la confidentialité du modèle sont des menaces spécifiques que les référentiels classiques ne couvrent pas." },
     ],
     recyf: [5, 7, 9, 18],
     evidence: ["Politique de sécurité des systèmes d'information", "Référentiel de mesures et de contrôles", "Rapports d'évaluation d'efficacité"],
@@ -216,7 +223,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Chiffrement et cryptographie',
     domain: 'protection',
     summary:
-      "Le RGPD cite le chiffrement comme mesure appropriée et en fait une cause d'exonération de la communication aux personnes en cas de violation. NIS 2 et DORA vont plus loin en exigeant une politique cryptographique formalisée, incluant la gestion du cycle de vie des clés.",
+      "Le RGPD cite le chiffrement comme mesure appropriée et en fait une cause d'exonération de la communication aux personnes en cas de violation. NIS2 et DORA vont plus loin en exigeant une politique cryptographique formalisée, incluant la gestion du cycle de vie des clés.",
     unifiedAction:
       "Rédiger une politique cryptographique unique définissant algorithmes, longueurs de clés, cas d'usage et gestion du cycle de vie, puis l'appliquer au repos et en transit. Cette politique sert simultanément de mesure article 32 et d'exonération potentielle de l'article 34.",
     relation: 'recouvrement',
@@ -236,7 +243,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Gestion des identités et des accès',
     domain: 'protection',
     summary:
-      "Trois textes convergent sur le contrôle d'accès, mais NIS 2 est le seul à nommer explicitement l'authentification multifacteur, et le ReCyF y consacre deux objectifs entiers avec une distinction nette entre accès utilisateurs et accès d'administration.",
+      "Trois textes convergent sur le contrôle d'accès, mais NIS2 est le seul à nommer explicitement l'authentification multifacteur, et le ReCyF y consacre deux objectifs entiers avec une distinction nette entre accès utilisateurs et accès d'administration.",
     unifiedAction:
       "Déployer un dispositif unique de gestion des identités : moindre privilège, revue périodique des habilitations, authentification multifacteur sur les accès distants et les comptes à privilèges, et séparation stricte des comptes d'administration.",
     relation: 'recouvrement',
@@ -256,7 +263,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Sécurité par conception, développement et changements',
     domain: 'protection',
     summary:
-      "Le RGPD impose la protection des données dès la conception et par défaut ; NIS 2 vise la sécurité de l'acquisition, du développement et de la maintenance ; DORA encadre la gestion des changements TIC. Trois formulations d'une même discipline d'ingénierie.",
+      "Le RGPD impose la protection des données dès la conception et par défaut ; NIS2 vise la sécurité de l'acquisition, du développement et de la maintenance ; DORA encadre la gestion des changements TIC. Trois formulations d'une même discipline d'ingénierie.",
     unifiedAction:
       "Insérer dans le cycle de vie projet un jalon de sécurité et de protection des données unique, couvrant exigences de sécurité, minimisation, paramétrage par défaut, revue de code et procédure de changement avec retour arrière.",
     relation: 'recouvrement',
@@ -265,6 +272,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2e'], requirement: "Sécurité de l'acquisition, du développement et de la maintenance, y compris traitement et divulgation des vulnérabilités." },
       { regulation: 'DORA', obligationIds: ['DORA-A9'], requirement: "Procédure documentée de gestion des changements TIC, avec validation et réversibilité." },
       { regulation: 'CRA', obligationIds: ['CRA-ANX1-P1', 'CRA-A13-RISK'], requirement: "Sécurité dès la conception, configuration sécurisée par défaut, surface d'attaque réduite.", nuance: "Le CRA est le texte le plus exigeant sur la conception : il en fait une condition de mise sur le marché." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A15'], requirement: "Résilience du système intégrée dès la conception, par redondance et mesures de sécurité adaptées." },
     ],
     recyf: [5, 18],
     evidence: ["Méthodologie projet incluant le jalon sécurité", "Politique de développement sécurisé", "Registre des changements"],
@@ -276,7 +284,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Sécurité physique et environnementale',
     domain: 'protection',
     summary:
-      "Aucun des textes ne construit de régime détaillé de protection physique, mais aucun ne l'exclut. NIS 2 vise expressément l'environnement physique dans son approche « tous risques », et c'est le ReCyF qui en donne la traduction concrète : registre des visiteurs, droits d'accès physique au strict besoin, protection renforcée des salles serveurs pour les entités essentielles.",
+      "Aucun des textes ne construit de régime détaillé de protection physique, mais aucun ne l'exclut. NIS2 vise expressément l'environnement physique dans son approche « tous risques », et c'est le ReCyF qui en donne la traduction concrète : registre des visiteurs, droits d'accès physique au strict besoin, protection renforcée des salles serveurs pour les entités essentielles.",
     unifiedAction:
       "Traiter la sécurité physique comme un volet à part entière de la politique de sécurité : contrôle des accès aux locaux, détection d'intrusion, surveillance, protection des zones hébergeant des systèmes critiques.",
     relation: 'recouvrement',
@@ -295,7 +303,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Sécurité des ressources humaines',
     domain: 'protection',
     summary:
-      "NIS 2 encadre le cycle de vie des personnes — arrivée, mobilité, départ — et le ReCyF y ajoute les clauses de confidentialité dans les contrats de travail. Toute vérification menée à ce titre est un traitement de données qui doit lui-même être conforme au RGPD : un cas net où un texte engendre une obligation au titre d'un autre.",
+      "NIS2 encadre le cycle de vie des personnes (arrivée, mobilité, départ) et le ReCyF y ajoute les clauses de confidentialité dans les contrats de travail. Toute vérification menée à ce titre est un traitement de données qui doit lui-même être conforme au RGPD : un cas net où un texte engendre une obligation au titre d'un autre.",
     unifiedAction:
       "Formaliser les procédures d'arrivée, de mobilité et de départ avec restitution systématique des accès, identifier les fonctions sensibles, et encadrer toute vérification d'antécédents par une base juridique et une information des personnes conformes au RGPD.",
     relation: 'recouvrement',
@@ -319,12 +327,13 @@ export const CROSSWALK: CrosswalkTheme[] = [
     summary:
       "La journalisation illustre une tension récurrente : les textes cyber poussent à collecter et conserver largement, le RGPD impose de minimiser et de borner la conservation. Les journaux contenant des identifiants et des adresses IP sont des données personnelles.",
     unifiedAction:
-      "Définir une politique de journalisation unique fixant, par catégorie de journal, ce qui est collecté, pourquoi, pendant combien de temps et qui y accède — puis inscrire cette politique au registre des traitements. Le besoin de détection fixe le plancher, la minimisation fixe le plafond.",
+      "Définir une politique de journalisation unique fixant, par catégorie de journal, ce qui est collecté, pourquoi, pendant combien de temps et qui y accède, puis inscrire cette politique au registre des traitements. Le besoin de détection fixe le plancher, la minimisation fixe le plafond.",
     relation: 'divergence',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A5', 'RGPD-A30'], requirement: "Limiter la conservation à la durée nécessaire et documenter le traitement que constitue la journalisation.", nuance: "La CNIL retient généralement six mois comme durée de conservation de principe des journaux techniques, sauf obligation légale contraire." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2b', 'NIS2-A21-2i'], requirement: "Journalisation nécessaire à la détection, à la qualification et à l'investigation des incidents." },
       { regulation: 'DORA', obligationIds: ['DORA-A10', 'DORA-A17'], requirement: "Journalisation des incidents et surveillance des activités, avec conservation permettant l'analyse des causes profondes.", nuance: "Les normes techniques imposent une conservation cohérente avec les besoins d'investigation prudentielle." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A11-12', 'AIACT-A26'], requirement: "Journalisation automatique des événements par conception, et conservation des journaux par le déployeur pendant au moins six mois." },
     ],
     strictest: {
       regulation: 'DORA',
@@ -342,7 +351,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Détection et supervision de sécurité',
     domain: 'detection',
     summary:
-      "NIS 2 et DORA exigent une capacité de détection active. Le ReCyF réserve la supervision avancée aux entités essentielles, ce qui en fait l'un des rares points où la qualification NIS 2 change matériellement l'investissement à consentir.",
+      "NIS2 et DORA exigent une capacité de détection active. Le ReCyF réserve la supervision avancée aux entités essentielles, ce qui en fait l'un des rares points où la qualification NIS2 change matériellement l'investissement à consentir.",
     unifiedAction:
       "Mettre en place une capacité de détection dimensionnée sur la qualification : dispositifs de détection et traitement des alertes pour toutes les entités, supervision continue avec analyse des événements pour les entités essentielles et les entités financières.",
     relation: 'recouvrement',
@@ -350,6 +359,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2b', 'NIS2-A30'], requirement: "Capacité d'identification et de réaction aux incidents ; participation facultative aux dispositifs de partage." },
       { regulation: 'DORA', obligationIds: ['DORA-A10', 'DORA-A45'], requirement: "Mécanismes de détection rapide des activités anormales, lignes d'alerte multiples, seuils définis." },
       { regulation: 'RGPD', obligationIds: ['RGPD-A33'], requirement: "Sans capacité de détection, le délai de 72 heures de notification devient inapplicable.", nuance: "L'obligation de détection est indirecte mais contraignante : l'autorité apprécie la date de prise de connaissance au regard des moyens dont l'organisation aurait dû disposer." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A72'], requirement: "Surveillance après commercialisation des performances du système tout au long de son cycle de vie.", nuance: "La surveillance porte sur la performance et la conformité du système, non sur les menaces de sécurité." },
     ],
     recyf: [12, 20],
     evidence: ["Description du dispositif de détection", "Procédure de traitement des alertes", "Indicateurs de couverture"],
@@ -361,7 +371,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Gestion des vulnérabilités',
     domain: 'detection',
     summary:
-      "NIS 2 traite la vulnérabilité sous l'angle de la divulgation coordonnée ; DORA sous celui du test périodique. La combinaison des deux donne un cycle complet : découvrir, qualifier, corriger, vérifier.",
+      "NIS2 traite la vulnérabilité sous l'angle de la divulgation coordonnée ; DORA sous celui du test périodique. La combinaison des deux donne un cycle complet : découvrir, qualifier, corriger, vérifier.",
     unifiedAction:
       "Organiser un cycle unique de gestion des vulnérabilités avec veille, délais de correction différenciés par criticité, et canal de divulgation coordonnée accessible depuis l'extérieur.",
     relation: 'recouvrement',
@@ -385,18 +395,19 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Processus de gestion des incidents',
     domain: 'reponse',
     summary:
-      "Les quatre textes exigent un processus de gestion des incidents, mais chacun définit son propre seuil de qualification : violation de données pour le RGPD, incident important pour NIS 2, incident majeur pour DORA, incident grave affectant la sécurité d'un produit pour le CRA. Un même événement peut relever de plusieurs qualifications simultanément.",
+      "Tous les textes exigent un processus de gestion des incidents, mais chacun définit son propre seuil de qualification : violation de données pour le RGPD, incident important pour NIS2, incident majeur pour DORA, incident grave affectant la sécurité d'un produit pour le CRA. Un même événement peut relever de plusieurs qualifications simultanément.",
     unifiedAction:
-      "Construire une procédure unique de gestion des incidents, dont l'étape de qualification applique en parallèle les quatre grilles et déclenche automatiquement les notifications correspondantes. Le processus est commun ; seule la qualification est multiple.",
+      "Construire une procédure unique de gestion des incidents, dont l'étape de qualification applique en parallèle toutes les grilles et déclenche automatiquement les notifications correspondantes. Le processus est commun ; seule la qualification est multiple.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A33'], requirement: "Qualifier la violation, documenter tout incident même non notifié, évaluer le risque pour les personnes." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2b', 'NIS2-A23-1'], requirement: "Processus de gestion des incidents et qualification de l'incident important selon deux critères alternatifs." },
       { regulation: 'DORA', obligationIds: ['DORA-A17', 'DORA-A18', 'DORA-A13'], requirement: "Processus documenté, classification selon sept critères, analyse des causes profondes après chaque perturbation majeure.", nuance: "DORA est le seul à imposer une grille de classification chiffrée par norme technique." },
       { regulation: 'CRA', obligationIds: ['CRA-A14-INC'], requirement: "Qualification des incidents graves ayant des répercussions sur la sécurité d'un produit." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A72', 'AIACT-A73'], requirement: "Collecte des retours des déployeurs et enquête après tout incident grave, sans modifier le système avant d'en informer l'autorité." },
     ],
     recyf: [12],
-    evidence: ["Procédure unique de gestion des incidents", "Grille de qualification à quatre entrées", "Registre des incidents"],
+    evidence: ["Procédure unique de gestion des incidents", "Grille de qualification multi-régimes", "Registre des incidents"],
     effort: 4,
   },
   {
@@ -405,21 +416,22 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: "Notification des incidents à l'autorité",
     domain: 'reponse',
     summary:
-      "C'est la divergence la plus opérationnelle du dispositif : quatre régimes de notification, quatre autorités, quatre horloges. Un incident touchant une banque et des données personnelles peut appeler une déclaration à l'ACPR, une alerte à l'ANSSI et une notification à la CNIL, avec des délais et des contenus distincts.",
+      "C'est la divergence la plus opérationnelle du dispositif : plusieurs régimes de notification, plusieurs autorités, plusieurs horloges. Un incident touchant une banque et des données personnelles peut appeler une déclaration à l'ACPR, une alerte à l'ANSSI et une notification à la CNIL, avec des délais et des contenus distincts.",
     unifiedAction:
-      "Établir une matrice de notification unique — événement, qualification, autorité, délai, modèle, responsable — et la répéter en exercice. L'horloge la plus courte commande la mobilisation de la cellule de crise, même si les autres délais sont plus longs.",
+      "Établir une matrice de notification unique (événement, qualification, autorité, délai, modèle, responsable) et la répéter en exercice. L'horloge la plus courte commande la mobilisation de la cellule de crise, même si les autres délais sont plus longs.",
     relation: 'divergence',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A33'], requirement: "Notification à la CNIL dans les 72 heures après prise de connaissance, sauf risque improbable pour les droits et libertés." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A23-1', 'NIS2-A23-4'], requirement: "Alerte précoce au CSIRT sous 24 heures, notification d'incident sous 72 heures, rapport final sous un mois.", nuance: "Délai unique de 24 heures pour les prestataires de services de confiance." },
       { regulation: 'DORA', obligationIds: ['DORA-A19', 'DORA-A18'], requirement: "Notification initiale, rapport intermédiaire et rapport final à l'autorité compétente, selon les délais du règlement délégué 2025/301, sur modèles harmonisés obligatoires." },
-      { regulation: 'CRA', obligationIds: ['CRA-A14-VULN', 'CRA-A14-INC'], requirement: "Alerte précoce sous 24 heures, notification sous 72 heures, rapport final 14 jours après correctif ou un mois après notification, via la plateforme unique de l'ENISA.", nuance: "Déclenché par un produit, non par un système d'information : un éditeur peut devoir notifier au titre du CRA sans être assujetti à NIS 2." },
+      { regulation: 'CRA', obligationIds: ['CRA-A14-VULN', 'CRA-A14-INC'], requirement: "Alerte précoce sous 24 heures, notification sous 72 heures, rapport final 14 jours après correctif ou un mois après notification, via la plateforme unique de l'ENISA.", nuance: "Déclenché par un produit, non par un système d'information : un éditeur peut devoir notifier au titre du CRA sans être assujetti à NIS2." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A73', 'AIACT-A55'], requirement: "Signalement des incidents graves à l'autorité de surveillance du marché : 2 jours, 10 jours ou 15 jours selon la gravité.", nuance: "L'horloge ne démarre qu'une fois le lien de causalité établi ou raisonnablement probable, avec un plafond calculé depuis la prise de connaissance." },
     ],
     strictest: {
       regulation: 'DORA',
       rule: "La notification initiale DORA est la plus précoce du dispositif, et elle emprunte un modèle harmonisé obligatoire dont l'usage n'est pas laissé à l'appréciation de l'entité.",
       rationale:
-        "Pour une entité financière traitant des données personnelles, la contrainte de conception est la suivante : la cellule de crise doit être en mesure de produire une première déclaration structurée en quelques heures, alors que la qualification RGPD de la violation n'est souvent pas encore établie. Dimensionner sur DORA, puis dérouler NIS 2 et le RGPD.",
+        "Pour une entité financière traitant des données personnelles, la contrainte de conception est la suivante : la cellule de crise doit être en mesure de produire une première déclaration structurée en quelques heures, alors que la qualification RGPD de la violation n'est souvent pas encore établie. Dimensionner sur DORA, puis dérouler NIS2 et le RGPD.",
     },
     evidence: ["Matrice de notification multi-autorités", "Modèles pré-remplis par régime", "Comptes rendus d'exercices de notification"],
     effort: 4,
@@ -430,7 +442,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Communication aux personnes et aux destinataires',
     domain: 'reponse',
     summary:
-      "Au-delà de l'autorité, les textes imposent d'informer ceux qui subissent l'incident : les personnes concernées pour le RGPD, les destinataires des services pour NIS 2, les clients pour DORA, les utilisateurs du produit pour le CRA. Les déclencheurs diffèrent — risque élevé, atteinte à la fourniture du service, incidence sur les intérêts financiers, vulnérabilité exploitée.",
+      "Au-delà de l'autorité, les textes imposent d'informer ceux qui subissent l'incident : les personnes concernées pour le RGPD, les destinataires des services pour NIS2, les clients pour DORA, les utilisateurs du produit pour le CRA. Les déclencheurs diffèrent : risque élevé, atteinte à la fourniture du service, incidence sur les intérêts financiers, vulnérabilité exploitée.",
     unifiedAction:
       "Préparer un jeu de modèles de communication par public et par déclencheur, validés en amont par les directions juridique et communication, afin que la rédaction ne soit pas produite sous la pression de la crise.",
     relation: 'recouvrement',
@@ -454,7 +466,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Continuité des activités et reprise',
     domain: 'resilience',
     summary:
-      "Le RGPD exige de pouvoir rétablir la disponibilité des données dans des délais appropriés ; NIS 2 et DORA construisent un régime complet de continuité. DORA est le plus prescriptif : objectifs de rétablissement chiffrés, tests annuels, déclaration des pertes.",
+      "Le RGPD exige de pouvoir rétablir la disponibilité des données dans des délais appropriés ; NIS2 et DORA construisent un régime complet de continuité. DORA est le plus prescriptif : objectifs de rétablissement chiffrés, tests annuels, déclaration des pertes.",
     unifiedAction:
       "Bâtir un plan de continuité unique, fondé sur les fonctions critiques identifiées, avec des objectifs de temps et de point de rétablissement définis par fonction, testé au minimum annuellement.",
     relation: 'recouvrement',
@@ -473,9 +485,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Gestion de crise',
     domain: 'resilience',
     summary:
-      "NIS 2 et DORA imposent une organisation de crise formalisée. Le ReCyF ajoute une exigence souvent négligée : disposer de moyens de communication de secours indépendants du système d'information courant — précisément parce qu'une crise d'origine cyber peut rendre la messagerie inutilisable.",
+      "NIS2 et DORA imposent une organisation de crise formalisée. Le ReCyF ajoute une exigence souvent négligée : disposer de moyens de communication de secours indépendants du système d'information courant, précisément parce qu'une crise d'origine cyber peut rendre la messagerie inutilisable.",
     unifiedAction:
-      "Formaliser un dispositif de crise unique — composition, critères de déclenchement, main courante, moyens de communication de secours hors du système d'information principal — et l'exercer selon une périodicité définie.",
+      "Formaliser un dispositif de crise unique (composition, critères de déclenchement, main courante, moyens de communication de secours hors du système d'information principal) et l'exercer selon une périodicité définie.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2c', 'NIS2-A21-2j'], requirement: "Gestion des crises et systèmes sécurisés de communication d'urgence au sein de l'entité." },
@@ -491,7 +503,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Sauvegardes et restauration',
     domain: 'resilience',
     summary:
-      "DORA est ici nettement plus exigeant que les autres textes : il impose la séparation physique et logique des systèmes de sauvegarde et la vérification des données restaurées dans un environnement isolé avant retour en production — deux mesures que ni le RGPD ni NIS 2 ne nomment.",
+      "DORA est ici nettement plus exigeant que les autres textes : il impose la séparation physique et logique des systèmes de sauvegarde et la vérification des données restaurées dans un environnement isolé avant retour en production : deux mesures que ni le RGPD ni NIS2 ne nomment.",
     unifiedAction:
       "Définir une politique de sauvegarde unique alignée sur le niveau DORA : périmètre et fréquence par criticité, isolement physique et logique, tests de restauration périodiques en environnement séparé.",
     relation: 'recouvrement',
@@ -519,12 +531,13 @@ export const CROSSWALK: CrosswalkTheme[] = [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2f', 'NIS2-A32', 'NIS2-A24'], requirement: "Politiques d'évaluation de l'efficacité ; les entités essentielles sont soumises à des audits de sécurité à leurs frais.", nuance: "Le ReCyF réserve l'obligation d'audit périodique aux entités essentielles (objectif 17)." },
       { regulation: 'DORA', obligationIds: ['DORA-A24', 'DORA-A25', 'DORA-A26'], requirement: "Programme de tests annuel sur les fonctions critiques, éventail de tests imposé, tests de pénétration fondés sur la menace au moins triennaux pour les entités identifiées." },
       { regulation: 'CRA', obligationIds: ['CRA-A32-CONF', 'CRA-ANX1-P2'], requirement: "Évaluation de la conformité selon la catégorie du produit, et tests de sécurité efficaces et réguliers.", nuance: "Pour les produits de classe II et critiques, l'évaluation par un tiers est obligatoire." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A43-49'], requirement: "Évaluation de la conformité avant la mise sur le marché, par contrôle interne ou organisme notifié." },
     ],
     strictest: {
       regulation: 'DORA',
       rule: "Test de pénétration fondé sur la menace au moins tous les trois ans, en production réelle, sur un périmètre validé par l'autorité et attesté par elle.",
       rationale:
-        "C'est le seul dispositif où l'autorité valide le périmètre en amont et atteste du résultat en aval. Un programme de tests calibré sur cette exigence absorbe sans difficulté les attentes de NIS 2 et du RGPD.",
+        "C'est le seul dispositif où l'autorité valide le périmètre en amont et atteste du résultat en aval. Un programme de tests calibré sur cette exigence absorbe sans difficulté les attentes de NIS2 et du RGPD.",
     },
     recyf: [15, 17],
     evidence: ["Plan pluriannuel de contrôle", "Rapports d'audit et de tests", "Attestations d'autorité le cas échéant"],
@@ -537,9 +550,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Maintien en sécurité et fin de vie',
     domain: 'resilience',
     summary:
-      "Le même sujet vu des deux côtés de la relation commerciale. Le CRA oblige le fabricant à garantir des mises à jour de sécurité pendant au moins cinq ans et à annoncer la fin d'assistance ; NIS 2 et DORA obligent l'entité utilisatrice à ne faire tourner que des versions supportées et à anticiper les systèmes en fin de vie. Une entreprise qui édite un logiciel et en consomme d'autres porte les deux obligations à la fois.",
+      "Le même sujet vu des deux côtés de la relation commerciale. Le CRA oblige le fabricant à garantir des mises à jour de sécurité pendant au moins cinq ans et à annoncer la fin d'assistance ; NIS2 et DORA obligent l'entité utilisatrice à ne faire tourner que des versions supportées et à anticiper les systèmes en fin de vie. Une entreprise qui édite un logiciel et en consomme d'autres porte les deux obligations à la fois.",
     unifiedAction:
-      "Tenir un registre unique des produits et composants avec leur date de fin d'assistance — celles que l'entité garantit en tant que fabricant, et celles dont elle dépend en tant qu'utilisatrice — et planifier chaque migration avant l'échéance.",
+      "Tenir un registre unique des produits et composants avec leur date de fin d'assistance (celles que l'entité garantit en tant que fabricant, et celles dont elle dépend en tant qu'utilisatrice) et planifier chaque migration avant l'échéance.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'CRA', obligationIds: ['CRA-A13-SUPPORT', 'CRA-ANX1-P2'], requirement: "Période d'assistance d'au moins cinq ans, mises à jour de sécurité gratuites conservées dix ans, et affichage de la date de fin d'assistance.", nuance: "Obligation du fabricant envers ses clients." },
@@ -561,12 +574,13 @@ export const CROSSWALK: CrosswalkTheme[] = [
     summary:
       "Le RGPD et DORA imposent tous deux des mentions contractuelles obligatoires, mais elles ne se recouvrent presque pas : l'article 28 du RGPD porte sur le traitement des données, l'article 30 de DORA sur la résilience du service. Un contrat conforme à l'un ne l'est pas à l'autre.",
     unifiedAction:
-      "Construire un corpus de clauses unique, organisé en trois blocs — protection des données (article 28 du RGPD), résilience et service (article 30 de DORA), sécurité de la chaîne (article 21 § 2 d) de NIS 2) — et le décliner selon la nature du prestataire.",
+      "Construire un corpus de clauses unique, organisé en trois blocs : protection des données (article 28 du RGPD), résilience et service (article 30 de DORA), sécurité de la chaîne (article 21 § 2 d) de NIS2). Le décliner ensuite selon la nature du prestataire.",
     relation: 'divergence',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A28', 'RGPD-A26'], requirement: "Huit mentions obligatoires : objet, durée, nature, finalité, types de données, catégories de personnes, obligations et droits du responsable, plus instruction documentée, confidentialité, sécurité, assistance, sort des données, audit et sous-traitance ultérieure." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2d'], requirement: "Intégrer des exigences de sécurité dans les relations avec les fournisseurs et prestataires directs.", nuance: "Aucune clause type n'est imposée : c'est une obligation de résultat sur la maîtrise du risque fournisseur." },
       { regulation: 'DORA', obligationIds: ['DORA-A30', 'DORA-A28'], requirement: "Mentions minimales du paragraphe 2 et mentions renforcées du paragraphe 3 pour les fonctions critiques : niveaux de service quantitatifs, coopération aux tests, accès et audit sans restriction, stratégies de sortie.", nuance: "Le droit d'audit sans restriction est une exigence dure : une clause limitant l'audit à un questionnaire annuel ne satisfait pas l'article 30." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A25'], requirement: "Contrat écrit précisant les informations, capacités techniques et assistance nécessaires entre le fournisseur et les tiers qui fournissent des composants." },
     ],
     strictest: {
       regulation: 'DORA',
@@ -584,9 +598,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Registre et cartographie des tiers',
     domain: 'tiers',
     summary:
-      "Le RGPD exige de recenser les destinataires au registre des traitements ; DORA impose un registre d'information dont la structure est fixée par quinze modèles liés entre eux ; NIS 2 demande une cartographie de l'écosystème. Les trois portent sur les mêmes prestataires, avec des attributs différents.",
+      "Le RGPD exige de recenser les destinataires au registre des traitements ; DORA impose un registre d'information dont la structure est fixée par quinze modèles liés entre eux ; NIS2 demande une cartographie de l'écosystème. Les trois portent sur les mêmes prestataires, avec des attributs différents.",
     unifiedAction:
-      "Tenir un référentiel fournisseurs unique, dont les attributs sont le sur-ensemble des trois exigences, et générer par extraction le registre d'information DORA, la section destinataires du registre RGPD et la cartographie NIS 2.",
+      "Tenir un référentiel fournisseurs unique, dont les attributs sont le sur-ensemble des trois exigences, et générer par extraction le registre d'information DORA, la section destinataires du registre RGPD et la cartographie NIS2.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A30', 'RGPD-A28'], requirement: "Mentionner au registre les catégories de destinataires et les transferts éventuels." },
@@ -603,7 +617,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: "Sécurité de la chaîne d'approvisionnement",
     domain: 'tiers',
     summary:
-      "NIS 2 impose d'évaluer les vulnérabilités propres à chaque fournisseur direct et la qualité de ses pratiques, y compris ses procédures de développement sécurisé. DORA y ajoute la maîtrise des chaînes de sous-traitance ultérieure, encadrée depuis 2025 par une norme technique dédiée.",
+      "NIS2 impose d'évaluer les vulnérabilités propres à chaque fournisseur direct et la qualité de ses pratiques, y compris ses procédures de développement sécurisé. DORA y ajoute la maîtrise des chaînes de sous-traitance ultérieure, encadrée depuis 2025 par une norme technique dédiée.",
     unifiedAction:
       "Mettre en place une évaluation fournisseur proportionnée à la criticité, exigeant la visibilité sur les sous-traitants ultérieurs, et la réexaminer périodiquement plutôt qu'à la seule contractualisation.",
     relation: 'recouvrement',
@@ -611,7 +625,8 @@ export const CROSSWALK: CrosswalkTheme[] = [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2d', 'NIS2-A24'], requirement: "Tenir compte des vulnérabilités propres à chaque fournisseur, de la qualité globale de ses pratiques et des évaluations coordonnées des risques au niveau européen." },
       { regulation: 'DORA', obligationIds: ['DORA-A29', 'DORA-A31'], requirement: "Maîtrise des chaînes de sous-traitance, visibilité sur les sous-traitants ultérieurs, prise en compte des recommandations du superviseur principal.", nuance: "Le règlement délégué 2025/532 impose d'évaluer la sous-traitance avant de l'autoriser, et non de la constater après coup." },
       { regulation: 'RGPD', obligationIds: ['RGPD-A28'], requirement: "Autorisation écrite de la sous-traitance ultérieure et répercussion des mêmes obligations contractuelles." },
-      { regulation: 'CRA', obligationIds: ['CRA-A13-COMP', 'CRA-ANX1-P2', 'CRA-A19-IMP'], requirement: "Diligence raisonnable sur les composants tiers intégrés, y compris les logiciels libres, et nomenclature des dépendances.", nuance: "Le CRA regarde la chaîne en amont du produit — les composants intégrés — là où NIS 2 et DORA regardent les prestataires." },
+      { regulation: 'CRA', obligationIds: ['CRA-A13-COMP', 'CRA-ANX1-P2', 'CRA-A19-IMP'], requirement: "Diligence raisonnable sur les composants tiers intégrés, y compris les logiciels libres, et nomenclature des dépendances.", nuance: "Le CRA regarde la chaîne en amont du produit (les composants intégrés), là où NIS2 et DORA regardent les prestataires." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A25'], requirement: "Un déployeur, importateur ou distributeur devient fournisseur s'il rebaptise, modifie substantiellement ou détourne la destination d'un système à haut risque.", nuance: "C'est la seule règle de requalification automatique du rôle parmi les cinq textes, avec l'article 21 du CRA." },
     ],
     recyf: [3],
     evidence: ["Grille d'évaluation fournisseur par criticité", "Cartographie des sous-traitants ultérieurs", "Revues périodiques"],
@@ -625,7 +640,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     summary:
       "C'est un apport propre de DORA, sans équivalent dans les trois autres textes : évaluer le risque de concentration avant de contracter, et disposer d'une stratégie de sortie assortie d'une période de transition. Le RGPD ne traite que du sort des données en fin de contrat.",
     unifiedAction:
-      "Documenter, pour chaque prestataire soutenant une fonction critique, une analyse de substituabilité et une stratégie de sortie opérationnelle — et non une simple clause de réversibilité.",
+      "Documenter, pour chaque prestataire soutenant une fonction critique, une analyse de substituabilité et une stratégie de sortie opérationnelle, et non une simple clause de réversibilité.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'DORA', obligationIds: ['DORA-A29', 'DORA-A30', 'DORA-A31'], requirement: "Évaluation préalable du risque de concentration, stratégies de sortie, périodes de transition, capacité à cesser l'usage sur injonction du superviseur.", nuance: "Le risque de concentration s'apprécie aussi entre prestataires liés entre eux, pas seulement par prestataire isolé." },
@@ -650,8 +665,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A5', 'RGPD-A6', 'RGPD-A7', 'RGPD-A9', 'RGPD-A25'], requirement: "Base juridique, finalité déterminée, minimisation, exactitude, limitation de la conservation." },
-      { regulation: 'NIS2', obligationIds: ['NIS2-A21-2i'], requirement: "La gestion des identités et la journalisation créent des traitements soumis au RGPD.", nuance: "L'article 2 § 14 de NIS 2 réserve expressément l'application du droit des données personnelles." },
+      { regulation: 'NIS2', obligationIds: ['NIS2-A21-2i'], requirement: "La gestion des identités et la journalisation créent des traitements soumis au RGPD.", nuance: "L'article 2 § 14 de NIS2 réserve expressément l'application du droit des données personnelles." },
       { regulation: 'CRA', obligationIds: ['CRA-ANX1-P1'], requirement: "Minimisation des données traitées par le produit au strict nécessaire à son utilisation prévue." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A10'], requirement: "Gouvernance des jeux de données d'entraînement, de validation et de test : origine, préparation, biais.", nuance: "L'Omnibus IA autorise, sous condition de stricte nécessité, le traitement de catégories particulières de données pour détecter et corriger les biais." },
     ],
     evidence: ["Registre des traitements incluant les dispositifs de sécurité", "Bases juridiques documentées", "Matrice de conservation"],
     effort: 3,
@@ -662,9 +678,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Droits des personnes',
     domain: 'donnees',
     summary:
-      "Domaine exclusivement RGPD. Aucun croisement, mais une interaction pratique : les dispositifs de sécurité doivent être conçus pour permettre l'exercice des droits — un journal immuable qui empêche toute rectification crée une impasse juridique.",
+      "Domaine exclusivement RGPD. Aucun croisement, mais une interaction pratique : les dispositifs de sécurité doivent être conçus pour permettre l'exercice des droits : un journal immuable qui empêche toute rectification crée une impasse juridique.",
     unifiedAction:
-      "Vérifier, pour chaque dispositif technique de sécurité et de résilience, qu'il ne fait pas obstacle à l'exercice des droits — en particulier l'effacement dans les sauvegardes et la rectification dans les journaux.",
+      "Vérifier, pour chaque dispositif technique de sécurité et de résilience, qu'il ne fait pas obstacle à l'exercice des droits, en particulier l'effacement dans les sauvegardes et la rectification dans les journaux.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A12-14', 'RGPD-A15-22', 'RGPD-A7'], requirement: "Information, accès, rectification, effacement, limitation, portabilité, opposition, encadrement des décisions automatisées." },
@@ -696,9 +712,9 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Localisation et souveraineté',
     domain: 'donnees',
     summary:
-      "Aucun des quatre textes n'impose de localiser les données dans l'Union. DORA s'en approche par la voie prudentielle — présence obligatoire dans l'Union pour les prestataires désignés critiques établis en pays tiers — et le ReCyF par la voie de la qualification des prestataires.",
+      "Aucun des textes n'impose de localiser les données dans l'Union. DORA s'en approche par la voie prudentielle (présence obligatoire dans l'Union pour les prestataires désignés critiques établis en pays tiers) et le ReCyF par la voie de la qualification des prestataires.",
     unifiedAction:
-      "Documenter les choix de localisation et leurs justifications, et anticiper les exigences de présence dans l'Union pesant sur les prestataires critiques — sans confondre obligation juridique et recommandation de souveraineté.",
+      "Documenter les choix de localisation et leurs justifications, et anticiper les exigences de présence dans l'Union pesant sur les prestataires critiques, sans confondre obligation juridique et recommandation de souveraineté.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'DORA', obligationIds: ['DORA-A30', 'DORA-A31'], requirement: "Localisation contractuellement connue ; un prestataire désigné critique établi hors Union doit y constituer une filiale sous douze mois." },
@@ -707,6 +723,102 @@ export const CROSSWALK: CrosswalkTheme[] = [
     ],
     evidence: ["Registre des localisations", "Justification des choix d'hébergement"],
     effort: 2,
+  },
+
+
+  // ==========================================================================
+  // INTELLIGENCE ARTIFICIELLE
+  // ==========================================================================
+  {
+    id: 'IA-01',
+    code: 'IA-01',
+    title: "Inventaire et classification des systèmes d'IA",
+    domain: 'ia',
+    summary:
+      "L'AI Act ne s'applique qu'à ce qui est connu : sans inventaire, aucune classification par niveau de risque n'est possible. Le RGPD exige déjà de recenser les traitements, et beaucoup de systèmes d'IA traitent des données personnelles. Les deux inventaires décrivent souvent les mêmes outils sous deux angles.",
+    unifiedAction:
+      "Tenir un inventaire unique des systèmes d'IA, relié au registre des traitements : pour chaque système, finalité, fournisseur, rôle de l'entité, données traitées, niveau de risque motivé et responsable. Revoir la classification à chaque nouveau cas d'usage.",
+    relation: 'recouvrement',
+    mappings: [
+      { regulation: 'AIACT', obligationIds: ['AIACT-A6'], requirement: "Recenser et classer les systèmes d'IA ; documenter et enregistrer toute dérogation de l'article 6, paragraphe 3.", nuance: "La classification relève de l'entité : une erreur de classement vers le bas est elle-même un manquement." },
+      { regulation: 'RGPD', obligationIds: ['RGPD-A30'], requirement: "Inscrire au registre les traitements de données personnelles réalisés au moyen de systèmes d'IA." },
+    ],
+    evidence: ["Inventaire des systèmes d'IA", 'Fiches de classification', 'Lien avec le registre des traitements'],
+    effort: 2,
+  },
+  {
+    id: 'IA-02',
+    code: 'IA-02',
+    title: "Pratiques d'IA interdites",
+    domain: 'ia',
+    summary:
+      "L'article 5 interdit des usages, pas des technologies. Plusieurs de ces interdictions recoupent des traitements que le RGPD encadrait déjà strictement, comme la catégorisation biométrique fondée sur des données sensibles. L'AI Act les fait basculer dans l'interdiction pure, avec le plafond de sanction le plus élevé du droit européen du numérique.",
+    unifiedAction:
+      "Soumettre chaque projet d'IA à une revue préalable au regard de l'article 5 et des lignes directrices de la Commission, consignée dans l'inventaire. Traiter tout doute comme un blocage jusqu'à décision motivée.",
+    relation: 'divergence',
+    mappings: [
+      { regulation: 'AIACT', obligationIds: ['AIACT-A5'], requirement: "Ne pas mettre sur le marché ni utiliser de système relevant d'une pratique interdite.", nuance: "Aucune base légale ni aucun consentement ne peut rendre licite une pratique interdite." },
+      { regulation: 'RGPD', obligationIds: ['RGPD-A9'], requirement: "Le traitement de données biométriques ou sensibles n'est permis que sur l'une des exceptions de l'article 9.", nuance: "Le RGPD admet ces traitements sous conditions ; l'AI Act en interdit certains usages quelles que soient les conditions." },
+    ],
+    strictest: {
+      regulation: 'AIACT',
+      rule: "Interdiction absolue des pratiques de l'article 5, sanctionnée jusqu'à 35 M€ ou 7 % du chiffre d'affaires mondial.",
+      rationale:
+        "Là où le RGPD encadre un traitement de données sensibles par des conditions de licéité, l'AI Act interdit l'usage lui-même. Un traitement conforme au RGPD peut donc rester interdit au titre de l'AI Act, jamais l'inverse.",
+    },
+    evidence: ["Revue des cas d'usage au regard de l'article 5", "Procédure de validation des projets d'IA"],
+    effort: 2,
+  },
+  {
+    id: 'IA-03',
+    code: 'IA-03',
+    title: 'Transparence envers les personnes',
+    domain: 'ia',
+    summary:
+      "Le RGPD impose d'informer les personnes sur le traitement de leurs données ; l'AI Act impose de leur dire qu'elles interagissent avec une IA ou qu'un contenu a été généré. Les deux informations se délivrent au même moment et gagnent à figurer dans les mêmes mentions.",
+    unifiedAction:
+      "Rédiger des mentions d'information uniques aux points de contact concernés (agent conversationnel, contenus générés, reconnaissance des émotions) qui couvrent à la fois l'information RGPD et la transparence AI Act, et marquer techniquement les contenus générés.",
+    relation: 'recouvrement',
+    mappings: [
+      { regulation: 'AIACT', obligationIds: ['AIACT-A50', 'AIACT-A13-14'], requirement: "Informer les personnes de l'interaction avec une IA, marquer les contenus générés, fournir une notice claire aux déployeurs.", nuance: "L'obligation de marquage lisible par machine est technique : une simple mention textuelle ne suffit pas." },
+      { regulation: 'RGPD', obligationIds: ['RGPD-A12-14'], requirement: "Informer de manière concise, transparente et accessible, y compris sur l'existence d'une prise de décision automatisée." },
+    ],
+    evidence: ["Mentions d'information", 'Spécification du marquage des contenus', "Notice d'utilisation"],
+    effort: 2,
+  },
+  {
+    id: 'IA-04',
+    code: 'IA-04',
+    title: 'Contrôle humain des décisions assistées par IA',
+    domain: 'ia',
+    summary:
+      "L'article 22 du RGPD donne aux personnes le droit de ne pas faire l'objet d'une décision fondée exclusivement sur un traitement automatisé. L'AI Act organise, côté système, le contrôle humain qui rend cette garantie effective. Les deux se complètent : l'un fixe le droit, l'autre le dispositif.",
+    unifiedAction:
+      "Désigner, former et habiliter des personnes chargées du contrôle humain des systèmes à haut risque, capables d'ignorer ou d'interrompre le système, et documenter la procédure d'intervention humaine ouverte aux personnes concernées.",
+    relation: 'recouvrement',
+    mappings: [
+      { regulation: 'AIACT', obligationIds: ['AIACT-A13-14', 'AIACT-A26'], requirement: "Concevoir un contrôle humain effectif et le confier à des personnes compétentes, formées et disposant de l'autorité nécessaire." },
+      { regulation: 'RGPD', obligationIds: ['RGPD-A15-22'], requirement: "Garantir le droit d'obtenir une intervention humaine, d'exprimer son point de vue et de contester une décision automatisée.", nuance: "Un contrôle humain de pure forme, qui entérine systématiquement la sortie du système, ne fait pas sortir la décision du champ de l'article 22." },
+    ],
+    evidence: ['Désignation des personnes chargées du contrôle', "Procédure d'intervention humaine", 'Traces des décisions revues'],
+    effort: 3,
+  },
+  {
+    id: 'IA-05',
+    code: 'IA-05',
+    title: "Qualité et gouvernance des données d'entraînement",
+    domain: 'ia',
+    summary:
+      "L'AI Act exige des jeux de données pertinents, représentatifs et examinés au regard des biais ; le RGPD exige des données exactes, minimisées et collectées pour une finalité déterminée. Réutiliser des données personnelles pour entraîner un modèle cumule les deux exigences.",
+    unifiedAction:
+      "Documenter chaque jeu de données d'entraînement (origine, base légale, préparation, analyse des biais) et vérifier la compatibilité de la réutilisation avec la finalité initiale. Publier le résumé des données d'entraînement pour les modèles à usage général.",
+    relation: 'recouvrement',
+    mappings: [
+      { regulation: 'AIACT', obligationIds: ['AIACT-A10', 'AIACT-A53'], requirement: "Gouvernance des jeux de données et résumé public des données d'entraînement des modèles à usage général." },
+      { regulation: 'RGPD', obligationIds: ['RGPD-A5', 'RGPD-A6'], requirement: "Licéité, limitation des finalités, minimisation et exactitude des données personnelles utilisées pour l'entraînement.", nuance: "La réutilisation de données pour entraîner un modèle est un nouveau traitement, qui exige sa propre base légale." },
+    ],
+    evidence: ['Fiches descriptives des jeux de données', "Analyse de compatibilité des finalités", "Rapport d'analyse des biais"],
+    effort: 4,
   },
 
   // ==========================================================================
@@ -718,7 +830,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Corpus documentaire et politiques',
     domain: 'documentation',
     summary:
-      "Les quatre textes exigent un corpus documentaire, et c'est ce que les contrôleurs demandent en premier. Le risque n'est pas l'absence de documents mais leur multiplication : trois politiques de sécurité concurrentes valent moins qu'une seule, correctement indexée.",
+      "Tous les textes exigent un corpus documentaire, et c'est ce que les contrôleurs demandent en premier. Le risque n'est pas l'absence de documents mais leur multiplication : trois politiques de sécurité concurrentes valent moins qu'une seule, correctement indexée.",
     unifiedAction:
       "Constituer un corpus unique, avec une politique cadre et des politiques thématiques, chacune portant une table de correspondance vers les articles qu'elle satisfait. C'est cette table qui transforme un document interne en preuve de conformité.",
     relation: 'recouvrement',
@@ -727,6 +839,7 @@ export const CROSSWALK: CrosswalkTheme[] = [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2a', 'NIS2-A32'], requirement: "Politique de sécurité et preuves immédiatement disponibles en cas de contrôle.", nuance: "Les entités essentielles étant soumises à un contrôle a priori, les preuves doivent être tenues prêtes en permanence." },
       { regulation: 'DORA', obligationIds: ['DORA-A6', 'DORA-A5'], requirement: "Cadre documenté couvrant stratégies, politiques, procédures, protocoles et outils TIC." },
       { regulation: 'CRA', obligationIds: ['CRA-A31-DOC', 'CRA-A32-CONF'], requirement: "Documentation technique de l'annexe VII et déclaration UE de conformité, conservées au moins dix ans." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A11-12', 'AIACT-A16-17', 'AIACT-A53'], requirement: "Documentation technique de l'annexe IV, système de gestion de la qualité documenté, et documentation des modèles à usage général.", nuance: "La documentation technique est conservée dix ans après la mise sur le marché, comme pour le CRA." },
     ],
     recyf: [2],
     evidence: ["Corpus documentaire indexé", "Table de correspondance document / article", "Plan de gestion documentaire"],
@@ -738,14 +851,15 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Registres réglementaires',
     domain: 'documentation',
     summary:
-      "Trois registres distincts sont exigés — traitements pour le RGPD, information TIC pour DORA, violations et incidents pour les deux — avec des structures imposées différentes. Ils ne peuvent pas être fusionnés, mais ils peuvent partager leurs sources.",
+      "Trois registres distincts sont exigés (traitements pour le RGPD, information TIC pour DORA, violations et incidents pour les deux) avec des structures imposées différentes. Ils ne peuvent pas être fusionnés, mais ils peuvent partager leurs sources.",
     unifiedAction:
-      "Alimenter les trois registres depuis un socle commun — inventaire des actifs, référentiel fournisseurs, registre des incidents — plutôt que de les tenir séparément. Le format de sortie diffère ; les données d'entrée sont largement les mêmes.",
+      "Alimenter les trois registres depuis un socle commun (inventaire des actifs, référentiel fournisseurs, registre des incidents) plutôt que de les tenir séparément. Le format de sortie diffère ; les données d'entrée sont largement les mêmes.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'RGPD', obligationIds: ['RGPD-A30', 'RGPD-A33'], requirement: "Registre des activités de traitement et registre interne des violations, y compris celles non notifiées." },
       { regulation: 'DORA', obligationIds: ['DORA-A28', 'DORA-A11'], requirement: "Registre d'information des accords TIC et registre des activités pendant les perturbations.", nuance: "Le registre d'information suit quinze modèles normalisés et liés ; il ne tolère aucune incohérence entre tableaux." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2b', 'NIS2-A21-4'], requirement: "Registre des incidents et registre des écarts de conformité." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A43-49'], requirement: "Enregistrement du fournisseur et des systèmes à haut risque dans la base de données de l'Union." },
     ],
     evidence: ["Registre des traitements", "Registre d'information TIC", "Registres des incidents et des écarts"],
     effort: 4,
@@ -756,14 +870,15 @@ export const CROSSWALK: CrosswalkTheme[] = [
     title: 'Cartographie des systèmes et inventaire des actifs',
     domain: 'documentation',
     summary:
-      "C'est le prérequis silencieux de presque tout le dispositif : NIS 2 en fait son premier objectif de sécurité, DORA son article 8, et le RGPD le suppose pour tenir un registre exact. Sans inventaire, aucune des autres exigences n'est démontrable.",
+      "C'est le prérequis silencieux de presque tout le dispositif : NIS2 en fait son premier objectif de sécurité, DORA son article 8, et le RGPD le suppose pour tenir un registre exact. Sans inventaire, aucune des autres exigences n'est démontrable.",
     unifiedAction:
-      "Établir et maintenir une cartographie unique — activités et services, systèmes les supportant, actifs matériels et logiciels, dépendances internes et externes, responsable désigné par entrée — et la réviser annuellement.",
+      "Établir et maintenir une cartographie unique (activités et services, systèmes les supportant, actifs matériels et logiciels, dépendances internes et externes, responsable désigné par entrée) et la réviser annuellement.",
     relation: 'recouvrement',
     mappings: [
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-1', 'NIS2-A21-2i'], requirement: "Recensement des activités, services et systèmes d'information, et inventaire des actifs.", nuance: "Le ReCyF exige de lister aussi les activités qui ne fondent pas la qualification d'entité, et de justifier toute exclusion de périmètre." },
       { regulation: 'DORA', obligationIds: ['DORA-A8'], requirement: "Recensement des fonctions métier, actifs TIC, dépendances et systèmes en fin de vie, réexaminé annuellement." },
       { regulation: 'RGPD', obligationIds: ['RGPD-A30'], requirement: "Le registre des traitements suppose de connaître les systèmes qui les mettent en œuvre." },
+      { regulation: 'AIACT', obligationIds: ['AIACT-A6'], requirement: "Inventaire des systèmes d'IA fournis ou utilisés, avec leur classification motivée.", nuance: "L'inventaire des systèmes d'IA gagne à être une vue de la cartographie générale, et non un registre isolé." },
     ],
     recyf: [1, 5],
     evidence: ["Cartographie des activités et services", "Inventaire des actifs avec responsables", "Matrice de dépendances"],
@@ -776,26 +891,57 @@ export const CROSSWALK: CrosswalkTheme[] = [
   {
     id: 'HIE-01',
     code: 'HIE-01',
-    title: 'Lex specialis : DORA prime sur NIS 2',
+    title: 'Lex specialis : DORA prime sur NIS2',
     domain: 'gouvernance',
     summary:
-      "DORA se déclare expressément lex specialis par rapport à NIS 2. L'article 4 de NIS 2 en tire la conséquence : lorsqu'un acte sectoriel impose des exigences d'effet au moins équivalent, les dispositions correspondantes de NIS 2 cessent de s'appliquer. Une entité financière soumise à DORA n'applique donc pas en parallèle le régime de gestion des risques et de notification de NIS 2.",
+      "DORA se déclare expressément lex specialis par rapport à NIS2. L'article 4 de NIS2 en tire la conséquence : lorsqu'un acte sectoriel impose des exigences d'effet au moins équivalent, les dispositions correspondantes de NIS2 cessent de s'appliquer. Une entité financière soumise à DORA n'applique donc pas en parallèle le régime de gestion des risques et de notification de NIS2.",
     unifiedAction:
-      "Pour une entité financière, appliquer DORA comme régime de référence en matière de gestion du risque TIC et de notification d'incidents. NIS 2 continue de produire des effets sur les points non couverts par DORA, et l'entité demeure rattachée à l'écosystème NIS 2 — groupe de coopération, CSIRT.",
+      "Pour une entité financière, appliquer DORA comme régime de référence en matière de gestion du risque TIC et de notification d'incidents. NIS2 continue de produire des effets sur les points non couverts par DORA, et l'entité demeure rattachée à l'écosystème NIS2 (groupe de coopération, CSIRT).",
     relation: 'hierarchie',
     precedence: {
       prevails: 'DORA',
       over: ['NIS2'],
       basis:
-        "Considérant 16 de DORA : « le présent règlement constitue une lex specialis en ce qui concerne la directive (UE) 2022/2555 ». Article 4 de NIS 2 : les dispositions de la directive ne s'appliquent pas lorsque des actes sectoriels imposent des exigences d'effet au moins équivalent.",
+        "Considérant 16 de DORA : « le présent règlement constitue une lex specialis en ce qui concerne la directive (UE) 2022/2555 ». Article 4 de NIS2 : les dispositions de la directive ne s'appliquent pas lorsque des actes sectoriels imposent des exigences d'effet au moins équivalent.",
     },
     mappings: [
       { regulation: 'DORA', obligationIds: ['DORA-A6', 'DORA-A19'], requirement: "Régime complet de gestion du risque TIC et de notification des incidents majeurs, applicable aux entités financières." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-1', 'NIS2-A23-1'], requirement: "Régime écarté pour les entités financières sur les points couverts par DORA.", nuance: "L'exclusion est fonctionnelle, non totale : elle vaut pour la gestion des risques et la notification, pas nécessairement pour l'ensemble de la directive." },
     ],
-    evidence: ["Note d'articulation DORA / NIS 2", "Analyse d'équivalence article 4"],
+    evidence: ["Note d'articulation DORA / NIS2", "Analyse d'équivalence article 4"],
     effort: 2,
   },
 ]
+
+interface ThemeEn {
+  title: string
+  summary: string
+  unifiedAction: string
+  mappings: Partial<Record<RegulationId, [string, string | null]>>
+  strictest?: [string, string]
+  precedence?: string
+  evidence: string[]
+}
+
+/** Version anglaise : seuls les textes affichés changent, la structure reste celle de la version française. */
+function localize(t: CrosswalkTheme): CrosswalkTheme {
+  const e = (EN as unknown as Record<string, ThemeEn>)[t.id]
+  if (!e) return t
+  return {
+    ...t,
+    title: e.title,
+    summary: e.summary,
+    unifiedAction: e.unifiedAction,
+    mappings: t.mappings.map((m) => {
+      const x = e.mappings[m.regulation]
+      return x ? { ...m, requirement: x[0], nuance: x[1] ?? undefined } : m
+    }),
+    strictest: t.strictest && e.strictest ? { ...t.strictest, rule: e.strictest[0], rationale: e.strictest[1] } : t.strictest,
+    precedence: t.precedence && e.precedence ? { ...t.precedence, basis: e.precedence } : t.precedence,
+    evidence: e.evidence,
+  }
+}
+
+export const CROSSWALK: CrosswalkTheme[] = LANG === 'en' ? CROSSWALK_FR.map(localize) : CROSSWALK_FR
 
 export const CROSSWALK_BY_ID = new Map(CROSSWALK.map((t) => [t.id, t]))

@@ -31,7 +31,7 @@ function incident(patch: Partial<IncidentRecord>): IncidentRecord {
 
 const step = (steps: ReturnType<typeof incidentSteps>, id: string) => steps.find((s) => s.id === id)!
 
-describe('RGPD — article 33', () => {
+describe('RGPD : article 33', () => {
   it('fixe la notification à 72 heures de la prise de connaissance', () => {
     const s = incidentSteps(incident({ regimes: ['RGPD'] }), {}, at(1))
     expect(step(s, 'RGPD-notification').due!.getTime()).toBe(at(72).getTime())
@@ -44,7 +44,7 @@ describe('RGPD — article 33', () => {
   })
 })
 
-describe('NIS 2 — article 23', () => {
+describe('NIS2 : article 23', () => {
   it('enchaîne 24 heures, 72 heures, puis un mois après la notification', () => {
     const s = incidentSteps(incident({ regimes: ['NIS2'] }), {}, at(1))
     expect(step(s, 'NIS2-alerte').due!.getTime()).toBe(at(24).getTime())
@@ -62,7 +62,7 @@ describe('NIS 2 — article 23', () => {
   })
 })
 
-describe('DORA — règlement délégué 2025/301, article 5', () => {
+describe('DORA : règlement délégué 2025/301, article 5', () => {
   it('retient 4 heures après la classification', () => {
     const s = incidentSteps(incident({ regimes: ['DORA'], classified_at: at(2).toISOString() }), {}, at(3))
     expect(step(s, 'DORA-initiale').due!.getTime()).toBe(at(6).getTime())
@@ -96,7 +96,7 @@ describe('DORA — règlement délégué 2025/301, article 5', () => {
   })
 })
 
-describe('CRA — article 14', () => {
+describe('CRA : article 14', () => {
   it('attend la date du correctif pour chiffrer le rapport final sur une vulnérabilité', () => {
     const s = incidentSteps(incident({ regimes: ['CRA-VULN'] }), {}, at(1))
     expect(step(s, 'CRA-VULN-final').due).toBeNull()
@@ -132,7 +132,7 @@ describe('statuts et alertes', () => {
 })
 
 describe('régimes proposés', () => {
-  it("n'ouvre pas l'horloge NIS 2 d'une entité financière, qui notifie au titre de DORA", () => {
+  it("n'ouvre pas l'horloge NIS2 d'une entité financière, qui notifie au titre de DORA", () => {
     expect(suggestedRegimes(['RGPD', 'NIS2', 'DORA'], { entite_financiere: 'oui' })).toEqual(['RGPD', 'DORA'])
   })
 

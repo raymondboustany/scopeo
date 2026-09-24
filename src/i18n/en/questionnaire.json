@@ -1,0 +1,305 @@
+{
+  "sections": {
+    "identite": ["Entity identity", "Sector, size and location: these three elements drive most of the scoping."],
+    "donnees": ["Personal data", "Scope of the GDPR and intensity of obligations."],
+    "numerique": ["Digital activity and criticality", "Scope of NIS2, including cases where size does not matter."],
+    "financier": ["Financial sector", "Scope of DORA and how it fits with NIS2."],
+    "produits": ["Digital products", "Scope of the CRA: hardware and software products placed on the Union market."],
+    "ia": ["Artificial intelligence", "Scope of the AI Act: the entity's role, the risk level of its systems and transparency obligations."],
+    "etat": ["Current state", "Context used for prioritisation, not for scoping."]
+  },
+  "sectors": {
+    "energie": "Energy",
+    "transports": "Transport",
+    "banque": "Banking",
+    "marches_financiers": "Financial market infrastructures",
+    "sante": "Health",
+    "eau_potable": "Drinking water",
+    "eaux_usees": "Waste water",
+    "infra_numerique": "Digital infrastructure",
+    "gestion_tic": "ICT service management (business-to-business)",
+    "admin_publique": "Public administration",
+    "espace": "Space",
+    "poste": "Postal and courier services",
+    "dechets": "Waste management",
+    "chimie": "Manufacture, production and distribution of chemicals",
+    "denrees": "Production, processing and distribution of food",
+    "fabrication": "Manufacturing (medical devices, computers, electronics, machinery, vehicles)",
+    "fournisseurs_num": "Digital providers (marketplaces, search engines, social networks)",
+    "recherche": "Research",
+    "assurance": "Insurance and reinsurance",
+    "conseil": "Consulting and professional services",
+    "commerce": "Retail and distribution",
+    "immobilier": "Real estate and construction",
+    "education": "Education and training",
+    "autre": "Other sector"
+  },
+  "size": {
+    "dns": "DNS service provider",
+    "tld": "Top-level domain name registry",
+    "confiance_qualifie": "Qualified trust service provider",
+    "confiance_non_qualifie": "Non-qualified trust service provider",
+    "comm_electroniques": "Provider of public electronic communications networks or services",
+    "enregistrement_domaines": "Domain name registration service provider"
+  },
+  "digital": {
+    "cloud": "Cloud computing service provider",
+    "datacenter": "Data centre service provider",
+    "cdn": "Content delivery network provider",
+    "msp": "Managed service provider",
+    "mssp": "Managed security service provider",
+    "marketplace": "Online marketplace provider",
+    "moteur": "Online search engine provider",
+    "reseau_social": "Social networking services platform"
+  },
+  "fin": {
+    "credit": "Credit institution",
+    "paiement": "Payment institution",
+    "monnaie_elec": "Electronic money institution",
+    "investissement": "Investment firm",
+    "crypto": "Crypto-asset service provider",
+    "dct": "Central securities depository",
+    "ccp": "Central counterparty",
+    "plateforme": "Trading venue",
+    "referentiel": "Trade repository",
+    "gestionnaire_fonds": "Alternative investment fund manager or management company",
+    "assurance": "Insurance or reinsurance undertaking",
+    "intermediaire": "Insurance or reinsurance intermediary",
+    "irp": "Institution for occupational retirement provision",
+    "notation": "Credit rating agency",
+    "indices": "Administrator of critical benchmarks",
+    "crowdfunding": "Crowdfunding service provider",
+    "titrisation": "Securitisation repository",
+    "prestataire_tic": "ICT third-party service provider to the financial sector"
+  },
+  "questions": {
+    "secteur": {
+      "basis": "NIS2, Annexes I and II",
+      "question": "In which sector does the entity carry out its main activity?",
+      "help": "Pick the most regulated sector if the entity covers several: scoping is assessed activity by activity, and the strictest one prevails."
+    },
+    "effectif": {
+      "basis": "Recommendation 2003/361/EC, Annex, Article 2",
+      "question": "How many people does the entity employ?",
+      "help": "Headcount is assessed at group level when the entity is linked or a partner within the meaning of the European recommendation defining small and medium-sized enterprises.",
+      "options": { "micro": ["Fewer than 10 people", "Microenterprise"], "petite": ["10 to 49 people", "Small enterprise"], "moyenne": ["50 to 249 people", "Medium-sized enterprise"], "grande": ["250 people or more", "Large enterprise"] }
+    },
+    "chiffre_affaires": {
+      "basis": "Recommendation 2003/361/EC; NIS2, Article 2(1)",
+      "question": "What is the entity's annual worldwide turnover?",
+      "help": "This amount has two separate uses: establishing whether the size threshold is met, and quantifying the maximum exposure to penalties, expressed as a percentage of worldwide turnover.",
+      "options": { "lt2": ["Under €2M"], "2a10": ["€2M to €10M"], "10a50": ["€10M to €50M"], "50a250": ["€50M to €250M"], "250a1000": ["€250M to €1bn"], "gt1000": ["Over €1bn"] }
+    },
+    "bilan": {
+      "basis": "Recommendation 2003/361/EC, Annex, Article 2",
+      "question": "What is the annual balance sheet total?",
+      "help": "The medium-sized threshold is reached as soon as headcount reaches 50, or turnover and balance sheet total both exceed €10M.",
+      "options": { "lte10": ["€10M or less"], "10a43": ["€10M to €43M"], "gt43": ["Over €43M"] }
+    },
+    "etablissement_ue": {
+      "basis": "GDPR, Article 3; NIS2, Article 26",
+      "question": "Is the entity established in the European Union?",
+      "help": "An entity not established in the Union may still be subject: to the GDPR if it targets individuals in the Union or monitors their behaviour, to NIS2 if it provides services covered by the directive there."
+    },
+    "cible_ue": {
+      "basis": "GDPR, Article 3(2)",
+      "question": "Does the entity offer goods or services to individuals in the Union, or monitor their behaviour?",
+      "help": "This criterion alone triggers the GDPR for an entity established outside the Union, and requires designating a representative."
+    },
+    "etats_membres": {
+      "basis": "NIS2, Article 26; GDPR, Article 56",
+      "question": "In how many Member States does the entity provide its services?",
+      "help": "Determines the competent authority and, for the GDPR, whether the one-stop shop with a lead authority may apply.",
+      "options": { "un": ["One"], "deux_cinq": ["Two to five"], "six_plus": ["Six or more"] }
+    },
+    "donnees_perso": {
+      "basis": "GDPR, Articles 2 and 4",
+      "question": "Does the entity process personal data?",
+      "help": "Customer, employee or prospect data, logs containing IP addresses, CCTV footage. In practice a negative answer is rare and should be checked.",
+      "options": { "oui": ["Yes"], "non": ["No, no personal data"], "incertain": ["Unsure"] }
+    },
+    "role_rgpd": {
+      "basis": "GDPR, Article 4(7) and (8)",
+      "question": "In what capacity does the entity act?",
+      "help": "Being a controller or a processor does not carry the same obligations. Most organisations are both, depending on the processing.",
+      "options": { "responsable": ["Controller only"], "sous_traitant": ["Processor only"], "les_deux": ["Both, depending on the processing"] }
+    },
+    "donnees_sensibles": {
+      "basis": "GDPR, Articles 9 and 10",
+      "question": "Does the entity process special categories of data?",
+      "help": "Health, biometric or genetic data, or data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, trade union membership, sex life or sexual orientation. Also data relating to criminal convictions and offences."
+    },
+    "suivi_grande_echelle": {
+      "basis": "GDPR, Article 37(1)",
+      "question": "Do the core activities involve regular and systematic monitoring on a large scale, or large-scale processing of sensitive data?",
+      "help": "This criterion, not the size of the organisation, triggers the obligation to designate a data protection officer.",
+      "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Unsure"] }
+    },
+    "autorite_publique": {
+      "basis": "GDPR, Article 37(1)(a)",
+      "question": "Is the entity a public authority or body?",
+      "help": "Designating a data protection officer is mandatory for every public authority, regardless of size or type of processing."
+    },
+    "transferts_hors_ue": {
+      "basis": "GDPR, Articles 44 to 49",
+      "question": "Is personal data transferred outside the European Union?",
+      "help": "Remote access from a third country is a transfer, even without copying the data. Hosting with a provider subject to extraterritorial legislation must be examined."
+    },
+    "base_consentement": {
+      "basis": "GDPR, Articles 6 and 7",
+      "question": "Does any processing rely on individuals' consent?",
+      "help": "Consent means being able to prove it was collected and offering withdrawal as easy as giving it, which creates its own technical burden."
+    },
+    "type_taille_independante": {
+      "basis": "NIS2, Article 2(2) and Article 3",
+      "question": "Is the entity one of these types, covered by NIS2 regardless of size?",
+      "help": "These categories escape the size threshold. A three-person entity providing DNS services is an essential entity.",
+      "options": { "aucun": ["None of these types"] }
+    },
+    "services_ict": {
+      "basis": "NIS2, Article 21(5); Implementing Regulation (EU) 2024/2690",
+      "question": "Does the entity provide digital services to other organisations?",
+      "help": "Cloud computing, data centres, content delivery, managed or managed security services, marketplaces, search engines, social networks."
+    },
+    "type_fournisseur_num": {
+      "basis": "Implementing Regulation (EU) 2024/2690, Article 1",
+      "question": "What type of digital provider is it?",
+      "help": "These categories are subject to quantified technical requirements and predefined significant-incident criteria, which replace case-by-case assessment."
+    },
+    "criticite_service": {
+      "basis": "NIS2, Article 2(2)(b) to (e)",
+      "question": "Would an interruption of the entity's services have consequences beyond the entity itself?",
+      "help": "A Member State may identify as essential or important, regardless of size, an entity whose disruption would significantly impact public safety, public security or public health, or could induce systemic risk.",
+      "options": { "majeur": ["Yes, major impact on public safety, security or health"], "modere": ["Yes, impact on several organisations or a large number of users"], "limite": ["No, impact limited to the entity and its direct customers"] }
+    },
+    "entite_critique": {
+      "basis": "NIS2, Article 3(1)(f)",
+      "question": "Has the entity been designated a critical entity, or an operator of vital importance?",
+      "help": "An entity designated critical by the State is automatically an essential entity under NIS2, regardless of size. In France, designation as an operator of vital importance (OIV) foreshadows this status.",
+      "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Not to our knowledge"] }
+    },
+    "entite_financiere": {
+      "basis": "DORA, Article 2(1)",
+      "question": "Is the entity one of the types of financial entity covered by DORA?",
+      "help": "The Article 2 list is exhaustive. An entity not on it is not subject to DORA, whatever its de facto financial activity."
+    },
+    "type_financier": {
+      "basis": "DORA, Article 2(1)",
+      "question": "What type of financial entity is it?"
+    },
+    "dora_regime_simplifie": {
+      "basis": "DORA, Article 16(1)",
+      "question": "Does the entity fall under the simplified ICT risk management framework?",
+      "help": "The simplified framework covers small and non-interconnected investment firms, exempted payment and e-money institutions, and small occupational retirement institutions. It sets aside Articles 5 to 15 in favour of a lighter baseline.",
+      "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Unsure"] }
+    },
+    "dora_tlpt": {
+      "basis": "DORA, Article 26(8)",
+      "question": "Has the competent authority identified the entity to carry out threat-led penetration testing?",
+      "help": "Identification is for the authority, based on criticality and risk profile. It entails a test at least every three years on live production systems.",
+      "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Not yet notified"] }
+    },
+    "tiers_ict_critiques": {
+      "basis": "DORA, Articles 28 to 30",
+      "question": "Does the entity rely on third parties for ICT services supporting critical or important functions?",
+      "help": "The answer drives DORA's heaviest obligations: register of information, reinforced contractual clauses, concentration-risk assessment and exit strategy."
+    },
+    "clients_financiers": {
+      "basis": "DORA, Articles 30 and 31",
+      "question": "Does the entity count financial entities among its clients?",
+      "help": "An ICT provider to financial entities is not directly subject to DORA, but feels its effects through contracts: its clients must impose the Article 30 clauses, including unrestricted audit rights.",
+      "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Unsure"] }
+    },
+    "cra_roles": {
+      "basis": "CRA, Articles 3, 13, 19 and 20",
+      "question": "Does the entity place products with digital elements on the Union market?",
+      "help": "Software sold or distributed, apps, connected objects, network equipment, firmware. The CRA targets the product, not the service: a pure cloud offering falls under NIS2. Free and open-source software supplied outside any commercial activity is not covered.",
+      "options": {
+        "fabricant": ["Yes, as manufacturer", "Designs or has the product manufactured, and markets it under its own name or trademark"],
+        "importateur": ["Yes, as importer", "Places on the Union market a product from a manufacturer established outside the Union"],
+        "distributeur": ["Yes, as distributor", "Makes a product available without changing its properties"],
+        "aucun": ["No, no such product"]
+      }
+    },
+    "cra_categorie": {
+      "basis": "CRA, Annexes III and IV; Implementing Regulation (EU) 2025/2392",
+      "question": "What is the highest category among the products manufactured?",
+      "help": "The category sets the conformity assessment procedure: self-assessment for default products, harmonised standard or third party for class I, mandatory third party for class II, European certification for critical products.",
+      "options": {
+        "defaut": ["Default product", "About 90% of products, self-assessment"],
+        "classe_i": ["Important product, class I", "Password manager, browser, operating system, router…"],
+        "classe_ii": ["Important product, class II", "Hypervisor, firewall, intrusion detection system…"],
+        "critique": ["Critical product", "Smart meter gateway, smart card, secure element"]
+      }
+    },
+    "cra_exclu": {
+      "basis": "CRA, Article 2(2) to (7)",
+      "question": "Are these products covered by sectoral legislation excluded from the CRA?",
+      "help": "Medical and in vitro diagnostic devices, motor vehicles, civil aviation, marine equipment, or products developed exclusively for defence or national security. These products follow their own regime.",
+      "options": { "non": ["No"], "partiellement": ["For some products only"], "oui": ["Yes, for all products"] }
+    },
+    "ia_roles": {
+      "basis": "AI Act, Article 2 and Article 3(3), (4), (6) and (7)",
+      "question": "Does the entity develop, place on the market or use artificial intelligence systems?",
+      "help": "An AI system infers, from the input it receives, how to generate predictions, content, recommendations or decisions (Art. 3(1)). A generative AI tool used by staff, a CV screening module or a chatbot all qualify. Purely personal, non-professional use is excluded.",
+      "options": {
+        "fournisseur": ["Yes, as provider", "Develops or has an AI system or model developed and places it on the market or into service under its own name or trademark"],
+        "deployeur": ["Yes, as deployer", "Uses an AI system under its authority in a professional context"],
+        "importateur": ["Yes, as importer or distributor", "Makes available in the Union an AI system from a third-party provider"],
+        "aucun": ["No, no AI system"]
+      }
+    },
+    "ia_pratiques": {
+      "basis": "AI Act, Article 5",
+      "question": "Does any use of AI amount to a prohibited practice?",
+      "help": "Social scoring, exploitation of vulnerabilities, subliminal manipulation, crime prediction based solely on profiling, untargeted scraping of facial images, emotion recognition at work or school, biometric categorisation based on sensitive data, real-time remote biometric identification for law enforcement. These bans have applied since 2 February 2025.",
+      "options": { "non": ["No"], "incertain": ["To be checked"], "oui": ["Yes, at least one use"] }
+    },
+    "ia_haut_risque": {
+      "basis": "AI Act, Article 6 and Annexes I and III",
+      "question": "Are AI systems used or provided in any of these areas?",
+      "help": "These areas presume a high-risk system. Since the AI Omnibus, the corresponding obligations apply from 2 December 2027 for Annex III and 2 August 2028 for Annex I.",
+      "options": {
+        "biometrie": ["Biometrics", "Remote identification, biometric categorisation, emotion recognition"],
+        "infrastructures": ["Critical infrastructure", "Safety component in the management of traffic, water, gas, heating, electricity or critical digital infrastructure"],
+        "education": ["Education and training", "Admission, assessment of learning outcomes, exam proctoring"],
+        "emploi": ["Employment and workforce management", "Recruitment, CV screening, promotion, dismissal, task allocation, evaluation"],
+        "services_essentiels": ["Access to essential services", "Creditworthiness and credit scoring, life and health insurance pricing, public benefits, emergency calls"],
+        "autorites": ["Law enforcement, migration, justice or democratic processes"],
+        "produit": ["Safety component of a regulated product", "Machinery, toys, medical devices, lifts, radio equipment… (Annex I)"],
+        "aucun": ["None of these areas"]
+      }
+    },
+    "ia_derogation": {
+      "basis": "AI Act, Article 6(3)",
+      "question": "Is the system limited to a narrow procedural or preparatory task, with no material influence on the decision?",
+      "help": "An Annex III system is not high-risk if it poses no significant risk to health, safety or fundamental rights. This derogation never applies to a system that profiles natural persons, and the provider relying on it must document its assessment and register the system.",
+      "options": { "non": ["No, it influences the decision"], "incertain": ["Unsure"], "oui": ["Yes, narrow or preparatory task, no profiling"] }
+    },
+    "ia_transparence": {
+      "basis": "AI Act, Article 50",
+      "question": "Do the AI systems give rise to any of these uses?",
+      "help": "These uses entail transparency obligations towards people, applicable since 2 August 2026, whatever the system's risk level.",
+      "options": {
+        "interaction": ["Direct interaction with people", "Chatbot, voice assistant"],
+        "generation": ["Generation of synthetic content", "Text, image, audio or video produced by the system"],
+        "hypertrucage": ["Deep fake, or text published to inform the public"],
+        "emotions": ["Emotion recognition or biometric categorisation"],
+        "aucun": ["None of these uses"]
+      }
+    },
+    "ia_gpai": {
+      "basis": "AI Act, Articles 51 to 55",
+      "question": "Does the entity place a general-purpose AI model on the Union market?",
+      "help": "A model trained on a large amount of data, able to perform a wide range of tasks and to be integrated into downstream systems. Systemic risk is presumed above 10^25 floating-point operations of training compute. Integrating a third party's model into a product does not make the entity a model provider.",
+      "options": { "non": ["No"], "oui": ["Yes"], "systemique": ["Yes, with systemic risk"] }
+    },
+    "incidents_recents": {
+      "basis": "Context only, no effect on scoping",
+      "question": "Has the entity suffered a significant security incident in the last two years?",
+      "help": "No effect on the legal scoping, but relevant for prioritisation: a recent history increases the likelihood of an inspection and the severity of its assessment.",
+      "options": { "recent": ["Yes, in the last two years"], "ancien": ["Yes, more than two years ago"], "aucun": ["No known significant incident"] }
+    }
+  },
+  "yesNo": { "oui": "Yes", "non": "No" }
+}

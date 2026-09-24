@@ -1,5 +1,5 @@
 import { NotesButton, NotesDrawer } from '@/components/notes/NotesDrawer'
-import { ThemeToggle } from './ThemeToggle'
+import { LanguageToggle, ThemeToggle } from './ThemeToggle'
 import { useEffect, useState, type ReactNode } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
@@ -26,17 +26,19 @@ import { NAV, NAV_GROUPS, type NavEntry } from './nav'
 import { CommandPalette } from './CommandPalette'
 import { Tooltip } from '@/components/ui/controls'
 import { useSession } from '@/lib/store'
-import { useCurrentEntity, useCurrentUser, useEntities, useSaveStatus, flushAll } from '@/lib/queries'
+import { useCurrentEntity, useCurrentUser, useEntities, useLogout, useSaveStatus, flushAll } from '@/lib/queries'
+import { useScoping } from '@/lib/hooks'
+import { tr } from '@/i18n'
 import { Tour } from '@/components/tour/Tour'
 
 const ROLE_LABEL: Record<string, string> = {
-  consultant: 'Consultant',
-  dpo: 'DPO',
-  rssi: 'RSSI',
-  juriste: 'Juriste',
-  dirigeant: 'Direction',
-  auditeur: 'Auditeur',
-  autre: 'Utilisateur',
+  consultant: tr('Consultant', 'Consultant'),
+  dpo: tr('DPO', 'DPO'),
+  rssi: tr('RSSI', 'CISO'),
+  juriste: tr('Juriste', 'Legal counsel'),
+  dirigeant: tr('Direction', 'Executive'),
+  auditeur: tr('Auditeur', 'Auditor'),
+  autre: tr('Utilisateur', 'User'),
 }
 
 /* ========================================================================== */
@@ -44,7 +46,7 @@ const ROLE_LABEL: Record<string, string> = {
 function NavItem({ entry, collapsed, disabled }: { entry: NavEntry; collapsed: boolean; disabled: boolean }) {
   if (disabled) {
     return (
-      <Tooltip content="Chargez d'abord une entité." side="right">
+      <Tooltip content={tr("Chargez d'abord une entité.", 'Load an entity first.')} side="right">
         <span
           className={cn(
             'flex cursor-not-allowed items-center gap-3 rounded-md px-2.5 py-2 text-sm text-ink-4',
@@ -100,11 +102,12 @@ function Sidebar({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?
   const collapsedPref = useSession((s) => s.sidebarCollapsed)
   const toggle = useSession((s) => s.toggleSidebar)
   const hasEntity = Boolean(useSession((s) => s.entityId))
+  const { qualified } = useScoping()
   const collapsed = mobile ? false : collapsedPref
 
   return (
     <nav
-      aria-label="Navigation principale"
+      aria-label={tr('Navigation principale', 'Main navigation')}
       data-tour="sidebar"
       onClick={onNavigate}
       className={cn(
@@ -125,7 +128,7 @@ function Sidebar({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?
               <div className="label-caps px-2.5 pb-2">{g.label}</div>
             )}
             <ul className="space-y-0.5">
-              {NAV.filter((n) => n.group === g.id).map((n) => (
+              {NAV.filter((n) => n.group === g.id && (!n.needsQualification || qualified)).map((n) => (
                 <li key={n.to}>
                   <NavItem entry={n} collapsed={collapsed} disabled={Boolean(n.needsEntity && !hasEntity)} />
                 </li>
@@ -139,14 +142,14 @@ function Sidebar({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?
         <div className={cn('border-t border-rule p-2', collapsed ? 'flex justify-center' : '')}>
           <button
             onClick={toggle}
-            aria-label={collapsed ? 'Déplier la navigation' : 'Replier la navigation'}
+            aria-label={collapsed ? tr('Déplier la navigation', 'Expand navigation') : tr('Replier la navigation', 'Collapse navigation')}
             className={cn(
               'flex items-center gap-2 rounded-md px-2.5 py-2 text-xs text-ink-3 transition-colors hover:bg-raised hover:text-ink',
               collapsed ? 'justify-center' : 'w-full',
             )}
           >
             {collapsed ? <ChevronsRight size={15} /> : <ChevronsLeft size={15} />}
-            {collapsed ? null : 'Replier'}
+            {collapsed ? null : tr('Replier', 'Collapse')}
           </button>
         </div>
       )}
@@ -170,14 +173,14 @@ function EntitySwitcher() {
           className="inline-flex h-9 max-w-[16rem] items-center gap-2 rounded-md border border-rule-2 bg-raised px-3 text-sm text-ink transition-colors hover:border-rule-3"
         >
           <span className={cn('size-2 shrink-0 rounded-full', current ? 'bg-positive' : 'bg-ink-4')} aria-hidden />
-          <span className="truncate font-medium">{current?.name ?? 'Aucune entité'}</span>
+          <span className="truncate font-medium">{current?.name ?? tr('Aucune entité', 'No entity')}</span>
           <ChevronDown size={14} className="shrink-0 text-ink-3" />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content align="start" sideOffset={6} className="z-50 w-72 rounded-lg border border-rule bg-surface p-1.5 shadow-pop">
-          <div className="label-caps px-2 py-1.5">Entités de ce profil</div>
-          {entities.length === 0 ? <p className="px-2 py-2 text-xs text-ink-3">Aucune entité pour l'instant.</p> : null}
+          <div className="label-caps px-2 py-1.5">{tr('Entités de ce profil', 'Entities in this profile')}</div>
+          {entities.length === 0 ? <p className="px-2 py-2 text-xs text-ink-3">{tr("Aucune entité pour l'instant.", 'No entities yet.')}</p> : null}
           {entities.map((e) => (
             <DropdownMenu.Item
               key={e.id}
@@ -197,7 +200,7 @@ function EntitySwitcher() {
             className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[highlighted]:text-ink"
           >
             <Plus size={14} />
-            Nouvelle entité
+            {tr('Nouvelle entité', 'New entity')}
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
@@ -212,21 +215,21 @@ function SaveIndicator() {
     state === 'error' ? (
       <span className="flex items-center gap-1.5 text-critical">
         <TriangleAlert size={13} />
-        Non enregistré
+        {tr('Non enregistré', 'Not saved')}
       </span>
     ) : state === 'saved' ? (
       <span className="flex items-center gap-1.5 text-ink-3">
         <CheckCheck size={14} />
-        Enregistré
+        {tr('Enregistré', 'Saved')}
       </span>
     ) : (
       <span className="flex items-center gap-1.5 text-ink-3">
         <CloudUpload size={14} className="animate-pulse" />
-        Enregistrement…
+        {tr('Enregistrement…', 'Saving…')}
       </span>
     )
   return (
-    <Tooltip content={error ?? 'Chaque modification est enregistrée sur le serveur local.'}>
+    <Tooltip content={error ?? tr('Chaque modification est enregistrée sur le serveur local.', 'Every change is saved to the local server.')}>
       <span className="hidden text-xs sm:inline-flex" role="status">
         {content}
       </span>
@@ -236,7 +239,7 @@ function SaveIndicator() {
 
 function UserMenu() {
   const { data: user } = useCurrentUser()
-  const signOut = useSession((s) => s.signOut)
+  const logout = useLogout()
   const openTour = useSession((s) => s.openTour)
   const navigate = useNavigate()
 
@@ -247,7 +250,7 @@ function UserMenu() {
           <span className="flex size-6 items-center justify-center rounded-full bg-accent-wash text-2xs font-semibold text-accent">
             {(user?.name ?? '?').slice(0, 1).toUpperCase()}
           </span>
-          <span className="hidden max-w-[8rem] truncate md:inline">{user?.name ?? '—'}</span>
+          <span className="hidden max-w-[8rem] truncate md:inline">{user?.name ?? ''}</span>
           <ChevronDown size={13} className="text-ink-3" />
         </button>
       </DropdownMenu.Trigger>
@@ -256,20 +259,19 @@ function UserMenu() {
           <div className="px-2 py-2">
             <div className="truncate text-sm font-medium text-ink">{user?.name}</div>
             <div className="text-2xs text-ink-3">
-              {user?.is_guest ? 'Mode invité' : ROLE_LABEL[user?.role ?? 'autre']}
+              {user?.is_guest ? tr('Mode invité', 'Guest mode') : ROLE_LABEL[user?.role ?? 'autre']}
               {user?.organisation ? ` · ${user.organisation}` : ''}
             </div>
           </div>
           <DropdownMenu.Separator className="my-1 h-px bg-rule-2" />
           {[
-            { icon: <UserRound size={14} />, label: 'Profil et données', onSelect: () => navigate('/app/parametres') },
-            { icon: <CircleHelp size={14} />, label: 'Relancer le parcours guidé', onSelect: () => openTour(0) },
+            { icon: <UserRound size={14} />, label: tr('Profil et données', 'Profile and data'), onSelect: () => navigate('/app/parametres') },
+            { icon: <CircleHelp size={14} />, label: tr('Relancer le parcours guidé', 'Restart the guided tour'), onSelect: () => openTour(0) },
             {
               icon: <LogOut size={14} />,
-              label: 'Changer de profil',
+              label: tr('Se déconnecter', 'Sign out'),
               onSelect: async () => {
-                await flushAll()
-                signOut()
+                await logout()
                 navigate('/')
               },
             },
@@ -329,7 +331,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <button
                 onClick={() => setMobileOpen(false)}
                 className="absolute right-3 top-3 rounded-md p-1.5 text-ink-3 hover:bg-raised"
-                aria-label="Fermer la navigation"
+                aria-label={tr('Fermer la navigation', 'Close navigation')}
               >
                 <X size={16} />
               </button>
@@ -344,7 +346,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <button
               onClick={() => setMobileOpen(true)}
               className="rounded-md p-2 text-ink-2 hover:bg-raised lg:hidden"
-              aria-label="Ouvrir la navigation"
+              aria-label={tr('Ouvrir la navigation', 'Open navigation')}
             >
               <Menu size={18} />
             </button>
@@ -359,19 +361,20 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="hidden h-9 items-center gap-2 rounded-md border border-rule-2 bg-raised px-3 text-sm text-ink-3 transition-colors hover:border-rule-3 hover:text-ink sm:inline-flex"
             >
               <Search size={14} />
-              Rechercher
+              {tr('Rechercher', 'Search')}
               <kbd className="rounded border border-rule-2 bg-paper px-1.5 font-mono text-[10px] text-ink-3">Ctrl K</kbd>
             </button>
-            <Tooltip content="Parcours guidé">
+            <Tooltip content={tr('Parcours guidé', 'Guided tour')}>
               <button
                 onClick={() => openTour(0)}
                 className="flex size-9 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-raised hover:text-ink"
-                aria-label="Relancer le parcours guidé"
+                aria-label={tr('Relancer le parcours guidé', 'Restart the guided tour')}
               >
                 <CircleHelp size={17} />
               </button>
             </Tooltip>
             <NotesButton />
+            <LanguageToggle />
             <ThemeToggle />
             <UserMenu />
           </div>

@@ -7,12 +7,13 @@ import { useCurrentUser, useUpdateUser } from '@/lib/queries'
 import { Button } from '@/components/ui/controls'
 import { Mark } from '@/components/layout/Brand'
 import { cn } from '@/lib/utils'
+import { tr } from '@/i18n'
 
 /**
  * Parcours guidé.
  *
- * Chaque étape désigne un élément réel de l'interface — par son attribut
- * `data-tour` — et l'isole sous un projecteur. Si l'élément n'est pas
+ * Chaque étape désigne un élément réel de l'interface, par son attribut
+ * `data-tour`, et l'isole sous un projecteur. Si l'élément n'est pas
  * visible (écran étroit, entité absente), l'étape s'affiche au centre plutôt
  * que de pointer dans le vide.
  */
@@ -28,69 +29,69 @@ interface Step {
 const STEPS: Step[] = [
   {
     id: 'bienvenue',
-    title: 'Un outil de cadrage, en amont',
-    body: "Scopeo établit ce qui s'applique à une organisation au titre du RGPD, de NIS 2, de DORA et du CRA, où une action unique satisfait plusieurs textes, et dans quel ordre traiter le reste. Il intervient avant un outil de suivi de conformité au long cours, pas à sa place. Et ce n'est pas un avis juridique : il structure une décision, il ne la prend pas.",
+    title: tr('Une plateforme de cadrage, en amont', 'A scoping platform, upstream'),
+    body: tr("Scopeo établit ce qui s'applique à une organisation au titre du RGPD, de NIS2 (détaillée par le ReCyF), de DORA, du CRA et de l'AI Act, où une action unique satisfait plusieurs textes, et dans quel ordre traiter le reste. Elle intervient avant une plateforme de suivi de conformité au long cours, pas à sa place. Et ce n'est pas un avis juridique : elle structure une décision, elle ne la prend pas.", 'Scopeo establishes what applies to an organisation under the GDPR, NIS2 (detailed by the French ReCyF), DORA, the CRA and the AI Act, where a single action satisfies several texts, and in which order to handle the rest. It comes before a long-term compliance tracking platform, not in its place. And it is not legal advice: it structures a decision, it does not take it.'),
   },
   {
     id: 'navigation',
-    title: 'La navigation suit l’exercice',
-    body: "Cadrer, consulter le référentiel, piloter, préparer, restituer. Le bouton en bas replie le panneau pour ne garder que les icônes.",
+    title: tr("La navigation suit l'exercice", 'Navigation follows the exercise'),
+    body: tr('Cadrer, consulter le référentiel, piloter, préparer, restituer. Le bouton en bas replie le panneau pour ne garder que les icônes.', 'Scope, browse the reference, steer, prepare, report. The button at the bottom collapses the panel to icons only.'),
     target: 'sidebar',
   },
   {
     id: 'entites',
-    title: 'Une entité par organisation cadrée',
-    body: "Un profil peut suivre plusieurs entités — plusieurs clients, ou plusieurs filiales. Chacune est enregistrée séparément : en créer une nouvelle ne touche jamais aux autres.",
+    title: tr('Une entité par organisation cadrée', 'One entity per organisation scoped'),
+    body: tr('Un profil peut suivre plusieurs entités : plusieurs clients, ou plusieurs filiales. Chacune est enregistrée séparément ; en créer une nouvelle ne touche jamais aux autres.', 'A profile can follow several entities: several clients, or several subsidiaries. Each is stored separately; creating a new one never affects the others.'),
     target: 'entity-switcher',
   },
   {
     id: 'fiche',
-    title: 'La fiche entité',
-    body: "Client ou organisation interne : société, mission, interlocuteurs. Ces informations ouvrent les rapports et ne sont jamais publiées.",
+    title: tr('La fiche entité', 'The entity profile'),
+    body: tr('Client ou organisation interne : société, mission, interlocuteurs, et une fois la qualification faite, la démarche ISO 27001. Ces informations ouvrent les rapports et ne sont jamais publiées.', 'Client or internal organisation: company, engagement, contacts, and once scoping is done, the ISO 27001 status. This information opens the reports and is never published.'),
     target: 'nav-fiche',
   },
   {
     id: 'qualification',
-    title: 'Tout part de la qualification',
-    body: "Une trentaine de questions, chacune rattachée à l'article qu'elle sert à établir. Si une réponse change, l'outil montre ce qui apparaît et ce qui disparaît dans le périmètre.",
+    title: tr('Tout part de la qualification', 'Everything starts with scoping'),
+    body: tr("Une quarantaine de questions, chacune rattachée à l'article qu'elle sert à établir. Si une réponse change, la plateforme montre ce qui apparaît et ce qui disparaît dans le périmètre.", 'About forty questions, each tied to the article it helps establish. If an answer changes, the platform shows what enters and leaves the scope.'),
     target: 'nav-qualification',
   },
   {
     id: 'score',
-    title: 'Le score se lit avec son dénominateur',
-    body: "L'anneau donne la part des exigences unifiées déclarées en place, et chaque référentiel a son sous-score. Une exigence partielle compte pour moitié.",
+    title: tr('Le score se lit avec son dénominateur', 'Read the score with its denominator'),
+    body: tr("L'anneau donne la part des exigences unifiées déclarées en place, et chaque référentiel a son sous-score. Une exigence partielle compte pour moitié.", 'The ring shows the share of unified requirements reported in place, and each framework has its own sub-score. A partial requirement counts for half.'),
     target: 'score-ring',
     route: '/app',
   },
   {
     id: 'incidents',
-    title: 'Qui prévenir, et dans quels délais',
-    body: "Selon les textes applicables, l'outil désigne les autorités à notifier, leurs délais et la chaîne d'escalade interne. Une information utile dès aujourd'hui, même avant la mise en conformité.",
+    title: tr('Qui prévenir, et dans quels délais', 'Who to notify, and how fast'),
+    body: tr("Selon les textes applicables, la plateforme désigne les autorités à notifier, leurs délais et la chaîne d'escalade interne. Une information utile dès aujourd'hui, même avant la mise en conformité.", 'Depending on the applicable texts, the platform names the authorities to notify, their deadlines and the internal escalation chain. Useful from day one, even before compliance work.'),
     target: 'incident-section',
     route: '/app',
   },
   {
     id: 'echeancier',
-    title: 'Le calendrier réglementaire',
-    body: "Une frise que l'on zoome et filtre. Le prochain jalon qui concerne l'entité clignote jusqu'à ce qu'il soit consulté.",
+    title: tr('Le calendrier réglementaire', 'The regulatory calendar'),
+    body: tr("Une frise que l'on zoome et filtre. Le prochain jalon qui concerne l'entité clignote jusqu'à ce qu'il soit consulté.", 'A timeline you can zoom and filter. The next milestone that concerns the entity blinks until it has been viewed.'),
     target: 'nav-timeline',
   },
   {
     id: 'restitution',
-    title: 'Restituer à la direction',
-    body: "Trois PDF : une note COMEX de deux pages pour décider, le rapport de cadrage complet pour instruire, et une fiche réflexe incident à diffuser en interne. Le Trust Center publie une vue en lecture seule, sans donnée sensible.",
+    title: tr('Restituer à la direction', 'Report to management'),
+    body: tr('Trois PDF : une note COMEX de deux pages pour décider, le rapport de cadrage complet pour instruire, et une fiche réflexe incident à diffuser en interne.', 'Three PDFs: a two-page executive note to decide, the full scoping report to investigate, and an incident quick-reference sheet for internal use.'),
     target: 'nav-report',
   },
   {
     id: 'notes',
-    title: 'Des notes attachées à leur contexte',
-    body: "L'icône de bulle, à côté d'une question, d'une exigence ou d'un article, ajoute une note étiquetée : à vérifier, hypothèse, décision, preuve demandée. Le journal d'entretien les rassemble (Alt + N) et le rapport complet reprend les points ouverts.",
+    title: tr('Des notes attachées à leur contexte', 'Notes attached to their context'),
+    body: tr("L'icône de bulle, à côté d'une question, d'une exigence ou d'un article, ajoute une note étiquetée : à vérifier, hypothèse, décision, preuve demandée. Le journal d'entretien les rassemble (Alt + N) et le rapport complet reprend les points ouverts.", 'The speech bubble next to a question, a requirement or an article adds a tagged note: to check, assumption, decision, evidence requested. The interview log gathers them (Alt + N) and the full report lists open points.'),
     target: 'notes',
   },
   {
     id: 'recherche',
-    title: 'Tout le corpus à portée de clavier',
-    body: 'Ctrl K (ou ⌘ K) cherche dans les articles, les exigences, les croisements et le détail ANSSI. Le point d’interrogation relance ce parcours ; la lune bascule en thème sombre.',
+    title: tr('Tout le corpus à portée de clavier', 'The whole corpus at your fingertips'),
+    body: tr("Ctrl K (ou ⌘ K) cherche dans les articles, les exigences, les croisements, le ReCyF et les contrôles ISO 27001. Le point d'interrogation relance ce parcours ; le sélecteur de langue passe l'interface en anglais.", 'Ctrl K (or ⌘ K) searches articles, requirements, crosswalk themes, the ReCyF and ISO 27001 controls. The question mark restarts this tour; the language switch changes the interface language.'),
     target: 'search',
   },
 ]
@@ -190,7 +191,7 @@ export function Tour() {
           exit={{ opacity: 0 }}
           role="dialog"
           aria-modal="true"
-          aria-label="Parcours guidé"
+          aria-label={tr('Parcours guidé', 'Guided tour')}
         >
           {/* Voile percé autour de la cible */}
           <svg className="absolute inset-0 h-full w-full" onClick={finish}>
@@ -232,9 +233,9 @@ export function Tour() {
             <div className="mb-3 flex items-center justify-between">
               <span className="flex items-center gap-2 text-2xs font-medium text-accent">
                 <Mark size={12} />
-                Étape {step + 1} sur {STEPS.length}
+                {tr(`Étape ${step + 1} sur ${STEPS.length}`, `Step ${step + 1} of ${STEPS.length}`)}
               </span>
-              <button onClick={finish} className="rounded-md p-1 text-ink-3 hover:bg-raised hover:text-ink" aria-label="Quitter le parcours">
+              <button onClick={finish} className="rounded-md p-1 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Quitter le parcours', 'Exit the tour')}>
                 <X size={15} />
               </button>
             </div>
@@ -243,13 +244,13 @@ export function Tour() {
             <p className="mt-2 text-sm leading-relaxed text-ink-2">{current.body}</p>
 
             {/* Progression cliquable */}
-            <div className="mt-4 flex items-center gap-1.5" role="tablist" aria-label="Étapes du parcours">
+            <div className="mt-4 flex items-center gap-1.5" role="tablist" aria-label={tr('Étapes du parcours', 'Tour steps')}>
               {STEPS.map((s, i) => (
                 <button
                   key={s.id}
                   role="tab"
                   aria-selected={i === step}
-                  aria-label={`Étape ${i + 1} : ${s.title}`}
+                  aria-label={tr(`Étape ${i + 1} : ${s.title}`, `Step ${i + 1}: ${s.title}`)}
                   onClick={() => setStep(i)}
                   className={cn(
                     'h-1.5 rounded-full transition-all',
@@ -261,16 +262,16 @@ export function Tour() {
 
             <div className="mt-5 flex items-center justify-between gap-2">
               <button onClick={finish} className="text-xs text-ink-3 hover:text-ink">
-                Passer
+                {tr('Passer', 'Skip')}
               </button>
               <div className="flex gap-2">
                 {step > 0 ? (
                   <Button size="sm" icon={<ArrowLeft size={13} />} onClick={() => setStep(step - 1)}>
-                    Précédent
+                    {tr('Précédent', 'Previous')}
                   </Button>
                 ) : null}
                 <Button size="sm" variant="primary" onClick={() => (last ? finish() : setStep(step + 1))}>
-                  {last ? 'Terminer' : 'Suivant'}
+                  {last ? tr('Terminer', 'Finish') : tr('Suivant', 'Next')}
                   {last ? null : <ArrowRight size={13} />}
                 </Button>
               </div>

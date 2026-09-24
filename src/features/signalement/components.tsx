@@ -21,6 +21,8 @@ import {
 import { useEntityEditor } from '@/lib/queries'
 import { cn, uid } from '@/lib/utils'
 import type { Answers, IncidentRecord, InternalContact, RegulationId } from '@/types/domain'
+import { REG_LABEL } from '@/components/ui/tokens'
+import { COLON, LOCALE, tr } from '@/i18n'
 
 /* ==========================================================================
    Cartes d'autorité
@@ -28,10 +30,10 @@ import type { Answers, IncidentRecord, InternalContact, RegulationId } from '@/t
 
 export function AuthorityCards({ applicable, answers }: { applicable: RegulationId[]; answers: Answers }) {
   if (applicable.length === 0) {
-    return <p className="text-sm text-ink-3">Aucune autorité à contacter : aucun texte applicable n'a été retenu.</p>
+    return <p className="text-sm text-ink-3">{tr("Aucune autorité à contacter : aucun texte applicable n'a été retenu.", 'No authority to contact: no applicable text was identified.')}</p>
   }
   return (
-    <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
+    <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
       {applicable.map((r, i) => {
         const authorities = authoritiesFor(r, answers)
         const main = authorities[0]
@@ -54,7 +56,7 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
             <div className="text-2xs text-ink-3">{main.role}</div>
             {r === 'NIS2' && applicable.includes('DORA') && answers.entite_financiere === 'oui' ? (
               <p className="mt-3 rounded-sm bg-overlay px-2.5 py-2 text-2xs leading-snug text-ink-2">
-                Incidents notifiés au titre de DORA, qui prime ici sur NIS 2 (article 4 de NIS 2).
+                {tr('Incidents notifiés au titre de DORA, qui prime ici sur NIS2 (article 4 de NIS2).', 'Incidents are reported under DORA, which prevails over NIS2 here (Article 4 of NIS2).')}
               </p>
             ) : null}
             <ul className="mt-3 space-y-1">
@@ -81,8 +83,16 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
             ) : (
               <p className="mt-3 border-t border-rule pt-2.5 text-2xs leading-snug text-ink-3">{main.channel}</p>
             )}
+            {r === 'AIACT' ? (
+              <p className="mt-2 text-[10px] leading-snug text-ink-4">
+                {tr(
+                  "Incidents graves des systèmes à haut risque, exigible à l'application du régime haut risque (2 décembre 2027 pour l'annexe III).",
+                  'Serious incidents involving high-risk systems, enforceable once the high-risk regime applies (2 December 2027 for Annex III).',
+                )}
+              </p>
+            ) : null}
             {r === 'DORA' ? (
-              <p className="mt-2 text-[10px] leading-snug text-ink-4">* 4 h après classification comme majeur, 24 h au plus tard après la détection.</p>
+              <p className="mt-2 text-[10px] leading-snug text-ink-4">{tr('* 4 h après classification comme majeur, 24 h au plus tard après la détection.', '* 4 h after classification as major, no later than 24 h after detection.')}</p>
             ) : null}
           </motion.a>
         )
@@ -96,16 +106,16 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
    ========================================================================== */
 
 const STEP_STYLE: Record<StepStatus, { label: string; tone: string; border: string; led?: 'critical' | 'caution' }> = {
-  done_on_time: { label: 'Respecté', tone: 'text-positive', border: 'border-positive-line bg-positive-wash' },
-  done_late: { label: 'Fait hors délai', tone: 'text-critical', border: 'border-critical-line bg-critical-wash' },
-  overdue: { label: 'Délai dépassé', tone: 'text-critical', border: 'border-critical-line bg-critical-wash', led: 'critical' },
-  due_soon: { label: 'Échéance proche', tone: 'text-caution', border: 'border-caution-line bg-caution-wash', led: 'caution' },
-  running: { label: 'Délai en cours', tone: 'text-ink-2', border: 'border-rule-2 bg-raised' },
-  no_deadline: { label: 'Sans délai chiffré', tone: 'text-ink-3', border: 'border-rule-2 bg-raised' },
+  done_on_time: { label: tr('Respecté', 'Met'), tone: 'text-positive', border: 'border-positive-line bg-positive-wash' },
+  done_late: { label: tr('Fait hors délai', 'Done late'), tone: 'text-critical', border: 'border-critical-line bg-critical-wash' },
+  overdue: { label: tr('Délai dépassé', 'Overdue'), tone: 'text-critical', border: 'border-critical-line bg-critical-wash', led: 'critical' },
+  due_soon: { label: tr('Échéance proche', 'Due soon'), tone: 'text-caution', border: 'border-caution-line bg-caution-wash', led: 'caution' },
+  running: { label: tr('Délai en cours', 'Clock running'), tone: 'text-ink-2', border: 'border-rule-2 bg-raised' },
+  no_deadline: { label: tr('Sans délai chiffré', 'No fixed deadline'), tone: 'text-ink-3', border: 'border-rule-2 bg-raised' },
 }
 
 /* ==========================================================================
-   Frise des délais d'un incident — compte à rebours
+   Frise des délais d'un incident : compte à rebours
    ========================================================================== */
 
 export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentStep[]; detectedAt: Date; now: Date }) {
@@ -146,7 +156,7 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
       {/* Maintenant */}
       <div className="absolute top-5 -translate-x-1/2" style={{ left: `${Math.min(100, x(now.getTime()))}%` }}>
         <div className="h-9 w-px bg-accent" />
-        <span className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-medium text-accent">maintenant</span>
+        <span className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-medium text-accent">{tr('maintenant', 'now')}</span>
       </div>
       {dated.map((s) => {
         const left = x(s.due!.getTime())
@@ -157,7 +167,7 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
         return (
           <Tooltip
             key={s.id}
-            content={`${s.label} (${s.authority}) — ${s.due!.toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}`}
+            content={`${s.label} (${s.authority})${COLON}${s.due!.toLocaleString(LOCALE, { dateStyle: 'short', timeStyle: 'short' })}`}
           >
             <div className="absolute top-7 -translate-x-1/2 cursor-default" style={{ left: `${left}%` }}>
               <span
@@ -172,14 +182,14 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
                     style.tone,
                   )}
                 >
-                  {s.regime.startsWith('CRA') ? 'CRA' : s.regime} · {s.label.split(' ')[0]}
+                  {REG_LABEL[REGIME_REGULATION[s.regime]].split(' ')[0]} · {s.label.split(' ')[0]}
                 </span>
               ) : null}
             </div>
           </Tooltip>
         )
       })}
-      <span className="absolute bottom-0 left-0 text-[10px] text-ink-4">détection</span>
+      <span className="absolute bottom-0 left-0 text-[10px] text-ink-4">{tr('détection', 'detection')}</span>
     </div>
   )
 }
@@ -190,12 +200,12 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
    ========================================================================== */
 
 const CONTACT_ROLES: { value: InternalContact['role']; label: string }[] = [
-  { value: 'direction', label: 'Membre de la direction' },
-  { value: 'rssi', label: 'RSSI' },
+  { value: 'direction', label: tr('Membre de la direction', 'Executive') },
+  { value: 'rssi', label: tr('RSSI', 'CISO') },
   { value: 'dpo', label: 'DPO' },
-  { value: 'juridique', label: 'Juridique' },
-  { value: 'communication', label: 'Communication' },
-  { value: 'autre', label: 'Autre' },
+  { value: 'juridique', label: tr('Juridique', 'Legal') },
+  { value: 'communication', label: tr('Communication', 'Communications') },
+  { value: 'autre', label: tr('Autre', 'Other') },
 ]
 
 const ROLE_LABEL = Object.fromEntries(CONTACT_ROLES.map((r) => [r.value, r.label])) as Record<string, string>
@@ -230,7 +240,7 @@ export function ContactCards({ contacts, readOnly }: { contacts: InternalContact
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="truncate text-sm font-medium text-ink">{c.name || 'Sans nom'}</span>
+                  <span className="truncate text-sm font-medium text-ink">{c.name || tr('Sans nom', 'No name')}</span>
                 </div>
                 <Tag className="mt-1">{ROLE_LABEL[c.role]}</Tag>
                 {c.title ? <div className="mt-1 text-2xs text-ink-3">{c.title}</div> : null}
@@ -250,9 +260,9 @@ export function ContactCards({ contacts, readOnly }: { contacts: InternalContact
               {readOnly ? null : (
                 <div className="flex flex-col gap-1">
                   <button onClick={() => setEditing(c)} className="rounded p-1 text-2xs text-ink-3 hover:bg-raised hover:text-ink">
-                    Modifier
+                    {tr('Modifier', 'Edit')}
                   </button>
-                  <button onClick={() => remove(c.id)} className="rounded p-1 text-ink-4 hover:bg-raised hover:text-critical" aria-label="Supprimer le contact">
+                  <button onClick={() => remove(c.id)} className="rounded p-1 text-ink-4 hover:bg-raised hover:text-critical" aria-label={tr('Supprimer le contact', 'Delete contact')}>
                     <Trash2 size={12} />
                   </button>
                 </div>
@@ -266,7 +276,7 @@ export function ContactCards({ contacts, readOnly }: { contacts: InternalContact
             className="flex min-h-[7rem] items-center justify-center gap-2 rounded-lg border border-dashed border-rule-3 text-sm text-ink-3 transition-colors hover:border-accent-line hover:text-ink"
           >
             <Plus size={15} />
-            Ajouter un contact
+            {tr('Ajouter un contact', 'Add a contact')}
           </button>
         )}
       </div>
@@ -282,36 +292,36 @@ function ContactDialog({ contact, onSave, onClose }: { contact: InternalContact;
     <Dialog
       open
       onOpenChange={(v) => !v && onClose()}
-      title="Contact d'escalade"
-      description="Personne à mobiliser en cas d'incident."
+      title={tr("Contact d'escalade", 'Escalation contact')}
+      description={tr("Personne à mobiliser en cas d'incident.", 'Person to call on in case of an incident.')}
       footer={
         <>
-          <Button onClick={onClose}>Annuler</Button>
+          <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>
           <Button variant="primary" onClick={() => onSave(c)} disabled={!c.name.trim()}>
-            Enregistrer
+            {tr('Enregistrer', 'Save')}
           </Button>
         </>
       }
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="block sm:col-span-2">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Rôle</span>
-          <Select value={c.role} onValueChange={(v) => set('role', v)} options={CONTACT_ROLES} ariaLabel="Rôle" />
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Rôle', 'Role')}</span>
+          <Select value={c.role} onValueChange={(v) => set('role', v)} options={CONTACT_ROLES} ariaLabel={tr('Rôle', 'Role')} />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Nom</span>
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Nom', 'Name')}</span>
           <Input value={c.name} onChange={(e) => set('name', e.target.value)} autoFocus />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Fonction</span>
-          <Input value={c.title} onChange={(e) => set('title', e.target.value)} placeholder="Directeur des systèmes d'information" />
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Fonction', 'Job title')}</span>
+          <Input value={c.title} onChange={(e) => set('title', e.target.value)} placeholder={tr("Directeur des systèmes d'information", 'Chief information officer')} />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Téléphone</span>
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Téléphone', 'Phone')}</span>
           <Input value={c.phone} onChange={(e) => set('phone', e.target.value)} />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Courriel</span>
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Courriel', 'Email')}</span>
           <Input type="email" value={c.email} onChange={(e) => set('email', e.target.value)} />
         </label>
       </div>
@@ -321,7 +331,7 @@ function ContactDialog({ contact, onSave, onClose }: { contact: InternalContact;
 
 
 /* ==========================================================================
-   Préparation au signalement — ce qu'un cadrage doit avoir établi
+   Préparation au signalement : ce qu'un cadrage doit avoir établi
    ========================================================================== */
 
 export function ReadinessList({ items }: { items: ReadinessItem[] }) {
@@ -334,7 +344,7 @@ export function ReadinessList({ items }: { items: ReadinessItem[] }) {
               'mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border',
               it.ok ? 'border-positive bg-positive text-paper' : 'border-caution-line text-caution',
             )}
-            aria-label={it.ok ? 'Établi' : 'À compléter'}
+            aria-label={it.ok ? tr('Établi', 'Established') : tr('À compléter', 'To complete')}
           >
             {it.ok ? <Check size={10} strokeWidth={3} /> : <span className="size-1.5 rounded-full bg-caution" />}
           </span>
@@ -349,10 +359,10 @@ export function ReadinessList({ items }: { items: ReadinessItem[] }) {
 }
 
 /* ==========================================================================
-   Simulation — exercer les horloges sans rien enregistrer
+   Simulation : exercer les horloges sans rien enregistrer
    ========================================================================== */
 
-const ALL_REGIMES: Regime[] = ['RGPD', 'NIS2', 'DORA', 'CRA-VULN', 'CRA-INC']
+const ALL_REGIMES: Regime[] = ['RGPD', 'NIS2', 'DORA', 'CRA-VULN', 'CRA-INC', 'AIACT']
 
 export function Simulator({ applicable, answers }: { applicable: RegulationId[]; answers: Answers }) {
   const offered = ALL_REGIMES.filter((r) => suggestedRegimes(applicable, answers).includes(r))
@@ -369,7 +379,7 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
     () => ({
       id: 'simulation',
       entity_id: '',
-      title: 'Simulation',
+      title: tr('Simulation', 'Simulation'),
       description: '',
       detected_at: t0.toISOString(),
       classified_at: regimes.includes('DORA') ? new Date(t0.getTime() + classifiedAfter * 3_600_000).toISOString() : null,
@@ -387,14 +397,14 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
   const next = nextDeadline(steps)
 
   if (offered.length === 0) {
-    return <p className="text-sm text-ink-3">Aucun régime de notification ne s'applique à cette entité au vu de sa qualification.</p>
+    return <p className="text-sm text-ink-3">{tr("Aucun régime de notification ne s'applique à cette entité au vu de sa qualification.", 'No notification regime applies to this entity given its scoping.')}</p>
   }
 
   return (
     <div className="space-y-5">
       <div className="grid gap-5 lg:grid-cols-[1fr_18rem]">
         <div>
-          <span className="label-caps mb-2 block">L'incident relèverait de</span>
+          <span className="label-caps mb-2 block">{tr("L'incident relèverait de", 'The incident would fall under')}</span>
           <div className="flex flex-wrap gap-2">
             {offered.map((r) => {
               const on = regimes.includes(r)
@@ -422,7 +432,7 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
         </div>
         {regimes.includes('DORA') ? (
           <label className="block">
-            <span className="label-caps mb-2 block">Classé majeur après</span>
+            <span className="label-caps mb-2 block">{tr('Classé majeur après', 'Classified as major after')}</span>
             <div className="flex items-center gap-3">
               <input
                 type="range"
@@ -441,7 +451,7 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
       <div className="rounded-md border border-rule-2 bg-sunken p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <label className="flex min-w-[16rem] flex-1 items-center gap-3">
-            <span className="shrink-0 text-xs text-ink-2">Temps écoulé depuis la détection</span>
+            <span className="shrink-0 text-xs text-ink-2">{tr('Temps écoulé depuis la détection', 'Time since detection')}</span>
             <input
               type="range"
               min={0}
@@ -449,13 +459,13 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
               value={elapsed}
               onChange={(e) => setElapsed(Number(e.target.value))}
               className="w-full accent-[var(--c-accent)]"
-              aria-label="Temps écoulé depuis la détection, en heures"
+              aria-label={tr('Temps écoulé depuis la détection, en heures', 'Time since detection, in hours')}
             />
             <span className="w-14 text-right font-mono text-xs text-ink">+{elapsed} h</span>
           </label>
           {next ? (
             <span className={cn('rounded-md border px-2.5 py-1 text-xs', STEP_STYLE[next.status].border, STEP_STYLE[next.status].tone)}>
-              Prochaine : {next.label} ({next.authority}) — {formatRemaining(next.due!.getTime() - now.getTime())}
+              {tr('Prochaine', 'Next')}{COLON}{next.label} ({next.authority}), {formatRemaining(next.due!.getTime() - now.getTime())}
             </span>
           ) : null}
         </div>
@@ -466,10 +476,10 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
         <table className="w-full min-w-[40rem] text-sm">
           <thead>
             <tr className="border-b border-rule-2 text-left">
-              <th className="label-caps py-2 pr-3 font-medium">Étape</th>
-              <th className="label-caps py-2 pr-3 font-medium">Autorité</th>
-              <th className="label-caps py-2 pr-3 font-medium">Échéance</th>
-              <th className="label-caps py-2 font-medium">État à +{elapsed} h</th>
+              <th className="label-caps py-2 pr-3 font-medium">{tr('Étape', 'Step')}</th>
+              <th className="label-caps py-2 pr-3 font-medium">{tr('Autorité', 'Authority')}</th>
+              <th className="label-caps py-2 pr-3 font-medium">{tr('Échéance', 'Deadline')}</th>
+              <th className="label-caps py-2 font-medium">{tr(`État à +${elapsed} h`, `Status at +${elapsed} h`)}</th>
             </tr>
           </thead>
           <tbody>
@@ -486,8 +496,8 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
                   </td>
                   <td className="py-2.5 pr-3 text-ink-2">{s.authority}</td>
                   <td className="py-2.5 pr-3 font-mono text-xs text-ink-2">
-                    {s.due ? `T0 + ${Math.round((s.due.getTime() - t0.getTime()) / 3_600_000)} h` : 'sans délai chiffré'}
-                    {s.provisional && s.due ? <span className="ml-1 text-ink-4">(provisoire)</span> : null}
+                    {s.due ? `T0 + ${Math.round((s.due.getTime() - t0.getTime()) / 3_600_000)} h` : tr('sans délai chiffré', 'no fixed deadline')}
+                    {s.provisional && s.due ? <span className="ml-1 text-ink-4">{tr('(provisoire)', '(provisional)')}</span> : null}
                   </td>
                   <td className={cn('py-2.5 text-xs font-medium', st.tone)}>{st.label}</td>
                 </tr>

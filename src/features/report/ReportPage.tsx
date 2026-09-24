@@ -7,6 +7,7 @@ import { useScoping } from '@/lib/hooks'
 import { cn, slugify } from '@/lib/utils'
 import { buildReportData } from './reportData'
 import type { ReportKind } from './pdf/generate'
+import { tr } from '@/i18n'
 
 const loadEngine = () => import('./pdf/generate')
 
@@ -28,33 +29,43 @@ const KINDS: {
   {
     id: 'comex',
     icon: <Presentation size={18} />,
-    title: 'Note au comité de direction',
-    audience: 'Pour décider — dirigeants, COMEX',
-    length: '2 pages',
-    contents: ['Message clé et quatre indicateurs', 'Couverture par texte, répartition des niveaux', 'Exposition et sanctions plafonds', 'Trois priorités, décisions attendues', 'Échéances et autorités à prévenir'],
+    title: tr('Note au comité de direction', 'Executive summary'),
+    audience: tr('Pour décider : dirigeants, COMEX', 'To decide: executives, management committee'),
+    length: tr('2 pages', '2 pages'),
+    contents: [
+      tr('Message clé, badge ISO 27001 et quatre indicateurs', 'Key message, ISO 27001 badge and four indicators'),
+      tr('Couverture par texte, répartition des niveaux', 'Coverage by text, breakdown of levels'),
+      tr('Exposition et sanctions plafonds', 'Exposure and penalty caps'),
+      tr('Trois priorités, décisions attendues', 'Three priorities, decisions required'),
+      tr('Échéances et autorités à prévenir', 'Deadlines and authorities to notify'),
+    ],
   },
   {
     id: 'complet',
     icon: <FileText size={18} />,
-    title: 'Rapport de cadrage complet',
-    audience: 'Pour instruire — conseil, RSSI, DPO, équipe projet',
-    length: '6 à 10 pages',
+    title: tr('Rapport de cadrage complet', 'Full scoping report'),
+    audience: tr('Pour instruire : conseil, RSSI, DPO, équipe projet', 'To investigate: counsel, CISO, DPO, project team'),
+    length: tr('6 à 12 pages', '6 to 12 pages'),
     contents: [
-      'Synthèse chiffrée et graphiques',
-      'Qualification détaillée, fondements et réserves',
-      'Périmètre, couverture par domaine, écarts',
-      'Points de friction entre textes',
-      'Plan de traitement par vagues, nuage priorité / charge',
-      'Signalement, échéancier, journal d’entretien, méthode',
+      tr('Synthèse chiffrée et graphiques', 'Figures and charts'),
+      tr('Qualification détaillée, fondements et réserves', 'Detailed scoping, legal bases and caveats'),
+      tr('Périmètre, couverture par domaine, écarts, démarche ISO 27001', 'Scope, coverage by domain, gaps, ISO 27001 status'),
+      tr('Points de friction entre textes', 'Friction points between texts'),
+      tr('Plan de traitement par vagues, nuage priorité / charge', 'Treatment plan by wave, priority / effort chart'),
+      tr('Signalement, échéancier, journal d’entretien, méthode', 'Reporting, timeline, interview log, method'),
     ],
   },
   {
     id: 'reflexe',
     icon: <Siren size={18} />,
-    title: 'Fiche réflexe incident',
-    audience: 'À diffuser en interne dès maintenant',
-    length: '1 page',
-    contents: ['Qui appeler, dans l’ordre, avec leurs coordonnées', 'Qui notifier et dans quel délai, selon les textes applicables', 'Les six réflexes des premières heures'],
+    title: tr('Fiche réflexe incident', 'Incident quick-reference sheet'),
+    audience: tr('À diffuser en interne dès maintenant', 'To share internally right away'),
+    length: tr('1 page', '1 page'),
+    contents: [
+      tr('Qui appeler, dans l’ordre, avec leurs coordonnées', 'Who to call, in order, with their contact details'),
+      tr('Qui notifier et dans quel délai, selon les textes applicables', 'Who to notify and how fast, according to the applicable texts'),
+      tr('Les six réflexes des premières heures', 'The six reflexes of the first hours'),
+    ],
   },
 ]
 
@@ -82,9 +93,9 @@ export default function ReportPage() {
   if (!scoping.qualified || !data) {
     return (
       <>
-        <PageHeader eyebrow={entity.name} title="Rapports" />
-        <EmptyState title="Qualification requise" action={<LinkButton to="/app/qualification" variant="primary">Qualifier l'entité</LinkButton>}>
-          Les rapports restituent la qualification, le périmètre et le plan de traitement : ils supposent un questionnaire complet.
+        <PageHeader eyebrow={entity.name} title={tr('Rapports', 'Reports')} />
+        <EmptyState title={tr('Qualification requise', 'Scoping required')} action={<LinkButton to="/app/qualification" variant="primary">{tr("Qualifier l'entité", 'Scope the entity')}</LinkButton>}>
+          {tr('Les rapports restituent la qualification, le périmètre et le plan de traitement : ils supposent un questionnaire complet.', 'Reports present the scoping, the scope and the treatment plan: they require a complete questionnaire.')}
         </EmptyState>
       </>
     )
@@ -102,7 +113,7 @@ export default function ReportPage() {
       if (mode === 'telecharger') {
         const a = document.createElement('a')
         a.href = url
-        a.download = `${kind === 'comex' ? 'note-comex' : kind === 'reflexe' ? 'fiche-reflexe-incident' : 'rapport-cadrage'}-${slugify(entity!.name)}.pdf`
+        a.download = `${kind === 'comex' ? tr('note-comex', 'executive-summary') : kind === 'reflexe' ? tr('fiche-reflexe-incident', 'incident-quick-reference') : tr('rapport-cadrage', 'scoping-report')}-${slugify(entity!.name)}.pdf`
         a.click()
         setTimeout(() => URL.revokeObjectURL(url), 2000)
       } else {
@@ -110,7 +121,7 @@ export default function ReportPage() {
         setTimeout(() => previewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'La génération a échoué.')
+      setError(e instanceof Error ? e.message : tr('La génération a échoué.', 'Generation failed.'))
     } finally {
       setBusy(null)
     }
@@ -122,14 +133,16 @@ export default function ReportPage() {
     <div className="space-y-6">
       <PageHeader
         eyebrow={entity.name}
-        title="Rapports"
-        lead="Trois documents PDF construits à partir du cadrage en cours : une note courte pour décider, un rapport complet pour instruire, une fiche réflexe à diffuser en interne."
+        title={tr('Rapports', 'Reports')}
+        lead={tr('Trois documents PDF construits à partir du cadrage en cours : une note courte pour décider, un rapport complet pour instruire, une fiche réflexe à diffuser en interne.', 'Three PDF documents built from the current scoping: a short note to decide, a full report to investigate, a quick-reference sheet to share internally.')}
       />
 
       {evaluatedShare < 1 ? (
         <p className="rounded-md border border-caution-line bg-caution-wash px-4 py-2.5 text-xs text-ink-2">
-          {data.coverage.themes - data.coverage.evaluated} exigence{data.coverage.themes - data.coverage.evaluated > 1 ? 's' : ''} ne sont pas encore évaluées : les
-          rapports les signalent comme telles, et la couverture affichée en tient compte.
+          {tr(
+            `${data.coverage.themes - data.coverage.evaluated} exigence${data.coverage.themes - data.coverage.evaluated > 1 ? 's' : ''} ne sont pas encore évaluées : les rapports les signalent comme telles, et la couverture affichée en tient compte.`,
+            `${data.coverage.themes - data.coverage.evaluated} requirement${data.coverage.themes - data.coverage.evaluated > 1 ? 's are' : ' is'} not assessed yet: the reports flag them as such, and the coverage shown takes this into account.`,
+          )}
         </p>
       ) : null}
 
@@ -156,10 +169,10 @@ export default function ReportPage() {
             </ul>
             <div className="flex flex-wrap gap-2 border-t border-rule bg-sunken px-5 py-3">
               <Button variant="primary" disabled={busy !== null} onClick={() => generate(k.id, 'apercu')}>
-                {busy === k.id ? 'Génération…' : 'Aperçu'}
+                {busy === k.id ? tr('Génération…', 'Generating…') : tr('Aperçu', 'Preview')}
               </Button>
               <Button icon={<Download size={14} />} disabled={busy !== null} onClick={() => generate(k.id, 'telecharger')}>
-                Télécharger le PDF
+                {tr('Télécharger le PDF', 'Download PDF')}
               </Button>
             </div>
           </Card>
@@ -174,7 +187,7 @@ export default function ReportPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-rule px-5 py-3">
               <div className="text-sm text-ink">
                 {KINDS.find((k) => k.id === preview.kind)!.title}
-                <span className="ml-2 font-mono text-2xs text-ink-4">généré en {preview.ms} ms</span>
+                <span className="ml-2 font-mono text-2xs text-ink-4">{tr(`généré en ${preview.ms} ms`, `generated in ${preview.ms} ms`)}</span>
               </div>
               <div className="flex gap-2">
                 <a
@@ -183,17 +196,17 @@ export default function ReportPage() {
                   rel="noreferrer"
                   className="inline-flex h-8 items-center gap-1.5 rounded-md border border-rule-2 bg-raised px-3 text-xs font-medium text-ink hover:bg-overlay"
                 >
-                  <ExternalLink size={13} /> Nouvel onglet
+                  <ExternalLink size={13} /> {tr('Nouvel onglet', 'New tab')}
                 </a>
                 <Button size="sm" icon={<Download size={13} />} onClick={() => generate(preview.kind, 'telecharger')}>
-                  Télécharger
+                  {tr('Télécharger', 'Download')}
                 </Button>
-                <Button size="sm" variant="ghost" aria-label="Fermer l'aperçu" onClick={() => setPreview(null)}>
+                <Button size="sm" variant="ghost" aria-label={tr("Fermer l'aperçu", 'Close preview')} onClick={() => setPreview(null)}>
                   <X size={14} />
                 </Button>
               </div>
             </div>
-            <iframe title="Aperçu du rapport" src={preview.url} className={cn('block h-[82vh] w-full bg-[#525659]')} />
+            <iframe title={tr('Aperçu du rapport', 'Report preview')} src={preview.url} className={cn('block h-[82vh] w-full bg-[#525659]')} />
           </Card>
         </motion.div>
       ) : null}

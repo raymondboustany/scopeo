@@ -19,22 +19,25 @@ import { REGULATIONS, REGULATION_ORDER } from '@/data/regulations'
 import { CROSSWALK_BY_ID } from '@/data/crosswalk'
 import { cn, formatDelay } from '@/lib/utils'
 import type { MeasureStatus, Obligation, RegulationId, RequirementType } from '@/types/domain'
+import { FrameworkNote } from '@/components/ui/primitives'
+import { REG_LABEL } from '@/components/ui/tokens'
+import { COLON, tr } from '@/i18n'
 
 type RegFilter = 'tous' | RegulationId
 
 const BINDING_LABEL: Record<Obligation['binding'], { label: string; tone: 'critical' | 'caution' | 'neutral' }> = {
-  obligatoire: { label: 'Obligation', tone: 'critical' },
-  conditionnelle: { label: 'Conditionnelle', tone: 'caution' },
-  recommandee: { label: 'Recommandation', tone: 'neutral' },
+  obligatoire: { label: tr('Obligation', 'Obligation'), tone: 'critical' },
+  conditionnelle: { label: tr('Conditionnelle', 'Conditional'), tone: 'caution' },
+  recommandee: { label: tr('Recommandation', 'Recommendation'), tone: 'neutral' },
 }
 
 const REQ_TYPE_LABEL: Record<RequirementType, string> = {
-  gouvernance: 'Gouvernance',
-  organisationnel: 'Organisationnel',
-  technique: 'Technique',
-  documentaire: 'Documentaire',
-  notification: 'Notification',
-  contractuel: 'Contractuel',
+  gouvernance: tr('Gouvernance', 'Governance'),
+  organisationnel: tr('Organisationnel', 'Organisational'),
+  technique: tr('Technique', 'Technical'),
+  documentaire: tr('Documentaire', 'Documentation'),
+  notification: tr('Notification', 'Notification'),
+  contractuel: tr('Contractuel', 'Contractual'),
 }
 
 export default function CorpusPage() {
@@ -45,7 +48,7 @@ export default function CorpusPage() {
   const [scopeOnly, setScopeOnly] = useState(true)
 
   const recyfParam = params.get('recyf') ? Number(params.get('recyf')) : null
-  // Un objectif ReCyF s'ouvre sous la première exigence NIS 2 qu'il détaille.
+  // Un objectif ReCyF s'ouvre sous la première exigence NIS2 qu'il détaille.
   const recyfTarget = recyfParam ? ALL_OBLIGATIONS.find((o) => o.recyf?.includes(recyfParam))?.id ?? null : null
   const selectedId = recyfTarget ?? params.get('obligation')
 
@@ -116,22 +119,25 @@ export default function CorpusPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Référentiel"
-        title="Corpus réglementaire"
-        lead={`${CORPUS_STATS.obligations} obligations reprises des quatre textes, décomposées en ${CORPUS_STATS.requirements} exigences élémentaires, avec les preuves attendues en contrôle.`}
+        eyebrow={tr('Référentiel', 'Reference')}
+        title={tr('Corpus réglementaire', 'Regulatory corpus')}
+        lead={tr(
+          `${CORPUS_STATS.obligations} obligations reprises des cinq textes, décomposées en ${CORPUS_STATS.textRequirements} exigences élémentaires et complétées, pour NIS2, par les ${CORPUS_STATS.recyfMeasures} mesures du ReCyF. Avec les preuves attendues en contrôle.`,
+          `${CORPUS_STATS.obligations} obligations drawn from the five texts, broken down into ${CORPUS_STATS.textRequirements} elementary requirements and supplemented, for NIS2, by the ${CORPUS_STATS.recyfMeasures} ReCyF measures. With the evidence expected at inspection.`,
+        )}
       />
 
-      {/* Barre de filtres — une seule ligne, au-dessus du contenu. */}
+      {/* Barre de filtres : une seule ligne, au-dessus du contenu. */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <SegmentedControl<RegFilter>
-          ariaLabel="Filtrer par règlement"
+          ariaLabel={tr('Filtrer par règlement', 'Filter by regulation')}
           value={reg}
           onChange={setReg}
           options={[
-            { value: 'tous', label: 'Tous', count: counts.tous },
+            { value: 'tous', label: tr('Tous', 'All'), count: counts.tous },
             ...REGULATION_ORDER.map((id) => ({
               value: id as RegFilter,
-              label: id === 'NIS2' ? 'NIS 2' : id,
+              label: REG_LABEL[id],
               count: counts[id],
             })),
           ]}
@@ -142,15 +148,15 @@ export default function CorpusPage() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Article, exigence, mot-clé…"
+            placeholder={tr('Article, exigence, mot-clé…', 'Article, requirement, keyword…')}
             className="pl-8"
-            aria-label="Rechercher dans le corpus"
+            aria-label={tr('Rechercher dans le corpus', 'Search the corpus')}
           />
           {query ? (
             <button
               onClick={() => setQuery('')}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-ink-4 hover:text-ink"
-              aria-label="Effacer la recherche"
+              aria-label={tr('Effacer la recherche', 'Clear search')}
             >
               <X size={13} />
             </button>
@@ -159,10 +165,10 @@ export default function CorpusPage() {
 
         {canScope ? (
           <label className="inline-flex items-center gap-2 rounded-sm border border-rule bg-surface px-2.5 py-1.5 text-xs text-ink-2">
-            <Switch checked={scopeOnly} onCheckedChange={setScopeOnly} label="Périmètre de l'entité" />
+            <Switch checked={scopeOnly} onCheckedChange={setScopeOnly} label={tr("Périmètre de l'entité", "Entity's scope")} />
             <span className="flex items-center gap-1">
               <SlidersHorizontal size={11} className="text-ink-4" />
-              Périmètre de l'entité
+              {tr("Périmètre de l'entité", "Entity's scope")}
             </span>
           </label>
         ) : null}
@@ -170,18 +176,17 @@ export default function CorpusPage() {
 
       {!scoping.qualified ? (
         <Callout tone="accent" className="mb-4">
-          Le corpus est affiché dans son intégralité.{' '}
+          {tr('Le corpus est affiché dans son intégralité.', 'The full corpus is shown.')}{' '}
           <Link to="/app/qualification" className="font-medium text-accent underline underline-offset-2">
-            Qualifiez l'entité
+            {tr("Qualifiez l'entité", 'Scope the entity')}
           </Link>{' '}
-          pour le restreindre aux obligations réellement applicables et voir, pour chaque obligation
-          écartée, le motif de son exclusion.
+          {tr('pour le restreindre aux obligations réellement applicables et voir, pour chaque obligation écartée, le motif de son exclusion.', 'to restrict it to the obligations that actually apply and see, for each excluded obligation, why it was excluded.')}
         </Callout>
       ) : null}
 
       {filtered.length === 0 ? (
-        <EmptyState title="Aucune obligation ne correspond" action={<Button onClick={() => { setQuery(''); setReg('tous') }}>Réinitialiser les filtres</Button>}>
-          Élargissez la recherche ou désactivez le filtrage par périmètre.
+        <EmptyState title={tr('Aucune obligation ne correspond', 'No obligation matches')} action={<Button onClick={() => { setQuery(''); setReg('tous') }}>{tr('Réinitialiser les filtres', 'Reset filters')}</Button>}>
+          {tr('Élargissez la recherche ou désactivez le filtrage par périmètre.', 'Broaden the search or turn off scope filtering.')}
         </EmptyState>
       ) : (
         <div className="grid gap-5 lg:grid-cols-[20rem_1fr] xl:grid-cols-[24rem_1fr]">
@@ -196,6 +201,7 @@ export default function CorpusPage() {
                       <span className="flex min-w-0 items-center gap-2">
                         <RegChip id={r} size="sm" />
                         <span className="truncate text-xs text-ink-3">{REGULATIONS[r].reference}</span>
+                        {r === 'NIS2' ? <FrameworkNote className="hidden truncate 2xl:inline" /> : null}
                       </span>
                       <span className="text-2xs text-ink-4">{group.length}</span>
                     </header>
@@ -223,7 +229,7 @@ export default function CorpusPage() {
                               </span>
                               <span className="mt-0.5 flex items-center gap-1.5 text-2xs text-ink-4">
                                 {o.shortRef ?? o.article}
-                                {!o.inScope ? <span className="text-ink-4">· hors périmètre</span> : null}
+                                {!o.inScope ? <span className="text-ink-4">· {tr('hors périmètre', 'out of scope')}</span> : null}
                               </span>
                             </button>
                           </li>
@@ -242,7 +248,8 @@ export default function CorpusPage() {
               key={selected.id}
               obligation={selected}
               recyf={recyfForObligation(selected, scoping.nis2Category)}
-              statuses={scoping.entity?.measures}
+              statuses={scoping.entity ? scoping.measureStatuses : undefined}
+              equivalence={scoping.iso.recyfEquivalence}
               openObjective={recyfParam ?? undefined}
             />
           ) : null}
@@ -258,11 +265,13 @@ function ObligationDetail({
   obligation: o,
   recyf,
   statuses,
+  equivalence,
   openObjective,
 }: {
   obligation: ScopedObligation
   recyf: ReturnType<typeof recyfForObligation>
   statuses?: Record<string, MeasureStatus>
+  equivalence?: Record<string, MeasureStatus>
   openObjective?: number
 }) {
   const reg = REGULATIONS[o.regulation]
@@ -274,21 +283,21 @@ function ObligationDetail({
       <Card>
         {/* En-tête : où l'on est, de quoi il s'agit, ce que cela pèse */}
         <div className="border-b border-rule px-6 py-5">
-          <nav aria-label="Emplacement dans le texte" className="flex flex-wrap items-center gap-1.5 text-xs text-ink-3">
+          <nav aria-label={tr('Emplacement dans le texte', 'Location in the text')} className="flex flex-wrap items-center gap-1.5 text-xs text-ink-3">
             <RegChip id={o.regulation} size="sm" />
             <ChevronRight size={12} className="text-ink-4" />
             <span className="truncate">{o.chapter}</span>
           </nav>
           <div className="mt-3 flex items-start justify-between gap-3">
             <h2 className="text-xl font-semibold tracking-tight text-ink">{o.title}</h2>
-            <NoteButton anchor={{ kind: 'obligation', id: o.id, label: `${REGULATION_SHORT[o.regulation]} · ${o.shortRef ?? o.article} — ${o.title}` }} />
+            <NoteButton anchor={{ kind: 'obligation', id: o.id, label: `${REG_LABEL[o.regulation]} · ${o.shortRef ?? o.article}${COLON}${o.title}` }} />
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <Tag>{o.article}</Tag>
             <Tag tone={binding.tone}>{binding.label}</Tag>
             <span className="inline-flex items-center gap-1.5 text-2xs text-ink-3">
-              Effort
-              <span className="flex gap-0.5" aria-label={`Effort ${o.effort} sur 5`}>
+              {tr('Effort', 'Effort')}
+              <span className="flex gap-0.5" aria-label={tr(`Effort ${o.effort} sur 5`, `Effort ${o.effort} out of 5`)}>
                 {[1, 2, 3, 4, 5].map((n) => (
                   <span key={n} className={cn('h-1.5 w-3 rounded-full', n <= o.effort ? 'bg-accent' : 'bg-overlay')} />
                 ))}
@@ -299,7 +308,7 @@ function ObligationDetail({
 
         {!o.inScope && o.unmetConditions.length > 0 ? (
           <div className="border-b border-rule px-5 py-3">
-            <Callout tone="neutral" title="Hors du périmètre de cette entité">
+            <Callout tone="neutral" title={tr('Hors du périmètre de cette entité', "Outside this entity's scope")}>
               <ul className="list-inside list-disc space-y-1">
                 {o.unmetConditions.map((c, i) => (
                   <li key={i}>{c}</li>
@@ -312,16 +321,26 @@ function ObligationDetail({
         <div className="space-y-6 px-6 py-5">
           {/* Ce qu'il faut faire */}
           <section>
-            <DetailHeading>Ce que le texte impose</DetailHeading>
+            <DetailHeading>{tr('Ce que le texte impose', 'What the text requires')}</DetailHeading>
             <p className="mt-2.5 text-base leading-relaxed text-ink">{o.statement}</p>
           </section>
 
           {/* Citation */}
-          {o.quote ? <Citation regulation={o.regulation} reference={`${reg.reference} — ${o.article}`}>{o.quote}</Citation> : null}
+          {o.quote ? <Citation regulation={o.regulation} reference={`${reg.reference}, ${o.article}`}>{o.quote}</Citation> : null}
 
-          {/* Exigences */}
+          {/* Exigences : pour NIS2, fixées par la directive et détaillées par le ReCyF */}
           <section>
-            <DetailHeading count={o.requirements.length}>Exigences élémentaires</DetailHeading>
+            <DetailHeading count={o.requirements.length + recyf.reduce((n, x) => n + x.measures.length, 0)}>
+              {recyf.length > 0 ? tr('Exigences NIS2 (ReCyF)', 'NIS2 requirements (ReCyF)') : tr('Exigences élémentaires', 'Elementary requirements')}
+            </DetailHeading>
+            {recyf.length > 0 ? (
+              <p className="mt-1.5 text-xs text-ink-3">
+                {tr(
+                  "Ce que fixe la directive, puis les mesures du ReCyF qui le détaillent. Tant que la transposition n'est pas achevée, le ReCyF est la référence opérationnelle des entités françaises.",
+                  'What the directive sets out, then the ReCyF measures that detail it. Until transposition is complete, the ReCyF is the operational reference for French entities.',
+                )}
+              </p>
+            ) : null}
             <ol className="mt-2.5 space-y-2">
               {o.requirements.map((r, i) => (
                 <li key={r.id} className="flex gap-3 border-b border-rule pb-2 last:border-0 last:pb-0">
@@ -338,33 +357,33 @@ function ObligationDetail({
             </ol>
           </section>
 
-          {recyf.length > 0 ? <RecyfPanel objectives={recyf} statuses={statuses} defaultOpen={openObjective} /> : null}
+          {recyf.length > 0 ? <RecyfPanel objectives={recyf} statuses={statuses} equivalence={equivalence} defaultOpen={openObjective ?? recyf[0]?.n} /> : null}
 
           {/* Deux colonnes : échéance / preuves */}
           <div className="grid gap-5 sm:grid-cols-2">
             <section>
-              <DetailHeading>Échéance</DetailHeading>
+              <DetailHeading>{tr('Échéance', 'Deadline')}</DetailHeading>
               <div className="mt-2.5 rounded-sm bg-sunken px-3 py-2.5">
                 <div className="text-sm font-medium text-ink">{o.deadline.label}</div>
                 {o.deadline.hours ? (
                   <div className="mt-1 font-mono text-2xs text-ink-3">
-                    Horloge la plus courte : {formatDelay(o.deadline.hours)}
+                    {tr('Horloge la plus courte', 'Shortest clock')}{COLON}{formatDelay(o.deadline.hours)}
                   </div>
                 ) : null}
                 <div className="mt-1.5 text-2xs uppercase tracking-wide text-ink-4">
                   {o.deadline.kind === 'declenchee'
-                    ? 'Déclenchée par un événement'
+                    ? tr('Déclenchée par un événement', 'Triggered by an event')
                     : o.deadline.kind === 'recurrente'
-                      ? 'Récurrente'
+                      ? tr('Récurrente', 'Recurring')
                       : o.deadline.kind === 'ponctuelle'
-                        ? 'Ponctuelle'
-                        : 'Permanente'}
+                        ? tr('Ponctuelle', 'One-off')
+                        : tr('Permanente', 'Ongoing')}
                 </div>
               </div>
             </section>
 
             <section>
-              <DetailHeading>Preuves attendues</DetailHeading>
+              <DetailHeading>{tr('Preuves attendues', 'Expected evidence')}</DetailHeading>
               <ul className="mt-2.5 space-y-1.5">
                 {o.evidence.map((e, i) => (
                   <li key={i} className="flex gap-2 text-sm text-ink-2">
@@ -379,7 +398,7 @@ function ObligationDetail({
           {/* Sanction */}
           {tier ? (
             <section>
-              <DetailHeading>Régime de sanction</DetailHeading>
+              <DetailHeading>{tr('Régime de sanction', 'Penalty regime')}</DetailHeading>
               <div className="mt-2.5 rounded-sm border border-critical-line bg-critical-wash px-3 py-2.5">
                 <div className="text-sm font-medium text-critical">{tier.label}</div>
                 <div className="ref mt-0.5 text-ink-3">{tier.basis}</div>
@@ -391,7 +410,7 @@ function ObligationDetail({
           {/* Croisements */}
           {o.themes.length > 0 ? (
             <section>
-              <DetailHeading>Croisements avec les autres textes</DetailHeading>
+              <DetailHeading>{tr('Croisements avec les autres textes', 'Crosswalk with the other texts')}</DetailHeading>
               <div className="mt-2.5 flex flex-wrap gap-1.5">
                 {o.themes.map((t) => {
                   const theme = CROSSWALK_BY_ID.get(t)
@@ -404,7 +423,7 @@ function ObligationDetail({
                       key={t}
                       content={
                         others.length > 0
-                          ? `Recoupe ${others.map((r) => (r === 'NIS2' ? 'NIS 2' : r)).join(', ')} — ${theme.unifiedAction}`
+                          ? `${tr('Recoupe', 'Overlaps')} ${others.map((r) => REG_LABEL[r]).join(', ')}${COLON}${theme.unifiedAction}`
                           : theme.summary
                       }
                     >
@@ -437,7 +456,7 @@ function ObligationDetail({
           {/* Doctrine et sources */}
           {o.guidance && o.guidance.length > 0 ? (
             <section>
-              <DetailHeading>Doctrine et textes d'application</DetailHeading>
+              <DetailHeading>{tr("Doctrine et textes d'application", 'Guidance and implementing acts')}</DetailHeading>
               <ul className="mt-2.5 space-y-1.5">
                 {o.guidance.map((g) => (
                   <li key={g.url}>
@@ -468,7 +487,7 @@ function ObligationDetail({
             className="ref inline-flex items-center gap-1.5 text-accent hover:underline"
           >
             <ExternalLink size={11} />
-            Texte officiel — {reg.reference}
+            {tr('Texte officiel', 'Official text')}{COLON}{reg.reference}
           </a>
         </div>
       </Card>
@@ -485,4 +504,3 @@ function DetailHeading({ children, count }: { children: React.ReactNode; count?:
   )
 }
 
-const REGULATION_SHORT: Record<string, string> = { RGPD: 'RGPD', NIS2: 'NIS 2', DORA: 'DORA', CRA: 'CRA' }

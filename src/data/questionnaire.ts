@@ -1,11 +1,13 @@
 import type { Answers, Question } from '@/types/domain'
+import { LANG } from '@/i18n'
+import EN_QUESTIONNAIRE from '@/i18n/en/questionnaire.json'
 
 /**
  * Questionnaire de qualification.
  *
  * Chaque question porte le fondement juridique qu'elle sert à établir. Ce
  * n'est pas un ornement : l'utilisateur doit pouvoir opposer la réponse de
- * l'outil à un juriste, et une question dont on ignore ce qu'elle établit
+ * la plateforme à un juriste, et une question dont on ignore ce qu'elle établit
  * ne mérite pas d'être posée.
  */
 
@@ -16,14 +18,14 @@ import type { Answers, Question } from '@/types/domain'
 export interface Sector {
   value: string
   label: string
-  /** Annexe de NIS 2 : I pour les secteurs hautement critiques, II pour les autres. */
+  /** Annexe de NIS2 : I pour les secteurs hautement critiques, II pour les autres. */
   nis2Annex: 'I' | 'II' | null
   /** Le secteur emporte-t-il présomption d'entité financière au sens de DORA ? */
   financial?: boolean
 }
 
 export const SECTORS: Sector[] = [
-  // Annexe I — secteurs hautement critiques
+  // Annexe I : secteurs hautement critiques
   { value: 'energie', label: 'Énergie', nis2Annex: 'I' },
   { value: 'transports', label: 'Transports', nis2Annex: 'I' },
   { value: 'banque', label: 'Secteur bancaire', nis2Annex: 'I', financial: true },
@@ -35,7 +37,7 @@ export const SECTORS: Sector[] = [
   { value: 'gestion_tic', label: 'Gestion des services TIC entre entreprises', nis2Annex: 'I' },
   { value: 'admin_publique', label: 'Administration publique', nis2Annex: 'I' },
   { value: 'espace', label: 'Espace', nis2Annex: 'I' },
-  // Annexe II — autres secteurs critiques
+  // Annexe II : autres secteurs critiques
   { value: 'poste', label: 'Services postaux et d\'expédition', nis2Annex: 'II' },
   { value: 'dechets', label: 'Gestion des déchets', nis2Annex: 'II' },
   { value: 'chimie', label: 'Fabrication, production et distribution de produits chimiques', nis2Annex: 'II' },
@@ -55,7 +57,7 @@ export const SECTORS: Sector[] = [
 export const SECTOR_BY_VALUE = new Map(SECTORS.map((s) => [s.value, s]))
 
 /**
- * Types d'entités soumises à NIS 2 quelle que soit leur taille (article 2,
+ * Types d'entités soumises à NIS2 quelle que soit leur taille (article 2,
  * paragraphe 2, et article 3, paragraphe 1, points b) et c)).
  */
 export const SIZE_INDEPENDENT_TYPES = [
@@ -121,7 +123,7 @@ export const QUESTIONS: Question[] = [
     id: 'secteur',
     section: 'identite',
     sectionLabel: "Identité de l'entité",
-    basis: 'NIS 2, annexes I et II',
+    basis: 'NIS2, annexes I et II',
     question: "Dans quel secteur l'entité exerce-t-elle son activité principale ?",
     help: "Retenez le secteur le plus réglementé si l'entité en couvre plusieurs : la qualification s'apprécie activité par activité, et la plus contraignante commande.",
     type: 'select',
@@ -148,7 +150,7 @@ export const QUESTIONS: Question[] = [
     id: 'chiffre_affaires',
     section: 'identite',
     sectionLabel: "Identité de l'entité",
-    basis: 'Recommandation 2003/361/CE — NIS 2, article 2, paragraphe 1',
+    basis: 'Recommandation 2003/361/CE ; NIS2, article 2, paragraphe 1',
     question: "Quel est le chiffre d'affaires annuel mondial de l'entité ?",
     help: "Ce montant sert deux usages distincts : établir le franchissement du seuil de taille, et valoriser l'exposition maximale aux sanctions, qui s'exprime en pourcentage du chiffre d'affaires mondial.",
     type: 'radio',
@@ -181,9 +183,9 @@ export const QUESTIONS: Question[] = [
     id: 'etablissement_ue',
     section: 'identite',
     sectionLabel: "Identité de l'entité",
-    basis: "RGPD, article 3 — NIS 2, article 26",
+    basis: "RGPD, article 3 ; NIS2, article 26",
     question: "L'entité est-elle établie dans l'Union européenne ?",
-    help: "Une entité non établie dans l'Union peut néanmoins y être soumise : au RGPD si elle cible des personnes situées dans l'Union ou suit leur comportement, à NIS 2 si elle y fournit des services relevant de la directive.",
+    help: "Une entité non établie dans l'Union peut néanmoins y être soumise : au RGPD si elle cible des personnes situées dans l'Union ou suit leur comportement, à NIS2 si elle y fournit des services relevant de la directive.",
     type: 'radio',
     options: yesNo,
     required: true,
@@ -204,7 +206,7 @@ export const QUESTIONS: Question[] = [
     id: 'etats_membres',
     section: 'identite',
     sectionLabel: "Identité de l'entité",
-    basis: 'NIS 2, article 26 — RGPD, article 56',
+    basis: 'NIS2, article 26 ; RGPD, article 56',
     question: "Dans combien d'États membres l'entité fournit-elle ses services ?",
     help: "Détermine l'autorité compétente et, pour le RGPD, l'éventuel recours au guichet unique auprès d'une autorité chef de file.",
     type: 'radio',
@@ -322,8 +324,8 @@ export const QUESTIONS: Question[] = [
     id: 'type_taille_independante',
     section: 'numerique',
     sectionLabel: 'Activité numérique et criticité',
-    basis: 'NIS 2, article 2, paragraphe 2, et article 3',
-    question: "L'entité relève-t-elle de l'un de ces types, soumis à NIS 2 quelle que soit sa taille ?",
+    basis: 'NIS2, article 2, paragraphe 2, et article 3',
+    question: "L'entité relève-t-elle de l'un de ces types, soumis à NIS2 quelle que soit sa taille ?",
     help: "Ces catégories échappent au seuil de taille. Une entité de trois personnes fournissant des services DNS est une entité essentielle.",
     type: 'multi',
     options: [
@@ -336,7 +338,7 @@ export const QUESTIONS: Question[] = [
     id: 'services_ict',
     section: 'numerique',
     sectionLabel: 'Activité numérique et criticité',
-    basis: "NIS 2, article 21, paragraphe 5 — Règlement d'exécution (UE) 2024/2690",
+    basis: "NIS2, article 21, paragraphe 5 ; règlement d'exécution (UE) 2024/2690",
     question: "L'entité fournit-elle des services numériques à d'autres organisations ?",
     help: "Informatique en nuage, centres de données, diffusion de contenu, services gérés ou de sécurité gérés, places de marché, moteurs de recherche, réseaux sociaux.",
     type: 'radio',
@@ -359,7 +361,7 @@ export const QUESTIONS: Question[] = [
     id: 'criticite_service',
     section: 'numerique',
     sectionLabel: 'Activité numérique et criticité',
-    basis: 'NIS 2, article 2, paragraphe 2, points b) à e)',
+    basis: 'NIS2, article 2, paragraphe 2, points b) à e)',
     question: "Une interruption des services de l'entité aurait-elle des conséquences au-delà de l'entité elle-même ?",
     help: "Un État membre peut identifier comme entité essentielle ou importante, sans condition de taille, une entité dont la perturbation aurait un impact significatif sur la sécurité publique, la sûreté publique ou la santé publique, ou pourrait induire un risque systémique.",
     type: 'radio',
@@ -375,9 +377,9 @@ export const QUESTIONS: Question[] = [
     id: 'entite_critique',
     section: 'numerique',
     sectionLabel: 'Activité numérique et criticité',
-    basis: 'NIS 2, article 3, paragraphe 1, point f)',
+    basis: 'NIS2, article 3, paragraphe 1, point f)',
     question: "L'entité a-t-elle été désignée entité critique, ou opérateur d'importance vitale ?",
-    help: "Une entité désignée critique par l'État est de plein droit entité essentielle au sens de NIS 2, quelle que soit sa taille. En France, la désignation comme opérateur d'importance vitale préfigure ce statut.",
+    help: "Une entité désignée critique par l'État est de plein droit entité essentielle au sens de NIS2, quelle que soit sa taille. En France, la désignation comme opérateur d'importance vitale préfigure ce statut.",
     type: 'radio',
     options: [
       { value: 'oui', label: 'Oui' },
@@ -474,7 +476,7 @@ export const QUESTIONS: Question[] = [
   },
 
   // -------------------------------------------------------------------------
-  // 5. Produits numériques — CRA
+  // 5. Produits numériques (CRA)
   // -------------------------------------------------------------------------
   {
     id: 'cra_roles',
@@ -482,7 +484,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: 'Produits numériques',
     basis: 'CRA, articles 3, 13, 19 et 20',
     question: "L'entité met-elle sur le marché de l'Union des produits comportant des éléments numériques ?",
-    help: "Logiciel vendu ou distribué, application, objet connecté, équipement réseau, micrologiciel. Le CRA vise le produit, pas le service : une offre purement en nuage relève de NIS 2. Un logiciel libre fourni hors de toute activité commerciale n'est pas concerné.",
+    help: "Logiciel vendu ou distribué, application, objet connecté, équipement réseau, micrologiciel. Le CRA vise le produit, pas le service : une offre purement en nuage relève de NIS2. Un logiciel libre fourni hors de toute activité commerciale n'est pas concerné.",
     type: 'multi',
     options: [
       { value: 'fabricant', label: 'Oui, en tant que fabricant', hint: "Conçoit ou fait fabriquer le produit, et le commercialise sous son nom ou sa marque" },
@@ -496,12 +498,12 @@ export const QUESTIONS: Question[] = [
     id: 'cra_categorie',
     section: 'produits',
     sectionLabel: 'Produits numériques',
-    basis: "CRA, annexes III et IV — Règlement d'exécution (UE) 2025/2392",
+    basis: "CRA, annexes III et IV ; règlement d'exécution (UE) 2025/2392",
     question: 'Quelle est la catégorie la plus élevée parmi les produits fabriqués ?',
     help: "La catégorie fixe la procédure d'évaluation de la conformité : autoévaluation pour les produits par défaut, norme harmonisée ou tierce partie pour la classe I, tierce partie obligatoire pour la classe II, certification européenne pour les produits critiques.",
     type: 'radio',
     options: [
-      { value: 'defaut', label: 'Produit par défaut', hint: 'Environ 90 % des produits — autoévaluation' },
+      { value: 'defaut', label: 'Produit par défaut', hint: 'Environ 90 % des produits, autoévaluation' },
       { value: 'classe_i', label: 'Produit important de classe I', hint: 'Gestionnaire de mots de passe, navigateur, système d\'exploitation, routeur…' },
       { value: 'classe_ii', label: 'Produit important de classe II', hint: 'Hyperviseur, pare-feu, système de détection d\'intrusion…' },
       { value: 'critique', label: 'Produit critique', hint: 'Passerelle de compteur intelligent, carte à puce, élément sécurisé' },
@@ -527,13 +529,121 @@ export const QUESTIONS: Question[] = [
   },
 
   // -------------------------------------------------------------------------
-  // 6. État des lieux
+  // 6. Intelligence artificielle
+  // -------------------------------------------------------------------------
+  {
+    id: 'ia_roles',
+    section: 'ia',
+    sectionLabel: 'Intelligence artificielle',
+    basis: 'AI Act, article 2 et article 3, points 3, 4, 6 et 7',
+    question: "L'entité développe-t-elle, met-elle sur le marché ou utilise-t-elle des systèmes d'intelligence artificielle ?",
+    help: "Un système d'IA infère, à partir des entrées qu'il reçoit, la manière de générer des prédictions, du contenu, des recommandations ou des décisions (art. 3, point 1). Un outil d'IA générative utilisé par les équipes, un module de tri de candidatures ou un agent conversationnel en relèvent. L'usage purement personnel et non professionnel est exclu.",
+    type: 'multi',
+    options: [
+      { value: 'fournisseur', label: 'Oui, en tant que fournisseur', hint: "Développe ou fait développer un système ou un modèle d'IA et le met sur le marché ou en service sous son nom ou sa marque" },
+      { value: 'deployeur', label: 'Oui, en tant que déployeur', hint: "Utilise sous son autorité un système d'IA dans un cadre professionnel" },
+      { value: 'importateur', label: 'Oui, en tant qu\'importateur ou distributeur', hint: "Met à disposition dans l'Union un système d'IA d'un fournisseur tiers" },
+      { value: 'aucun', label: "Non, aucun système d'IA" },
+    ],
+    required: true,
+  },
+  {
+    id: 'ia_pratiques',
+    section: 'ia',
+    sectionLabel: 'Intelligence artificielle',
+    basis: 'AI Act, article 5',
+    question: "Un des usages de l'IA relève-t-il d'une pratique interdite ?",
+    help: "Notation sociale, exploitation des vulnérabilités, manipulation subliminale, prédiction d'infraction fondée sur le seul profilage, moissonnage non ciblé d'images faciales, reconnaissance des émotions au travail ou à l'école, catégorisation biométrique sur des données sensibles, identification biométrique à distance en temps réel à des fins répressives. Ces interdictions s'appliquent depuis le 2 février 2025.",
+    type: 'radio',
+    options: [
+      { value: 'non', label: 'Non' },
+      { value: 'incertain', label: 'À vérifier' },
+      { value: 'oui', label: 'Oui, au moins un usage' },
+    ],
+    required: true,
+    showIf: (a) => Array.isArray(a.ia_roles) && a.ia_roles.some((r) => r !== 'aucun'),
+  },
+  {
+    id: 'ia_haut_risque',
+    section: 'ia',
+    sectionLabel: 'Intelligence artificielle',
+    basis: 'AI Act, article 6 et annexes I et III',
+    question: "Les systèmes d'IA sont-ils utilisés ou fournis dans l'un de ces domaines ?",
+    help: "Ces domaines font présumer un système à haut risque. Les obligations correspondantes s'appliquent au 2 décembre 2027 pour l'annexe III et au 2 août 2028 pour l'annexe I, depuis l'Omnibus IA.",
+    type: 'multi',
+    options: [
+      { value: 'biometrie', label: 'Biométrie', hint: 'Identification à distance, catégorisation biométrique, reconnaissance des émotions' },
+      { value: 'infrastructures', label: 'Infrastructures critiques', hint: "Composant de sécurité de la gestion du trafic, de l'eau, du gaz, du chauffage, de l'électricité ou des infrastructures numériques critiques" },
+      { value: 'education', label: 'Éducation et formation', hint: 'Admission, évaluation des acquis, surveillance des examens' },
+      { value: 'emploi', label: 'Emploi et gestion du personnel', hint: 'Recrutement, tri de candidatures, promotion, licenciement, attribution des tâches, évaluation' },
+      { value: 'services_essentiels', label: 'Accès aux services essentiels', hint: "Solvabilité et note de crédit, tarification d'assurance vie et santé, prestations publiques, appels d'urgence" },
+      { value: 'autorites', label: 'Répression, migration, justice ou processus démocratiques' },
+      { value: 'produit', label: 'Composant de sécurité d\'un produit réglementé', hint: 'Machines, jouets, dispositifs médicaux, ascenseurs, équipements radio… (annexe I)' },
+      { value: 'aucun', label: 'Aucun de ces domaines' },
+    ],
+    required: true,
+    showIf: (a) => Array.isArray(a.ia_roles) && a.ia_roles.some((r) => r !== 'aucun'),
+  },
+  {
+    id: 'ia_derogation',
+    section: 'ia',
+    sectionLabel: 'Intelligence artificielle',
+    basis: 'AI Act, article 6, paragraphe 3',
+    question: "Le système se limite-t-il à une tâche procédurale étroite ou préparatoire, sans influence significative sur la décision ?",
+    help: "Un système de l'annexe III n'est pas à haut risque s'il ne présente pas de risque important pour la santé, la sécurité ou les droits fondamentaux. Cette dérogation ne vaut jamais pour un système qui effectue un profilage de personnes physiques, et le fournisseur qui l'invoque doit documenter son appréciation et enregistrer le système.",
+    type: 'radio',
+    options: [
+      { value: 'non', label: 'Non, il influence la décision' },
+      { value: 'incertain', label: 'Incertain' },
+      { value: 'oui', label: 'Oui, tâche étroite ou préparatoire, sans profilage' },
+    ],
+    required: true,
+    showIf: (a) =>
+      Array.isArray(a.ia_haut_risque) && a.ia_haut_risque.some((v) => v !== 'aucun' && v !== 'produit'),
+  },
+  {
+    id: 'ia_transparence',
+    section: 'ia',
+    sectionLabel: 'Intelligence artificielle',
+    basis: 'AI Act, article 50',
+    question: "Les systèmes d'IA donnent-ils lieu à l'un de ces usages ?",
+    help: "Ces usages emportent des obligations de transparence envers les personnes, applicables depuis le 2 août 2026, quel que soit le niveau de risque du système.",
+    type: 'multi',
+    options: [
+      { value: 'interaction', label: 'Interaction directe avec des personnes', hint: 'Agent conversationnel, assistant vocal' },
+      { value: 'generation', label: 'Génération de contenus de synthèse', hint: 'Texte, image, son ou vidéo produits par le système' },
+      { value: 'hypertrucage', label: "Hypertrucage ou texte publié pour informer le public" },
+      { value: 'emotions', label: 'Reconnaissance des émotions ou catégorisation biométrique' },
+      { value: 'aucun', label: 'Aucun de ces usages' },
+    ],
+    required: true,
+    showIf: (a) => Array.isArray(a.ia_roles) && a.ia_roles.some((r) => r !== 'aucun'),
+  },
+  {
+    id: 'ia_gpai',
+    section: 'ia',
+    sectionLabel: 'Intelligence artificielle',
+    basis: 'AI Act, articles 51 à 55',
+    question: "L'entité met-elle sur le marché de l'Union un modèle d'IA à usage général ?",
+    help: "Un modèle entraîné sur un grand volume de données, capable d'exécuter un large éventail de tâches et intégrable dans des systèmes en aval. Le seuil de risque systémique est présumé atteint au-delà de 10^25 opérations en virgule flottante de calcul d'entraînement. Intégrer le modèle d'un tiers dans son produit ne fait pas de l'entité un fournisseur de modèle.",
+    type: 'radio',
+    options: [
+      { value: 'non', label: 'Non' },
+      { value: 'oui', label: 'Oui' },
+      { value: 'systemique', label: 'Oui, présentant un risque systémique' },
+    ],
+    required: true,
+    showIf: (a) => Array.isArray(a.ia_roles) && a.ia_roles.includes('fournisseur'),
+  },
+
+  // -------------------------------------------------------------------------
+  // 7. État des lieux
   // -------------------------------------------------------------------------
   {
     id: 'incidents_recents',
     section: 'etat',
     sectionLabel: 'État des lieux',
-    basis: "Élément de contexte — n'entre pas dans la qualification",
+    basis: "Élément de contexte, sans effet sur la qualification",
     question: "L'entité a-t-elle subi un incident de sécurité significatif au cours des deux dernières années ?",
     help: "Sans effet sur la qualification juridique, mais pertinent pour la priorisation : un antécédent récent accroît la probabilité d'un contrôle et la sévérité de son appréciation.",
     type: 'radio',
@@ -544,30 +654,16 @@ export const QUESTIONS: Question[] = [
     ],
     required: true,
   },
-  {
-    id: 'certification',
-    section: 'etat',
-    sectionLabel: 'État des lieux',
-    basis: "ReCyF — opposabilité des certifications",
-    question: "L'entité détient-elle une certification de son système de management de la sécurité de l'information ?",
-    help: "Une certification ISO/CEI 27001:2022 est opposable lors d'un contrôle ANSSI pour démontrer l'atteinte des objectifs 2 et 16 du ReCyF, sur le périmètre couvert.",
-    type: 'radio',
-    options: [
-      { value: 'iso27001', label: 'Oui, ISO/CEI 27001 en cours de validité' },
-      { value: 'demarche', label: 'Démarche engagée, non certifiée' },
-      { value: 'non', label: 'Non' },
-    ],
-    required: true,
-  },
 ]
 
 export const QUESTION_SECTIONS = [
-  { id: 'identite', label: "Identité de l'entité", hint: "Secteur, taille et implantation — ces trois éléments commandent l'essentiel de la qualification." },
+  { id: 'identite', label: "Identité de l'entité", hint: "Secteur, taille et implantation : ces trois éléments commandent l'essentiel de la qualification." },
   { id: 'donnees', label: 'Données à caractère personnel', hint: "Champ d'application du RGPD et intensité des obligations." },
-  { id: 'numerique', label: 'Activité numérique et criticité', hint: "Champ d'application de NIS 2, y compris les cas où la taille est indifférente." },
-  { id: 'financier', label: 'Secteur financier', hint: "Champ d'application de DORA et articulation avec NIS 2." },
+  { id: 'numerique', label: 'Activité numérique et criticité', hint: "Champ d'application de NIS2, y compris les cas où la taille est indifférente." },
+  { id: 'financier', label: 'Secteur financier', hint: "Champ d'application de DORA et articulation avec NIS2." },
   { id: 'produits', label: 'Produits numériques', hint: "Champ d'application du CRA : produits matériels et logiciels mis sur le marché de l'Union." },
-  { id: 'etat', label: 'État des lieux', hint: "Éléments de contexte utilisés pour la priorisation, non pour la qualification." },
+  { id: 'ia', label: 'Intelligence artificielle', hint: "Champ d'application de l'AI Act : rôle de l'entité, niveau de risque des systèmes et obligations de transparence." },
+  { id: 'etat', label: 'État des lieux', hint: "Élément de contexte utilisé pour la priorisation, non pour la qualification." },
 ]
 
 /** Questions effectivement posées compte tenu des réponses déjà données. */
@@ -584,3 +680,51 @@ export function isComplete(answers: Answers): boolean {
       return v !== undefined && v !== null && v !== ''
     })
 }
+
+// ---------------------------------------------------------------------------
+// Interface en anglais
+// ---------------------------------------------------------------------------
+
+/**
+ * La langue est fixée au chargement : les libellés sont remplacés une fois,
+ * avant tout usage, sans toucher aux valeurs qui portent le raisonnement.
+ */
+function applyEnglish() {
+  const en = EN_QUESTIONNAIRE as unknown as {
+    sections: Record<string, [string, string]>
+    sectors: Record<string, string>
+    size: Record<string, string>
+    digital: Record<string, string>
+    fin: Record<string, string>
+    yesNo: Record<string, string>
+    questions: Record<string, { basis?: string; question?: string; help?: string; options?: Record<string, [string, string?]> }>
+  }
+  for (const s of SECTORS) s.label = en.sectors[s.value] ?? s.label
+  for (const t of SIZE_INDEPENDENT_TYPES) t.label = en.size[t.value] ?? t.label
+  for (const t of DIGITAL_PROVIDER_TYPES) t.label = en.digital[t.value] ?? t.label
+  for (const t of FINANCIAL_TYPES) t.label = en.fin[t.value] ?? t.label
+  for (const s of QUESTION_SECTIONS) {
+    const t = en.sections[s.id]
+    if (t) [s.label, s.hint] = t
+  }
+  // Listes de référence dont les options sont des copies : secteurs et types hors taille.
+  const listFor: Record<string, Record<string, string>> = { secteur: en.sectors, type_taille_independante: en.size }
+  for (const q of QUESTIONS) {
+    const t = en.questions[q.id]
+    q.sectionLabel = en.sections[q.section]?.[0] ?? q.sectionLabel
+    if (!t) continue
+    if (t.basis) q.basis = t.basis
+    if (t.question) q.question = t.question
+    if (t.help) q.help = t.help
+    for (const o of q.options ?? []) {
+      const own = t.options?.[o.value]
+      if (own) {
+        o.label = own[0]
+        if (own[1]) o.hint = own[1]
+      } else if (listFor[q.id]?.[o.value]) o.label = listFor[q.id][o.value]
+      else if (en.yesNo[o.value] && (o.label === 'Oui' || o.label === 'Non')) o.label = en.yesNo[o.value]
+    }
+  }
+}
+
+if (LANG === 'en') applyEnglish()

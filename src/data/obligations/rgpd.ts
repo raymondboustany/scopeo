@@ -6,7 +6,7 @@ const CNIL = (label: string, url: string) => ({ label, issuer: 'CNIL', url })
 const CEPD = (label: string, url: string) => ({ label, issuer: 'CEPD', url })
 
 /**
- * Obligations RGPD — Règlement (UE) 2016/679.
+ * Obligations RGPD : Règlement (UE) 2016/679.
  * Les citations sont reprises littéralement du texte publié au JO L 119.
  */
 export const RGPD_OBLIGATIONS: Obligation[] = [
@@ -15,10 +15,10 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 5',
     order: 5,
-    chapter: 'Chapitre II — Principes',
+    chapter: 'Chapitre II : Principes',
     title: 'Principes relatifs au traitement des données',
     statement:
-      "Fonder chaque traitement sur les six principes cardinaux et être en mesure de démontrer leur respect à tout moment. Ce dernier point — la responsabilité — transforme un principe en charge de preuve : ce n'est pas au régulateur d'établir le manquement, c'est à l'organisation d'établir sa conformité.",
+      "Fonder chaque traitement sur les six principes cardinaux et être en mesure de démontrer leur respect à tout moment. Ce dernier point, la responsabilité, transforme un principe en charge de preuve : ce n'est pas au régulateur d'établir le manquement, c'est à l'organisation d'établir sa conformité.",
     quote:
       "Le responsable du traitement est responsable du respect du paragraphe 1 et est en mesure de démontrer que celui-ci est respecté (responsabilité).",
     appliesTo: ['Responsable de traitement', 'Sous-traitant'],
@@ -40,7 +40,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     sanctionTier: 'RGPD-T2',
     effort: 4,
     binding: 'obligatoire',
-    themes: ['DON-01', 'GOV-01', 'DOC-01'],
+    themes: ['DON-01', 'GOV-01', 'DOC-01', 'IA-05'],
     sourceUrl: URL,
     guidance: [CNIL('Les principes clés de la protection des données', 'https://www.cnil.fr/fr/les-principes-cles')],
   },
@@ -49,7 +49,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 6',
     order: 6,
-    chapter: 'Chapitre II — Principes',
+    chapter: 'Chapitre II : Principes',
     title: 'Licéité du traitement',
     statement:
       "Identifier, pour chaque traitement, une base juridique parmi les six prévues, la documenter et l'appliquer de manière cohérente. Une base ne peut être changée en cours de traitement pour régulariser après coup.",
@@ -66,7 +66,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     sanctionTier: 'RGPD-T2',
     effort: 3,
     binding: 'obligatoire',
-    themes: ['DON-01', 'DOC-02'],
+    themes: ['DON-01', 'DOC-02', 'IA-05'],
     sourceUrl: URL,
   },
   {
@@ -74,7 +74,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 7',
     order: 7,
-    chapter: 'Chapitre II — Principes',
+    chapter: 'Chapitre II : Principes',
     title: 'Conditions applicables au consentement',
     statement:
       "Lorsque le traitement repose sur le consentement, être en mesure de démontrer que la personne a consenti, présenter la demande de manière distincte et intelligible, et permettre un retrait aussi simple que le recueil.",
@@ -98,7 +98,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 9',
     order: 9,
-    chapter: 'Chapitre II — Principes',
+    chapter: 'Chapitre II : Principes',
     title: 'Traitement de catégories particulières de données',
     statement:
       "Le traitement des données sensibles est interdit par principe. Il ne devient possible qu'au titre d'une des dix exceptions limitativement énumérées, qui doit être identifiée et documentée en plus de la base juridique de l'article 6.",
@@ -113,7 +113,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     sanctionTier: 'RGPD-T2',
     effort: 3,
     binding: 'conditionnelle',
-    themes: ['DON-01', 'RSK-02'],
+    themes: ['DON-01', 'RSK-02', 'IA-02'],
     conditions: [{ key: 'donnees_sensibles', op: 'eq', value: 'oui', label: 'Traitement de données sensibles' }],
     sourceUrl: URL,
   },
@@ -122,7 +122,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 12 à 14',
     order: 12,
-    chapter: 'Chapitre III — Droits de la personne concernée',
+    chapter: 'Chapitre III : Droits de la personne concernée',
     title: 'Transparence et information des personnes',
     statement:
       "Informer les personnes, au moment de la collecte ou dans le mois qui suit lorsque les données sont obtenues indirectement, au moyen d'une information concise, transparente, compréhensible et aisément accessible.",
@@ -137,7 +137,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     sanctionTier: 'RGPD-T2',
     effort: 2,
     binding: 'obligatoire',
-    themes: ['DON-02', 'DOC-01'],
+    themes: ['DON-02', 'DOC-01', 'IA-03'],
     sourceUrl: URL,
   },
   {
@@ -145,7 +145,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 15 à 22',
     order: 15,
-    chapter: 'Chapitre III — Droits de la personne concernée',
+    chapter: 'Chapitre III : Droits de la personne concernée',
     title: 'Exercice des droits des personnes',
     statement:
       "Mettre en place une procédure permettant de répondre aux demandes d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition dans un délai d'un mois, prorogeable de deux mois pour les demandes complexes.",
@@ -162,7 +162,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     sanctionTier: 'RGPD-T2',
     effort: 3,
     binding: 'obligatoire',
-    themes: ['DON-02'],
+    themes: ['DON-02', 'IA-04'],
     sourceUrl: URL,
     guidance: [CNIL("Répondre à une demande de droit d'accès", 'https://www.cnil.fr/fr/le-droit-dacces')],
   },
@@ -171,7 +171,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 24',
     order: 24,
-    chapter: 'Chapitre IV — Responsable du traitement et sous-traitant',
+    chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: 'Responsabilité du responsable du traitement',
     statement:
       "Mettre en œuvre des mesures techniques et organisationnelles appropriées pour garantir et démontrer la conformité, et les réexaminer et actualiser si nécessaire. C'est le socle de gouvernance dont découlent le registre, les analyses d'impact et les politiques internes.",
@@ -196,10 +196,10 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 25',
     order: 25,
-    chapter: 'Chapitre IV — Responsable du traitement et sous-traitant',
+    chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: 'Protection des données dès la conception et par défaut',
     statement:
-      "Intégrer les garanties de protection des données dès la conception des traitements, et garantir que, par défaut, seules les données nécessaires à chaque finalité sont traitées — en volume, en étendue, en durée de conservation et en accessibilité.",
+      "Intégrer les garanties de protection des données dès la conception des traitements, et garantir que, par défaut, seules les données nécessaires à chaque finalité sont traitées, en volume, en étendue, en durée de conservation et en accessibilité.",
     appliesTo: ['Responsable de traitement'],
     requirements: [
       { id: 'RGPD-A25-R1', text: "Intégrer un point de contrôle protection des données dans le cycle de vie projet.", type: 'organisationnel' },
@@ -219,7 +219,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 26',
     order: 26,
-    chapter: 'Chapitre IV — Responsable du traitement et sous-traitant',
+    chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: 'Responsables conjoints du traitement',
     statement:
       "Lorsque deux entités déterminent conjointement les finalités et les moyens, définir par accord la répartition des obligations, notamment l'exercice des droits et l'information des personnes, et en mettre les grandes lignes à disposition des personnes concernées.",
@@ -242,7 +242,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 27',
     order: 27,
-    chapter: 'Chapitre IV — Responsable du traitement et sous-traitant',
+    chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: "Représentant des organismes non établis dans l'Union",
     statement:
       "Une organisation non établie dans l'Union mais soumise au règlement au titre de l'article 3.2 doit désigner par écrit un représentant dans l'Union, dans l'un des États membres où se trouvent les personnes concernées.",
@@ -265,7 +265,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 28',
     order: 28,
-    chapter: 'Chapitre IV — Responsable du traitement et sous-traitant',
+    chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: 'Encadrement contractuel de la sous-traitance',
     statement:
       "Ne recourir qu'à des sous-traitants présentant des garanties suffisantes, et régir la relation par un contrat écrit comportant les huit mentions obligatoires de l'article 28.3. L'absence de ces clauses est l'un des manquements les plus fréquemment relevés en contrôle.",
@@ -292,7 +292,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 30',
     order: 30,
-    chapter: 'Chapitre IV — Responsable du traitement et sous-traitant',
+    chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: 'Registre des activités de traitement',
     statement:
       "Tenir un registre écrit de toutes les activités de traitement, et le mettre à disposition de l'autorité de contrôle sur demande. La dispense pour les organisations de moins de 250 salariés est en pratique inopérante dès qu'il existe un risque, un traitement non occasionnel ou des données sensibles.",
@@ -308,7 +308,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     sanctionTier: 'RGPD-T1',
     effort: 3,
     binding: 'obligatoire',
-    themes: ['DOC-02'],
+    themes: ['DOC-02', 'IA-01'],
     sourceUrl: URL,
     guidance: [CNIL('Le registre des activités de traitement', 'https://www.cnil.fr/fr/RGPD-le-registre-des-activites-de-traitement')],
   },
@@ -317,10 +317,10 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 32',
     order: 32,
-    chapter: 'Chapitre IV — Section 2 — Sécurité',
+    chapter: 'Chapitre IV : Section 2 : Sécurité',
     title: 'Sécurité du traitement',
     statement:
-      "Mettre en œuvre des mesures techniques et organisationnelles garantissant un niveau de sécurité adapté au risque, et disposer d'une procédure permettant d'en tester et d'en évaluer régulièrement l'efficacité. C'est l'article qui recoupe le plus directement NIS 2 et DORA.",
+      "Mettre en œuvre des mesures techniques et organisationnelles garantissant un niveau de sécurité adapté au risque, et disposer d'une procédure permettant d'en tester et d'en évaluer régulièrement l'efficacité. C'est l'article qui recoupe le plus directement NIS2 et DORA.",
     quote:
       "Compte tenu de l'état des connaissances, des coûts de mise en œuvre et de la nature, de la portée, du contexte et des finalités du traitement ainsi que des risques [...] le responsable du traitement et le sous-traitant mettent en œuvre les mesures techniques et organisationnelles appropriées afin de garantir un niveau de sécurité adapté au risque.",
     appliesTo: ['Responsable de traitement', 'Sous-traitant'],
@@ -345,7 +345,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 33',
     order: 33,
-    chapter: 'Chapitre IV — Section 2 — Sécurité',
+    chapter: 'Chapitre IV : Section 2 : Sécurité',
     title: "Notification d'une violation à l'autorité de contrôle",
     statement:
       "Notifier à l'autorité de contrôle toute violation de données personnelles dans les 72 heures après en avoir pris connaissance, sauf si la violation est peu susceptible d'engendrer un risque pour les droits et libertés. Toute violation, notifiée ou non, doit être documentée en interne.",
@@ -372,7 +372,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 34',
     order: 34,
-    chapter: 'Chapitre IV — Section 2 — Sécurité',
+    chapter: 'Chapitre IV : Section 2 : Sécurité',
     title: 'Communication de la violation aux personnes concernées',
     statement:
       "Lorsque la violation est susceptible d'engendrer un risque élevé pour les droits et libertés, informer les personnes concernées dans les meilleurs délais, en termes clairs et simples. Le chiffrement rendant les données incompréhensibles dispense de cette communication.",
@@ -395,7 +395,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 35',
     order: 35,
-    chapter: 'Chapitre IV — Section 3 — Analyse d\'impact',
+    chapter: 'Chapitre IV : Section 3 : Analyse d\'impact',
     title: "Analyse d'impact relative à la protection des données",
     statement:
       "Réaliser une analyse d'impact avant tout traitement susceptible d'engendrer un risque élevé, notamment en cas d'évaluation systématique, de traitement à grande échelle de données sensibles, ou de surveillance systématique à grande échelle d'une zone accessible au public.",
@@ -420,7 +420,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 36',
     order: 36,
-    chapter: 'Chapitre IV — Section 3 — Analyse d\'impact',
+    chapter: 'Chapitre IV : Section 3 : Analyse d\'impact',
     title: 'Consultation préalable de l\'autorité de contrôle',
     statement:
       "Lorsque l'analyse d'impact conclut à un risque élevé résiduel que le responsable ne peut atténuer, consulter l'autorité de contrôle avant de démarrer le traitement. L'autorité dispose de huit semaines, prorogeables de six.",
@@ -442,7 +442,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 37 à 39',
     order: 37,
-    chapter: 'Chapitre IV — Section 4 — Délégué à la protection des données',
+    chapter: 'Chapitre IV : Section 4 : Délégué à la protection des données',
     title: 'Désignation et mission du délégué à la protection des données',
     statement:
       "Désigner un délégué lorsque l'organisation est une autorité publique, ou que ses activités de base impliquent un suivi régulier et systématique à grande échelle, ou un traitement à grande échelle de données sensibles. Le délégué doit être associé à toutes les questions de protection des données et ne recevoir aucune instruction sur l'exercice de ses missions.",
@@ -466,7 +466,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 40 à 43',
     order: 40,
-    chapter: 'Chapitre IV — Section 5 — Codes de conduite et certification',
+    chapter: 'Chapitre IV : Section 5 : Codes de conduite et certification',
     title: 'Codes de conduite et certification',
     statement:
       "L'adhésion à un code de conduite approuvé ou l'obtention d'une certification agréée constitue un élément permettant de démontrer le respect des obligations. Ces dispositifs sont facultatifs mais opposables en contrôle.",
@@ -488,7 +488,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 44 à 49',
     order: 44,
-    chapter: 'Chapitre V — Transferts vers des pays tiers',
+    chapter: 'Chapitre V : Transferts vers des pays tiers',
     title: 'Encadrement des transferts hors Union européenne',
     statement:
       "Ne transférer des données hors de l'Union que sur le fondement d'une décision d'adéquation, de garanties appropriées, ou à défaut d'une dérogation de l'article 49. Depuis l'arrêt Schrems II, les garanties appropriées doivent être complétées d'une analyse d'impact du transfert.",
@@ -514,7 +514,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 83',
     order: 83,
-    chapter: 'Chapitre VIII — Voies de recours et sanctions',
+    chapter: 'Chapitre VIII : Voies de recours et sanctions',
     title: 'Conditions générales des amendes administratives',
     statement:
       "Connaître les deux paliers de sanction et les onze critères de modulation, afin d'apprécier l'exposition réelle. Les mesures de sécurité, la coopération avec l'autorité et l'existence de certifications sont expressément retenues comme circonstances atténuantes.",

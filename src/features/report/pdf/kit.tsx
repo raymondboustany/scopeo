@@ -4,6 +4,7 @@ import { Circle, Font, Line, Page, Path, StyleSheet, Svg, Text, View } from '@re
 import type { Style } from '@react-pdf/types'
 import type { CoverageLevel, RegulationId } from '@/types/domain'
 import type { Distribution } from '../reportData'
+import { LOCALE, tr } from '@/i18n'
 
 /**
  * Boîte à outils des rapports PDF.
@@ -52,25 +53,27 @@ export function clean(s: string | null | undefined): string {
 }
 
 export const eur = (n: number) => {
+  const en = LOCALE === 'en-GB'
   if (n >= 1_000_000) {
     const m = n / 1_000_000
-    return `${m.toLocaleString('fr-FR', { maximumFractionDigits: m < 10 ? 1 : 0 }).replace(/[\u202f\u00a0]/g, ' ')} M€`
+    const v = m.toLocaleString(LOCALE, { maximumFractionDigits: m < 10 ? 1 : 0 }).replace(/[\u202f\u00a0]/g, ' ')
+    return en ? `€${v}M` : `${v} M€`
   }
-  return `${Math.round(n / 1000)} k€`
+  return en ? `€${Math.round(n / 1000)}k` : `${Math.round(n / 1000)} k€`
 }
 /** Ligne de méta d'ouverture : qui, pour qui, quand. */
 export function missionMeta(profile: { mode?: string; legalName?: string; siren?: string; lead?: string; sponsor?: string }, entityName: string): string[] {
   const out: string[] = []
   if (profile.legalName && profile.legalName !== entityName) out.push(profile.legalName)
   if (profile.siren) out.push(`SIREN ${profile.siren}`)
-  if (profile.lead) out.push(`${profile.mode === 'interne' ? 'Piloté par' : 'Établi par'} ${profile.lead}`)
-  if (profile.sponsor) out.push(`À l'attention de ${profile.sponsor}`)
+  if (profile.lead) out.push(`${profile.mode === 'interne' ? tr('Piloté par', 'Led by') : tr('Établi par', 'Prepared by')} ${profile.lead}`)
+  if (profile.sponsor) out.push(`${tr("À l'attention de", 'For the attention of')} ${profile.sponsor}`)
   return out
 }
 
-export const pct = (r: number) => `${Math.round(r * 100)} %`
+export const pct = (r: number) => (LOCALE === 'en-GB' ? `${Math.round(r * 100)}%` : `${Math.round(r * 100)} %`)
 export const dateFr = (d: Date | string) =>
-  new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  new Date(d).toLocaleDateString(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' })
 
 // ---------------------------------------------------------------------------
 // Palette imprimée
@@ -91,10 +94,15 @@ export const C = {
   neutral: '#D6D9DF',
 }
 
-export const REG_HEX: Record<RegulationId, string> = { RGPD: '#3D68BF', NIS2: '#008C99', DORA: '#946F00', CRA: '#9C2F63' }
-export const REG_NAME: Record<RegulationId, string> = { RGPD: 'RGPD', NIS2: 'NIS 2', DORA: 'DORA', CRA: 'CRA' }
+export const REG_HEX: Record<RegulationId, string> = { RGPD: '#3D68BF', NIS2: '#008C99', DORA: '#946F00', CRA: '#9C2F63', AIACT: '#4F7A1F' }
+export const REG_NAME: Record<RegulationId, string> = { RGPD: tr('RGPD', 'GDPR'), NIS2: 'NIS2 (ReCyF)', DORA: 'DORA', CRA: 'CRA', AIACT: 'AI Act' }
 export const LEVEL_HEX: Record<CoverageLevel, string> = { en_place: C.positive, partiel: C.caution, absent: C.critical, non_evalue: C.neutral }
-export const LEVEL_LABEL: Record<CoverageLevel, string> = { en_place: 'En place', partiel: 'Partiel', absent: 'Absent', non_evalue: 'Non évalué' }
+export const LEVEL_LABEL: Record<CoverageLevel, string> = {
+  en_place: tr('En place', 'In place'),
+  partiel: tr('Partiel', 'Partial'),
+  absent: tr('Absent', 'Missing'),
+  non_evalue: tr('Non évalué', 'Not assessed'),
+}
 
 export const S = StyleSheet.create({
   page: { paddingTop: 54, paddingBottom: 52, paddingHorizontal: 44, fontFamily: 'Helvetica', fontSize: 8.8, color: C.ink },
@@ -131,7 +139,7 @@ export function ReportPage({ title, entity, children }: { title: string; entity:
       {children}
       <View fixed style={{ position: 'absolute', top: PAGE_H - 34, left: 44, right: 44, flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 0.6, borderTopColor: C.rule, paddingTop: 5 }}>
         <Text style={[S.small, S.muted, { fontSize: 6.8 }]}>
-          {clean("Scopeo · Outil d'aide au cadrage, pas un avis juridique.")}
+          {clean(tr("Scopeo · Plateforme d'aide au cadrage, pas un avis juridique.", 'Scopeo · A scoping aid, not legal advice.'))}
         </Text>
         <Text style={[S.small, S.muted, { fontSize: 6.8 }]} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
       </View>
@@ -162,9 +170,10 @@ export function DocHeader({ kind, title, entity, meta }: { kind: string; title: 
 export function BrandMark({ size = 16 }: { size?: number }) {
   const nodes = [
     { x: 12, y: 6.5, c: REG_HEX.RGPD },
-    { x: 17.5, y: 12, c: REG_HEX.NIS2 },
-    { x: 12, y: 17.5, c: REG_HEX.DORA },
-    { x: 6.5, y: 12, c: REG_HEX.CRA },
+    { x: 17.2, y: 10.3, c: REG_HEX.NIS2 },
+    { x: 15.2, y: 16.4, c: REG_HEX.DORA },
+    { x: 8.8, y: 16.4, c: REG_HEX.CRA },
+    { x: 6.8, y: 10.3, c: REG_HEX.AIACT },
   ]
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
@@ -175,7 +184,7 @@ export function BrandMark({ size = 16 }: { size?: number }) {
         <Line key={`l${n.x}${n.y}`} x1={n.x} y1={n.y} x2={12} y2={12} stroke={C.ink3} strokeWidth={1} />
       ))}
       {nodes.map((n) => (
-        <Circle key={`c${n.x}${n.y}`} cx={n.x} cy={n.y} r={1.9} fill={n.c} />
+        <Circle key={`c${n.x}${n.y}`} cx={n.x} cy={n.y} r={1.7} fill={n.c} />
       ))}
       <Circle cx={12} cy={12} r={2.3} fill={C.accent} />
     </Svg>
@@ -183,7 +192,7 @@ export function BrandMark({ size = 16 }: { size?: number }) {
 }
 
 // ---------------------------------------------------------------------------
-// Titres — jamais orphelins
+// Titres : jamais orphelins
 // ---------------------------------------------------------------------------
 
 export function H2({ n, children }: { n?: string; children: string }) {
@@ -245,7 +254,7 @@ export function Ring({ value, size = 84, label }: { value: number; size?: number
   )
 }
 
-/** Barre horizontale étiquetée — pour comparer des parts entre elles. */
+/** Barre horizontale étiquetée, pour comparer des parts entre elles. */
 export function BarRow({ label, value, color, labelWidth = 92, suffix }: { label: string; value: number; color: string; labelWidth?: number; suffix?: string }) {
   return (
     <View style={[S.row, { alignItems: 'center', marginBottom: 5 }]} wrap={false}>
@@ -271,7 +280,7 @@ export function StackedBar({ label, dist, labelWidth = 92 }: { label?: string; d
           <View key={k} style={{ width: `${(dist[k] / total) * 100}%`, backgroundColor: LEVEL_HEX[k], height: 9 }} />
         ))}
       </View>
-      <Text style={{ width: 52, textAlign: 'right', fontSize: 7.5, color: C.ink3 }}>{total} exig.</Text>
+      <Text style={{ width: 52, textAlign: 'right', fontSize: 7.5, color: C.ink3 }}>{total} {tr('exig.', 'req.')}</Text>
     </View>
   )
 }
@@ -290,7 +299,7 @@ export function Legend() {
 }
 
 // ---------------------------------------------------------------------------
-// Tableaux — une ligne ne se coupe jamais
+// Tableaux : une ligne ne se coupe jamais
 // ---------------------------------------------------------------------------
 
 export interface Col {
@@ -377,7 +386,7 @@ export function Note({ children, tone = 'accent', title }: { children: string; t
 }
 
 // ---------------------------------------------------------------------------
-// Nuage de priorisation — score contre charge
+// Nuage de priorisation : score contre charge
 // ---------------------------------------------------------------------------
 
 const WAVE_HEX = ['#5B45E0', '#3D68BF', '#008C99', '#9AA0AA']
@@ -430,19 +439,38 @@ export function PriorityScatter({ items, width = 507, height = 170 }: { items: {
             {e}
           </Text>
         ))}
-        <Text style={{ position: 'absolute', left: 0, top: pad.t - 2, fontSize: 6.5, color: C.ink3 }}>Priorité</Text>
+        <Text style={{ position: 'absolute', left: 0, top: pad.t - 2, fontSize: 6.5, color: C.ink3 }}>{tr('Priorité', 'Priority')}</Text>
       </View>
       <View style={[S.row, { justifyContent: 'space-between', marginTop: 3 }]}>
         <View style={[S.row, { gap: 10 }]}>
           {WAVE_HEX.map((c, i) => (
             <View key={c} style={[S.row, { alignItems: 'center', gap: 3 }]}>
               <View style={{ width: 7, height: 7, borderRadius: 3.5, backgroundColor: c }} />
-              <Text style={[S.small, { fontSize: 7 }]}>Vague {i + 1}</Text>
+              <Text style={[S.small, { fontSize: 7 }]}>{tr('Vague', 'Wave')} {i + 1}</Text>
             </View>
           ))}
         </View>
-        <Text style={[S.small, S.muted, { fontSize: 7 }]}>{clean('Charge de mise en œuvre, de 1 (faible) à 5 (lourde)')}</Text>
+        <Text style={[S.small, S.muted, { fontSize: 7 }]}>{clean(tr('Charge de mise en œuvre, de 1 (faible) à 5 (lourde)', 'Implementation effort, from 1 (light) to 5 (heavy)'))}</Text>
       </View>
+    </View>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Badge de certification ISO 27001
+// ---------------------------------------------------------------------------
+
+export function IsoCertBadge({ valid, until }: { valid: boolean; until?: string }) {
+  const color = valid ? C.positive : C.caution
+  const label = valid ? tr('Certifié ISO 27001', 'ISO 27001 certified') : tr('Certificat ISO 27001 expiré', 'ISO 27001 certificate expired')
+  const when = until ? (valid ? tr(`valide jusqu'au ${dateFr(until)}`, `valid until ${dateFr(until)}`) : tr(`expiré le ${dateFr(until)}`, `expired on ${dateFr(until)}`)) : ''
+  return (
+    <View wrap={false} style={[S.row, { alignItems: 'center', gap: 6, borderWidth: 0.9, borderColor: color, borderRadius: 3, paddingVertical: 4, paddingHorizontal: 7, alignSelf: 'flex-start' }]}>
+      <Svg width={9} height={9} viewBox="0 0 24 24">
+        <Path d="M20 6 9 17l-5-5" stroke={color} strokeWidth={3} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </Svg>
+      <Text style={{ fontSize: 8, fontFamily: 'Helvetica-Bold', color }}>{clean(label)}</Text>
+      {when ? <Text style={{ fontSize: 7.5, color: C.ink2 }}>{clean(when)}</Text> : null}
     </View>
   )
 }

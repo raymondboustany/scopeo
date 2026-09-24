@@ -1,12 +1,49 @@
+# Installation guide
+
+**English** · [Français](#guide-dinstallation)
+
+This guide is for everyone, including people with no technical background. Allow **10 to 15 minutes** for a first install. The platform runs **on your computer** and sends no data over the internet. Once started, it is used in your browser at **http://localhost:8000**.
+
+## Method A: Docker (recommended)
+
+1. Install **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**. On Windows, accept WSL 2 if offered, then restart. Open Docker Desktop and wait for "Engine running".
+2. Create a folder, for example `Documents\Scopeo`, and save [`compose.yaml`](https://raw.githubusercontent.com/raymondboustany/scopeo/main/compose.yaml) into it.
+3. Open a terminal in that folder and run `docker compose up -d`. After the first download (one or two minutes), open **http://localhost:8000**.
+
+| Action | Command |
+|---|---|
+| Stop | `docker compose down` |
+| Restart | `docker compose up -d` |
+| Update | `docker compose pull` then `docker compose up -d` |
+
+## Method B: portable archive (no Docker)
+
+1. Install **[Python 3.11+](https://www.python.org/downloads/)**. On Windows, tick **"Add python.exe to PATH"** on the first screen.
+2. Download `scopeo-vX.Y.Z-portable.zip` from the [latest release](https://github.com/raymondboustany/scopeo/releases/latest) and extract it.
+3. Double-click **`start.bat`** (Windows) or run `./start.sh` (macOS, Linux). The first launch installs what is needed, then opens the browser.
+
+To update, download the new archive and copy the `server/data` folder from the old one: it holds your data.
+
+## First steps
+
+1. On the home page, **Guest mode** opens the *Finexa* demo with a guided tour; the guest session is erased on sign-out.
+2. For real scoping, choose **Create a profile**: name, role and password (10 characters minimum, typed twice). Then create an entity: a client, or your own organisation.
+3. Next time, sign in with the profile name and password. **Sign out** (profile menu) closes the session.
+4. The interface language (English or French) is switched from the top bar.
+
+To back up an entity: **Profile and data**, then **Export**.
+
+---
+
 # Guide d'installation
 
 Ce guide s'adresse à tous les profils, y compris sans connaissance technique. Il suffit de suivre les étapes dans l'ordre. Comptez **10 à 15 minutes** pour une première installation.
 
-L'application fonctionne **sur votre ordinateur** : aucun compte à créer, aucune donnée envoyée sur Internet. Une fois lancée, elle s'utilise dans votre navigateur (Chrome, Edge, Firefox…), à l'adresse **http://localhost:8000**.
+La plateforme fonctionne **sur votre ordinateur** : aucune donnée envoyée sur Internet. Une fois lancée, elle s'utilise dans votre navigateur (Chrome, Edge, Firefox…), à l'adresse **http://localhost:8000**.
 
 Deux méthodes sont proposées :
 
-| | Méthode A — Docker | Méthode B — Archive prête à l'emploi |
+| | Méthode A : Docker | Méthode B : Archive prête à l'emploi |
 |---|---|---|
 | Recommandée pour | La plupart des utilisateurs, les équipes | Les postes où Docker n'est pas autorisé |
 | Logiciel à installer une fois | Docker Desktop | Python |
@@ -16,9 +53,9 @@ Deux méthodes sont proposées :
 
 ---
 
-## Méthode A — Docker (recommandée)
+## Méthode A : Docker (recommandée)
 
-Docker est l'outil standard pour faire tourner des applications comme celle-ci. C'est la méthode utilisée par la plupart des outils open source de cybersécurité et de GRC.
+Docker est la manière standard de faire tourner des applications comme celle-ci. C'est la méthode utilisée par la plupart des plateformes open source de cybersécurité et de GRC.
 
 ### 1. Installer Docker Desktop
 
@@ -60,7 +97,7 @@ Vos données sont conservées lors des arrêts et des mises à jour.
 
 ---
 
-## Méthode B — Archive prête à l'emploi (sans Docker)
+## Méthode B : Archive prête à l'emploi (sans Docker)
 
 ### 1. Installer Python
 
@@ -89,9 +126,11 @@ Au premier lancement, une fenêtre de commande installe les composants nécessai
 
 ## Premiers pas
 
-1. À l'accueil, choisissez **Mode invité** pour découvrir l'outil sur l'entreprise de démonstration *Finexa*. Un parcours guidé présente les écrans.
-2. Pour un vrai cadrage, choisissez **Créer un profil**, puis créez une entité : un client, ou votre propre organisation.
-3. Suivez les étapes proposées sur le tableau de bord : qualifier, évaluer, prioriser, préparer le signalement, restituer.
+1. À l'accueil, choisissez **Mode invité** pour découvrir la plateforme sur l'entreprise de démonstration *Finexa*. Un parcours guidé présente les écrans ; la session invitée est effacée à la déconnexion.
+2. Pour un vrai cadrage, choisissez **Créer un profil** : nom, fonction et mot de passe (10 caractères au moins, saisi deux fois). Créez ensuite une entité : un client, ou votre propre organisation.
+3. Les fois suivantes, connectez-vous avec le nom du profil et son mot de passe. **Se déconnecter** (menu du profil) ferme la session.
+4. La langue de l'interface (français ou anglais) se change dans la barre du haut.
+5. Suivez les étapes proposées sur le tableau de bord : qualifier, évaluer, prioriser, préparer le signalement, restituer.
 
 ## Sauvegarder vos données
 

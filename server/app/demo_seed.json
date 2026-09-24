@@ -36,158 +36,147 @@
       "cra_categorie": "defaut",
       "cra_exclu": "non",
       "incidents_recents": "recent",
-      "certification": "demarche"
+      "ia_roles": [
+        "deployeur"
+      ],
+      "ia_pratiques": "non",
+      "ia_haut_risque": [
+        "aucun"
+      ],
+      "ia_transparence": [
+        "interaction"
+      ]
     },
     "coverage": {
-      "GOV-02": {
-        "level": "partiel",
-        "owner": "Direction générale",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "GOV-04": {
-        "level": "partiel",
-        "owner": "Direction générale",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
       "REP-03": {
-        "level": "en_place",
+        "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "DON-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "GOV-01": {
-        "level": "partiel",
+        "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "PRO-02": {
-        "level": "en_place",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "PRO-05": {
-        "level": "partiel",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "DET-01": {
-        "level": "en_place",
-        "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "DET-03": {
-        "level": "en_place",
-        "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "DON-01": {
-        "level": "partiel",
+        "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
-      "RSK-01": {
-        "level": "en_place",
-        "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "PRO-03": {
+      "RSK-02": {
         "level": "partiel",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "PRO-04": {
-        "level": "en_place",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "DET-02": {
-        "level": "en_place",
         "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "REP-01": {
-        "level": "en_place",
-        "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "REP-02": {
-        "level": "partiel",
+        "level": "absent",
         "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
-      "RES-03": {
+      "GOV-02": {
         "level": "partiel",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
-      "TIE-02": {
-        "level": "absent",
-        "owner": "Achats",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "TIE-03": {
+      "GOV-04": {
         "level": "partiel",
-        "owner": "Achats",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "DOC-02": {
-        "level": "absent",
-        "owner": "Conformité",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "DOC-03": {
-        "level": "partiel",
-        "owner": "Conformité",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "PRO-01": {
-        "level": "en_place",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "RES-01": {
-        "level": "absent",
-        "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
-      },
-      "TIE-01": {
-        "level": "absent",
-        "owner": "Achats",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "owner": "Direction générale",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "GOV-03": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "DOC-01": {
+        "level": "absent",
+        "owner": "Conformité",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "RSK-01": {
+        "level": "partiel",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "REP-01": {
+        "level": "partiel",
+        "owner": "RSSI",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "TIE-02": {
+        "level": "absent",
+        "owner": "Achats",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "TIE-03": {
+        "level": "partiel",
+        "owner": "Achats",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "HIE-01": {
-        "level": "partiel",
+        "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
-      "PRO-06": {
-        "level": "en_place",
+      "IA-01": {
+        "level": "absent",
+        "owner": "DPO",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "IA-02": {
+        "level": "partiel",
+        "owner": "DPO",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "IA-03": {
+        "level": "absent",
+        "owner": "DPO",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "RES-01": {
+        "level": "partiel",
         "owner": "DSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
-      "RSK-02": {
+      "RES-04": {
+        "level": "absent",
+        "owner": "DSI",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "TIE-01": {
+        "level": "partiel",
+        "owner": "Achats",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "IA-04": {
         "level": "en_place",
-        "owner": "RSSI",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "owner": "DPO",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "DON-02": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "IA-05": {
+        "level": "en_place",
+        "owner": "DPO",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       },
       "DON-03": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-23T14:05:31.062Z"
+        "updatedAt": "2026-09-24T11:50:38.419Z"
+      },
+      "RES-03": {
+        "level": "absent",
+        "owner": "DSI",
+        "updatedAt": "2026-09-24T11:50:38.419Z"
       }
     },
     "measures": {},
@@ -257,7 +246,11 @@
           "role": "Conformité",
           "email": "conformite@finexa.example"
         }
-      ]
+      ],
+      "iso27001": {
+        "status": "partiel",
+        "perimeter": "integral"
+      }
     },
     "notes": [
       {
@@ -313,15 +306,49 @@
         "updatedAt": "2026-09-18T10:00:00.000Z"
       }
     ],
+    "iso_controls": {
+      "themes": {
+        "A5": {
+          "applicability": "applicable",
+          "implementation": "partiel"
+        },
+        "A6": {
+          "applicability": "applicable",
+          "implementation": "mis_en_oeuvre"
+        },
+        "A7": {
+          "applicability": "applicable",
+          "implementation": "partiel"
+        },
+        "A8": {
+          "applicability": "applicable",
+          "implementation": "mis_en_oeuvre"
+        }
+      },
+      "controls": {
+        "8.16": {
+          "applicability": "non_applicable",
+          "justification": "Supervision confiée au prestataire d’hébergement, hors du système de management."
+        },
+        "8.28": {
+          "applicability": "applicable",
+          "implementation": "partiel"
+        }
+      },
+      "detailed": [
+        "A8"
+      ]
+    },
     "public_snapshot": {
-      "generatedAt": "2026-09-23T14:05:31.063Z",
+      "generatedAt": "2026-09-24T11:50:38.420Z",
       "sectorLabel": "Infrastructure numérique",
-      "score": 57,
+      "score": 46,
       "scores": {
-        "RGPD": 61,
-        "NIS2": 55,
-        "DORA": 56,
-        "CRA": 63
+        "RGPD": 50,
+        "NIS2": 44,
+        "DORA": 42,
+        "CRA": 47,
+        "AIACT": 45
       },
       "verdicts": [
         {
@@ -342,38 +369,43 @@
         {
           "regulation": "CRA",
           "status": "applicable",
-          "qualification": "Fabricant — produit par défaut"
+          "qualification": "Fabricant, produit par défaut"
+        },
+        {
+          "regulation": "AIACT",
+          "status": "applicable",
+          "qualification": "Déployeur, risque limité"
         }
       ],
       "domains": [
         {
           "domain": "gouvernance",
           "label": "Gouvernance",
-          "score": 50,
+          "score": 30,
           "themes": 5
         },
         {
           "domain": "risques",
           "label": "Risques",
-          "score": 100,
+          "score": 50,
           "themes": 2
         },
         {
           "domain": "protection",
           "label": "Protection",
-          "score": 83,
+          "score": 75,
           "themes": 6
         },
         {
           "domain": "detection",
           "label": "Détection",
-          "score": 100,
+          "score": 67,
           "themes": 3
         },
         {
           "domain": "reponse",
           "label": "Réponse",
-          "score": 83,
+          "score": 33,
           "themes": 3
         },
         {
@@ -385,14 +417,20 @@
         {
           "domain": "tiers",
           "label": "Tiers",
-          "score": 13,
+          "score": 25,
           "themes": 4
         },
         {
           "domain": "donnees",
           "label": "Données",
-          "score": 88,
+          "score": 100,
           "themes": 4
+        },
+        {
+          "domain": "ia",
+          "label": "Intelligence artificielle",
+          "score": 50,
+          "themes": 5
         },
         {
           "domain": "documentation",
@@ -401,8 +439,8 @@
           "themes": 3
         }
       ],
-      "themesTotal": 35,
-      "themesCovered": 14,
+      "themesTotal": 40,
+      "themesCovered": 10,
       "nis2Category": "importante"
     }
   }

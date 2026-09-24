@@ -1,9 +1,9 @@
 {
   "name": "scopeo",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Outil open source de cadrage et de diagnostic réglementaire RGPD, NIS 2, DORA et CRA",
+  "description": "Open source regulatory scoping platform for the GDPR, NIS2 (ReCyF), DORA, the CRA and the AI Act",
   "scripts": {
     "setup": "node scripts/setup.mjs",
     "dev": "node scripts/dev.mjs",
@@ -81,6 +81,8 @@
     "dora",
     "cra",
     "cyber-resilience-act",
+    "ai-act",
+    "iso27001",
     "compliance",
     "grc",
     "cybersecurity",

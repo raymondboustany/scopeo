@@ -25,7 +25,7 @@ const answers: Answers = {
   entite_financiere: 'non',
   cra_roles: ['aucun'],
   incidents_recents: 'aucun',
-  certification: 'non',
+  ia_roles: ['aucun'],
 }
 
 function entity(patch: Partial<EntityRecord> = {}): EntityRecord {
@@ -43,6 +43,7 @@ function entity(patch: Partial<EntityRecord> = {}): EntityRecord {
     notes: [],
     seen_alerts: [],
     public_snapshot: null,
+    iso_controls: {},
     share_enabled: false,
     share_token: 't',
     is_demo: false,

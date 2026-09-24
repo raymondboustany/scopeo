@@ -9,7 +9,7 @@ import { RECURRING_DUTIES, TIMELINE } from '@/data/timeline'
 /**
  * Intégrité du corpus.
  *
- * Ces tests ne vérifient pas le droit — ils vérifient que les renvois internes
+ * Ces tests ne vérifient pas le droit, ils vérifient que les renvois internes
  * tiennent. Un thème qui pointe vers une obligation inexistante, ou une
  * obligation qui invoque un palier de sanction absent, produirait une fiche
  * silencieusement trouée.
@@ -24,7 +24,7 @@ describe('obligations', () => {
   it('renvoient à un palier de sanction existant dans leur règlement', () => {
     for (const o of ALL_OBLIGATIONS) {
       const tiers = REGULATIONS[o.regulation].sanctions.map((s) => s.id)
-      expect(tiers, `${o.id} — palier ${o.sanctionTier}`).toContain(o.sanctionTier)
+      expect(tiers, `${o.id} : palier ${o.sanctionTier}`).toContain(o.sanctionTier)
     }
   })
 
@@ -54,7 +54,8 @@ describe('obligations', () => {
     }
   })
 
-  it('couvrent les quatre textes', () => {
+  it('couvrent les cinq textes', () => {
+    expect(REGULATION_ORDER).toHaveLength(5)
     for (const id of REGULATION_ORDER) {
       expect(ALL_OBLIGATIONS.filter((o) => o.regulation === id).length, id).toBeGreaterThan(0)
     }
@@ -95,14 +96,14 @@ describe('croisements', () => {
 
   it('nomment la règle qui commande pour chaque divergence', () => {
     for (const t of CROSSWALK.filter((x) => x.relation === 'divergence')) {
-      expect(t.strictest, `${t.id} — divergence sans règle désignée`).toBeDefined()
+      expect(t.strictest, `${t.id} : divergence sans règle désignée`).toBeDefined()
       expect(t.strictest!.rationale.length).toBeGreaterThan(40)
     }
   })
 
   it('nomment le texte qui prime pour chaque hiérarchie', () => {
     for (const t of CROSSWALK.filter((x) => x.relation === 'hierarchie')) {
-      expect(t.precedence, `${t.id} — hiérarchie sans texte désigné`).toBeDefined()
+      expect(t.precedence, `${t.id} : hiérarchie sans texte désigné`).toBeDefined()
       expect(t.precedence!.over.length).toBeGreaterThan(0)
       expect(t.precedence!.over).not.toContain(t.precedence!.prevails)
     }

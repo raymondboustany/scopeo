@@ -1,0 +1,332 @@
+{
+  "DORA-A5": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Governance and organisation",
+    "statement": "The management body defines, approves, oversees and is accountable for the implementation of the ICT risk management framework. It bears ultimate responsibility and must actively keep its knowledge up to date through regular training, proportionate to the risk managed.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A5-R1": "Have the management body approve the digital operational resilience strategy and the ICT policy.",
+      "DORA-A5-R2": "Assign clear roles and responsibilities for all ICT-related functions.",
+      "DORA-A5-R3": "Define and approve the policy on the use of ICT third-party service providers.",
+      "DORA-A5-R4": "Allocate a dedicated digital operational resilience budget and review it.",
+      "DORA-A5-R5": "Have members of the management body follow regular training on ICT risk."
+    },
+    "deadline": "At least annual review by the management body",
+    "evidence": ["Approval resolutions", "Digital operational resilience strategy", "Management training plan", "Identified ICT budget"]
+  },
+  "DORA-A6": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "ICT risk management framework",
+    "statement": "Have a sound, comprehensive and documented ICT risk management framework, reviewed at least once a year, after every major incident and following audit and supervisory recommendations. An independent control function must be identified.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A6-R1": "Document a framework covering ICT strategies, policies, procedures, protocols and tools.",
+      "DORA-A6-R2": "Identify an independent ICT risk control function.",
+      "DORA-A6-R3": "Review the framework at least annually and after every major incident.",
+      "DORA-A6-R4": "Subject the framework to periodic internal audit by auditors with the required skills.",
+      "DORA-A6-R5": "Set up a crisis communication plan and a process for following up audit recommendations."
+    },
+    "deadline": "Annual review and after every major incident",
+    "evidence": ["Dated ICT risk management framework", "ICT internal audit reports", "Records of annual review"],
+    "guidance": ["Delegated Regulation (EU) 2024/1774: ICT risk management RTS"]
+  },
+  "DORA-A7": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "ICT systems, protocols and tools",
+    "statement": "Use and maintain reliable ICT systems, protocols and tools, with enough capacity to absorb activity peaks, technologically resilient and sufficiently up to date. In practice, this article forbids resting a critical function on obsolete or undersized technology.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A7-R1": "Use systems appropriate to the scale of operations supporting the entity's activities.",
+      "DORA-A7-R2": "Size capacity to absorb peaks in orders, messages or transactions, including when new technology is deployed.",
+      "DORA-A7-R3": "Ensure technological resilience to handle additional information needs under stress.",
+      "DORA-A7-R4": "Keep systems up to date and free of known material failures or gaps."
+    },
+    "deadline": "Ongoing requirement",
+    "evidence": ["Inventory of systems and their support level", "Capacity studies and load tests", "Tracking of end-of-life systems"]
+  },
+  "DORA-A8": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Identification of functions, assets and dependencies",
+    "statement": "Identify and classify business functions, the information assets and ICT assets supporting them, and all dependencies, internal and on third parties. This inventory is reviewed at least annually and at each major architecture change.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A8-R1": "Identify business functions and determine which are critical or important.",
+      "DORA-A8-R2": "Map the ICT assets supporting these functions and their interdependencies.",
+      "DORA-A8-R3": "Identify ICT risk sources and assess relevant cyber threats.",
+      "DORA-A8-R4": "Keep an inventory of existing systems and assess end-of-life systems.",
+      "DORA-A8-R5": "Review these inventories at least once a year."
+    },
+    "deadline": "Annual review and at each major change",
+    "evidence": ["Map of critical or important functions", "ICT asset inventory", "Dependency matrix"]
+  },
+  "DORA-A9": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Protection and prevention",
+    "statement": "Continuously monitor and control the security and functioning of ICT systems, and deploy protection policies, procedures and tools: access management, encryption, network segmentation, change management, data leakage protection.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A9-R1": "Ensure the resilience, continuity and availability of ICT systems and the security of data.",
+      "DORA-A9-R2": "Implement an information security policy and least-privilege access management measures.",
+      "DORA-A9-R3": "Encrypt data at rest, in transit and, where relevant, in use.",
+      "DORA-A9-R4": "Segment networks and limit the attack surface.",
+      "DORA-A9-R5": "Govern ICT changes with a documented validation and rollback procedure."
+    },
+    "deadline": "Continuous monitoring and control",
+    "evidence": ["Information security policy", "Access control policy and access reviews", "Cryptography policy", "Change management procedure"],
+    "guidance": ["Delegated Regulation (EU) 2024/1774, Articles 6 to 20"]
+  },
+  "DORA-A10": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Detection of anomalous activities",
+    "statement": "Have mechanisms to promptly detect anomalous activities, including network performance issues and incidents, and to identify single points of failure. Multiple layers of alerts must be set up, with defined thresholds and trigger criteria.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A10-R1": "Define alert thresholds and criteria triggering response processes.",
+      "DORA-A10-R2": "Set up detection capabilities allowing a rapid response.",
+      "DORA-A10-R3": "Dedicate sufficient resources to monitoring user activity and anomalies.",
+      "DORA-A10-R4": ["For trading venues, be able to detect incorrectly reported transactions.", "Trading venues"]
+    },
+    "deadline": "Continuous detection",
+    "evidence": ["Description of the detection set-up", "Alert threshold matrix", "Monitoring logs"]
+  },
+  "DORA-A11": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "ICT business continuity policy",
+    "statement": "Put in place an ICT business continuity policy and response and recovery plans, tested at least annually. Entities other than microenterprises must have a crisis management function and report to the authorities the estimated costs and losses of major disruptions.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A11-R1": "Set recovery time and recovery point objectives for each critical function.",
+      "DORA-A11-R2": "Test business continuity and recovery plans at least once a year.",
+      "DORA-A11-R3": "Set up a crisis management function with clear communication procedures.",
+      "DORA-A11-R4": "Keep a record of activities during disruptions.",
+      "DORA-A11-R5": "Estimate and report to the authorities the aggregated annual costs and losses caused by major incidents."
+    },
+    "deadline": "Tests at least annually",
+    "evidence": ["ICT business continuity policy", "Response and recovery plans", "Annual test reports", "Estimate of costs and losses"]
+  },
+  "DORA-A12": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Backup, restoration and redundancy",
+    "statement": "Define backup policies setting scope and frequency according to criticality, and restoration procedures. Backup systems must be physically and logically segregated from the source system, and restored data must be checked in an isolated environment before going back into production.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A12-R1": "Define backup scope and frequency according to data criticality.",
+      "DORA-A12-R2": "Physically and logically segregate backup systems from the source system.",
+      "DORA-A12-R3": "Periodically test restoration procedures in an isolated environment.",
+      "DORA-A12-R4": "Maintain redundant capacity with an equivalent level of resources and security.",
+      "DORA-A12-R5": ["For central counterparties, maintain a secondary site with a distinct geographical risk profile.", "Central counterparties"]
+    },
+    "deadline": "Periodic restoration tests",
+    "evidence": ["Backup policy", "Restoration test reports", "Redundancy architecture"]
+  },
+  "DORA-A13": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Learning, evolving and awareness",
+    "statement": "Gather information on vulnerabilities and incidents, carry out post-incident reviews after every major disruption, and feed the lessons into the risk management framework. Digital resilience awareness and training programmes are mandatory for all staff and management.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A13-R1": "Carry out a post-incident review after every major disruption of core activities.",
+      "DORA-A13-R2": "Feed lessons learned into risk assessment and protection processes.",
+      "DORA-A13-R3": "Report changes made to the competent authority on request.",
+      "DORA-A13-R4": "Roll out mandatory awareness and training programmes, including for the management body.",
+      "DORA-A13-R5": "Monitor relevant technological developments to anticipate their impact on ICT risk."
+    },
+    "deadline": "Annual awareness, review after every major incident",
+    "evidence": ["Post-incident review reports", "Annual awareness programme", "Training register"]
+  },
+  "DORA-A14": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Crisis communication plans",
+    "statement": "Have communication plans enabling responsible disclosure of major incidents to clients, counterparts and the public, and designate at least one person in charge of communication with the public and the authorities.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A14-R1": "Draw up separate communication plans for staff and for external stakeholders.",
+      "DORA-A14-R2": "Designate at least one person responsible for external and institutional communication."
+    },
+    "deadline": "Plans ready at all times",
+    "evidence": ["Crisis communication plan", "Named spokesperson designation"]
+  },
+  "DORA-A16": {
+    "chapter": "Chapter II: ICT risk management",
+    "title": "Simplified framework for certain entities",
+    "statement": "Small and non-interconnected investment firms, exempted payment and e-money institutions and small occupational retirement institutions are exempt from Articles 5 to 15, but must still keep a lighter framework: documented ICT risk management, protection, detection, continuity, testing and third-party risk management.",
+    "appliesTo": ["Small financial entities under Article 16(1)"],
+    "requirements": {
+      "DORA-A16-R1": "Put in place and maintain a sound and documented ICT risk management framework.",
+      "DORA-A16-R2": "Continuously monitor the security and functioning of ICT systems.",
+      "DORA-A16-R3": "Reduce the impact of ICT risk through protection and prevention measures.",
+      "DORA-A16-R4": "Detect anomalous activities and manage incidents.",
+      "DORA-A16-R5": "Put in place continuity plans and backup, restoration and recovery measures.",
+      "DORA-A16-R6": "Test these plans and measures regularly."
+    },
+    "deadline": "Regular tests, framework reviewed periodically",
+    "evidence": ["Documented simplified framework", "Test reports"],
+    "conditions": ["Entity under the simplified framework"]
+  },
+  "DORA-A17": {
+    "chapter": "Chapter III: ICT-related incident management and reporting",
+    "title": "ICT-related incident management process",
+    "statement": "Define and implement an ICT-related incident management process to detect, manage and notify incidents, with early-warning indicators, identified roles and responsibilities, and escalation procedures to senior management and, where relevant, resolution authorities.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A17-R1": "Set up procedures to detect, track, log and prioritise incidents.",
+      "DORA-A17-R2": "Assign roles and responsibilities that can be activated for different scenarios.",
+      "DORA-A17-R3": "Define communication plans towards staff, external stakeholders and the media.",
+      "DORA-A17-R4": "Provide for escalation of major incidents to senior management and the management body.",
+      "DORA-A17-R5": "Analyse and document root causes."
+    },
+    "deadline": "Ongoing process",
+    "evidence": ["ICT incident management procedure", "Incident log", "Root-cause analyses"]
+  },
+  "DORA-A18": {
+    "chapter": "Chapter III: ICT-related incident management and reporting",
+    "title": "Classification of incidents and cyber threats",
+    "statement": "Classify incidents against seven criteria: number of clients or counterparts affected, reputation, duration and service downtime, geographical spread, data losses, criticality of the services affected, economic impact. Materiality thresholds are set by Delegated Regulation 2024/1772.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A18-R1": "Apply the seven classification criteria to each incident.",
+      "DORA-A18-R2": "Determine whether it is major against the materiality thresholds of the technical standards.",
+      "DORA-A18-R3": "Also classify significant cyber threats according to their criticality."
+    },
+    "deadline": "On detection, before reporting",
+    "evidence": ["Classification grid applied", "Qualification records per incident"],
+    "guidance": ["Delegated Regulation (EU) 2024/1772: incident classification"]
+  },
+  "DORA-A19": {
+    "chapter": "Chapter III: ICT-related incident management and reporting",
+    "title": "Reporting major incidents to the competent authority",
+    "statement": "Report major ICT-related incidents to the competent authority according to three deadlines set by Delegated Regulation 2025/301: initial notification, intermediate report, final report. Reporting uses mandatory harmonised templates.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A19-R1": "Send the initial notification within the deadlines set by the technical standards.",
+      "DORA-A19-R2": "Send an intermediate report once the situation is restored, then at each significant change.",
+      "DORA-A19-R3": "Send a final report including root-cause analysis.",
+      "DORA-A19-R4": "Use the Article 20 harmonised templates; report any technical impossibility by other means.",
+      "DORA-A19-R5": "Inform affected clients when the incident has an impact on their financial interests."
+    },
+    "deadline": "Initial notification, intermediate report, final report",
+    "evidence": ["Timestamped reports to the ACPR or AMF", "Final reports with root-cause analysis"],
+    "guidance": ["Delegated Regulation (EU) 2025/301: content and deadlines for reporting"]
+  },
+  "DORA-A24": {
+    "chapter": "Chapter IV: Digital operational resilience testing",
+    "title": "Digital operational resilience testing programme",
+    "statement": "Set up a sound and comprehensive testing programme, proportionate to size and risk profile, as an integral part of the ICT risk management framework. Tests are carried out by independent parties, internal or external, and all deficiencies found must be remediated on an agreed schedule.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A24-R1": "Define a testing programme covering all ICT systems supporting critical or important functions.",
+      "DORA-A24-R2": "Ensure testers are independent and prevent conflicts of interest.",
+      "DORA-A24-R3": "Set up procedures to prioritise, classify and remediate deficiencies found.",
+      "DORA-A24-R4": "Test systems supporting critical or important functions at least once a year."
+    },
+    "deadline": "Annual tests on critical or important functions",
+    "evidence": ["Annual testing programme", "Test reports and remediation plans", "Evidence of tester independence"]
+  },
+  "DORA-A25": {
+    "chapter": "Chapter IV: Digital operational resilience testing",
+    "title": "Range of tests required",
+    "statement": "Carry out an appropriate range of tests: vulnerability assessments, open-source analyses, network security assessments, gap analyses, physical security reviews, questionnaires and scanning software, source code reviews, compatibility, performance, end-to-end and penetration tests.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A25-R1": "Carry out vulnerability assessments and network security analyses.",
+      "DORA-A25-R2": "Carry out source code reviews where feasible.",
+      "DORA-A25-R3": "Carry out performance, end-to-end and penetration tests.",
+      "DORA-A25-R4": "Test continuity and recovery plans as part of the programme."
+    },
+    "deadline": "According to the testing programme, at least annually",
+    "evidence": ["Test reports by type", "Coverage plan of systems tested"]
+  },
+  "DORA-A26": {
+    "chapter": "Chapter IV: Digital operational resilience testing",
+    "title": "Threat-led penetration testing",
+    "statement": "Financial entities identified by the authorities carry out threat-led penetration testing at least every three years, on live production systems supporting critical or important functions. The methodology is aligned with TIBER-EU and the scope is validated by the competent authority, which then issues an attestation.",
+    "appliesTo": ["Financial entities identified by the competent authority"],
+    "requirements": {
+      "DORA-A26-R1": "Identify the systems, processes and technologies supporting critical or important functions, including outsourced ones.",
+      "DORA-A26-R2": "Have the test scope validated by the competent authority.",
+      "DORA-A26-R3": "Involve the relevant ICT third-party service providers in the test.",
+      "DORA-A26-R4": "Implement risk management controls to test in production without compromising services.",
+      "DORA-A26-R5": "Obtain the authority's attestation confirming the test's compliance."
+    },
+    "deadline": "At least every three years",
+    "evidence": ["Scope validated by the authority", "Test report and remediation plan", "Competent authority attestation"],
+    "conditions": ["Entity identified for threat-led testing"],
+    "guidance": ["Delegated Regulation (EU) 2025/1190: TLPT technical standards"]
+  },
+  "DORA-A28": {
+    "chapter": "Chapter V: Managing ICT third-party risk",
+    "title": "General principles of ICT third-party risk management",
+    "statement": "Manage ICT third-party risk as an integral part of ICT risk, under the full responsibility of the financial entity. Adopt a third-party risk strategy, keep a register of information on all contractual arrangements, and submit it annually to the competent authority.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A28-R1": "Adopt an ICT third-party risk strategy approved by the management body.",
+      "DORA-A28-R2": "Keep a register of information in line with the templates of Implementing Regulation 2024/2956.",
+      "DORA-A28-R3": "Distinguish in the register the arrangements supporting critical or important functions.",
+      "DORA-A28-R4": "Submit the register to the competent authority at least once a year and on request.",
+      "DORA-A28-R5": "Inform the authority in good time of any planned arrangement covering critical or important functions.",
+      "DORA-A28-R6": "Report annually to the authority the number of new arrangements concluded."
+    },
+    "deadline": "Register submitted annually to the competent authority",
+    "evidence": ["Register of information in the fifteen templates", "Approved third-party risk strategy", "Submission acknowledgements from the authority"],
+    "guidance": ["Implementing Regulation (EU) 2024/2956: register of information templates"]
+  },
+  "DORA-A29": {
+    "chapter": "Chapter V: Managing ICT third-party risk",
+    "title": "Preliminary assessment of concentration risk",
+    "statement": "Before entering an arrangement covering a critical or important function, assess concentration risk: reliance on a provider that is hard to substitute, reliance on several closely connected providers, and the consequences of a failure. Examine subcontracting chains and their impact on oversight capability.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A29-R1": "Assess, before contracting, the concentration risk linked to the intended provider.",
+      "DORA-A29-R2": "Analyse the provider's substitutability and the conditions for effective reversibility.",
+      "DORA-A29-R3": "Examine subcontracting chains, in particular towards third countries.",
+      "DORA-A29-R4": "Weigh the benefits and costs of alternative solutions."
+    },
+    "deadline": "Before concluding each critical arrangement",
+    "evidence": ["Concentration analyses per provider", "Substitutability notes"],
+    "guidance": ["Delegated Regulation (EU) 2025/532: subcontracting of critical ICT services"]
+  },
+  "DORA-A30": {
+    "chapter": "Chapter V: Managing ICT third-party risk",
+    "title": "Mandatory contractual provisions",
+    "statement": "Include in each ICT contract the minimum terms of Article 30(2) and, for critical or important functions, the reinforced terms of paragraph 3: quantitative service levels, cooperation in penetration tests, unrestricted access and audit rights, exit strategies and transition periods.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A30-R1": "Describe precisely the ICT functions and services, the location of data and processing, and notification of any change.",
+      "DORA-A30-R2": "Provide for data availability, integrity and confidentiality requirements.",
+      "DORA-A30-R3": "Guarantee assistance during incidents, participation in training, and unrestricted access and audit.",
+      "DORA-A30-R4": "Set quantitative and qualitative performance targets for critical or important functions.",
+      "DORA-A30-R5": "Govern further subcontracting and the conditions for changing it.",
+      "DORA-A30-R6": "Provide for exit strategies with sufficient transition periods.",
+      "DORA-A30-R7": "Define termination rights and notice periods."
+    },
+    "deadline": "Applies to every ICT arrangement in force",
+    "evidence": ["Revised ICT contracts", "Article 30 contractual compliance grid", "Documented exit strategies"]
+  },
+  "DORA-A31": {
+    "article": "Articles 31 to 44",
+    "chapter": "Chapter V: Oversight framework",
+    "title": "Oversight of critical third-party providers",
+    "statement": "Third-party providers designated as critical by the European supervisory authorities are subject to direct EU oversight, led by a lead overseer supported by joint examination teams. For the client financial entity, the consequence is twofold: it must take into account recommendations addressed to the provider, and stop using a service when the overseer requires it.",
+    "appliesTo": ["Financial entity", "Critical ICT third-party service provider"],
+    "requirements": {
+      "DORA-A31-R1": "Identify among its providers those on the list of designated critical third-party providers.",
+      "DORA-A31-R2": "Take the lead overseer's recommendations into account in third-party risk management.",
+      "DORA-A31-R3": "Be able to suspend or terminate the use of a service when the overseer requires it.",
+      "DORA-A31-R4": ["For a designated provider: maintain an adequate presence in the Union within twelve months of designation.", "Designated critical providers"]
+    },
+    "deadline": "Continuous monitoring of designations",
+    "evidence": ["List of critical providers identified", "Records of how recommendations were taken into account"]
+  },
+  "DORA-A45": {
+    "chapter": "Chapter VI: Information sharing",
+    "title": "Sharing cyber threat information",
+    "statement": "Financial entities may exchange cyber threat information and intelligence among themselves, within trusted communities, under conditions that protect the commercially sensitive nature of the information and respect data protection law.",
+    "appliesTo": ["Financial entity"],
+    "requirements": {
+      "DORA-A45-R1": "Use sharing arrangements that protect the confidentiality of the information exchanged.",
+      "DORA-A45-R2": "Notify the competent authority of participation in such an arrangement."
+    },
+    "deadline": "Voluntary, to be notified",
+    "evidence": ["Sharing agreement", "Notification to the authority"]
+  }
+}

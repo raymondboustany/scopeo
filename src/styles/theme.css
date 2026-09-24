@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Scopeo — thème clair par défaut, sombre en option
+   Scopeo : thème clair par défaut, sombre en option
    Surfaces pleines, badges remplis, aucun contour lumineux. Un seul accent
    violet, réservé à l'action principale, au focus et au score. Geist pour
    l'interface, Geist Mono pour toute référence normative.
@@ -10,7 +10,7 @@
 @source "../";
 
 /* --------------------------------------------------------------------------
-   1. Valeurs — thème clair par défaut, thème sombre en option
+   1. Valeurs : thème clair par défaut, thème sombre en option
    -------------------------------------------------------------------------- */
 :root {
   /* Surfaces */
@@ -63,8 +63,12 @@
   --c-cra-wash:      #f7e3ed;
   --c-cra-line:      rgb(168 51 110 / 0.3);
   --c-cra-ink:       #85234f;
+  --c-aiact:         #4f7a1f;
+  --c-aiact-wash:    #e8f1dc;
+  --c-aiact-line:    rgb(79 122 31 / 0.3);
+  --c-aiact-ink:     #3b5d16;
 
-  /* Statuts — vert en place, orange partiel, rouge absent */
+  /* Statuts : vert en place, orange partiel, rouge absent */
   --c-positive:      #13925b;
   --c-positive-wash: #e0f4ea;
   --c-positive-line: rgb(19 146 91 / 0.3);
@@ -131,6 +135,10 @@
   --c-cra-wash:      rgb(171 54 110 / 0.24);
   --c-cra-line:      rgb(171 54 110 / 0.45);
   --c-cra-ink:       #ec9cc2;
+  --c-aiact:         #6f9e35;
+  --c-aiact-wash:    rgb(111 158 53 / 0.2);
+  --c-aiact-line:    rgb(111 158 53 / 0.42);
+  --c-aiact-ink:     #b2d98a;
 
   --c-positive:      #22b872;
   --c-positive-wash: rgb(34 184 114 / 0.16);
@@ -199,6 +207,11 @@
   --color-cra:          var(--c-cra);
   --color-cra-wash:     var(--c-cra-wash);
   --color-cra-line:     var(--c-cra-line);
+  --color-cra-ink:      var(--c-cra-ink);
+  --color-aiact:        var(--c-aiact);
+  --color-aiact-wash:   var(--c-aiact-wash);
+  --color-aiact-line:   var(--c-aiact-line);
+  --color-aiact-ink:    var(--c-aiact-ink);
 
   --color-positive:      var(--c-positive);
   --color-positive-wash: var(--c-positive-wash);
@@ -436,7 +449,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   5. Impression — le rapport sort sur fond blanc
+   5. Impression : le rapport sort sur fond blanc
    -------------------------------------------------------------------------- */
 @media print {
   :root {

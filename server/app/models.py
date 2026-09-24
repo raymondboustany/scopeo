@@ -2,9 +2,10 @@
 
 Deux niveaux distincts, comme le cadrage l'exige :
 
-- ``User`` : la personne qui utilise l'outil (consultant, DPO, RSSI…) ;
+- ``User`` : la personne qui utilise la plateforme (consultant, DPO, RSSI…),
+  protégée par un mot de passe haché ;
 - ``Entity`` : l'organisation cadrée, avec ses réponses, son évaluation,
-  ses contacts d'escalade et ses incidents.
+  ses contacts d'escalade et sa démarche ISO 27001.
 
 Un profil porte plusieurs entités ; chaque entité est une ligne autonome,
 chargée, renommée ou supprimée sans effet sur les autres.
@@ -21,7 +22,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
-from sqlalchemy import Column
+from sqlalchemy import Column, LargeBinary
 from sqlalchemy.types import JSON
 from sqlmodel import Field, SQLModel
 
@@ -44,6 +45,10 @@ class User(SQLModel, table=True):
     role: str = "consultant"
     organisation: str = ""
     email: str = ""
+    # Empreinte bcrypt du mot de passe. Absente pour un profil invité, ou pour
+    # un profil créé avant l'authentification, qui en définit une à la
+    # première connexion.
+    password_hash: str | None = Field(default=None)
     is_guest: bool = False
     # Profil support de l'entité de démonstration : jamais listé comme profil.
     is_demo: bool = False
@@ -71,6 +76,8 @@ class Entity(SQLModel, table=True):
     # Trust Center expose, de sorte qu'aucune donnée sensible ne quitte
     # l'entité par ce canal.
     public_snapshot: dict[str, Any] | None = Field(default=None, sa_column=Column(JSON, nullable=True))
+    # Détail des contrôles de l'annexe A d'ISO/IEC 27001:2022.
+    iso_controls: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON, nullable=False, server_default="{}"))
     share_enabled: bool = False
     share_token: str = Field(default_factory=new_token, index=True, unique=True)
     is_demo: bool = False
@@ -88,4 +95,21 @@ class EntityRevision(SQLModel, table=True):
     id: str = Field(default_factory=new_id, primary_key=True)
     entity_id: str = Field(foreign_key="entity.id", index=True)
     answers: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))
+    created_at: datetime = Field(default_factory=now)
+
+
+class EntityFile(SQLModel, table=True):
+    """Pièce déposée pour une entité : aujourd'hui, la déclaration d'applicabilité ISO 27001.
+
+    Le contenu est conservé tel quel, pour être relu ; il n'est jamais
+    interprété par le serveur.
+    """
+
+    id: str = Field(default_factory=new_id, primary_key=True)
+    entity_id: str = Field(foreign_key="entity.id", index=True)
+    kind: str = "soa"
+    name: str
+    content_type: str
+    size: int
+    data: bytes = Field(sa_column=Column(LargeBinary, nullable=False))
     created_at: datetime = Field(default_factory=now)

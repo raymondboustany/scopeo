@@ -3,14 +3,15 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ChevronRight } from 'lucide-react'
 import { Card, CardHeader, RegChip } from '@/components/ui/primitives'
 import { REG_LABEL, REG_STYLE } from '@/components/ui/tokens'
-import { cn } from '@/lib/utils'
+import { cn, formatPct } from '@/lib/utils'
 import type { CrosswalkTheme, RegulationId } from '@/types/domain'
+import { tr } from '@/i18n'
 
 /**
- * Mutualisation — ce qu'une action unique permet de couvrir.
+ * Mutualisation : ce qu'une action unique permet de couvrir.
  *
  * Plutôt qu'un graphe de forces, deux lectures fixes :
- *  1. combien d'exigences unifiées sont partagées par 4, 3, 2 textes, ou
+ *  1. combien d'exigences unifiées sont partagées par 5, 4, 3, 2 textes, ou
  *     propres à un seul ;
  *  2. quelles combinaisons de textes reviennent, et avec quelles exigences
  *     (une lecture « UpSet » : une ligne par combinaison, des pastilles pour
@@ -53,25 +54,25 @@ export default function CrosswalkOverlap({
   return (
     <div className="grid gap-5 xl:grid-cols-[20rem_1fr]">
       <Card className="h-fit">
-        <CardHeader title="Effet de levier" subtitle="Exigences unifiées selon le nombre de textes qu'elles couvrent" />
+        <CardHeader title={tr('Effet de levier', 'Leverage')} subtitle={tr("Exigences unifiées selon le nombre de textes qu'elles couvrent", 'Unified requirements by number of texts covered')} />
         <div className="space-y-4 p-5">
           <div>
             <div className="text-3xl font-semibold tracking-tight text-ink">
-              {total ? Math.round((shared / total) * 100) : 0} %
+              {formatPct(total ? shared / total : 0)}
             </div>
             <p className="text-xs text-ink-3">
-              des exigences satisfont au moins deux textes à la fois : une action, plusieurs conformités.
+              {tr('des exigences satisfont au moins deux textes à la fois : une action, plusieurs conformités.', 'of requirements satisfy at least two texts at once: one action, several compliances.')}
             </p>
           </div>
           <ul className="space-y-2.5">
-            {[4, 3, 2, 1]
+            {[5, 4, 3, 2, 1]
               .filter((d) => d <= regs.length)
               .map((d, i) => {
                 const n = byDegree.get(d) ?? 0
                 return (
                   <li key={d}>
                     <div className="mb-1 flex items-center justify-between text-xs">
-                      <span className="text-ink-2">{d === 1 ? 'Propres à un texte' : `Communes à ${d} textes`}</span>
+                      <span className="text-ink-2">{d === 1 ? tr('Propres à un texte', 'Specific to one text') : tr(`Communes à ${d} textes`, `Shared by ${d} texts`)}</span>
                       <span className="font-semibold text-ink">{n}</span>
                     </div>
                     <div className="h-2 overflow-hidden rounded-full bg-overlay">
@@ -91,16 +92,16 @@ export default function CrosswalkOverlap({
       </Card>
 
       <Card>
-        <CardHeader title="Combinaisons de textes" subtitle="Une ligne par combinaison ; dépliez pour voir les exigences et ouvrir leur fiche" />
+        <CardHeader title={tr('Combinaisons de textes', 'Text combinations')} subtitle={tr('Une ligne par combinaison ; dépliez pour voir les exigences et ouvrir leur fiche', 'One row per combination; expand to see the requirements and open their card')} />
         <div className="grid grid-cols-[auto_1fr] items-center gap-x-4 border-b border-rule px-5 py-2">
           <div className="flex gap-1.5">
             {regs.map((r) => (
-              <span key={r} className="w-10 text-center text-[10px] font-semibold text-ink-3">
+              <span key={r} className="w-16 text-center text-[10px] font-semibold leading-tight text-ink-3">
                 {REG_LABEL[r]}
               </span>
             ))}
           </div>
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-ink-4">Exigences</span>
+          <span className="text-[10px] font-semibold uppercase tracking-wide text-ink-4">{tr('Exigences', 'Requirements')}</span>
         </div>
         <ul className="divide-y divide-rule">
           {rows.map((row) => {
@@ -117,7 +118,7 @@ export default function CrosswalkOverlap({
                     {regs.map((r) => {
                       const on = row.regs.includes(r)
                       return (
-                        <span key={r} className="flex w-10 justify-center">
+                        <span key={r} className="flex w-16 justify-center">
                           <span
                             className="size-3 rounded-full"
                             style={{ background: on ? REG_STYLE[r].hex : 'var(--c-overlay)' }}
@@ -143,7 +144,7 @@ export default function CrosswalkOverlap({
                           {row.regs.map((r) => (
                             <RegChip key={r} id={r} size="sm" />
                           ))}
-                          <span className="ml-1">{row.regs.length > 1 ? 'couverts ensemble par :' : 'seul, par :'}</span>
+                          <span className="ml-1">{row.regs.length > 1 ? tr('couverts ensemble par :', 'covered together by:') : tr('seul, par :', 'alone, by:')}</span>
                         </span>
                         {row.themes.map((t) => (
                           <button

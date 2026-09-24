@@ -5,9 +5,19 @@ import { DEFAULT_WEIGHTS, prioritise } from '@/engines/prioritisation'
 import { recyfCounts, recyfForCategory, scopeObligations, type ScopedObligation } from '@/engines/corpus'
 import { buildSnapshot, computeScores, measureProgress, type Scores } from '@/engines/scores'
 import { isComplete } from '@/data/questionnaire'
+import {
+  isoExclusionAlerts,
+  isoRecyfEquivalence,
+  isoSuggestions,
+  mergeCoverage,
+  type IsoContext,
+  type IsoExclusionAlert,
+  type IsoSuggestion,
+} from '@/engines/iso'
 import type {
   CoverageEntry,
   EntityRecord,
+  MeasureStatus,
   PrioritisedItem,
   PriorityWeights,
   QualificationResult,
@@ -39,11 +49,22 @@ export interface Scoping {
   measures: ReturnType<typeof measureProgress>
   nis2Category: 'essentielle' | 'importante' | null
   /**
-   * Le détail ANSSI s'impose-t-il ? Non pour une entité financière : DORA
-   * remplace alors les articles 21 et 23 de NIS 2 (article 4 de NIS 2).
+   * Les exigences ReCyF s'imposent-elles ? Non pour une entité financière :
+   * DORA remplace alors les articles 21 et 23 de NIS2 (article 4 de NIS2).
    */
   anssiApplies: boolean
   doraPrevails: boolean
+  /** Couverture effective : saisie manuelle, complétée des propositions ISO 27001. */
+  coverage: Record<string, CoverageEntry>
+  /** Statut des mesures ReCyF, y compris l'équivalence ISO reconnue par l'ANSSI. */
+  measureStatuses: Record<string, MeasureStatus>
+  iso: {
+    context: IsoContext
+    suggestions: Map<string, IsoSuggestion>
+    alerts: Map<string, IsoExclusionAlert>
+    /** Mesures ReCyF réputées en place par équivalence ISO. */
+    recyfEquivalence: Record<string, MeasureStatus>
+  }
 }
 
 export function deriveScoping(entity: EntityRecord | null, loading = false): Scoping {
@@ -52,13 +73,27 @@ export function deriveScoping(entity: EntityRecord | null, loading = false): Sco
   const obligations = entity ? scopeObligations(answers, qualification) : []
   const inScope = obligations.filter((o) => o.inScope)
   const weights: PriorityWeights = { ...DEFAULT_WEIGHTS, ...(entity?.weights ?? {}) }
-  const coverage = (entity?.coverage ?? {}) as Record<string, CoverageEntry>
+  const manual = (entity?.coverage ?? {}) as Record<string, CoverageEntry>
   const applicable = applicableRegulations(qualification)
+
+  // ISO 27001 : uniquement une fois le cadrage réglementaire établi.
+  const isoContext: IsoContext = {
+    profile: entity?.profile?.iso27001,
+    assessment: entity?.iso_controls,
+    applicable,
+    inScope,
+  }
+  const suggestions = qualification ? isoSuggestions(isoContext) : new Map<string, IsoSuggestion>()
+  const alerts = qualification ? isoExclusionAlerts(isoContext) : new Map<string, IsoExclusionAlert>()
+  const coverage = mergeCoverage(manual, suggestions)
+
   const prioritised = qualification ? prioritise({ qualification, coverage, weights, obligations: inScope }) : []
   const category = qualification?.nis2Category ?? null
   const recyf = recyfForCategory(category)
   const doraPrevails = qualification?.derived.doraPrevails === true
   const anssiApplies = applicable.includes('NIS2') && !doraPrevails
+  const recyfEquivalence = qualification && anssiApplies ? isoRecyfEquivalence(isoContext.profile, recyf) : {}
+  const measureStatuses = { ...recyfEquivalence, ...(entity?.measures ?? {}) }
 
   return {
     entity,
@@ -74,10 +109,13 @@ export function deriveScoping(entity: EntityRecord | null, loading = false): Sco
     weights,
     recyf,
     recyfCounts: recyfCounts(category),
-    measures: measureProgress(anssiApplies ? recyf : [], entity?.measures ?? {}),
+    measures: measureProgress(anssiApplies ? recyf : [], measureStatuses),
     nis2Category: category,
     anssiApplies,
     doraPrevails,
+    coverage,
+    measureStatuses,
+    iso: { context: isoContext, suggestions, alerts, recyfEquivalence },
   }
 }
 
@@ -107,7 +145,7 @@ export function useSnapshotSync() {
   const { entity, qualification, prioritised, applicable, readOnly } = scoping
   useEffect(() => {
     if (!entity || readOnly || !qualification) return
-    const next = buildSnapshot(entity.answers, qualification, prioritised, applicable)
+    const next = buildSnapshot(entity.answers, qualification, prioritised, applicable, entity.profile?.iso27001)
     const strip = (s: unknown) => {
       if (!s || typeof s !== 'object') return null
       const { generatedAt: _generatedAt, ...rest } = s as Record<string, unknown>

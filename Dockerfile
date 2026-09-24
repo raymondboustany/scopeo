@@ -14,7 +14,7 @@ RUN npx vite build
 FROM python:3.12-slim AS runtime
 
 LABEL org.opencontainers.image.title="Scopeo" \
-      org.opencontainers.image.description="Cadrage et diagnostic réglementaire RGPD, NIS 2, DORA et CRA" \
+      org.opencontainers.image.description="Cadrage et diagnostic réglementaire RGPD, NIS2, DORA et CRA" \
       org.opencontainers.image.licenses="MIT"
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

@@ -27,7 +27,7 @@ const profile: Answers = {
   notifie_rec: 'non',
   oiv: 'non',
   incidents_recents: 'aucun',
-  certification: 'non',
+  ia_roles: ['aucun'],
 }
 
 function run(coverage: Record<string, CoverageEntry> = {}, weights = DEFAULT_WEIGHTS) {
@@ -143,8 +143,8 @@ describe('restriction du corpus au profil', () => {
     expect(scoped.find((o) => o.id === 'RGPD-A44-49')!.inScope).toBe(true)
   })
 
-  it("écarte le régime NIS 2 de gestion des risques pour une entité financière soumise à DORA", () => {
-    // Article 4 de NIS 2 : DORA, lex specialis, se substitue sur ce champ.
+  it("écarte le régime NIS2 de gestion des risques pour une entité financière soumise à DORA", () => {
+    // Article 4 de NIS2 : DORA, lex specialis, se substitue sur ce champ.
     const financial: Answers = {
       ...profile,
       secteur: 'banque',

@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Scopeo est un outil de **cadrage et de diagnostic en amont**. Les fonctions d'audit
-        (vérification de preuves, maturité certifiante) et de suivi continu relèvent d'autres outils.
+        Scopeo est une plateforme de **cadrage et de diagnostic en amont**. Les fonctions d'audit
+        (vérification de preuves, maturité certifiante) et de suivi continu relèvent d'autres plateformes.
   - type: textarea
     id: problem
     attributes:

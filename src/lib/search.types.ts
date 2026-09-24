@@ -1,4 +1,6 @@
-export type SearchKind = 'obligation' | 'theme' | 'recyf' | 'echeance'
+import { tr } from '@/i18n'
+
+export type SearchKind = 'obligation' | 'theme' | 'recyf' | 'echeance' | 'iso'
 
 export interface SearchRecord {
   id: string
@@ -11,8 +13,9 @@ export interface SearchRecord {
 }
 
 export const KIND_LABEL: Record<SearchKind, string> = {
-  obligation: 'Obligation',
-  theme: 'Croisement',
+  obligation: tr('Obligation', 'Obligation'),
+  theme: tr('Croisement', 'Crosswalk'),
   recyf: 'ReCyF',
-  echeance: 'Échéance',
+  echeance: tr('Échéance', 'Deadline'),
+  iso: 'ISO 27001',
 }

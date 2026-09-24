@@ -6,6 +6,10 @@ import './styles/theme.css'
 import { App } from './app/App'
 
 import { useSession } from './lib/store'
+import { LANG, tr } from './i18n'
+
+document.documentElement.lang = LANG
+document.title = tr('Scopeo : cadrage réglementaire RGPD, NIS2, DORA, CRA, AI Act', 'Scopeo: regulatory scoping for GDPR, NIS2, DORA, CRA and the AI Act')
 
 // Le thème suit la préférence enregistrée ; clair par défaut.
 const applyTheme = (theme: 'light' | 'dark') => {

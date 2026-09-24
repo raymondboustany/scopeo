@@ -3,22 +3,43 @@ import { useEntityEditor } from '@/lib/queries'
 import { useScoping } from '@/lib/hooks'
 import { uid } from '@/lib/utils'
 import type { EntityNote, NoteAnchor, NoteTag } from '@/types/domain'
+import { tr } from '@/i18n'
 
 /**
  * Notes d'entretien.
  *
- * Une note est toujours posée quelque part — une question, une exigence, un
- * article — pour se relire dans son contexte. Son étiquette dit ce qu'elle
+ * Une note est toujours posée quelque part (une question, une exigence, un
+ * article) pour se relire dans son contexte. Son étiquette dit ce qu'elle
  * appelle : une vérification, une hypothèse retenue, une décision, une preuve
  * à obtenir. Les rapports reprennent les notes ouvertes en annexe.
  */
 
 export const TAG_META: Record<NoteTag, { label: string; plural: string; tone: 'caution' | 'accent' | 'positive' | 'brass' | 'neutral'; hint: string }> = {
-  verifier: { label: 'À vérifier', plural: 'Points à vérifier', tone: 'caution', hint: 'Une réponse ou un fait à confirmer auprès de l’entité.' },
-  hypothese: { label: 'Hypothèse', plural: 'Hypothèses retenues', tone: 'accent', hint: 'Ce que l’on a supposé faute d’information.' },
-  decision: { label: 'Décision', plural: 'Décisions', tone: 'positive', hint: 'Un arbitrage pris pendant l’entretien.' },
-  preuve: { label: 'Preuve demandée', plural: 'Preuves demandées', tone: 'brass', hint: 'Un document à obtenir pour étayer une réponse.' },
-  note: { label: 'Note', plural: 'Notes', tone: 'neutral', hint: 'Observation libre.' },
+  verifier: {
+    label: tr('À vérifier', 'To check'),
+    plural: tr('Points à vérifier', 'Points to check'),
+    tone: 'caution',
+    hint: tr('Une réponse ou un fait à confirmer auprès de l’entité.', 'An answer or fact to confirm with the entity.'),
+  },
+  hypothese: {
+    label: tr('Hypothèse', 'Assumption'),
+    plural: tr('Hypothèses retenues', 'Assumptions made'),
+    tone: 'accent',
+    hint: tr('Ce que l’on a supposé faute d’information.', 'What was assumed for lack of information.'),
+  },
+  decision: {
+    label: tr('Décision', 'Decision'),
+    plural: tr('Décisions', 'Decisions'),
+    tone: 'positive',
+    hint: tr('Un arbitrage pris pendant l’entretien.', 'A decision taken during the interview.'),
+  },
+  preuve: {
+    label: tr('Preuve demandée', 'Evidence requested'),
+    plural: tr('Preuves demandées', 'Evidence requested'),
+    tone: 'brass',
+    hint: tr('Un document à obtenir pour étayer une réponse.', 'A document to obtain to support an answer.'),
+  },
+  note: { label: tr('Note', 'Note'), plural: tr('Notes', 'Notes'), tone: 'neutral', hint: tr('Observation libre.', 'Free-form observation.') },
 }
 
 export function anchorRoute(a: NoteAnchor): string | null {

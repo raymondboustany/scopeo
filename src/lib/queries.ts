@@ -1,9 +1,10 @@
 import { useCallback, useEffect } from 'react'
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { create } from 'zustand'
-import { api, type EntityPatch, type UserInput } from './api'
+import { api, type EntityPatch, type RegisterInput } from './api'
 import { useSession } from './store'
-import type { EntityProfile, EntityRecord } from '@/types/domain'
+import type { EntityProfile, EntityRecord, UserProfile } from '@/types/domain'
+import { tr } from '@/i18n'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,7 +13,7 @@ export const queryClient = new QueryClient({
 })
 
 export const keys = {
-  users: ['users'] as const,
+  me: ['me'] as const,
   user: (id: string) => ['user', id] as const,
   entities: (userId: string) => ['entities', userId] as const,
   entity: (id: string) => ['entity', id] as const,
@@ -21,44 +22,97 @@ export const keys = {
 }
 
 // ---------------------------------------------------------------------------
-// Profils
+// Session et profil
 // ---------------------------------------------------------------------------
 
-export const useUsers = () => useQuery({ queryKey: keys.users, queryFn: api.users })
-
+/** Profil de la session en cours, vérifié par le serveur. */
 export function useCurrentUser() {
   const userId = useSession((s) => s.userId)
   return useQuery({
-    queryKey: keys.user(userId ?? '—'),
-    queryFn: () => api.user(userId!),
+    queryKey: [...keys.me, userId ?? 'none'],
+    queryFn: () => api.me(),
     enabled: Boolean(userId),
+    retry: false,
   })
 }
 
-export function useCreateUser() {
+/** Ouvre la session côté client une fois le serveur d'accord. */
+function useOpenSession() {
   const qc = useQueryClient()
+  const signIn = useSession((s) => s.signIn)
+  const setLastName = useSession((s) => s.setLastName)
+  return (user: UserProfile) => {
+    qc.clear()
+    if (!user.is_guest) setLastName(user.name)
+    signIn(user.id)
+  }
+}
+
+export function useLogin() {
+  const open = useOpenSession()
   return useMutation({
-    mutationFn: (input: UserInput) => api.createUser(input),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.users }),
+    mutationFn: ({ name, password }: { name: string; password: string }) => api.login(name, password),
+    onSuccess: open,
   })
+}
+
+export function useRegister() {
+  const open = useOpenSession()
+  return useMutation({ mutationFn: (input: RegisterInput) => api.register(input), onSuccess: open })
+}
+
+export function useSetupPassword() {
+  const open = useOpenSession()
+  return useMutation({
+    mutationFn: ({ name, password, confirm }: { name: string; password: string; confirm: string }) => api.setupPassword(name, password, confirm),
+    onSuccess: open,
+  })
+}
+
+export function useGuest() {
+  const open = useOpenSession()
+  return useMutation({ mutationFn: () => api.guest(), onSuccess: open })
+}
+
+/** Déconnexion : la session est détruite au serveur, pas seulement oubliée ici. */
+export function useLogout() {
+  const qc = useQueryClient()
+  const signOut = useSession((s) => s.signOut)
+  return useCallback(async () => {
+    await flushAll()
+    try {
+      await api.logout()
+    } finally {
+      signOut()
+      qc.clear()
+    }
+  }, [qc, signOut])
 }
 
 export function useUpdateUser() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: ({ id, patch }: { id: string; patch: Parameters<typeof api.updateUser>[1] }) => api.updateUser(id, patch),
-    onSuccess: (user) => {
-      qc.setQueryData(keys.user(user.id), user)
-      qc.invalidateQueries({ queryKey: keys.users })
-    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.me }),
+  })
+}
+
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: ({ current, password, confirm }: { current: string; password: string; confirm: string }) =>
+      api.changePassword(current, password, confirm),
   })
 }
 
 export function useDeleteUser() {
   const qc = useQueryClient()
+  const signOut = useSession((s) => s.signOut)
   return useMutation({
-    mutationFn: (id: string) => api.deleteUser(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.users }),
+    mutationFn: ({ id, password }: { id: string; password?: string }) => api.deleteUser(id, password),
+    onSuccess: () => {
+      signOut()
+      qc.clear()
+    },
   })
 }
 
@@ -69,7 +123,7 @@ export function useDeleteUser() {
 export function useEntities() {
   const userId = useSession((s) => s.userId)
   return useQuery({
-    queryKey: keys.entities(userId ?? '—'),
+    queryKey: keys.entities(userId ?? 'none'),
     queryFn: () => api.entities(userId!),
     enabled: Boolean(userId),
   })
@@ -77,7 +131,7 @@ export function useEntities() {
 
 export function useEntity(entityId: string | null) {
   return useQuery({
-    queryKey: keys.entity(entityId ?? '—'),
+    queryKey: keys.entity(entityId ?? 'none'),
     queryFn: () => api.entity(entityId!),
     enabled: Boolean(entityId),
   })
@@ -96,7 +150,7 @@ export function useCreateEntity() {
     onSuccess: (entity) => {
       qc.setQueryData(keys.entity(entity.id), entity)
       qc.invalidateQueries({ queryKey: keys.entities(userId!) })
-      qc.invalidateQueries({ queryKey: keys.user(userId!) })
+      qc.invalidateQueries({ queryKey: keys.me })
     },
   })
 }
@@ -109,7 +163,7 @@ export function useCopyDemo() {
     onSuccess: (entity) => {
       qc.setQueryData(keys.entity(entity.id), entity)
       qc.invalidateQueries({ queryKey: keys.entities(userId!) })
-      qc.invalidateQueries({ queryKey: keys.user(userId!) })
+      qc.invalidateQueries({ queryKey: keys.me })
     },
   })
 }
@@ -122,14 +176,14 @@ export function useDeleteEntity() {
     onSuccess: (_void, id) => {
       qc.removeQueries({ queryKey: keys.entity(id) })
       qc.invalidateQueries({ queryKey: keys.entities(userId!) })
-      qc.invalidateQueries({ queryKey: keys.user(userId!) })
+      qc.invalidateQueries({ queryKey: keys.me })
     },
   })
 }
 
 export function useRevisions(entityId: string | null) {
   return useQuery({
-    queryKey: keys.revisions(entityId ?? '—'),
+    queryKey: keys.revisions(entityId ?? 'none'),
     queryFn: () => api.revisions(entityId!),
     enabled: Boolean(entityId),
   })
@@ -174,7 +228,7 @@ async function flush(entityId: string) {
     if ('answers' in entry.patch) queryClient.invalidateQueries({ queryKey: keys.revisions(entityId) })
     useSaveStatus.setState({ state: 'saved', at: Date.now() })
   } catch (e) {
-    useSaveStatus.setState({ state: 'error', error: e instanceof Error ? e.message : 'Échec de l’enregistrement' })
+    useSaveStatus.setState({ state: 'error', error: e instanceof Error ? e.message : tr('Échec de l’enregistrement', 'Save failed') })
   }
 }
 
@@ -222,7 +276,7 @@ export function useEntityEditor() {
 
 export function usePublicView(token: string | undefined) {
   return useQuery({
-    queryKey: keys.public(token ?? '—'),
+    queryKey: keys.public(token ?? 'none'),
     queryFn: () => api.publicView(token!),
     enabled: Boolean(token),
     retry: false,

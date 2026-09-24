@@ -1,0 +1,295 @@
+{
+  "groups": {
+    "Rôles et responsabilités": "Roles and responsibilities",
+    "Politique de sécurité": "Security policy",
+    "Gestion de la conformité": "Compliance management",
+    "Cartographie de l'écosystème": "Ecosystem mapping",
+    "Sécurité dans les contrats": "Security in contracts",
+    "Cartographie": "Mapping",
+    "Maintien en condition": "Operational and security maintenance",
+    "Cloisonnement": "Segmentation",
+    "Filtrage": "Filtering",
+    "Identification": "Identification",
+    "Authentification": "Authentication",
+    "Droits d'accès": "Access rights",
+    "Comptes d'administration": "Administration accounts",
+    "Sécurité des annuaires": "Directory security"
+  },
+  "objectives": {
+    "1": {
+      "title": "Inventory of information systems",
+      "statement": "Draw up and keep up to date the list of all the entity's activities and services and of the information systems contributing to them. The security objectives apply to all these systems, except those which the entity shows, with a supporting risk analysis, are exposed neither to degradation or interruption of activities, nor to disclosure of sensitive information, nor to alteration of the information needed for the activities. Implementing security measures is not enough to justify an exclusion.",
+      "measures": {
+        "1.1-EI/EE": "List all activities and services, including those that do not ground the important or essential entity qualification; for each entry, identify an owner and list the information systems supporting it.",
+        "1.2-EI/EE": "Specify in this list the information systems excluded from the scope and record the justification for each exclusion.",
+        "1.3-EI/EE": "Validate and review the list annually, and as needed when activities change or a new system is put into service."
+      }
+    },
+    "2": {
+      "title": "Implementing a digital security governance framework",
+      "statement": "Define a governance framework under the responsibility of the chief executive, comprising an organisation, roles and responsibilities, compliance management processes, and an information systems security policy. The entity analyses its compliance, identifies gaps and draws up an action plan, followed over time, to correct them.",
+      "measures": {
+        "2.A.1-EI/EE": "The chief executive is responsible for digital security within the entity, and in particular for monitoring the compliance of information systems with the measures of the framework.",
+        "2.A.2-EE": "Appoint at least one person to advise and support the chief executive, who becomes ANSSI's preferred point of contact for all digital security matters.",
+        "2.A.3-EI/EE": "Define and implement a suitable organisation: digital security officer, responsibility matrix, committee structure.",
+        "2.B.1-EI/EE": "Define and implement an information systems security policy.",
+        "2.B.2-EI/EE": "The policy covers at least: governance and roles of internal and external staff, strategic orientations derived from the overall strategy, the chief executive's commitment to security and to meeting the legal requirements arising from the transposition of NIS2, and account taken of sector specificities.",
+        "2.B.3-EI/EE": "The chief executive approves the information systems security policy.",
+        "2.B.4-EI/EE": "Review the policy at least annually and update it upon major changes in the threat or in the business, technical or organisational context.",
+        "2.B.5-EI/EE": "Break the policy down into topic policies covering at least the use of encryption, physical and logical access control, review of the application of measures and account management.",
+        "2.C.1-EI/EE": "For each information system, carry out and keep up to date a compliance analysis against the framework, taking account of the security policy.",
+        "2.C.2-EI/EE": "The analysis identifies the gaps between the measures implemented and the measures of the framework.",
+        "2.C.3-EI/EE": "Draw up and follow an action plan correcting these gaps, with at least a reasonable deadline and an owner per action; justify any alternative measure adopted."
+      }
+    },
+    "3": {
+      "title": "Control of the ecosystem",
+      "statement": "Keep up to date the list of IT service providers and suppliers involved in the activities or services, with the scope and nature of each service, and put in place processes, notably contractual ones, ensuring that these services comply with the entity's obligations, in particular on risk management and incident notification.",
+      "measures": {
+        "3.A.1-EI/EE": "Define and keep up to date a map of the ecosystem containing at least the list of IT service providers and suppliers with which a legal or de facto relationship exists, and the list of interconnections with the entity's information systems.",
+        "3.A.2-EI/EE": "Record and keep up to date the contact details of at least one point of contact for each entry in the map.",
+        "3.B.1-EI/EE": "Ensure the service complies with the entity's obligations and obtain the corresponding contractual assurances: security assurance plan, remote maintenance charter, monitoring indicators.",
+        "3.B.2-EI/EE": "Periodically check the compliance of the service, relying where relevant on the audits provided for in measures 17.2-EE, 17.4-EE and 17.5-EE."
+      }
+    },
+    "4": {
+      "title": "Integrating digital security into human resources management",
+      "statement": "Define awareness procedures for users, in particular executives, and training for people holding positions of responsibility in the digital field. Integrate digital security into human resources management, from a staff member's arrival to their departure.",
+      "measures": {
+        "4.1-EI/EE": "Define and implement an information systems acceptable use charter, binding on every user; it may include specific provisions for administrators and cover systems excluded from the scope.",
+        "4.2-EI/EE": "Define and implement a digital security awareness programme for all users, with actions throughout their time in the entity.",
+        "4.3-EE": "Include security clauses in employment contracts, in particular confidentiality clauses applying during and after the contract.",
+        "4.4-EI/EE": "Define a process for managing arrivals, departures and changes of role of staff and third parties: acknowledgement of the rules, granting of access, update upon a change, and on departure return of equipment and deactivation of all logical and physical access.",
+        "4.5-EI/EE": "Define and implement, for positions of responsibility in the digital field, a programme of dedicated training suited to those responsibilities."
+      }
+    },
+    "16": {
+      "title": "Implementing a risk-based approach",
+      "statement": "Implement a risk-based approach under the responsibility of the chief executive, making it possible to know and follow the evolution of the risks to information systems, to define and follow the security measures intended to control them, and to formally accept residual risks.",
+      "measures": {
+        "16.1-EE": "Define, implement and keep up to date risk-based governance ensuring that digital risk is taken into account by the chief executive and business owners, and that adequate financial, human and technical resources are allocated.",
+        "16.2-EE": "Ensure each information system is covered by a risk analysis; this can be met by an analysis per activity or service covering all the systems supporting it.",
+        "16.3-EE": "Base the analysis on the security policy and sector specificities, control of the ecosystem, control of the information system, the compliance approach and audits. The EBIOS Risk Manager method may be used.",
+        "16.4-EE": "Validate the analysis, accept residual risks and implement the action plan; review the analysis at least every three years and upon an incident or major change in context."
+      }
+    },
+    "17": {
+      "title": "Information systems security audit",
+      "statement": "Carry out, or have carried out, at regular and planned intervals, security audits verifying that the security objectives are met and assessing the security level of information systems.",
+      "equivalence": "Using an information systems security audit provider qualified by ANSSI can be relied on during an inspection, provided the scope of the service covers the application of corrective measures.",
+      "measures": {
+        "17.1-EE": "Define and implement an audit programme for all information systems, whose depth and frequency take account of the risk analysis, criticality and exposure of each system.",
+        "17.2-EE": "The audit independently verifies that regulatory objectives are met (compliance with the measures or implementation of alternative measures) and assesses the security level against known threats and vulnerabilities.",
+        "17.3-EE": "The audit includes at least one activity among: penetration test covering exposed interfaces, configuration audit, architecture audit, organisational and physical audit, and where relevant code audit.",
+        "17.4-EE": "The audit report presents a summary of compliance and security level, the non-compliance findings and vulnerabilities identified, and recommendations to remedy them.",
+        "17.5-EE": "Define and implement an action plan correcting non-compliance and vulnerabilities, with a reasonable deadline and an owner per action."
+      }
+    },
+    "5": {
+      "title": "Control of information systems",
+      "statement": "Have at least one map of the information systems detailed enough to facilitate their operational and security maintenance and improve responsiveness in case of incident. Define and implement a maintenance process aimed at applying security patches and limiting exposure to vulnerabilities.",
+      "measures": {
+        "5.A.1-EI/EE": "Draw up and keep up to date at least one map of the information systems whose level of detail allows their maintenance and a response without undue delay to an incident, in particular by identifying vulnerable or affected resources.",
+        "5.B.1-EE": "Draw up, implement and keep up to date a procedure for the operational and security maintenance of hardware and software resources.",
+        "5.B.2-EI/EE": "Keep the knowledge bases of anti-malware tools up to date: antivirus databases, signatures of endpoint detection solutions.",
+        "5.B.3-EI/EE": "Monitor vulnerabilities, patches and mitigation measures published notably by suppliers, a mandated provider, CERT-FR or CSIRTs.",
+        "5.B.4-EI/EE": "Start patch installation without delay and apply security patches without undue delay on resources exposed to third-party systems and on workstations.",
+        "5.B.5-EE": "Plan and install security patches on all resources, including those not exposed to third-party information systems.",
+        "5.B.6-EI/EE": "Where technical or operational reasons prevent a patch from being installed, implement mitigation measures: isolation of the resource, reinforced access control.",
+        "5.B.7-EI/EE": "Keep software resources, including embedded ones, in versions supported by their supplier and containing security updates.",
+        "5.B.8-EI/EE": "Check that any new software version is downloaded from the official resources provided by the publisher or supplier.",
+        "5.B.9-EI/EE": "Where a supported version cannot be installed, implement measures reducing the risks of using an obsolete version."
+      }
+    },
+    "6": {
+      "title": "Control of physical access to premises",
+      "statement": "Put in place access control, access rights management and visitor management mechanisms so that only authorised people access the premises, in particular technical rooms and rooms hosting data servers.",
+      "measures": {
+        "6.1-EI/EE": "Put in place measures limiting access by unauthorised people to premises, server rooms and technical rooms: visitor log, access badges.",
+        "6.2-EE": "Ensure the physical protection of premises, server rooms and technical rooms (video surveillance, guarding, alarm) to prevent, monitor and respond to unauthorised access.",
+        "6.3-EE": "Grant physical access rights according to what is strictly necessary to perform duties.",
+        "6.4-EI/EE": "Ensure external people accessing technical rooms and server rooms are escorted or duly authorised."
+      }
+    },
+    "7": {
+      "title": "Securing the architecture of information systems",
+      "statement": "Identify the exposure needs of services and interfaces and the interconnection needs with third-party information systems, and filter incoming and outgoing communications. Essential entities also segment their systems into consistent security zones and control communications between these zones.",
+      "measures": {
+        "7.A.1-EI/EE": "Physically or logically segment all information systems from other systems, including those excluded from the scope and third-party systems.",
+        "7.A.2-EE": "Physically or logically segment each information system from the others, including those excluded from the scope and third-party systems.",
+        "7.A.3-EE": "Examine, for each system, whether to define subsystems grouping resources of homogeneous sensitivity, exposure and security; justify the absence of subsystems.",
+        "7.A.4-EE": "Physically or logically segment the identified subsystems from each other.",
+        "7.A.5-EE": "Implement at least one \"outbound gateway\" subsystem allowing access to third-party systems and authenticating, filtering and logging that access.",
+        "7.A.6-EE": "Implement at least one \"inbound gateway\" subsystem allowing resources to be exposed to third-party systems and filtering and logging inbound access.",
+        "7.A.7-EI/EE": "Establish only the interconnections needed for activities and services or for maintenance, between all information systems and third-party systems or systems excluded from the scope.",
+        "7.A.8-EE": "Apply the same restriction at the level of each information system and between subsystems.",
+        "7.B.1-EI/EE": "Define and document the communications needed for activities and services and for maintenance, flowing between information systems and third-party or excluded systems.",
+        "7.B.2-EE": "Define and document the necessary communications flowing between subsystems of the same information system.",
+        "7.B.3-EI/EE": "Implement filtering rules at interconnections allowing only the identified communications; block all others by default.",
+        "7.B.4-EI/EE": "Filter, through one or more dedicated firewalls, at least the communications between the entity's information systems and third-party systems.",
+        "7.B.5-EI/EE": "Review the technical implementation of filtering rules annually."
+      }
+    },
+    "8": {
+      "title": "Securing remote access to information systems",
+      "statement": "Put in place identification and authentication mechanisms for people and automated processes accessing information systems from third-party systems, as well as mechanisms securing the communication channel, entry and exit points, and access.",
+      "measures": {
+        "8.1-EI/EE": "Protect access made through a third-party information system with encryption mechanisms that follow ANSSI recommendations: TLS or IPsec virtual private network, encrypted application protocols.",
+        "8.2-EI/EE": "Protect such access, when made by authorised staff and providers, with an authentication mechanism compliant with the authentication measures.",
+        "8.3-EE": "The authentication mechanism for such access is multi-factor and relies on at least one knowledge factor, for example a smart card and a PIN.",
+        "8.4-EE": "Where multi-factor authentication cannot be implemented for technical or operational reasons, put in place measures reducing the associated risk.",
+        "8.5-EE": "Permanently protect the mass storage of workstations and mobile devices used for remote access from an uncontrolled location, with encryption and authentication in line with the state of the art recommended by ANSSI."
+      }
+    },
+    "9": {
+      "title": "Protecting information systems against malware",
+      "statement": "Implement protection mechanisms against malware on information system resources. Essential entities also ensure that only hardware they manage, or whose management they have entrusted, connects to information systems, which in practice forbids the use of personal devices.",
+      "measures": {
+        "9.1-EI/EE": "Define the hardware resources, in particular endpoints, authorised to connect to information systems. This measure allows the use of personal devices.",
+        "9.2-EE": "Only allow the connection of hardware resources managed by the entity or its mandated provider and taking part in activities, services or maintenance. This measure forbids the use of personal devices.",
+        "9.3-EI/EE": "Implement organisational or technical measures preventing the connection of hardware resources other than those identified in measure 9.1-EI/EE.",
+        "9.4-EE": "Implement measures preventing the connection of resources other than those identified in measure 9.2-EE.",
+        "9.5-EI/EE": "Only allow the rewritable removable media needed for activities and services or for maintenance.",
+        "9.6-EI/EE": "Equip workstations, servers and mobile devices processing data from external sources with protection mechanisms against malware execution (antivirus, endpoint detection).",
+        "9.7-EI/EE": "Scan data from external sources for malware as soon as it is received: email gateway scanning attachments, decontamination station for removable media."
+      }
+    },
+    "10": {
+      "title": "User identity and access management",
+      "statement": "Implement identification and authentication mechanisms for users and automated processes, as well as rights management processes allowing rights to be granted according to operational need, revoked upon a change of assignment and the account deactivated upon departure.",
+      "measures": {
+        "10.A.1-EI/EE": "Assign individual accounts to users and automated processes accessing resources; a user may have several individual accounts.",
+        "10.A.2-EI/EE": "Reserve the use of an individual account to the user or process to which it was assigned.",
+        "10.A.3-EI/EE": "Where individual accounts cannot be created, put in place measures reducing the risk of shared accounts and ensuring traceability of their use.",
+        "10.A.4-EI/EE": "Public access to freely published information does not require accounts to be created.",
+        "10.A.5-EI/EE": "Deactivate accounts that have become unnecessary within the deadlines set by the account management policy.",
+        "10.A.6-EI/EE": "Review accounts at least annually, checking compliance with the identification measures and correcting anomalies.",
+        "10.B.1-EI/EE": "Protect access to resources with an authentication mechanism involving at least one secret.",
+        "10.B.2-EI/EE": "Change default secrets before a resource is put into service, and make sure with the supplier that the means and rights to do so are available.",
+        "10.B.3-EI/EE": "Renew the secret of a shared account whenever a user is removed from that account.",
+        "10.B.4-EI/EE": "Restrict knowledge of the secret to authorised users only, where relevant using a password vault.",
+        "10.B.5-EI/EE": "Make authentication factors compliant with ANSSI recommendations on complexity and renewal frequency, taking account of the limits of the resource.",
+        "10.B.6-EI/EE": "Where the secret cannot be changed, implement appropriate access control and measures reducing the risk of a fixed secret.",
+        "10.B.7-EE": "Under this exception, also implement measures ensuring the traceability of access.",
+        "10.C.1-EI/EE": "Only grant rights to authenticated users and automated processes.",
+        "10.C.2-EI/EE": "Grant each user or process only the access rights to resources needed for activities and services or for maintenance.",
+        "10.C.3-EI/EE": "For each resource, grant rights only to users and processes showing a need in light of their duties.",
+        "10.C.4-EI/EE": "Review access rights at least annually and correct anomalies."
+      }
+    },
+    "11": {
+      "title": "Control of information systems administration",
+      "statement": "Have administration accounts dedicated exclusively to that use and used only by authorised people. Essential entities also secure the administration of their directories, relying on ANSSI recommendations.",
+      "measures": {
+        "11.A.1-EI/EE": "Perform administration actions only from administration accounts, and use these accounts only for administration actions.",
+        "11.A.2-EI/EE": "Administration accounts are used only by administrators or authorised people.",
+        "11.A.3-EI/EE": "Apply the identity and access management measures to administration accounts.",
+        "11.A.4-EE": "Use an administration account only to connect to the resources it administers or to an administration resource.",
+        "11.A.5-EI/EE": "Where an administration action cannot be performed from a dedicated account, implement measures controlling these actions and reducing the risk.",
+        "11.A.6-EE": "Draw up and keep up to date the list of information systems administration accounts.",
+        "11.A.7-EE": "Upon any change to an administration account, check that rights are consistent with usage needs and restrict them to the functional and technical scope of the account, preferably through groups.",
+        "11.B.1-EI/EE": "Apply security patches without undue delay to the directories managing users or resources.",
+        "11.B.2-EE": "Identify, for each directory, the resources forming its \"core of trust\": the directory, the resources hosting it or allowing control of it to be taken.",
+        "11.B.3-EE": "Perform the administration of a core of trust from administration accounts dedicated to that use.",
+        "11.B.4-EE": "Perform these actions from resources dedicated exclusively to the administration of cores of trust.",
+        "11.B.5-EE": "Forbid connections from outside a core of trust to the administration resources, with a filtering device on these resources.",
+        "11.B.6-EE": "Review directory configuration annually to identify any unnecessary or abnormal element, preferably with an automated tool.",
+        "11.B.7-EE": "Implement ANSSI recommendations on the core of trust where they exist: hardening guides, incident response guides, technical memos."
+      }
+    },
+    "18": {
+      "title": "Secure configuration of resources",
+      "statement": "Limit the attack surface by installing and keeping only the necessary software resources, and by configuring resources securely, relying on the recommendations of ANSSI, the publisher or the manufacturer.",
+      "measures": {
+        "18.1-EE": "Install and keep only the software resources needed for activities and services or for maintenance, for example through a centralised configuration template.",
+        "18.2-EE": "Where a software resource cannot be disabled or uninstalled, implement measures reducing the associated risk.",
+        "18.3-EE": "Configure resources securely, relying on the recommendations of the publisher, the manufacturer or ANSSI.",
+        "18.4-EE": "Carry out an annual configuration review checking that the previous measures are applied, preferably with automated tools."
+      }
+    },
+    "19": {
+      "title": "Administration from dedicated resources",
+      "statement": "Put in place, for the administration of information systems, controlled administration workstations compliant with ANSSI recommendations, as well as securing and segmentation of the flows dedicated to this activity.",
+      "equivalence": "Using a secure administration and maintenance service qualified by ANSSI can be relied on for measures 19.2 to 19.7 and 19.10 to 19.12.",
+      "measures": {
+        "19.1-EE": "Perform administration actions through a dedicated administration network.",
+        "19.2-EE": "Have the resources of administration networks managed and configured by the entity or its mandated provider.",
+        "19.3-EE": "Use the hardware resources of administration networks only for administration actions.",
+        "19.4-EE": "Use the physical workstation for administration actions only for that purpose.",
+        "19.5-EE": "Administrators connect to the administration network from a physical workstation dedicated exclusively to administration.",
+        "19.6-EE": "Where a dedicated workstation cannot be provided, implement hardening and segmentation measures isolating the administration operating system from the one used for other actions, in line with ANSSI recommendations.",
+        "19.7-EE": "Connect administration networks to administered resources through a dedicated physical network link, and administer these resources through their physical administration interface.",
+        "19.8-EE": "Apply to the administration network the same segmentation and filtering rules as those applied between and within information systems.",
+        "19.9-EE": "Where a resource cannot be administered through a physical link or physical administration interface, implement logical risk reduction measures in line with ANSSI recommendations.",
+        "19.10-EE": "Protect communications associated with administration actions with encryption and authentication mechanisms in line with the state of the art recommended by ANSSI.",
+        "19.11-EE": "Segment administration communications transiting over non-dedicated networks with encryption and authentication mechanisms, for example encrypted tunnels.",
+        "19.12-EE": "Where encryption or authentication of these communications is impossible, implement measures protecting the confidentiality and integrity of the flows and strengthening control and traceability of administration actions."
+      }
+    },
+    "12": {
+      "title": "Identifying and responding to security incidents",
+      "statement": "Implement a suitable organisation, processes and tools to prepare for and respond to security events likely to affect the performance of activities or the provision of services.",
+      "measures": {
+        "12.1-EE": "Draw up, keep up to date and implement a procedure for handling security incidents affecting information systems.",
+        "12.2-EE": "Implement tools to collect reports from employees, customers and users of activities and services, and contracted providers and suppliers.",
+        "12.3-EI/EE": "Define and implement mechanisms to analyse and qualify reported events and identify potential or actual incidents.",
+        "12.4-EE": "Define and implement organisational and technical mechanisms to respond to an incident and limit the consequences for service provision; include them where relevant in continuity and recovery plans.",
+        "12.5-EE": "Ensure a root-cause analysis is carried out after each incident, aimed at defining measures limiting the likelihood of a new incident or its impact, and keep evidence of it.",
+        "12.6-EI/EE": "Keep technical records that may serve as evidence in legal proceedings, for a period appropriate in light of personal data protection and the purpose of the processing.",
+        "12.7-EE": "Protect technical records relating to incident analyses from an incident that would make them unusable, for example through offline storage against ransomware."
+      }
+    },
+    "20": {
+      "title": "Security monitoring of information systems",
+      "statement": "Size and operate the system supporting security monitoring in line with operational capacity, so as to process logs and events without undue delay and within 24 hours at most; implement continuous improvement of threat scenario coverage; keep events and logs for at least three months, without prejudice to other legal obligations, in particular on personal data protection.",
+      "equivalence": "Using a security incident detection service qualified by ANSSI can be relied on for the measures on sizing, control of the architecture and collection.",
+      "measures": {
+        "20.1-EE": "Size and operate the system supporting security monitoring in line with the teams' operational capacity, so as to process logs and events without undue delay and within 24 working hours at most.",
+        "20.2-EE": "Draw up and implement a continuous improvement approach for monitoring: additional collection sources, improved processes, centralisation, correlation, additional threat scenarios.",
+        "20.3-EE": "Control, directly or through the mandated provider, the architecture and configuration of the system supporting monitoring: collection, analysis, investigation and reporting chains.",
+        "20.4-EE": "Collect the monitoring data and security events useful for detecting the main threat scenarios, reflecting the variety of the information system's activities: network, system, application, user.",
+        "20.5-EE": "Keep monitoring data and security events for at least three months, without prejudice to other legal and regulatory obligations, in particular the General Data Protection Regulation.",
+        "20.6-EE": "Protect monitoring data and security events from an incident making them unusable, for example through offline storage."
+      }
+    },
+    "13": {
+      "title": "Business continuity and recovery",
+      "statement": "Implement operational backup and restoration mechanisms and test them at least once a year. Essential entities define and keep up to date business continuity and recovery plans suited to the needs of their activities and services.",
+      "measures": {
+        "13.1-EI/EE": "Define and implement backup and restoration procedures for information systems and the data they handle.",
+        "13.2-EI/EE": "Test backup and restoration processes at least once a year, to check that backups are properly made and properly restored.",
+        "13.3-EI/EE": "Protect backups from an incident making them unusable, for example through offline storage against ransomware.",
+        "13.4-EE": "Define and document, for each activity and service, the maximum tolerable downtime and the recovery point for data.",
+        "13.5-EI/EE": "Size backup mechanisms to meet the availability needs of the various services and activities.",
+        "13.6-EE": "Define and implement a business continuity plan and a recovery plan suited to cyber crisis scenarios and consistent with the maximum tolerable downtime and recovery point.",
+        "13.7-EE": "Base the identification of continuity measures on the ecosystem map, the incident management procedure and the cyber crisis management procedure."
+      }
+    },
+    "14": {
+      "title": "Responding to cyber crises",
+      "statement": "Implement a suitable organisation, processes and tools to prepare for and respond to cyber crises, and keep information on relevant external stakeholders available to the authorities. Essential entities hold lessons-learned reviews after each drill, exercise or real crisis.",
+      "measures": {
+        "14.1-EI/EE": "Define, keep up to date and implement a crisis management procedure for security incidents requiring a switch to crisis mode.",
+        "14.2-EI/EE": "Keep up to date a printed list of the people who can be mobilised for crisis management on digital security matters, with their contact details.",
+        "14.3-EI/EE": "Make this list accessible in a format suited to the nature of the crisis: on paper if information systems are unavailable, in digital form if the paper version is not.",
+        "14.4-EI/EE": "Keep up to date a directory of the external stakeholders relevant to crisis management, based on the ecosystem map.",
+        "14.5-EE": "Hold lessons-learned reviews identifying areas for improvement and the associated measures after a drill, an exercise or a real crisis.",
+        "14.6-EE": "Define, keep up to date and implement criteria for activating and deactivating the crisis management set-up that take cyber threats into account.",
+        "14.7-EE": "Define, keep up to date and implement crisis management procedures and mechanisms suited to the cyber threat, relying on ANSSI recommendations.",
+        "14.8-EE": "Define and implement measures to isolate, protect and where relevant rebuild the information systems concerned, ready to be activated in case of incident, taking account of outsourced infrastructure and services.",
+        "14.9-EE": "Define a communication strategy suited to cyber crises: scenarios, organisation chart, steering tools and key messages on sensitive topics.",
+        "14.10-EE": "Ensure backup means of communication, secured if possible, are available when the usual means are unavailable."
+      }
+    },
+    "15": {
+      "title": "Exercises, tests and drills",
+      "statement": "Carry out exercises, tests and drills at regular intervals to check the ability of the organisation, processes, tools and preparation to deal with security incidents and cyber crises.",
+      "measures": {
+        "15.1-EI/EE": "Raise the awareness of the people who can be mobilised in the crisis management set-up and hold at least a tabletop exercise, at a frequency set by the entity.",
+        "15.2-EE": "Define and implement a training strategy listing the actors, the exercises, the objectives, the means of verification, the priority scenarios and the follow-up committee structure.",
+        "15.3-EE": "Have this strategy cover the handling of alerts on incidents, vulnerabilities and threats, business continuity and recovery, and cyber crisis management.",
+        "15.4-EE": "Break the strategy down into a three-year training and exercise programme specifying frequency, nature and objectives, allowing incident management, crisis management, cooperation with the ecosystem and the cyber part of continuity and recovery plans to be tested."
+      }
+    }
+  }
+}

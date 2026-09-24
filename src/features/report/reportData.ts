@@ -1,5 +1,5 @@
 import type { Scoping } from '@/lib/hooks'
-import type { CoverageLevel, EntityNote, EntityProfile, PrioritisedItem, RegulationId, TimelineEvent } from '@/types/domain'
+import type { CoverageLevel, EntityNote, EntityProfile, IsoProfile, PrioritisedItem, RegulationId, TimelineEvent } from '@/types/domain'
 import { REGULATION_ORDER, REGULATIONS } from '@/data/regulations'
 import { CROSSWALK } from '@/data/crosswalk'
 import { RECURRING_DUTIES } from '@/data/timeline'
@@ -10,11 +10,14 @@ import { WAVES, WEIGHT_LABELS } from '@/engines/prioritisation'
 import { DOMAIN_LABELS } from '@/engines/scores'
 import { authoritiesFor, NOTIFICATION_DELAYS, readiness } from '@/engines/incidents'
 import { nextMilestones, relevantEvents } from '@/engines/alerts'
+import { isoCertificateValid } from '@/engines/scores'
+import { isoProgress } from '@/engines/iso'
+import { COLON, tr } from '@/i18n'
 
 /**
  * Données des rapports.
  *
- * Tout ce qu'impriment la note COMEX et le rapport complet est calculé ici,
+ * Tout ce qu'impriment la note de synthèse et le rapport complet est calculé ici,
  * une seule fois, à partir de la vue dérivée de l'entité. Les documents ne
  * font que mettre en page : aucun calcul n'y est dupliqué.
  */
@@ -72,6 +75,15 @@ export interface ReportData {
   readiness: { label: string; ok: boolean }[]
   contacts: { role: string; name: string; title: string; phone: string; email: string }[]
   measures: { total: number; en_place: number; partiel: number; absent: number } | null
+  /** Démarche ISO 27001 : badge de certification et état du module. */
+  iso: {
+    profile: IsoProfile
+    certified: boolean
+    certificateValid: boolean
+    controlsAssessed: number
+    exclusions: number
+    prefilled: number
+  } | null
   weights: { label: string; value: number }[]
   decisions: string[]
   headline: string
@@ -88,19 +100,19 @@ function distribution(items: PrioritisedItem[]): Distribution {
 const ESCALATION = ['rssi', 'dpo', 'direction', 'juridique', 'communication', 'autre']
 
 const ROLE_LABEL: Record<string, string> = {
-  rssi: 'RSSI',
+  rssi: tr('RSSI', 'CISO'),
   dpo: 'DPO',
-  direction: 'Direction',
-  juridique: 'Juridique',
-  communication: 'Communication',
-  autre: 'Autre',
+  direction: tr('Direction', 'Management'),
+  juridique: tr('Juridique', 'Legal'),
+  communication: tr('Communication', 'Communications'),
+  autre: tr('Autre', 'Other'),
 }
 
 export function buildReportData(s: Scoping): ReportData {
   const entity = s.entity!
   const q = s.qualification!
   const now = new Date()
-  const coverageMap = entity.coverage ?? {}
+  const coverageMap = s.coverage
 
   const items = s.prioritised.map((p) => ({ ...p, owner: coverageMap[p.themeId]?.owner, targetDate: coverageMap[p.themeId]?.targetDate }))
 
@@ -146,10 +158,10 @@ export function buildReportData(s: Scoping): ReportData {
   ).map((t) => ({
     code: t.code,
     title: t.title,
-    relation: t.relation === 'divergence' ? 'Divergence' : 'Hiérarchie',
+    relation: t.relation === 'divergence' ? tr('Divergence', 'Divergence') : tr('Hiérarchie', 'Precedence'),
     summary: t.summary,
     rule: t.strictest
-      ? `${t.strictest.regulation === 'NIS2' ? 'NIS 2' : t.strictest.regulation} commande : ${t.strictest.rule}`
+      ? `${REGULATIONS[t.strictest.regulation].shortName} ${tr('commande', 'prevails')}${COLON}${t.strictest.rule}`
       : t.precedence
         ? t.precedence.basis
         : null,
@@ -179,26 +191,84 @@ export function buildReportData(s: Scoping): ReportData {
   const decisions: string[] = []
   if (wave1.length > 0)
     decisions.push(
-      `Valider la vague 1 (${wave1.length} exigence${wave1.length > 1 ? 's' : ''}, 0 à 3 mois) et le budget associé.`,
+      tr(
+        `Valider la vague 1 (${wave1.length} exigence${wave1.length > 1 ? 's' : ''}, 0 à 3 mois) et le budget associé.`,
+        `Approve wave 1 (${wave1.length} requirement${wave1.length > 1 ? 's' : ''}, 0 to 3 months) and its budget.`,
+      ),
     )
-  if (tracking && unowned > 0) decisions.push(`Désigner un responsable pour ${unowned} exigence${unowned > 1 ? 's' : ''} en écart sans porteur identifié.`)
+  if (tracking && unowned > 0)
+    decisions.push(
+      tr(
+        `Désigner un responsable pour ${unowned} exigence${unowned > 1 ? 's' : ''} en écart sans porteur identifié.`,
+        `Assign an owner to ${unowned} requirement${unowned > 1 ? 's' : ''} with a gap and no identified owner.`,
+      ),
+    )
   if (g.evaluated < g.themes)
-    decisions.push(`Faire compléter l'évaluation : ${g.themes - g.evaluated} exigence${g.themes - g.evaluated > 1 ? 's' : ''} restent à évaluer.`)
+    decisions.push(
+      tr(
+        `Faire compléter l'évaluation : ${g.themes - g.evaluated} exigence${g.themes - g.evaluated > 1 ? 's' : ''} restent à évaluer.`,
+        `Have the assessment completed: ${g.themes - g.evaluated} requirement${g.themes - g.evaluated > 1 ? 's' : ''} still to assess.`,
+      ),
+    )
   const missing = ready.filter((r) => !r.ok)
-  if (missing.length > 0) decisions.push(`Compléter la préparation au signalement : ${missing.map((m) => m.label.toLowerCase()).join(', ')}.`)
+  if (missing.length > 0)
+    decisions.push(
+      tr(
+        `Compléter la préparation au signalement : ${missing.map((m) => m.label.toLowerCase()).join(', ')}.`,
+        `Complete reporting readiness: ${missing.map((m) => m.label.toLowerCase()).join(', ')}.`,
+      ),
+    )
   const toCheck = (entity.notes ?? []).filter((n) => !n.resolved && n.tag === 'verifier').length
-  if (toCheck > 0) decisions.push(`Lever ${toCheck} point${toCheck > 1 ? 's' : ''} resté${toCheck > 1 ? 's' : ''} à vérifier lors du cadrage (voir l'annexe du rapport complet).`)
+  if (toCheck > 0)
+    decisions.push(
+      tr(
+        `Lever ${toCheck} point${toCheck > 1 ? 's' : ''} resté${toCheck > 1 ? 's' : ''} à vérifier lors du cadrage (voir l'annexe du rapport complet).`,
+        `Clear ${toCheck} point${toCheck > 1 ? 's' : ''} left to check during scoping (see the appendix of the full report).`,
+      ),
+    )
+  if (s.iso.alerts.size > 0)
+    decisions.push(
+      tr(
+        `Arbitrer ${s.iso.alerts.size} exigence${s.iso.alerts.size > 1 ? 's' : ''} obligatoire${s.iso.alerts.size > 1 ? 's' : ''} dont le contrôle ISO 27001 correspondant a été exclu de la démarche.`,
+        `Decide on ${s.iso.alerts.size} mandatory requirement${s.iso.alerts.size > 1 ? 's' : ''} whose matching ISO 27001 control was excluded from the initiative.`,
+      ),
+    )
   if (s.applicable.includes('NIS2'))
-    decisions.push("Suivre l'adoption de la loi de transposition de NIS 2 et arrêter le calendrier de mise en conformité qui en découlera.")
+    decisions.push(
+      tr(
+        "Suivre l'adoption de la loi de transposition de NIS2 et arrêter le calendrier de mise en conformité qui en découlera.",
+        'Follow the adoption of the NIS2 transposition act and set the resulting compliance timetable.',
+      ),
+    )
 
-  const texts = s.applicable.map((r) => (r === 'NIS2' ? 'NIS 2' : r)).join(', ')
+  const texts = s.applicable.map((r) => REGULATIONS[r].shortName).join(', ')
+  const pct = Math.round(g.score * 100)
   const headline =
     s.applicable.length === 0
-      ? "Aucun des quatre textes n'est retenu comme applicable au vu des éléments déclarés."
-      : `${s.applicable.length} texte${s.applicable.length > 1 ? 's' : ''} s'applique${s.applicable.length > 1 ? 'nt' : ''} (${texts}), soit ${g.themes} exigences unifiées. ` +
+      ? tr("Aucun des cinq textes n'est retenu comme applicable au vu des éléments déclarés.", 'None of the five texts applies based on the information provided.')
+      : tr(
+          `${s.applicable.length} texte${s.applicable.length > 1 ? 's' : ''} s'applique${s.applicable.length > 1 ? 'nt' : ''} (${texts}), soit ${g.themes} exigences unifiées. `,
+          `${s.applicable.length} text${s.applicable.length > 1 ? 's apply' : ' applies'} (${texts}), i.e. ${g.themes} unified requirements. `,
+        ) +
         (g.evaluated === 0
-          ? "L'évaluation de l'existant reste à conduire."
-          : `Couverture déclarée : ${Math.round(g.score * 100)} % ; ${dist.absent} exigence${dist.absent > 1 ? 's' : ''} sans aucune mesure, ${dist.partiel} partiellement couverte${dist.partiel > 1 ? 's' : ''}.`)
+          ? tr("L'évaluation de l'existant reste à conduire.", 'The assessment of the current state remains to be done.')
+          : tr(
+              `Couverture déclarée : ${pct} % ; ${dist.absent} exigence${dist.absent > 1 ? 's' : ''} sans aucune mesure, ${dist.partiel} partiellement couverte${dist.partiel > 1 ? 's' : ''}.`,
+              `Reported coverage: ${pct}%; ${dist.absent} requirement${dist.absent > 1 ? 's' : ''} with no measure at all, ${dist.partiel} partly covered.`,
+            ))
+
+  const isoProfile = entity.profile?.iso27001
+  const iso =
+    isoProfile?.status
+      ? {
+          profile: isoProfile,
+          certified: isoProfile.status === 'certifie',
+          certificateValid: isoCertificateValid(isoProfile),
+          controlsAssessed: isoProgress(entity.iso_controls).assessed,
+          exclusions: s.iso.alerts.size,
+          prefilled: Object.values(s.coverage).filter((c) => c.fromIso).length,
+        }
+      : null
 
   return {
     generatedAt: now,
@@ -237,6 +307,7 @@ export function buildReportData(s: Scoping): ReportData {
       .sort((a, b) => ESCALATION.indexOf(a.role) - ESCALATION.indexOf(b.role))
       .map((c) => ({ role: ROLE_LABEL[c.role] ?? c.role, name: c.name, title: c.title, phone: c.phone, email: c.email })),
     measures: s.anssiApplies && s.measures.total > 0 ? s.measures : null,
+    iso,
     weights: (Object.keys(WEIGHT_LABELS) as (keyof typeof WEIGHT_LABELS)[]).map((k) => ({ label: WEIGHT_LABELS[k].label, value: s.weights[k] })),
     decisions,
     headline,

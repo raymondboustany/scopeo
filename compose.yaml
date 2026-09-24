@@ -1,4 +1,4 @@
-# Scopeo — démarrage avec Docker Compose
+# Scopeo : démarrage avec Docker Compose
 #
 #   docker compose up -d        puis ouvrir http://localhost:8000
 #

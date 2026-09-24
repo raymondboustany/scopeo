@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # ---------------------------------------------------------------------------
-#  Scopeo — lanceur macOS / Linux
+#  Scopeo : lanceur macOS / Linux
 #  ./start.sh : installe ce qui manque au premier lancement, puis démarre
 #  l'application et ouvre le navigateur.
 # ---------------------------------------------------------------------------

@@ -1,0 +1,36 @@
+{
+  "scope_note": "Payment institution authorised by the ACPR, 50 employees, operating in France, Belgium and Spain. Provides a cloud payment platform to merchants and publishes a payment SDK embedded in their applications.",
+  "profile": {
+    "group": "Independent",
+    "objective": "Establish which texts apply ahead of the 2027 ACPR audit and decide on this year's compliance budget.",
+    "lead": "Firm consultant",
+    "sponsor": "Thomas Lefèvre, deputy chief executive"
+  },
+  "stakeholders": {
+    "RSSI": "CISO",
+    "Conformité": "Compliance"
+  },
+  "contacts": {
+    "c-rssi": "Chief information security officer",
+    "c-dpo": "Data protection officer",
+    "c-dir": "Deputy chief executive",
+    "c-jur": "Head of compliance"
+  },
+  "notes": {
+    "n1": ["Confirm that the ACPR authorisation does not also cover issuing electronic money: that would change the type of financial entity.", "Type of financial entity"],
+    "n2": ["The payment SDK is distributed free of charge but bundled into a paid offer: treated as placed on the market under the CRA.", "Products with digital elements"],
+    "n3": ["Obtain the register of ICT providers kept by Procurement (format and date of last update).", "Third-party register and mapping"],
+    "n4": ["The DPO and the CISO remain two separate functions; the CISO becomes the DORA point of contact.", "Dedicated function and point of contact"]
+  },
+  "owners": {
+    "Direction générale": "Executive management",
+    "RSSI": "CISO",
+    "DSI": "IT department",
+    "Achats": "Procurement",
+    "DPO": "DPO",
+    "Conformité": "Compliance"
+  },
+  "iso": {
+    "8.16": "Monitoring entrusted to the hosting provider, outside the management system."
+  }
+}

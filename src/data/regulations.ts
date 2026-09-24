@@ -1,11 +1,13 @@
 import type { Regulation, RegulationId } from '@/types/domain'
+import { LANG, LOCALE, tr } from '@/i18n'
+import EN_REGULATIONS from '@/i18n/en/regulations.json'
 
 /**
- * Régime juridique des quatre textes couverts.
+ * Régime juridique des cinq textes couverts.
  *
  * Toutes les dates, références et plafonds de sanction sont repris des textes
  * publiés au Journal officiel de l'Union européenne. L'état de transposition
- * française est arrêté au 23 septembre 2026.
+ * française est arrêté au 24 septembre 2026.
  */
 
 export const REGULATIONS: Record<RegulationId, Regulation> = {
@@ -37,7 +39,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
     sanctions: [
       {
         id: 'RGPD-T1',
-        label: 'Premier palier — 10 M€ ou 2 % du CA mondial',
+        label: 'Premier palier : 10 M€ ou 2 % du CA mondial',
         turnoverPct: 2,
         capEur: 10_000_000,
         capRule: 'le_plus_eleve',
@@ -46,7 +48,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         id: 'RGPD-T2',
-        label: 'Second palier — 20 M€ ou 4 % du CA mondial',
+        label: 'Second palier : 20 M€ ou 4 % du CA mondial',
         turnoverPct: 4,
         capEur: 20_000_000,
         capRule: 'le_plus_eleve',
@@ -73,8 +75,8 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
         url: 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32021D0914',
       },
       {
-        reference: 'Digital Omnibus — COM(2025) 837',
-        title: "Proposition de règlement modifiant le RGPD, la directive vie privée et communications électroniques, NIS 2 et DORA",
+        reference: 'Digital Omnibus, COM(2025) 837',
+        title: "Proposition de règlement modifiant le RGPD, la directive vie privée et communications électroniques, NIS2 et DORA",
         kind: 'reglement_execution',
         date: '2025-11-19',
         status: 'projet',
@@ -88,7 +90,14 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
   // -------------------------------------------------------------------------
   NIS2: {
     id: 'NIS2',
-    shortName: 'NIS 2',
+    shortName: 'NIS2 (ReCyF)',
+    framework: {
+      name: 'ReCyF',
+      version: '2.5',
+      date: '2026-03-17',
+      issuer: 'ANSSI',
+      note: "Les exigences NIS2 sont détaillées et structurées par le Référentiel Cyber France (ReCyF) de l'ANSSI, qui traduit les objectifs de la directive en mesures actionnables pour les entités françaises. Document de travail, susceptible d'évoluer avant la publication du décret d'application.",
+    },
     name: 'Directive sur un niveau élevé commun de cybersécurité dans l\'Union',
     reference: 'Directive (UE) 2022/2555',
     celex: '32022L2555',
@@ -107,14 +116,14 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
     frAuthorities: ['ANSSI'],
     frenchStatus: {
       status: 'en_cours',
-      label: "Non transposée au 23 septembre 2026",
+      label: "Non transposée au 24 septembre 2026",
       note: "Le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité, déposé au Sénat le 15 octobre 2024, y a été adopté en première lecture le 12 mars 2025, puis adopté en commission spéciale à l'Assemblée nationale le 10 septembre 2025. La conférence des présidents du 22 septembre 2026 a inscrit l'examen en séance publique à partir du 7 octobre 2026. La France reste en retard de transposition ; l'ANSSI a toutefois publié le ReCyF, qui fixe les objectifs de sécurité attendus.",
       url: 'https://www.legifrance.gouv.fr/dossierlegislatif/JORFDOLE000050320631/',
     },
     sanctions: [
       {
         id: 'NIS2-EE',
-        label: 'Entité essentielle — 10 M€ ou 2 % du CA mondial',
+        label: 'Entité essentielle : 10 M€ ou 2 % du CA mondial',
         turnoverPct: 2,
         capEur: 10_000_000,
         capRule: 'le_plus_eleve',
@@ -123,7 +132,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         id: 'NIS2-EI',
-        label: 'Entité importante — 7 M€ ou 1,4 % du CA mondial',
+        label: 'Entité importante : 7 M€ ou 1,4 % du CA mondial',
         turnoverPct: 1.4,
         capEur: 7_000_000,
         capRule: 'le_plus_eleve',
@@ -158,12 +167,12 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         reference: 'ReCyF v2.5',
-        title: "Référentiel Cyber France — objectifs de sécurité et moyens acceptables de conformité",
+        title: "Référentiel Cyber France : objectifs de sécurité et moyens acceptables de conformité",
         kind: 'referentiel',
         date: '2026-03-17',
         status: 'adopte',
         url: 'https://messervices.cyber.gouv.fr/documents-ressources/20260317_NIS_V2_ReCyF_v2.5.pdf',
-        note: "Publié par l'ANSSI. Traduit NIS 2 en 20 objectifs de sécurité et 152 moyens acceptables de conformité, avec une applicabilité distincte pour les entités importantes et essentielles. Document de travail tant que la loi de transposition et ses décrets ne sont pas publiés.",
+        note: "Publié par l'ANSSI. Traduit NIS2 en 20 objectifs de sécurité et 152 moyens acceptables de conformité, avec une applicabilité distincte pour les entités importantes et essentielles. Document de travail tant que la loi de transposition et ses décrets ne sont pas publiés.",
       },
     ],
     articleCount: 46,
@@ -203,7 +212,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         id: 'DORA-CTPP',
-        label: "Prestataire tiers critique — astreinte de 1 % du CA mondial journalier",
+        label: "Prestataire tiers critique : astreinte de 1 % du CA mondial journalier",
         turnoverPct: 1,
         basis: 'Article 35, paragraphes 6 à 8',
         note: "Astreinte journalière plafonnée à 1 % du chiffre d'affaires quotidien moyen mondial de l'exercice précédent, pendant six mois au maximum. Elle vise les prestataires tiers critiques de services TIC désignés, non les entités financières clientes.",
@@ -286,16 +295,16 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
     celex: '32024R2847',
     kind: 'reglement',
     purpose:
-      "Garantir que les produits comportant des éléments numériques — matériels et logiciels — sont mis sur le marché avec moins de vulnérabilités, et que leurs fabricants en assurent la sécurité pendant toute leur période d'assistance.",
+      "Garantir que les produits comportant des éléments numériques (matériels et logiciels) sont mis sur le marché avec moins de vulnérabilités, et que leurs fabricants en assurent la sécurité pendant toute leur période d'assistance.",
     scopeSummary:
-      "Tout produit comportant des éléments numériques mis à disposition sur le marché de l'Union, dont l'utilisation prévue inclut une connexion de données directe ou indirecte à un appareil ou à un réseau. Les obligations pèsent principalement sur le fabricant, et, dans une moindre mesure, sur l'importateur et le distributeur. Sont exclus les produits relevant de réglementations sectorielles équivalentes : dispositifs médicaux, véhicules à moteur, aviation civile, équipements marins, et les produits développés exclusivement pour la défense ou la sécurité nationale. Les services en nuage purs relèvent de NIS 2, non du CRA.",
+      "Tout produit comportant des éléments numériques mis à disposition sur le marché de l'Union, dont l'utilisation prévue inclut une connexion de données directe ou indirecte à un appareil ou à un réseau. Les obligations pèsent principalement sur le fabricant, et, dans une moindre mesure, sur l'importateur et le distributeur. Sont exclus les produits relevant de réglementations sectorielles équivalentes : dispositifs médicaux, véhicules à moteur, aviation civile, équipements marins, et les produits développés exclusivement pour la défense ou la sécurité nationale. Les services en nuage purs relèvent de NIS2, non du CRA.",
     adopted: '2024-10-23',
     entryIntoForce: '2024-12-10',
     application: '2027-12-11',
     officialJournal: 'JO L, 2024/2847, 20.11.2024',
     eurLexUrl: 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R2847',
-    euAuthorities: ['Commission européenne', 'ENISA — plateforme unique de signalement', 'Groupe de coopération administrative (ADCO)'],
-    frAuthorities: ['ANFR — surveillance du marché (pressentie)', 'ANSSI — autorité notifiante', 'CERT-FR — CSIRT coordinateur'],
+    euAuthorities: ['Commission européenne', 'ENISA, plateforme unique de signalement', 'Groupe de coopération administrative (ADCO)'],
+    frAuthorities: ['ANFR, surveillance du marché (pressentie)', 'ANSSI, autorité notifiante', 'CERT-FR, CSIRT coordinateur'],
     frenchStatus: {
       status: 'applicable_direct',
       label: 'Application progressive : signalements depuis le 11 septembre 2026',
@@ -305,7 +314,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
     sanctions: [
       {
         id: 'CRA-T1',
-        label: 'Exigences essentielles — 15 M€ ou 2,5 % du CA mondial',
+        label: 'Exigences essentielles : 15 M€ ou 2,5 % du CA mondial',
         turnoverPct: 2.5,
         capEur: 15_000_000,
         capRule: 'le_plus_eleve',
@@ -314,7 +323,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         id: 'CRA-T2',
-        label: 'Autres obligations — 10 M€ ou 2 % du CA mondial',
+        label: 'Autres obligations : 10 M€ ou 2 % du CA mondial',
         turnoverPct: 2,
         capEur: 10_000_000,
         capRule: 'le_plus_eleve',
@@ -323,7 +332,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         id: 'CRA-T3',
-        label: 'Informations inexactes — 5 M€ ou 1 % du CA mondial',
+        label: 'Informations inexactes : 5 M€ ou 1 % du CA mondial',
         turnoverPct: 1,
         capEur: 5_000_000,
         capRule: 'le_plus_eleve',
@@ -348,13 +357,156 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
         date: '2026-09-11',
         status: 'en_vigueur',
         url: 'https://www.enisa.europa.eu/',
-        note: "Opérée par l'ENISA (art. 16), elle transmet simultanément au CSIRT coordinateur de l'État membre concerné — le CERT-FR pour la France.",
+        note: "Opérée par l'ENISA (art. 16), elle transmet simultanément au CSIRT coordinateur de l'État membre concerné, soit le CERT-FR pour la France.",
       },
     ],
     articleCount: 71,
   },
+
+  // -------------------------------------------------------------------------
+  AIACT: {
+    id: 'AIACT',
+    shortName: 'AI Act',
+    name: "Règlement sur l'intelligence artificielle",
+    reference: 'Règlement (UE) 2024/1689',
+    celex: '32024R1689',
+    kind: 'reglement',
+    purpose:
+      "Encadrer la mise sur le marché, la mise en service et l'utilisation des systèmes d'intelligence artificielle selon leur niveau de risque, afin de protéger la santé, la sécurité et les droits fondamentaux.",
+    scopeSummary:
+      "Fournisseurs qui mettent sur le marché ou en service un système ou un modèle d'IA dans l'Union, déployeurs établis ou situés dans l'Union, ainsi qu'importateurs, distributeurs et mandataires (art. 2). Les obligations dépendent du niveau de risque : pratiques interdites (art. 5), systèmes à haut risque (art. 6, annexes I et III), obligations de transparence (art. 50) et modèles d'IA à usage général (chapitre V). Sont exclus les usages exclusivement militaires, de défense ou de sécurité nationale, la recherche scientifique et l'usage personnel non professionnel.",
+    adopted: '2024-06-13',
+    entryIntoForce: '2024-08-01',
+    application: '2026-08-02',
+    officialJournal: 'JO L, 2024/1689, 12.7.2024',
+    eurLexUrl: 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R1689',
+    euAuthorities: ["Bureau de l'IA (Commission européenne)", "Comité européen de l'intelligence artificielle", "Groupe scientifique d'experts indépendants"],
+    frAuthorities: ['DGCCRF, coordination de la surveillance du marché (pressentie)', 'CNIL, données personnelles et biométrie (pressentie)', 'Autorités sectorielles : ACPR, Arcom, ANSM (pressenties)'],
+    frenchStatus: {
+      status: 'applicable_direct',
+      label: "Application progressive, calendrier modifié par l'Omnibus IA",
+      note: "Règlement d'application directe, applicable par paliers (art. 113) : pratiques interdites et maîtrise de l'IA depuis le 2 février 2025, modèles d'IA à usage général et gouvernance depuis le 2 août 2025, transparence et régime général depuis le 2 août 2026. Le règlement (UE) 2026/1744, dit « Omnibus IA », en vigueur depuis le 27 juillet 2026, reporte les systèmes à haut risque de l'annexe III au 2 décembre 2027 et ceux de l'annexe I au 2 août 2028. En France, la désignation des autorités compétentes (DGCCRF en coordination, CNIL et autorités sectorielles) dépend d'un projet de loi encore en discussion.",
+      url: 'https://www.entreprises.gouv.fr/priorites-et-actions/transition-numerique/soutenir-le-developpement-de-lia-au-service-de-0',
+    },
+    sanctions: [
+      {
+        id: 'AIACT-T1',
+        label: 'Pratiques interdites : 35 M€ ou 7 % du CA mondial',
+        turnoverPct: 7,
+        capEur: 35_000_000,
+        capRule: 'le_plus_eleve',
+        basis: 'Article 99, paragraphe 3',
+        note: "Non-respect de l'interdiction des pratiques de l'article 5. C'est le plafond le plus élevé du droit européen du numérique. Pour les PME, le montant le plus faible des deux est retenu (art. 99 § 6).",
+      },
+      {
+        id: 'AIACT-T2',
+        label: 'Autres obligations : 15 M€ ou 3 % du CA mondial',
+        turnoverPct: 3,
+        capEur: 15_000_000,
+        capRule: 'le_plus_eleve',
+        basis: 'Article 99, paragraphe 4',
+        note: "Obligations des fournisseurs (art. 16), mandataires, importateurs, distributeurs et déployeurs (art. 26), et obligations de transparence (art. 50). Les fournisseurs de modèles d'IA à usage général relèvent d'un plafond équivalent fixé par la Commission (art. 101).",
+      },
+      {
+        id: 'AIACT-T3',
+        label: 'Informations inexactes : 7,5 M€ ou 1 % du CA mondial',
+        turnoverPct: 1,
+        capEur: 7_500_000,
+        capRule: 'le_plus_eleve',
+        basis: 'Article 99, paragraphe 5',
+        note: "Fourniture d'informations inexactes, incomplètes ou trompeuses aux organismes notifiés ou aux autorités nationales compétentes.",
+      },
+    ],
+    implementingActs: [
+      {
+        reference: 'Règlement (UE) 2026/1744',
+        title: "Omnibus numérique sur l'IA : simplification et report du calendrier des systèmes à haut risque",
+        kind: 'reglement_execution',
+        date: '2026-07-08',
+        status: 'en_vigueur',
+        url: 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32026R1744',
+        note: "Publié au JO le 24 juillet 2026, en vigueur le 27 juillet 2026. Reporte les systèmes à haut risque de l'annexe III au 2 décembre 2027 et ceux de l'annexe I au 2 août 2028. Réécrit l'article 4 : la maîtrise de l'IA devient une obligation de moyens. Ajoute une interdiction visant la génération de contenus pédopornographiques ou intimes non consentis (2 décembre 2026) et accorde jusqu'au 2 décembre 2026 aux systèmes déjà sur le marché pour le marquage des contenus générés. Étend les allègements des PME aux petites entreprises à moyenne capitalisation. Le corpus local conserve la version initiale publiée au JO ; les citations de l'article 4 renvoient à cette version.",
+      },
+      {
+        reference: 'Lignes directrices C(2025) 884',
+        title: "Lignes directrices de la Commission sur les pratiques d'IA interdites",
+        kind: 'lignes_directrices',
+        date: '2025-02-04',
+        status: 'en_vigueur',
+        url: 'https://digital-strategy.ec.europa.eu/fr/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act',
+        note: "Non contraignantes, mais constituent l'interprétation de référence de l'article 5.",
+      },
+      {
+        reference: 'Code de bonnes pratiques GPAI',
+        title: "Code de bonnes pratiques pour les modèles d'IA à usage général",
+        kind: 'lignes_directrices',
+        date: '2025-07-10',
+        status: 'en_vigueur',
+        url: 'https://digital-strategy.ec.europa.eu/fr/policies/contents-code-gpai',
+        note: "Outil volontaire permettant de démontrer le respect des articles 53 et 55 : transparence, droit d'auteur, sûreté et sécurité.",
+      },
+    ],
+    articleCount: 113,
+  },
 }
 
-export const REGULATION_ORDER: RegulationId[] = ['RGPD', 'NIS2', 'DORA', 'CRA']
+// ---------------------------------------------------------------------------
+// Interface en anglais : libellés remplacés au chargement
+// ---------------------------------------------------------------------------
+
+interface RegulationEn {
+  shortName: string
+  name: string
+  reference: string
+  officialJournal: string
+  purpose: string
+  scopeSummary: string
+  euAuthorities: string[]
+  frAuthorities: string[]
+  frenchStatus: { label: string; note: string }
+  sanctions: Record<string, [string, string, string]>
+  acts: [string, string, string | null][]
+  framework?: string
+}
+
+if (LANG === 'en') {
+  for (const [id, en] of Object.entries(EN_REGULATIONS as unknown as Record<RegulationId, RegulationEn>)) {
+    const r = REGULATIONS[id as RegulationId]
+    Object.assign(r, {
+      shortName: en.shortName,
+      name: en.name,
+      reference: en.reference,
+      officialJournal: en.officialJournal,
+      purpose: en.purpose,
+      scopeSummary: en.scopeSummary,
+      euAuthorities: en.euAuthorities,
+      frAuthorities: en.frAuthorities,
+      frenchStatus: { ...r.frenchStatus, ...en.frenchStatus },
+      eurLexUrl: r.eurLexUrl.replace('/FR/', '/EN/'),
+    })
+    for (const t of r.sanctions) {
+      const e = en.sanctions[t.id]
+      if (e) [t.label, t.basis, t.note] = e
+    }
+    r.implementingActs.forEach((a, i) => {
+      const e = en.acts[i]
+      if (!e) return
+      a.reference = e[0]
+      a.title = e[1]
+      if (e[2]) a.note = e[2]
+    })
+    if (r.framework && en.framework) r.framework.note = en.framework
+  }
+}
+
+export const REGULATION_ORDER: RegulationId[] = ['RGPD', 'NIS2', 'DORA', 'CRA', 'AIACT']
 
 export const REGULATION_LIST = REGULATION_ORDER.map((id) => REGULATIONS[id])
+
+/** « basé sur ReCyF v2.5, mars 2026 » : la version de travail sur laquelle NIS2 s'appuie. */
+export function frameworkNote(): string {
+  const f = REGULATIONS.NIS2.framework
+  if (!f) return ''
+  const month = new Date(f.date).toLocaleDateString(LOCALE, { month: 'long', year: 'numeric', timeZone: 'UTC' })
+  return tr(`basé sur ${f.name} v${f.version}, ${month}`, `based on ${f.name} v${f.version}, ${month}`)
+}

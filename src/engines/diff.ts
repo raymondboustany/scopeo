@@ -4,13 +4,14 @@ import { qualify } from './qualification'
 import { scopeObligations, type ScopedObligation } from './corpus'
 import { CROSSWALK } from '@/data/crosswalk'
 import { REGULATION_ORDER } from '@/data/regulations'
+import { tr } from '@/i18n'
 
 /**
  * Comparateur avant / après.
  *
  * Une réponse modifiée ne se lit pas seule : elle déplace le périmètre. On
- * compare donc deux états complets — qualification, obligations retenues,
- * exigences unifiées — et on ne restitue que ce qui a bougé.
+ * compare donc deux états complets (qualification, obligations retenues,
+ * exigences unifiées) et on ne restitue que ce qui a bougé.
  */
 
 export interface VerdictChange {
@@ -45,7 +46,7 @@ function evaluate(answers: Answers): { q: QualificationResult | null; scoped: Sc
 function labelOf(questionId: string, value: unknown): string {
   const question = QUESTIONS.find((x) => x.id === questionId)
   const values = Array.isArray(value) ? value : value === undefined || value === null || value === '' ? [] : [value]
-  if (values.length === 0) return '—'
+  if (values.length === 0) return tr('non renseigné', 'not answered')
   return values
     .map((v) => question?.options?.find((o) => o.value === v)?.label ?? String(v))
     .join(', ')

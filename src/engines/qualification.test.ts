@@ -28,12 +28,12 @@ const base: Answers = {
   entite_financiere: 'non',
   entite_critique: 'non',
   incidents_recents: 'aucun',
-  certification: 'non',
+  ia_roles: ['aucun'],
 }
 
 const answers = (patch: Answers): Answers => ({ ...base, ...patch })
 
-describe('seuils de taille — recommandation 2003/361/CE', () => {
+describe('seuils de taille : recommandation 2003/361/CE', () => {
   it('retient le seuil de moyenne entreprise dès 50 personnes', () => {
     expect(meetsMediumThreshold(answers({ effectif: 'moyenne' }))).toBe(true)
   })
@@ -53,7 +53,7 @@ describe('seuils de taille — recommandation 2003/361/CE', () => {
   })
 })
 
-describe('RGPD — articles 2 et 3', () => {
+describe('RGPD : articles 2 et 3', () => {
   it("s'applique à une entité établie dans l'Union qui traite des données", () => {
     const r = qualify(base)
     expect(r.verdicts.RGPD.status).toBe('applicable')
@@ -88,7 +88,7 @@ describe('RGPD — articles 2 et 3', () => {
   })
 })
 
-describe('NIS 2 — articles 2 et 3', () => {
+describe('NIS2 : articles 2 et 3', () => {
   it('écarte une petite entité d\'un secteur non couvert', () => {
     const r = qualify(base)
     expect(r.verdicts.NIS2.status).toBe('hors_champ')
@@ -130,7 +130,7 @@ describe('NIS 2 — articles 2 et 3', () => {
   })
 })
 
-describe('DORA — article 2', () => {
+describe('DORA : article 2', () => {
   it("s'applique directement à une entité financière", () => {
     const r = qualify(answers({ entite_financiere: 'oui', type_financier: 'credit', dora_regime_simplifie: 'non', dora_tlpt: 'non', tiers_ict_critiques: 'oui' }))
     expect(r.verdicts.DORA.status).toBe('applicable')
@@ -153,14 +153,14 @@ describe('DORA — article 2', () => {
   })
 })
 
-describe('entité critique — NIS 2, article 3, paragraphe 1, point f)', () => {
+describe('entité critique : NIS2, article 3, paragraphe 1, point f)', () => {
   it("emporte la qualification d'entité essentielle sans condition de taille", () => {
     const r = qualify(answers({ secteur: 'eau_potable', effectif: 'micro', chiffre_affaires: 'lt2', entite_critique: 'oui' }))
     expect(r.nis2Category).toBe('essentielle')
   })
 })
 
-describe('CRA — produits comportant des éléments numériques', () => {
+describe('CRA : produits comportant des éléments numériques', () => {
   it('retient le fabricant et la catégorie du produit', () => {
     const r = qualify(answers({ cra_roles: ['fabricant'], cra_categorie: 'classe_i', cra_exclu: 'non' }))
     expect(r.verdicts.CRA.status).toBe('applicable')
@@ -178,7 +178,7 @@ describe('CRA — produits comportant des éléments numériques', () => {
   })
 })
 
-describe('articulation DORA / NIS 2', () => {
+describe('articulation DORA / NIS2', () => {
   it('signale la primauté de DORA lorsque les deux textes trouvent à s\'appliquer', () => {
     const r = qualify(
       answers({
@@ -209,5 +209,47 @@ describe('liste des textes applicables', () => {
 
   it('renvoie une liste vide en l\'absence de qualification', () => {
     expect(applicableRegulations(null)).toEqual([])
+  })
+})
+
+describe('AI Act : articles 2, 5, 6 et 50', () => {
+  it("est hors champ quand l'entité ne fournit ni n'utilise de système d'IA", () => {
+    expect(qualify(base).verdicts.AIACT.status).toBe('hors_champ')
+  })
+
+  it("s'applique dès l'usage professionnel d'un système d'IA, au niveau de risque minimal", () => {
+    const r = qualify(answers({ ia_roles: ['deployeur'], ia_pratiques: 'non', ia_haut_risque: ['aucun'], ia_transparence: ['aucun'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.status).toBe('applicable')
+    expect(r.verdicts.AIACT.qualification).toBe('Déployeur, risque minimal')
+  })
+
+  it("retient le haut risque pour un domaine de l'annexe III sans dérogation", () => {
+    const r = qualify(answers({ ia_roles: ['fournisseur'], ia_pratiques: 'non', ia_haut_risque: ['emploi'], ia_derogation: 'non', ia_transparence: ['aucun'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.qualification).toBe('Fournisseur, haut risque')
+  })
+
+  it("écarte le haut risque quand la dérogation de l'article 6, paragraphe 3, est retenue", () => {
+    const r = qualify(answers({ ia_roles: ['fournisseur'], ia_pratiques: 'non', ia_haut_risque: ['emploi'], ia_derogation: 'oui', ia_transparence: ['aucun'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.qualification).toBe('Fournisseur, risque minimal')
+  })
+
+  it("ne laisse pas la dérogation couvrir un composant de sécurité de l'annexe I", () => {
+    const r = qualify(answers({ ia_roles: ['fournisseur'], ia_pratiques: 'non', ia_haut_risque: ['produit'], ia_derogation: 'oui', ia_transparence: ['aucun'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.qualification).toBe('Fournisseur, haut risque')
+  })
+
+  it("retient le risque limité quand seules des obligations de transparence s'appliquent", () => {
+    const r = qualify(answers({ ia_roles: ['deployeur'], ia_pratiques: 'non', ia_haut_risque: ['aucun'], ia_transparence: ['interaction'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.qualification).toBe('Déployeur, risque limité')
+  })
+
+  it("applique le palier de sanction le plus lourd en cas de pratique interdite", () => {
+    const r = qualify(answers({ ia_roles: ['deployeur'], ia_pratiques: 'oui', ia_haut_risque: ['aucun'], ia_transparence: ['aucun'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.exposure?.tier).toContain('35 M€')
+  })
+
+  it("ne retient qu'une application indirecte pour un simple importateur ou distributeur", () => {
+    const r = qualify(answers({ ia_roles: ['importateur'], ia_pratiques: 'non', ia_haut_risque: ['aucun'], ia_transparence: ['aucun'], ia_gpai: 'non' }))
+    expect(r.verdicts.AIACT.status).toBe('indirect')
   })
 })

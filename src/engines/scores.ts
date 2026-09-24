@@ -4,6 +4,7 @@ import type {
   PrioritisedItem,
   PublicSnapshot,
   QualificationResult,
+  IsoProfile,
   RecyfObjective,
   RegulationId,
 } from '@/types/domain'
@@ -11,13 +12,14 @@ import { DOMAINS } from '@/types/domain'
 import { COVERAGE_VALUE } from './prioritisation'
 import { SECTOR_BY_VALUE } from '@/data/questionnaire'
 import { REGULATION_ORDER } from '@/data/regulations'
+import { tr } from '@/i18n'
 
 /**
  * Scores de conformité.
  *
  * Un score n'est pas une note : c'est la part des exigences unifiées déclarées
  * en place, les exigences partielles comptant pour moitié. Il se lit toujours
- * avec son dénominateur — 80 % de trois exigences ne vaut pas 80 % de trente.
+ * avec son dénominateur : 80 % de trois exigences ne vaut pas 80 % de trente.
  */
 
 export interface ScoreLine {
@@ -69,15 +71,23 @@ export function measureProgress(objectives: RecyfObjective[], statuses: Record<s
 }
 
 export const DOMAIN_LABELS: Record<Domain, string> = {
-  gouvernance: 'Gouvernance',
-  risques: 'Risques',
-  protection: 'Protection',
-  detection: 'Détection',
-  reponse: 'Réponse',
-  resilience: 'Résilience',
-  tiers: 'Tiers',
-  donnees: 'Données',
-  documentation: 'Documentation',
+  gouvernance: tr('Gouvernance', 'Governance'),
+  risques: tr('Risques', 'Risk'),
+  protection: tr('Protection', 'Protection'),
+  detection: tr('Détection', 'Detection'),
+  reponse: tr('Réponse', 'Response'),
+  resilience: tr('Résilience', 'Resilience'),
+  tiers: tr('Tiers', 'Third parties'),
+  donnees: tr('Données', 'Data'),
+  ia: tr('Intelligence artificielle', 'Artificial intelligence'),
+  documentation: tr('Documentation', 'Documentation'),
+}
+
+/** Certificat ISO/IEC 27001 en cours de validité à la date donnée. */
+export function isoCertificateValid(iso: IsoProfile | undefined, now = new Date()): boolean {
+  if (iso?.status !== 'certifie') return false
+  if (!iso.validUntil) return true
+  return new Date(iso.validUntil).getTime() >= now.setHours(0, 0, 0, 0)
 }
 
 /**
@@ -92,6 +102,7 @@ export function buildSnapshot(
   qualification: QualificationResult | null,
   prioritised: PrioritisedItem[],
   applicable: RegulationId[],
+  iso?: IsoProfile,
 ): PublicSnapshot {
   const scores = computeScores(prioritised, applicable)
   const sector = typeof answers.secteur === 'string' ? SECTOR_BY_VALUE.get(answers.secteur)?.label ?? null : null
@@ -118,5 +129,7 @@ export function buildSnapshot(
     themesTotal: scores.global.themes,
     themesCovered: scores.global.inPlace,
     nis2Category: qualification?.nis2Category ?? null,
+    // Seule une certification sort de l'entité : c'est un fait public, pas une auto-évaluation.
+    ...(iso?.status === 'certifie' ? { iso27001: { certified: isoCertificateValid(iso), validUntil: iso.validUntil ?? null } } : {}),
   }
 }

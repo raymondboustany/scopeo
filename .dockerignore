@@ -1,6 +1,5 @@
 .git
 .github
-.claude
 node_modules
 dist
 release

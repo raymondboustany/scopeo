@@ -20,6 +20,7 @@ import { NoteButton } from '@/components/notes/NoteButton'
 import { RecyfPanel } from '@/components/recyf/RecyfPanel'
 import { cn } from '@/lib/utils'
 import { DOMAINS, type CrosswalkRelation, type CrosswalkTheme, type MeasureStatus, type RegulationId } from '@/types/domain'
+import { tr } from '@/i18n'
 
 const CrosswalkOverlap = lazy(() => import('./CrosswalkOverlap'))
 
@@ -67,54 +68,53 @@ export default function CrosswalkPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Référentiel"
-        title="Carte de croisement"
-        lead="Où une seule action satisfait plusieurs textes, où ils divergent et laquelle des règles commande, et où l'un prime explicitement sur l'autre."
+        eyebrow={tr('Référentiel', 'Reference')}
+        title={tr('Carte de croisement', 'Crosswalk map')}
+        lead={tr("Où une seule action satisfait plusieurs textes, où ils divergent et laquelle des règles commande, et où l'un prime explicitement sur l'autre.", 'Where a single action satisfies several texts, where they diverge and which rule prevails, and where one explicitly overrides the other.')}
       />
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <SegmentedControl<RelFilter>
-          ariaLabel="Filtrer par nature du croisement"
+          ariaLabel={tr('Filtrer par nature du croisement', 'Filter by type of overlap')}
           value={rel}
           onChange={setRel}
           options={[
-            { value: 'tous', label: 'Tous', count: counts.tous },
-            { value: 'recouvrement', label: 'Recouvrements', count: counts.recouvrement },
-            { value: 'divergence', label: 'Divergences', count: counts.divergence },
-            { value: 'hierarchie', label: 'Hiérarchies', count: counts.hierarchie },
+            { value: 'tous', label: tr('Tous', 'All'), count: counts.tous },
+            { value: 'recouvrement', label: tr('Recouvrements', 'Overlaps'), count: counts.recouvrement },
+            { value: 'divergence', label: tr('Divergences', 'Divergences'), count: counts.divergence },
+            { value: 'hierarchie', label: tr('Hiérarchies', 'Precedence'), count: counts.hierarchie },
           ]}
         />
         {scoping.qualified ? (
           <label className="inline-flex items-center gap-2 rounded-sm border border-rule bg-surface px-2.5 py-1.5 text-xs text-ink-2">
-            <Switch checked={scopeOnly} onCheckedChange={setScopeOnly} label="Périmètre de l'entité" />
-            Périmètre de l'entité
+            <Switch checked={scopeOnly} onCheckedChange={setScopeOnly} label={tr("Périmètre de l'entité", "Entity's scope")} />
+            {tr("Périmètre de l'entité", "Entity's scope")}
           </label>
         ) : null}
       </div>
 
       <Tabs defaultValue="matrice">
         <TabsList className="mb-4">
-          <TabTrigger value="matrice" count={themes.length}>Matrice</TabTrigger>
-          <TabTrigger value="graphe">Mutualisation</TabTrigger>
-          <TabTrigger value="lecture">Mode d'emploi</TabTrigger>
+          <TabTrigger value="matrice" count={themes.length}>{tr('Matrice', 'Matrix')}</TabTrigger>
+          <TabTrigger value="graphe">{tr('Mutualisation', 'Shared actions')}</TabTrigger>
+          <TabTrigger value="lecture">{tr("Mode d'emploi", 'How to read')}</TabTrigger>
         </TabsList>
 
         <TabPanel value="matrice">
           {themes.length === 0 ? (
-            <EmptyState title="Aucun croisement ne correspond aux filtres" />
+            <EmptyState title={tr('Aucun croisement ne correspond aux filtres', 'No theme matches the filters')} />
           ) : (
             <div className="grid gap-5 xl:grid-cols-[1fr_26rem]">
               <Matrix themes={themes} regs={activeRegs} selectedId={selectedId} onSelect={select} />
               <div className="min-w-0">
                 {selected ? (
-                  <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.entity?.measures} showAnssi={!scoping.doraPrevails} />
+                  <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.measureStatuses} showAnssi={!scoping.doraPrevails} />
                 ) : (
                   <Card className="p-5">
                     <div className="hatch mb-3 h-6 rounded-xs opacity-30" aria-hidden />
-                    <h3 className="text-sm font-semibold text-ink">Sélectionnez un thème</h3>
+                    <h3 className="text-sm font-semibold text-ink">{tr('Sélectionnez un thème', 'Select a theme')}</h3>
                     <p className="mt-1.5 text-sm text-ink-3">
-                      La fiche détaille l'exigence unifiée, ce que chaque texte demande précisément,
-                      et — en cas de divergence — la règle qui commande en pratique.
+                      {tr("La fiche détaille l'exigence unifiée, ce que chaque texte demande précisément et, en cas de divergence, la règle qui commande en pratique.", 'The card details the unified requirement, what each text asks for precisely and, in case of divergence, the rule that prevails in practice.')}
                     </p>
                   </Card>
                 )}
@@ -127,7 +127,7 @@ export default function CrosswalkPage() {
           <Suspense
             fallback={
               <div className="flex h-[32rem] items-center justify-center text-sm text-ink-3">
-                Chargement…
+                {tr('Chargement…', 'Loading…')}
               </div>
             }
           >
@@ -135,7 +135,7 @@ export default function CrosswalkPage() {
           </Suspense>
           {selected ? (
             <div className="mt-5 max-w-3xl">
-              <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.entity?.measures} showAnssi={!scoping.doraPrevails} />
+              <ThemeDetail theme={selected} activeRegs={activeRegs} nis2Category={scoping.nis2Category} statuses={scoping.measureStatuses} showAnssi={!scoping.doraPrevails} />
             </div>
           ) : null}
         </TabPanel>
@@ -149,7 +149,7 @@ export default function CrosswalkPage() {
 }
 
 /* ==========================================================================
-   Matrice — thèmes en lignes, règlements en colonnes. Les cellules portent
+   Matrice : thèmes en lignes, règlements en colonnes. Les cellules portent
    les articles : c'est ce qui distingue une carte de croisement d'un simple
    tableau de correspondance.
    ========================================================================== */
@@ -163,7 +163,8 @@ function shortRef(obligationId: string): string {
     .replace(/^Articles? /, '')
     .replace(/, paragraphe (\d+)/g, '§$1')
     .replace(/, point ([a-z])\)/g, '.$1')
-    .replace(/ à /, '–')
+    .replace(/ (à|to) /, '–')
+    .replace(/ (et|and) /, ', ')
 }
 
 function Matrix({
@@ -187,7 +188,7 @@ function Matrix({
         <thead className="sticky top-0 z-10 bg-chrome">
           <tr className="border-b border-rule-2">
             <th scope="col" className="label-caps px-3 py-2.5 font-semibold">
-              Exigence unifiée
+              {tr('Exigence unifiée', 'Unified requirement')}
             </th>
             {regs.map((r) => (
               <th key={r} scope="col" className="w-[5.75rem] px-2 py-2.5">
@@ -195,7 +196,7 @@ function Matrix({
               </th>
             ))}
             <th scope="col" className="label-caps w-[5.5rem] px-3 py-2.5 text-right font-semibold">
-              Nature
+              {tr('Nature', 'Type')}
             </th>
           </tr>
         </thead>
@@ -234,7 +235,7 @@ function Matrix({
                     if (!m) {
                       return (
                         <td key={r} className="px-2 py-2.5 text-center">
-                          <span className="text-ink-4" aria-label="Non couvert par ce texte">
+                          <span className="text-ink-4" aria-label={tr('Non couvert par ce texte', 'Not covered by this text')}>
                             ·
                           </span>
                         </td>
@@ -265,10 +266,10 @@ function Matrix({
 
                   <td className="px-3 py-2.5 text-right">
                     {t.relation === 'recouvrement' ? (
-                      <span className="text-2xs text-ink-4">Recouvr.</span>
+                      <span className="text-2xs text-ink-4">{tr('Recouvr.', 'Overlap')}</span>
                     ) : (
                       <Tag tone={t.relation === 'divergence' ? 'critical' : 'brass'}>
-                        {t.relation === 'divergence' ? 'Diverg.' : 'Hiérar.'}
+                        {t.relation === 'divergence' ? tr('Diverg.', 'Diverg.') : tr('Hiérar.', 'Preced.')}
                       </Tag>
                     )}
                   </td>
@@ -297,13 +298,13 @@ function ThemeDetail({
   statuses?: Record<string, MeasureStatus>
   showAnssi: boolean
 }) {
-  // Le détail ANSSI n'a de sens que si NIS 2 porte ce thème et concerne l'entité.
+  // Les exigences ReCyF n'ont de sens que si NIS2 porte ce thème et concerne l'entité.
   const recyf = t.mappings.some((m) => m.regulation === 'NIS2') && activeRegs.includes('NIS2') && showAnssi ? recyfForTheme(t.recyf, nis2Category) : []
   const rel = RELATION_STYLE[t.relation]
 
   return (
     <article className="xl:sticky xl:top-[calc(var(--bar)+1.5rem)]">
-      <SectionRule aside={<span className="ref">{t.code}</span>}>Exigence unifiée</SectionRule>
+      <SectionRule aside={<span className="ref">{t.code}</span>}>{tr('Exigence unifiée', 'Unified requirement')}</SectionRule>
 
       <Card className="mt-3 max-h-[75vh] overflow-y-auto">
         <div className={cn('border-b border-rule px-4 py-3.5', rel.wash)}>
@@ -331,7 +332,7 @@ function ThemeDetail({
           <section className="rounded-sm border border-accent-line bg-accent-wash px-3.5 py-3">
             <div className="label-caps mb-1 flex items-center gap-1.5 text-accent">
               <ArrowRight size={11} />
-              L'action à mener
+              {tr("L'action à mener", 'The action to take')}
             </div>
             <p className="text-sm leading-relaxed text-ink">{t.unifiedAction}</p>
           </section>
@@ -339,7 +340,7 @@ function ThemeDetail({
           {/* Divergence : la règle qui commande */}
           {t.strictest ? (
             <section className="rounded-sm border border-critical-line bg-critical-wash px-3.5 py-3">
-              <div className="label-caps mb-1.5 text-critical">La règle qui commande</div>
+              <div className="label-caps mb-1.5 text-critical">{tr('La règle qui commande', 'The prevailing rule')}</div>
               <div className="flex items-center gap-2">
                 <RegChip id={t.strictest.regulation} />
                 <span className="text-sm font-medium text-ink">{t.strictest.rule}</span>
@@ -351,10 +352,10 @@ function ThemeDetail({
           {/* Hiérarchie */}
           {t.precedence ? (
             <section className="rounded-sm border border-brass-line bg-brass-wash px-3.5 py-3">
-              <div className="label-caps mb-1.5 text-brass">Texte qui prime</div>
+              <div className="label-caps mb-1.5 text-brass">{tr('Texte qui prime', 'Prevailing text')}</div>
               <div className="flex flex-wrap items-center gap-2">
                 <RegChip id={t.precedence.prevails} />
-                <span className="text-xs text-ink-3">prime sur</span>
+                <span className="text-xs text-ink-3">{tr('prime sur', 'prevails over')}</span>
                 {t.precedence.over.map((o) => (
                   <RegChip key={o} id={o} muted />
                 ))}
@@ -365,7 +366,7 @@ function ThemeDetail({
 
           {/* Ce que chaque texte demande */}
           <section>
-            <SectionRule>Exigence texte par texte</SectionRule>
+            <SectionRule>{tr('Exigence texte par texte', 'Requirement text by text')}</SectionRule>
             <ul className="mt-2.5 space-y-3">
               {t.mappings.map((m) => {
                 const inScope = activeRegs.includes(m.regulation)
@@ -389,7 +390,7 @@ function ThemeDetail({
                           </Link>
                         ) : null
                       })}
-                      {!inScope ? <Tag>Hors périmètre</Tag> : null}
+                      {!inScope ? <Tag>{tr('Hors périmètre', 'Out of scope')}</Tag> : null}
                     </div>
                     <p className="mt-1 text-sm leading-relaxed text-ink-2">{m.requirement}</p>
                     {m.nuance ? (
@@ -407,7 +408,7 @@ function ThemeDetail({
 
           {/* Preuves */}
           <section>
-            <SectionRule aside={`Charge ${t.effort}/5`}>Preuves attendues</SectionRule>
+            <SectionRule aside={tr(`Charge ${t.effort}/5`, `Effort ${t.effort}/5`)}>{tr('Preuves attendues', 'Expected evidence')}</SectionRule>
             <ul className="mt-2 space-y-1.5">
               {t.evidence.map((e, i) => (
                 <li key={i} className="flex gap-2 text-sm text-ink-2">
@@ -431,12 +432,9 @@ function ReadingGuide() {
       {(['recouvrement', 'divergence', 'hierarchie'] as CrosswalkRelation[]).map((r) => {
         const s = RELATION_STYLE[r]
         const body = {
-          recouvrement:
-            "Les textes demandent la même chose, à des degrés de précision différents. Une action unique, calibrée sur l'exigence la plus détaillée, les satisfait tous. C'est le cas le plus fréquent, et la source principale d'économie dans un plan de conformité.",
-          divergence:
-            "Les textes traitent du même sujet mais posent des exigences inconciliables — un délai plus court, une mesure nommée, un format imposé. Il faut alors identifier la règle la plus stricte et dimensionner sur elle : satisfaire la plus exigeante satisfait les autres, l'inverse est faux.",
-          hierarchie:
-            "Un texte écarte expressément l'autre sur un champ donné. Ce n'est pas un arbitrage à faire mais une règle de droit à constater : appliquer les deux en parallèle est une erreur, pas une précaution.",
+          recouvrement: tr("Les textes demandent la même chose, à des degrés de précision différents. Une action unique, calibrée sur l'exigence la plus détaillée, les satisfait tous. C'est le cas le plus fréquent, et la source principale d'économie dans un plan de conformité.", 'The texts ask for the same thing, at different levels of detail. A single action, calibrated on the most detailed requirement, satisfies them all. This is the most common case, and the main source of savings in a compliance plan.'),
+          divergence: tr("Les textes traitent du même sujet mais posent des exigences inconciliables : un délai plus court, une mesure nommée, un format imposé. Il faut alors identifier la règle la plus stricte et dimensionner sur elle : satisfaire la plus exigeante satisfait les autres, l'inverse est faux.", 'The texts address the same subject but set irreconcilable requirements: a shorter deadline, a named measure, a mandated format. You then identify the strictest rule and size for it: meeting the most demanding one meets the others, not the reverse.'),
+          hierarchie: tr("Un texte écarte expressément l'autre sur un champ donné. Ce n'est pas un arbitrage à faire mais une règle de droit à constater : appliquer les deux en parallèle est une erreur, pas une précaution.", 'One text expressly sets the other aside in a given area. It is not a judgment call but a rule of law to acknowledge: applying both in parallel is a mistake, not a precaution.'),
         }[r]
         return (
           <Card key={r} className={cn('border-l-2 p-4', s.line.replace('border-', 'border-l-'))}>
@@ -446,11 +444,8 @@ function ReadingGuide() {
         )
       })}
 
-      <Callout tone="neutral" className="sm:col-span-3" title="Une précision sur la méthode">
-        Les croisements portent sur des exigences, non sur des articles. Deux articles peuvent
-        traiter du même sujet sans se recouper — par exemple lorsque l'un fixe une obligation de
-        moyens et l'autre une obligation de résultat. La carte identifie l'action commune, puis
-        signale explicitement là où la mutualisation cesse d'être possible.
+      <Callout tone="neutral" className="sm:col-span-3" title={tr('Une précision sur la méthode', 'A note on method')}>
+        {tr("Les croisements portent sur des exigences, non sur des articles. Deux articles peuvent traiter du même sujet sans se recouper, par exemple lorsque l'un fixe une obligation de moyens et l'autre une obligation de résultat. La carte identifie l'action commune, puis signale explicitement là où la mutualisation cesse d'être possible.", 'The crosswalk works on requirements, not articles. Two articles can deal with the same subject without overlapping, for instance when one sets a best-efforts obligation and the other an obligation of result. The map identifies the shared action, then explicitly flags where sharing stops being possible.')}
       </Callout>
     </div>
   )

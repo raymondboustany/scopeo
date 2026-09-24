@@ -1,0 +1,124 @@
+{
+  "RGPD": {
+    "shortName": "GDPR",
+    "name": "General Data Protection Regulation",
+    "reference": "Regulation (EU) 2016/679",
+    "officialJournal": "OJ L 119, 4.5.2016, p. 1",
+    "purpose": "Protect natural persons with regard to the processing of their personal data and govern the free movement of such data.",
+    "scopeSummary": "Any controller or processor established in the Union, and any actor outside the Union that targets individuals in the Union or monitors their behaviour (Art. 3). No size threshold: the text applies from the first processing operation.",
+    "euAuthorities": ["European Data Protection Board (EDPB)", "European Data Protection Supervisor (EDPS)"],
+    "frAuthorities": ["CNIL"],
+    "frenchStatus": {
+      "label": "Directly applicable since 25 May 2018",
+      "note": "Supplemented in French law by amended Act No. 78-17 of 6 January 1978 (Data Protection Act) and its implementing decree No. 2019-536."
+    },
+    "sanctions": {
+      "RGPD-T1": ["First tier: €10M or 2% of worldwide turnover", "Article 83(4)", "Breaches of controller and processor obligations (Art. 8, 11, 25 to 39, 42 and 43), notably security, records, impact assessment and DPO designation."],
+      "RGPD-T2": ["Second tier: €20M or 4% of worldwide turnover", "Article 83(5)", "Infringements of the basic principles, data subject rights and rules on transfers outside the Union. The heaviest tier in EU data law."]
+    },
+    "acts": [
+      ["EDPB guidelines", "Body of guidelines from the European Data Protection Board (security, breaches, transfers, impact assessment)", "Not legally binding, but the reference doctrine of the supervisory authorities."],
+      ["Decision (EU) 2021/914", "Standard contractual clauses for transfers of data to third countries", null],
+      ["Digital Omnibus, COM(2025) 837", "Proposal for a regulation amending the GDPR, the ePrivacy directive, NIS2 and DORA", "Data strand still under negotiation as of 22 September 2026. The EDPB and EDPS issued joint opinion 2/2026 on 11 February 2026. To watch: definition of personal data, cookie regime, legal basis of legitimate interest."]
+    ]
+  },
+  "NIS2": {
+    "shortName": "NIS2 (ReCyF)",
+    "name": "Directive on a high common level of cybersecurity across the Union",
+    "reference": "Directive (EU) 2022/2555",
+    "officialJournal": "OJ L 333, 27.12.2022, p. 80",
+    "purpose": "Raise the cybersecurity level of entities supporting activities critical to the economy and society, and organise cooperation between Member States.",
+    "scopeSummary": "Entities in the Annex I (highly critical) and Annex II (critical) sectors that are at least medium-sized: 50 staff, or €10M turnover and balance sheet (Art. 2 and 3). Some entities are covered regardless of size, notably DNS service providers, domain name registries, trust service providers and providers of public electronic communications networks.",
+    "euAuthorities": ["ENISA", "NIS Cooperation Group", "CSIRTs network"],
+    "frAuthorities": ["ANSSI"],
+    "frenchStatus": {
+      "label": "Not transposed as of 24 September 2026",
+      "note": "The bill on the resilience of critical infrastructure and strengthening cybersecurity, tabled in the Senate on 15 October 2024, was adopted there at first reading on 12 March 2025, then adopted by a special committee of the National Assembly on 10 September 2025. The Conference of Presidents of 22 September 2026 scheduled the plenary debate from 7 October 2026. France remains late in transposing; ANSSI has nonetheless published the ReCyF, which sets out the expected security objectives."
+    },
+    "sanctions": {
+      "NIS2-EE": ["Essential entity: €10M or 2% of worldwide turnover", "Article 34(4)", "Minimum cap Member States must provide for breaches of Articles 21 and 23. National law may go further."],
+      "NIS2-EI": ["Important entity: €7M or 1.4% of worldwide turnover", "Article 34(5)", "Minimum cap applicable to important entities for the same breaches."],
+      "NIS2-DIR": ["Liability of management bodies", "Articles 20 and 32(6)", "Beyond fines, the authority may temporarily suspend a certification or ban a natural person with managerial responsibilities from exercising those functions. This sanction only applies to essential entities."]
+    },
+    "acts": [
+      ["Implementing Regulation (EU) 2024/2690", "Technical and methodological requirements for risk-management measures, and cases in which an incident is considered significant, for certain digital providers", "In force since 7 November 2024. Covers DNS service providers, TLD registries, cloud computing, data centres, content delivery networks, managed and managed security services, online marketplaces, search engines, social networks and trust service providers. For these actors, it replaces case-by-case assessment with quantified thresholds."],
+      ["ENISA Technical Implementation Guidance", "Technical implementation guide for Implementing Regulation 2024/2690", "170 pages turning each requirement into operational measures and examples of expected evidence."],
+      ["ReCyF v2.5", "French cyber framework (Référentiel Cyber France): security objectives and acceptable means of compliance", "Published by ANSSI. Turns NIS2 into 20 security objectives and 152 acceptable means of compliance, with separate applicability for important and essential entities. Working document until the transposition act and its decrees are published."]
+    ],
+    "framework": "NIS2 requirements are detailed and structured by ANSSI's French cyber framework (Référentiel Cyber France, ReCyF), which turns the directive's objectives into actionable measures for French entities. Working document, liable to change before the implementing decree is published."
+  },
+  "DORA": {
+    "shortName": "DORA",
+    "name": "Regulation on digital operational resilience for the financial sector",
+    "reference": "Regulation (EU) 2022/2554",
+    "officialJournal": "OJ L 333, 27.12.2022, p. 1",
+    "purpose": "Ensure the European financial sector can withstand, respond to and recover from disruptions and threats related to information and communication technologies.",
+    "scopeSummary": "Twenty-one types of financial entities listed in Article 2: credit, payment and e-money institutions, investment firms, crypto-asset service providers, central securities depositories, central counterparties, trading venues, trade repositories, fund managers, insurance and reinsurance undertakings, intermediaries, occupational retirement institutions, credit rating agencies, benchmark administrators, crowdfunding service providers, as well as ICT third-party service providers. A lighter regime applies to microenterprises.",
+    "euAuthorities": ["EBA", "ESMA", "EIOPA", "Oversight Forum"],
+    "frAuthorities": ["ACPR", "AMF", "Banque de France"],
+    "frenchStatus": {
+      "label": "Directly applicable since 17 January 2025",
+      "note": "Directly applicable regulation. The ACPR and AMF supervise French entities; the European supervisory authorities directly oversee designated critical third-party providers."
+    },
+    "sanctions": {
+      "DORA-NAT": ["National administrative penalties", "Articles 50 to 52", "DORA sets no harmonised EU cap for financial entities: each Member State lays down effective, proportionate and dissuasive penalties. In France, the caps are those of the Monetary and Financial Code for the relevant category of entity. Authorities may also publish penalties and hold management personally liable."],
+      "DORA-CTPP": ["Critical third-party provider: periodic penalty of 1% of daily worldwide turnover", "Article 35(6) to (8)", "Daily periodic penalty capped at 1% of average daily worldwide turnover of the previous financial year, for up to six months. It targets designated critical ICT third-party service providers, not client financial entities."]
+    },
+    "acts": [
+      ["Delegated Regulation (EU) 2024/1774", "Regulatory technical standards specifying the ICT risk management framework", "Minimum content of security policies, access management, encryption, network segmentation, change management, continuity and crisis communication. This is the text that makes DORA Article 15 operational."],
+      ["Delegated Regulation (EU) 2024/1772", "Regulatory technical standards on the classification of ICT-related incidents", "Criteria and materiality thresholds for qualifying an incident as major, and therefore reportable."],
+      ["Implementing Regulation (EU) 2024/2956", "Standard templates for the register of information on ICT contractual arrangements", "Sets the exact structure of the register of information to be submitted annually to the competent authority. Fifteen linked table templates."],
+      ["Delegated Regulation (EU) 2025/301", "Technical standards on the content and deadlines for reporting major incidents", "Sets the three reporting deadlines: initial notification, intermediate report, final report."],
+      ["Delegated Regulation (EU) 2025/532", "Technical standards on subcontracting ICT services supporting critical or important functions", "In force since 22 July 2025. Frames what the financial entity must check before authorising a subcontracting chain: visibility of downstream subcontractors, concentration risk, data location."],
+      ["Delegated Regulation (EU) 2025/1190", "Technical standards on threat-led penetration testing", "In force since 8 July 2025. Methodology aligned with TIBER-EU: threat intelligence, red team, scope, authority attestation."],
+      ["Designation of critical third-party providers", "First list of critical ICT third-party service providers designated by the European supervisory authorities", "Nineteen providers designated, mostly cloud and data centre providers. Since 2026, each has a lead overseer supported by joint examination teams."]
+    ]
+  },
+  "CRA": {
+    "shortName": "CRA",
+    "name": "Cyber Resilience Act",
+    "reference": "Regulation (EU) 2024/2847",
+    "officialJournal": "OJ L, 2024/2847, 20.11.2024",
+    "purpose": "Ensure that products with digital elements (hardware and software) are placed on the market with fewer vulnerabilities, and that manufacturers keep them secure throughout their support period.",
+    "scopeSummary": "Any product with digital elements made available on the Union market whose intended use includes a direct or indirect data connection to a device or network. Obligations fall mainly on the manufacturer and, to a lesser extent, on the importer and distributor. Excluded are products covered by equivalent sectoral rules: medical devices, motor vehicles, civil aviation, marine equipment, and products developed exclusively for defence or national security. Pure cloud services fall under NIS2, not the CRA.",
+    "euAuthorities": ["European Commission", "ENISA, single reporting platform", "Administrative cooperation group (ADCO)"],
+    "frAuthorities": ["ANFR, market surveillance (expected)", "ANSSI, notifying authority", "CERT-FR, coordinating CSIRT"],
+    "frenchStatus": {
+      "label": "Phased application: reporting since 11 September 2026",
+      "note": "Directly applicable regulation, applying in stages (Art. 71): conformity assessment bodies since 11 June 2026, Article 14 reporting obligations since 11 September 2026, all requirements from 11 December 2027. In France, ANSSI is the notifying authority and market surveillance is expected to go to ANFR; formal designation is still pending."
+    },
+    "sanctions": {
+      "CRA-T1": ["Essential requirements: €15M or 2.5% of worldwide turnover", "Article 64(2)", "Non-compliance with the Annex I essential requirements and the obligations of Articles 13 (manufacturer) and 14 (reporting). Micro and small enterprises are not fined solely for missing the 24-hour early-warning deadline (Art. 64(10))."],
+      "CRA-T2": ["Other obligations: €10M or 2% of worldwide turnover", "Article 64(3)", "Obligations of importers and distributors (Art. 18 to 23), CE marking, technical documentation and conformity assessment procedures."],
+      "CRA-T3": ["Incorrect information: €5M or 1% of worldwide turnover", "Article 64(4)", "Supplying incorrect, incomplete or misleading information to notified bodies and market surveillance authorities."]
+    },
+    "acts": [
+      ["Implementing Regulation (EU) 2025/2392", "Technical description of the categories of important and critical products", "In force since 29 November 2025. Specifies the twenty-eight categories of Annexes III (classes I and II) and IV, which determine the applicable conformity assessment procedure: self-assessment, third party or European certification."],
+      ["Single reporting platform", "Channel for notifying actively exploited vulnerabilities and severe incidents", "Operated by ENISA (Art. 16), it forwards simultaneously to the coordinating CSIRT of the Member State concerned, i.e. CERT-FR for France."]
+    ]
+  },
+  "AIACT": {
+    "shortName": "AI Act",
+    "name": "Artificial Intelligence Act",
+    "reference": "Regulation (EU) 2024/1689",
+    "officialJournal": "OJ L, 2024/1689, 12.7.2024",
+    "purpose": "Govern the placing on the market, putting into service and use of artificial intelligence systems according to their level of risk, in order to protect health, safety and fundamental rights.",
+    "scopeSummary": "Providers placing on the market or putting into service an AI system or model in the Union, deployers established or located in the Union, as well as importers, distributors and authorised representatives (Art. 2). Obligations depend on the level of risk: prohibited practices (Art. 5), high-risk systems (Art. 6, Annexes I and III), transparency obligations (Art. 50) and general-purpose AI models (Chapter V). Exclusively military, defence or national security uses, scientific research and purely personal non-professional use are excluded.",
+    "euAuthorities": ["AI Office (European Commission)", "European Artificial Intelligence Board", "Scientific panel of independent experts"],
+    "frAuthorities": ["DGCCRF, market surveillance coordination (expected)", "CNIL, personal data and biometrics (expected)", "Sectoral authorities: ACPR, Arcom, ANSM (expected)"],
+    "frenchStatus": {
+      "label": "Phased application, timetable amended by the AI Omnibus",
+      "note": "Directly applicable regulation, applying in stages (Art. 113): prohibited practices and AI literacy since 2 February 2025, general-purpose AI models and governance since 2 August 2025, transparency and the general regime since 2 August 2026. Regulation (EU) 2026/1744, the \"AI Omnibus\", in force since 27 July 2026, postpones Annex III high-risk systems to 2 December 2027 and Annex I systems to 2 August 2028. In France, designation of the competent authorities (DGCCRF coordinating, CNIL and sectoral authorities) depends on a bill still under discussion."
+    },
+    "sanctions": {
+      "AIACT-T1": ["Prohibited practices: €35M or 7% of worldwide turnover", "Article 99(3)", "Non-compliance with the prohibition of the Article 5 practices. The highest cap in EU digital law. For SMEs, the lower of the two amounts applies (Art. 99(6))."],
+      "AIACT-T2": ["Other obligations: €15M or 3% of worldwide turnover", "Article 99(4)", "Obligations of providers (Art. 16), authorised representatives, importers, distributors and deployers (Art. 26), and transparency obligations (Art. 50). Providers of general-purpose AI models fall under an equivalent cap set by the Commission (Art. 101)."],
+      "AIACT-T3": ["Incorrect information: €7.5M or 1% of worldwide turnover", "Article 99(5)", "Supplying incorrect, incomplete or misleading information to notified bodies or national competent authorities."]
+    },
+    "acts": [
+      ["Regulation (EU) 2026/1744", "Digital Omnibus on AI: simplification and postponed timetable for high-risk systems", "Published in the OJ on 24 July 2026, in force on 27 July 2026. Postpones Annex III high-risk systems to 2 December 2027 and Annex I systems to 2 August 2028. Rewrites Article 4: AI literacy becomes a best-efforts obligation. Adds a ban on generating child sexual abuse material or non-consensual intimate content (2 December 2026) and gives systems already on the market until 2 December 2026 to mark generated content. Extends SME relief to small mid-caps. The local corpus keeps the original version published in the OJ; Article 4 quotes refer to that version."],
+      ["Guidelines C(2025) 884", "Commission guidelines on prohibited AI practices", "Not binding, but the reference interpretation of Article 5."],
+      ["GPAI Code of Practice", "Code of practice for general-purpose AI models", "Voluntary tool to demonstrate compliance with Articles 53 and 55: transparency, copyright, safety and security."]
+    ]
+  }
+}

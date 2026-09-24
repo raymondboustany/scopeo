@@ -8,10 +8,11 @@ import { NAV } from './nav'
 import { cn } from '@/lib/utils'
 import { RegChip } from '@/components/ui/primitives'
 import type { RegulationId } from '@/types/domain'
+import { tr } from '@/i18n'
 
-const REG_IDS = new Set(['RGPD', 'NIS2', 'DORA', 'CRA'])
+const REG_IDS = new Set(['RGPD', 'NIS2', 'DORA', 'CRA', 'AIACT'])
 
-const KIND_ORDER: SearchKind[] = ['obligation', 'theme', 'recyf', 'echeance']
+const KIND_ORDER: SearchKind[] = ['obligation', 'theme', 'recyf', 'iso', 'echeance']
 
 /** Référence stable, pour ne pas invalider les calculs à chaque rendu. */
 const EMPTY: SearchRecord[] = []
@@ -76,7 +77,7 @@ export function CommandPalette({
           aria-describedby={undefined}
           className="fixed left-1/2 top-[12vh] z-50 w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-md border border-rule-2 bg-surface shadow-modal"
         >
-          <Dialog.Title className="sr-only">Recherche dans le corpus réglementaire</Dialog.Title>
+          <Dialog.Title className="sr-only">{tr('Recherche dans le corpus réglementaire', 'Search the regulatory corpus')}</Dialog.Title>
           <Command shouldFilter={false} loop>
             <div className="flex items-center gap-2.5 border-b border-rule px-3.5">
               <Search size={15} className="shrink-0 text-ink-3" />
@@ -84,7 +85,7 @@ export function CommandPalette({
                 value={query}
                 onValueChange={setQuery}
                 autoFocus
-                placeholder="Article, exigence, thème de croisement, objectif ReCyF…"
+                placeholder={tr('Article, exigence, thème de croisement, objectif ReCyF, contrôle ISO…', 'Article, requirement, crosswalk theme, ReCyF objective, ISO control…')}
                 className="h-11 w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-4"
               />
               <kbd className="shrink-0 rounded-xs border border-rule-2 bg-sunken px-1 font-mono text-[10px] text-ink-4">
@@ -94,7 +95,7 @@ export function CommandPalette({
 
             <Command.List className="max-h-[54vh] overflow-y-auto p-1.5">
               {!active ? (
-                <Command.Group heading={<GroupLabel>Accès rapide</GroupLabel>}>
+                <Command.Group heading={<GroupLabel>{tr('Accès rapide', 'Quick access')}</GroupLabel>}>
                   {NAV.map((n) => (
                     <Item key={n.to} onSelect={() => go(n.to)}>
                       <span className="text-ink-3">{n.icon}</span>
@@ -104,9 +105,12 @@ export function CommandPalette({
                 </Command.Group>
               ) : results.length === 0 ? (
                 <div className="px-3 py-8 text-center text-sm text-ink-3">
-                  Aucun résultat pour « {query} ».
+                  {tr(`Aucun résultat pour « ${query} ».`, `No results for "${query}".`)}
                   <div className="mt-1 text-xs text-ink-4">
-                    La recherche porte sur les articles, les exigences, les croisements et le ReCyF.
+                    {tr(
+                      'La recherche porte sur les articles, les exigences, les croisements, le ReCyF et les contrôles ISO 27001.',
+                      'Search covers articles, requirements, crosswalk themes, the ReCyF and ISO 27001 controls.',
+                    )}
                   </div>
                 </div>
               ) : (

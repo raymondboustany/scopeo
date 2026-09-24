@@ -1,24 +1,28 @@
 /**
- * Modèle de domaine — Scopeo
+ * Modèle de domaine : Scopeo
  *
  * Le produit repose sur quatre couches, de la plus normative à la plus
  * opérationnelle :
  *
- *   1. Règlement      — le texte et son régime (dates, autorités, sanctions)
- *   2. Obligation     — un article, décomposé en exigences élémentaires
- *   3. Exigence       — la plus petite unité vérifiable d'une obligation
- *   4. Croisement     — l'exigence unifiée qui satisfait plusieurs textes
+ *   1. Règlement : le texte et son régime (dates, autorités, sanctions)
+ *   2. Obligation : un article, décomposé en exigences élémentaires
+ *   3. Exigence : la plus petite unité vérifiable d'une obligation
+ *   4. Croisement : l'exigence unifiée qui satisfait plusieurs textes
  *
- * Le ReCyF, traduction opérationnelle française de NIS 2 publiée par l'ANSSI,
- * n'est pas un référentiel autonome : il s'affiche sous les exigences NIS 2
- * qu'il détaille, comme « détail d'implémentation ANSSI ».
+ * Le ReCyF, traduction opérationnelle française de NIS2 publiée par l'ANSSI,
+ * n'est pas un référentiel autonome : il structure et détaille les exigences
+ * NIS2, affichées sous la forme « NIS2 (ReCyF) ».
+ *
+ * ISO/IEC 27001 n'est pas un texte réglementaire : c'est une démarche
+ * volontaire de l'entité, dont l'état peut pré-remplir l'évaluation des
+ * exigences réglementaires qui lui correspondent.
  */
 
 // ---------------------------------------------------------------------------
 // Règlements
 // ---------------------------------------------------------------------------
 
-export const REGULATION_IDS = ['RGPD', 'NIS2', 'DORA', 'CRA'] as const
+export const REGULATION_IDS = ['RGPD', 'NIS2', 'DORA', 'CRA', 'AIACT'] as const
 export type RegulationId = (typeof REGULATION_IDS)[number]
 
 export type LegalKind = 'reglement' | 'directive'
@@ -78,6 +82,8 @@ export interface Regulation {
   implementingActs: ImplementingAct[]
   /** Nombre d'articles du texte, pour situer la couverture du corpus. */
   articleCount: number
+  /** Référentiel national qui détaille et structure les exigences du texte. */
+  framework?: { name: string; version: string; date: string; issuer: string; note: string }
 }
 
 // ---------------------------------------------------------------------------
@@ -160,13 +166,13 @@ export interface Obligation {
   themes: string[]
   conditions?: ScopeCondition[]
   guidance?: ExternalReference[]
-  /** Objectifs ReCyF qui détaillent la mise en œuvre de cette exigence NIS 2. */
+  /** Objectifs ReCyF qui détaillent la mise en œuvre de cette exigence NIS2. */
   recyf?: number[]
   sourceUrl: string
 }
 
 // ---------------------------------------------------------------------------
-// Croisements — le cœur du produit
+// Croisements : le cœur du produit
 // ---------------------------------------------------------------------------
 
 export type CrosswalkRelation = 'recouvrement' | 'divergence' | 'hierarchie'
@@ -180,6 +186,7 @@ export const DOMAINS = [
   'resilience',
   'tiers',
   'donnees',
+  'ia',
   'documentation',
 ] as const
 export type Domain = (typeof DOMAINS)[number]
@@ -225,7 +232,7 @@ export interface CrosswalkTheme {
 }
 
 // ---------------------------------------------------------------------------
-// ReCyF — Référentiel Cyber France (ANSSI)
+// ReCyF : Référentiel Cyber France (ANSSI)
 // ---------------------------------------------------------------------------
 
 export type RecyfPillar = 'gouvernance' | 'protection' | 'defense' | 'resilience'
@@ -250,7 +257,7 @@ export interface RecyfObjective {
   statement: string
   /** Portée : toutes entités, ou entités essentielles seulement. */
   scope: 'EI+EE' | 'EE'
-  /** Dispositions de NIS 2 couvertes par l'objectif. */
+  /** Dispositions de NIS2 couvertes par l'objectif. */
   nis2: string[]
   themes: string[]
   measures: RecyfMeasure[]
@@ -274,7 +281,7 @@ export interface Question {
   id: string
   section: string
   sectionLabel: string
-  /** Fondement juridique interrogé — affiché pour justifier la question. */
+  /** Fondement juridique interrogé : affiché pour justifier la question. */
   basis: string
   question: string
   help?: string
@@ -308,7 +315,7 @@ export interface RegulationVerdict {
   /** Qualification retenue, ex. « Entité essentielle » ou « Entité financière ». */
   qualification: string | null
   basis: LegalBasis[]
-  /** Points qui restent à confirmer hors de l'outil. */
+  /** Points qui restent à confirmer hors de la plateforme. */
   caveats: string[]
   /** Sanction encourue, valorisée avec le chiffre d'affaires déclaré. */
   exposure: {
@@ -320,7 +327,7 @@ export interface RegulationVerdict {
 
 export interface QualificationResult {
   verdicts: Record<RegulationId, RegulationVerdict>
-  /** Catégorie NIS 2 retenue, utilisée pour filtrer le ReCyF. */
+  /** Catégorie NIS2 retenue, utilisée pour filtrer le ReCyF. */
   nis2Category: 'essentielle' | 'importante' | null
   /** Clés dérivées réutilisées par les conditions d'applicabilité. */
   derived: Record<string, string | boolean | number>
@@ -348,6 +355,10 @@ export interface CoverageEntry {
   evidence?: string
   targetDate?: string
   updatedAt: string
+  /** Niveau proposé par la démarche ISO 27001, non saisi à la main. Jamais enregistré. */
+  fromIso?: boolean
+  /** L'utilisateur a écarté la proposition ISO pour ce thème. */
+  isoDismissed?: boolean
 }
 
 // ---------------------------------------------------------------------------
@@ -363,7 +374,7 @@ export interface PriorityWeights {
   levier: number
   /** Urgence calendaire au regard des échéances réglementaires. */
   echeance: number
-  /** Charge de mise en œuvre — pondération inversée. */
+  /** Charge de mise en œuvre : pondération inversée. */
   effort: number
 }
 
@@ -410,7 +421,7 @@ export interface TimelineEvent {
 }
 
 // ---------------------------------------------------------------------------
-// Persistance — miroir des objets du serveur
+// Persistance : miroir des objets du serveur
 // ---------------------------------------------------------------------------
 
 export type UserRole = 'consultant' | 'dpo' | 'rssi' | 'juriste' | 'dirigeant' | 'auditeur' | 'autre'
@@ -467,6 +478,8 @@ export interface EntityProfile {
   /** Commanditaire côté entité. */
   sponsor?: string
   stakeholders?: Stakeholder[]
+  /** Démarche ISO/IEC 27001 de l'entité, renseignée après la qualification. */
+  iso27001?: IsoProfile
 }
 
 export const NOTE_TAGS = ['verifier', 'hypothese', 'decision', 'preuve', 'note'] as const
@@ -516,6 +529,8 @@ export interface EntityRecord {
   profile: EntityProfile
   notes: EntityNote[]
   public_snapshot: PublicSnapshot | null
+  /** Détail des contrôles de l'annexe A d'ISO/IEC 27001:2022. */
+  iso_controls: IsoAssessment
   share_enabled: boolean
   share_token: string
   is_demo: boolean
@@ -531,7 +546,7 @@ export interface Revision {
 
 /**
  * Scénario d'incident simulé : sert à exercer les délais de notification.
- * Il n'est jamais enregistré — l'outil prépare la réaction, il ne la pilote pas.
+ * Il n'est jamais enregistré : la plateforme prépare la réaction, il ne la pilote pas.
  */
 export interface IncidentRecord {
   id: string
@@ -564,4 +579,59 @@ export interface PublicSnapshot {
   themesTotal: number
   themesCovered: number
   nis2Category: 'essentielle' | 'importante' | null
+  /** Certification ISO/IEC 27001 en cours de validité, le cas échéant. */
+  iso27001?: { certified: boolean; validUntil: string | null }
+}
+
+// ---------------------------------------------------------------------------
+// ISO/IEC 27001:2022
+// ---------------------------------------------------------------------------
+
+/** Statut de la démarche ISO/IEC 27001 déclaré pour l'entité. */
+export const ISO_STATUSES = ['certifie', 'conforme', 'partiel', 'aucune'] as const
+export type IsoStatus = (typeof ISO_STATUSES)[number]
+
+/** La démarche couvre-t-elle tout le périmètre réglementaire applicable ? */
+export type IsoPerimeter = 'integral' | 'partiel'
+
+export interface IsoProfile {
+  status?: IsoStatus
+  /** Date de fin de validité du certificat, si certifié. */
+  validUntil?: string
+  perimeter?: IsoPerimeter
+  /** Référentiels applicables au moment où le périmètre a été confirmé. */
+  perimeterRegulations?: RegulationId[]
+}
+
+/** Les quatre thèmes de l'annexe A. */
+export const ISO_THEMES = ['A5', 'A6', 'A7', 'A8'] as const
+export type IsoThemeId = (typeof ISO_THEMES)[number]
+
+export type IsoApplicability = 'applicable' | 'non_applicable'
+export type IsoImplementation = 'mis_en_oeuvre' | 'partiel' | 'non_mis_en_oeuvre'
+
+/** Déclaration pour un contrôle, ou pour un thème entier en saisie groupée. */
+export interface IsoControlEntry {
+  applicability?: IsoApplicability
+  /** Renseigné uniquement pour un contrôle applicable. */
+  implementation?: IsoImplementation
+  justification?: string
+}
+
+export interface IsoControl {
+  /** Numéro de l'annexe A, ex. « 5.15 ». */
+  id: string
+  theme: IsoThemeId
+  title: string
+}
+
+export interface IsoAssessment {
+  /** Saisie groupée, par thème. */
+  themes?: Partial<Record<IsoThemeId, IsoControlEntry>>
+  /** Saisie détaillée, par contrôle : elle prime sur la saisie groupée. */
+  controls?: Record<string, IsoControlEntry>
+  /** Thèmes dépliés pour une saisie contrôle par contrôle. */
+  detailed?: IsoThemeId[]
+  /** Déclaration d'applicabilité importée, conservée comme pièce de référence. */
+  soa?: { id: string; name: string; size: number; uploadedAt: string; imported: number }
 }

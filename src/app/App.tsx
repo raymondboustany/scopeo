@@ -7,8 +7,9 @@ import { Button, TooltipProvider } from '@/components/ui/controls'
 import { EmptyState } from '@/components/ui/primitives'
 import { queryClient, useCurrentEntity, useCurrentUser } from '@/lib/queries'
 import { useSession } from '@/lib/store'
-import { ApiError } from '@/lib/api'
+import { ApiError, setUnauthenticatedHandler } from '@/lib/api'
 import { useSnapshotSync } from '@/lib/hooks'
+import { tr } from '@/i18n'
 
 const Landing = lazy(() => import('@/features/landing/LandingPage'))
 const PublicTrust = lazy(() => import('@/features/trust/PublicTrustPage'))
@@ -19,6 +20,7 @@ const Qualification = lazy(() => import('@/features/qualification/QualificationP
 const Corpus = lazy(() => import('@/features/corpus/CorpusPage'))
 const Crosswalk = lazy(() => import('@/features/crosswalk/CrosswalkPage'))
 const Assessment = lazy(() => import('@/features/assessment/AssessmentPage'))
+const Iso = lazy(() => import('@/features/iso/IsoPage'))
 const Priorities = lazy(() => import('@/features/priorities/PrioritiesPage'))
 const Roadmap = lazy(() => import('@/features/roadmap/RoadmapPage'))
 const Timeline = lazy(() => import('@/features/timeline/TimelinePage'))
@@ -27,11 +29,17 @@ const Report = lazy(() => import('@/features/report/ReportPage'))
 const TrustSettings = lazy(() => import('@/features/trust/TrustSettingsPage'))
 const Settings = lazy(() => import('@/features/settings/SettingsPage'))
 
+// Une session expirée ou révoquée ramène à l'écran de connexion.
+setUnauthenticatedHandler(() => {
+  useSession.getState().signOut()
+  queryClient.clear()
+})
+
 function Loading() {
   return (
     <div className="flex h-64 items-center justify-center gap-3 text-sm text-ink-3">
       <span className="size-4 animate-spin rounded-full border-2 border-rule-2 border-t-accent" aria-hidden />
-      Chargement…
+      {tr('Chargement…', 'Loading…')}
     </div>
   )
 }
@@ -43,7 +51,7 @@ function useScrollReset() {
   }, [pathname])
 }
 
-/** Garde de l'application : sans profil ouvert, on revient à l'accueil. */
+/** Garde de l'application : sans session valide, on revient à l'écran de connexion. */
 function AppLayout() {
   useScrollReset()
   const userId = useSession((s) => s.userId)
@@ -52,10 +60,10 @@ function AppLayout() {
   const { data: user, error, isLoading } = useCurrentUser()
   const entity = useCurrentEntity()
 
-  // Un profil ou une entité supprimés ailleurs ne doivent pas bloquer l'accès.
   useEffect(() => {
-    if (error instanceof ApiError && error.status === 404) signOut()
+    if (error instanceof ApiError && (error.status === 401 || error.status === 404)) signOut()
   }, [error, signOut])
+  // Une entité supprimée ailleurs ne doit pas bloquer l'accès.
   useEffect(() => {
     if (entity.error instanceof ApiError && entity.error.status === 404) selectEntity(null)
   }, [entity.error, selectEntity])
@@ -95,15 +103,19 @@ function ServerDown() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-paper p-6">
       <EmptyState
-        title="Le serveur local ne répond pas"
+        title={tr('Le serveur local ne répond pas', 'The local server is not responding')}
         action={
           <Button variant="primary" onClick={() => window.location.reload()}>
-            Réessayer
+            {tr('Réessayer', 'Retry')}
           </Button>
         }
       >
-        L'application enregistre vos données sur un serveur qui tourne sur ce poste. Lancez-le avec{' '}
-        <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">npm run dev</code> puis rechargez.
+        {tr(
+          "La plateforme enregistre vos données sur un serveur qui tourne sur ce poste. Lancez-le avec ",
+          'The platform stores your data on a server running on this machine. Start it with ',
+        )}
+        <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">npm run dev</code>
+        {tr(' puis rechargez.', ' then reload.')}
       </EmptyState>
     </div>
   )
@@ -111,19 +123,24 @@ function ServerDown() {
 
 function ErrorScreen() {
   const error = useRouteError()
-  const message = error instanceof Error ? error.message : "Une erreur inattendue s'est produite."
+  const message = error instanceof Error ? error.message : tr("Une erreur inattendue s'est produite.", 'An unexpected error occurred.')
   return (
     <div className="flex min-h-screen items-center justify-center bg-paper p-6">
       <EmptyState
-        title="L'écran n'a pas pu être affiché"
+        title={tr("L'écran n'a pas pu être affiché", 'This screen could not be displayed')}
         action={
           <Button variant="primary" onClick={() => (window.location.hash = '#/app')}>
-            Revenir au tableau de bord
+            {tr('Revenir au tableau de bord', 'Back to the dashboard')}
           </Button>
         }
       >
         <p>{message}</p>
-        <p className="mt-2">Vos données sont enregistrées sur le serveur local et ne sont pas affectées.</p>
+        <p className="mt-2">
+          {tr(
+            'Vos données sont enregistrées sur le serveur local et ne sont pas affectées.',
+            'Your data is stored on the local server and is not affected.',
+          )}
+        </p>
       </EmptyState>
     </div>
   )
@@ -154,6 +171,7 @@ const router = createHashRouter([
       { path: 'corpus', element: <Corpus /> },
       { path: 'croisements', element: <Crosswalk /> },
       { path: 'evaluation', element: <Assessment /> },
+      { path: 'iso27001', element: <Iso /> },
       { path: 'priorisation', element: <Priorities /> },
       { path: 'feuille-de-route', element: <Roadmap /> },
       { path: 'echeancier', element: <Timeline /> },

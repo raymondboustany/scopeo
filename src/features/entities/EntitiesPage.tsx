@@ -10,8 +10,9 @@ import { useCopyDemo, useCreateEntity, useDeleteEntity, useEntities, keys, flush
 import { useSession } from '@/lib/store'
 import { api } from '@/lib/api'
 import { QUESTIONS, SECTOR_BY_VALUE } from '@/data/questionnaire'
-import { cn, formatDate } from '@/lib/utils'
+import { cn, formatDate, formatPct } from '@/lib/utils'
 import type { EntitySummary } from '@/types/domain'
+import { tr } from '@/i18n'
 
 export default function EntitiesPage() {
   const { data: entities = [], isLoading } = useEntities()
@@ -39,9 +40,9 @@ export default function EntitiesPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Cadrage"
-        title="Entités"
-        lead="Une entité par organisation cadrée. Chacune est enregistrée séparément : ouvrir, renommer ou supprimer l'une ne touche jamais aux autres."
+        eyebrow={tr('Cadrage', 'Scoping')}
+        title={tr('Entités', 'Entities')}
+        lead={tr("Une entité par organisation cadrée. Chacune est enregistrée séparément : ouvrir, renommer ou supprimer l'une ne touche jamais aux autres.", 'One entity per organisation scoped. Each is stored separately: opening, renaming or deleting one never affects the others.')}
         actions={
           <>
             <Button
@@ -52,10 +53,10 @@ export default function EntitiesPage() {
                 await open(e.id)
               }}
             >
-              Copier la démonstration
+              {tr('Copier la démonstration', 'Copy the demo')}
             </Button>
             <Button variant="primary" icon={<Plus size={14} />} onClick={() => setCreating(true)}>
-              Nouvelle entité
+              {tr('Nouvelle entité', 'New entity')}
             </Button>
           </>
         }
@@ -64,14 +65,14 @@ export default function EntitiesPage() {
       {isLoading ? null : entities.length === 0 ? (
         <EmptyState
           icon={<Building2 size={20} />}
-          title="Aucune entité pour ce profil"
+          title={tr('Aucune entité pour ce profil', 'No entities for this profile')}
           action={
             <Button variant="primary" icon={<Plus size={14} />} onClick={() => setCreating(true)}>
-              Créer la première
+              {tr('Créer la première', 'Create the first one')}
             </Button>
           }
         >
-          Créez l'entité que vous souhaitez cadrer, ou copiez la démonstration pour explorer l'outil sur un cas complet.
+          {tr("Créez l'entité que vous souhaitez cadrer, ou copiez la démonstration pour explorer la plateforme sur un cas complet.", 'Create the entity you want to scope, or copy the demo to explore the platform on a complete case.')}
         </EmptyState>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -99,7 +100,7 @@ export default function EntitiesPage() {
             className="flex min-h-[11rem] flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-rule-3 text-sm text-ink-3 transition-colors hover:border-accent-line hover:text-ink"
           >
             <Plus size={18} />
-            Nouvelle entité
+            {tr('Nouvelle entité', 'New entity')}
           </button>
         </div>
       )}
@@ -154,22 +155,22 @@ function EntityCard({
           </span>
           <span className="min-w-0">
             <span className="block truncate text-base font-semibold text-ink">{entity.name}</span>
-            <span className="block truncate text-2xs text-ink-3">{sector ?? 'Secteur non renseigné'}</span>
+            <span className="block truncate text-2xs text-ink-3">{sector ?? tr('Secteur non renseigné', 'Sector not provided')}</span>
           </span>
         </button>
         <Dropdown.Root>
           <Dropdown.Trigger asChild>
-            <button className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={`Actions pour ${entity.name}`}>
+            <button className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr(`Actions pour ${entity.name}`, `Actions for ${entity.name}`)}>
               <MoreHorizontal size={15} />
             </button>
           </Dropdown.Trigger>
           <Dropdown.Portal>
             <Dropdown.Content align="end" sideOffset={4} className="z-50 min-w-40 rounded-md border border-rule bg-surface p-1 shadow-pop">
               <Dropdown.Item onSelect={onRename} className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[highlighted]:text-ink">
-                <Pencil size={13} /> Renommer
+                <Pencil size={13} /> {tr('Renommer', 'Rename')}
               </Dropdown.Item>
               <Dropdown.Item onSelect={onDelete} className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 text-sm text-critical outline-none data-[highlighted]:bg-critical-wash">
-                <Trash2 size={13} /> Supprimer
+                <Trash2 size={13} /> {tr('Supprimer', 'Delete')}
               </Dropdown.Item>
             </Dropdown.Content>
           </Dropdown.Portal>
@@ -180,8 +181,8 @@ function EntityCard({
 
       <div className="mt-auto pt-4">
         <div className="mb-1.5 flex items-center justify-between text-2xs text-ink-3">
-          <span>Qualification</span>
-          <span className="tabular">{progress >= 1 ? 'terminée' : `${Math.round(progress * 100)} %`}</span>
+          <span>{tr('Qualification', 'Scoping')}</span>
+          <span className="tabular">{progress >= 1 ? tr('terminée', 'complete') : formatPct(progress)}</span>
         </div>
         <div className="h-1 overflow-hidden rounded-full bg-overlay">
           <motion.div
@@ -192,14 +193,14 @@ function EntityCard({
           />
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
-          {active ? <Tag tone="accent">Ouverte</Tag> : null}
-          {entity.mode ? <Tag>{entity.mode === 'interne' ? 'Interne' : 'Client'}</Tag> : null}
+          {active ? <Tag tone="accent">{tr('Ouverte', 'Open')}</Tag> : null}
+          {entity.mode ? <Tag>{entity.mode === 'interne' ? tr('Interne', 'Internal') : tr('Client', 'Client')}</Tag> : null}
           {entity.share_enabled ? (
             <Tag>
-              <Globe size={10} /> Partagée
+              <Globe size={10} /> {tr('Partagée', 'Shared')}
             </Tag>
           ) : null}
-          <span className="ml-auto text-2xs text-ink-4">Modifiée le {formatDate(entity.updated_at)}</span>
+          <span className="ml-auto text-2xs text-ink-4">{tr(`Modifiée le ${formatDate(entity.updated_at)}`, `Updated ${formatDate(entity.updated_at)}`)}</span>
         </div>
       </div>
     </Card>
@@ -229,13 +230,13 @@ function CreateDialog({
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
-      title="Nouvelle entité"
-      description="L'organisation que vous allez cadrer. Sa fiche s'ouvre ensuite, puis la qualification."
+      title={tr('Nouvelle entité', 'New entity')}
+      description={tr("L'organisation que vous allez cadrer. Sa fiche s'ouvre ensuite, puis la qualification.", 'The organisation you are going to scope. Its profile opens next, then the scoping.')}
       footer={
         <>
-          <Button onClick={() => onOpenChange(false)}>Annuler</Button>
+          <Button onClick={() => onOpenChange(false)}>{tr('Annuler', 'Cancel')}</Button>
           <Button variant="primary" onClick={submit} disabled={!name.trim() || create.isPending}>
-            Créer l'entité
+            {tr("Créer l'entité", 'Create the entity')}
           </Button>
         </>
       }
@@ -247,10 +248,10 @@ function CreateDialog({
           if (name.trim()) void submit()
         }}
       >
-        <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Type de cadrage">
+        <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label={tr('Type de cadrage', 'Type of scoping')}>
           {([
-            ['client', 'Un client', 'Vous accompagnez une organisation tierce.'],
-            ['interne', 'Mon organisation', 'Vous cadrez votre propre entreprise.'],
+            ['client', tr('Un client', 'A client'), tr('Vous accompagnez une organisation tierce.', 'You are advising a third-party organisation.')],
+            ['interne', tr('Mon organisation', 'My organisation'), tr('Vous cadrez votre propre entreprise.', 'You are scoping your own company.')],
           ] as const).map(([v, label, hint]) => (
             <button
               key={v}
@@ -269,12 +270,12 @@ function CreateDialog({
           ))}
         </div>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Nom</span>
-          <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={mode === 'client' ? 'Nom du client' : 'Nom de votre organisation'} autoFocus />
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Nom', 'Name')}</span>
+          <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={mode === 'client' ? tr('Nom du client', 'Client name') : tr('Nom de votre organisation', 'Your organisation name')} autoFocus />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Périmètre (facultatif)</span>
-          <Textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Ce que couvre le cadrage : une filiale, un produit, un pays…" />
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Périmètre (facultatif)', 'Scope (optional)')}</span>
+          <Textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder={tr('Ce que couvre le cadrage : une filiale, un produit, un pays…', 'What the scoping covers: a subsidiary, a product, a country…')} />
         </label>
       </form>
     </Dialog>
@@ -298,23 +299,23 @@ function RenameDialog({ entity, onClose }: { entity: EntitySummary; onClose: () 
     <Dialog
       open
       onOpenChange={(v) => !v && onClose()}
-      title="Renommer l'entité"
+      title={tr("Renommer l'entité", 'Rename the entity')}
       footer={
         <>
-          <Button onClick={onClose}>Annuler</Button>
+          <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>
           <Button variant="primary" onClick={() => rename.mutate()} disabled={!name.trim() || rename.isPending}>
-            Enregistrer
+            {tr('Enregistrer', 'Save')}
           </Button>
         </>
       }
     >
       <div className="space-y-4">
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Nom</span>
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Nom', 'Name')}</span>
           <Input value={name} onChange={(e) => setName(e.target.value)} autoFocus />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-ink-2">Périmètre</span>
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Périmètre', 'Scope')}</span>
           <Textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} />
         </label>
       </div>
@@ -329,11 +330,11 @@ function DeleteDialog({ entity, onClose, onDeleted }: { entity: EntitySummary; o
     <Dialog
       open
       onOpenChange={(v) => !v && onClose()}
-      title={`Supprimer « ${entity.name} » ?`}
-      description="Réponses, évaluation, contacts, incidents et lien public seront supprimés. Les autres entités ne sont pas touchées."
+      title={tr(`Supprimer « ${entity.name} » ?`, `Delete "${entity.name}"?`)}
+      description={tr('Réponses, évaluation, démarche ISO 27001, contacts et lien public seront supprimés. Les autres entités ne sont pas touchées.', 'Answers, assessment, ISO 27001 data, contacts and public link will be deleted. Other entities are not affected.')}
       footer={
         <>
-          <Button onClick={onClose}>Annuler</Button>
+          <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>
           <Button
             variant="danger"
             icon={<Trash2 size={13} />}
@@ -343,14 +344,14 @@ function DeleteDialog({ entity, onClose, onDeleted }: { entity: EntitySummary; o
               onDeleted()
             }}
           >
-            Supprimer définitivement
+            {tr('Supprimer définitivement', 'Delete permanently')}
           </Button>
         </>
       }
     >
       <label className="block">
         <span className="mb-1.5 block text-xs text-ink-2">
-          Saisissez <strong className="text-ink">{entity.name}</strong> pour confirmer.
+          {tr('Saisissez', 'Type')} <strong className="text-ink">{entity.name}</strong> {tr('pour confirmer.', 'to confirm.')}
         </span>
         <Input value={confirm} onChange={(e) => setConfirm(e.target.value)} autoFocus />
       </label>

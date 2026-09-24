@@ -9,6 +9,7 @@ import { cn, formatDate } from '@/lib/utils'
 import { NOTE_TAGS, type EntityNote, type NoteTag } from '@/types/domain'
 import { anchorRoute, TAG_META, useNotes } from './notes'
 import { NoteComposer, TagBadge } from './NoteComposer'
+import { tr } from '@/i18n'
 
 type Filter = 'ouvertes' | NoteTag | 'toutes'
 
@@ -32,11 +33,11 @@ export function NotesButton() {
 
   if (!available) return null
   return (
-    <Tooltip content="Journal d'entretien (Alt + N)">
+    <Tooltip content={tr("Journal d'entretien (Alt + N)", 'Interview log (Alt + N)')}>
       <button
         onClick={() => setOpen(true)}
         data-tour="notes"
-        aria-label="Ouvrir le journal d'entretien"
+        aria-label={tr("Ouvrir le journal d'entretien", 'Open the interview log')}
         className="relative flex size-9 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-raised hover:text-ink"
       >
         <NotebookPen size={17} />
@@ -94,13 +95,13 @@ export function NotesDrawer() {
               >
                 <header className="flex items-start justify-between gap-3 border-b border-rule px-5 py-4">
                   <div>
-                    <Dialog.Title className="text-base font-semibold text-ink">Journal d'entretien</Dialog.Title>
+                    <Dialog.Title className="text-base font-semibold text-ink">{tr("Journal d'entretien", 'Interview log')}</Dialog.Title>
                     <Dialog.Description className="mt-0.5 text-xs text-ink-3">
-                      Toutes les notes de l'entité. Les points ouverts figurent en annexe du rapport complet.
+                      {tr("Toutes les notes de l'entité. Les points ouverts figurent en annexe du rapport complet.", "All of the entity's notes. Open points appear in the appendix of the full report.")}
                     </Dialog.Description>
                   </div>
                   <div className="flex gap-1">
-                    <Tooltip content={copied ? 'Copié' : 'Copier en texte (compte rendu)'}>
+                    <Tooltip content={copied ? tr('Copié', 'Copied') : tr('Copier en texte (compte rendu)', 'Copy as text (minutes)')}>
                       <button
                         onClick={async () => {
                           await navigator.clipboard.writeText(toMarkdown(notes))
@@ -108,12 +109,12 @@ export function NotesDrawer() {
                           setTimeout(() => setCopied(false), 1500)
                         }}
                         className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink"
-                        aria-label="Copier le journal"
+                        aria-label={tr('Copier le journal', 'Copy the log')}
                       >
                         {copied ? <Check size={15} /> : <ClipboardCopy size={15} />}
                       </button>
                     </Tooltip>
-                    <Dialog.Close className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label="Fermer">
+                    <Dialog.Close className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Fermer', 'Close')}>
                       <X size={15} />
                     </Dialog.Close>
                   </div>
@@ -129,7 +130,7 @@ export function NotesDrawer() {
                         filter === f ? 'bg-accent-wash font-medium text-accent-strong' : 'text-ink-3 hover:bg-raised hover:text-ink',
                       )}
                     >
-                      {f === 'ouvertes' ? 'Ouvertes' : f === 'toutes' ? 'Toutes' : TAG_META[f].label}
+                      {f === 'ouvertes' ? tr('Ouvertes', 'Open') : f === 'toutes' ? tr('Toutes', 'All') : TAG_META[f].label}
                       <span className="ml-1 font-mono text-[10px] opacity-70">{counts(f)}</span>
                     </button>
                   ))}
@@ -138,7 +139,7 @@ export function NotesDrawer() {
                 <ul className="flex-1 space-y-2 overflow-y-auto px-4 py-3">
                   {shown.length === 0 ? (
                     <li className="px-2 py-8 text-center text-sm text-ink-3">
-                      Aucune note ici. Ajoutez-en depuis une question, une exigence ou un article (icône de bulle), ou ci-dessous.
+                      {tr('Aucune note ici. Ajoutez-en depuis une question, une exigence ou un article (icône de bulle), ou ci-dessous.', 'No notes here. Add one from a question, a requirement or an article (speech bubble icon), or below.')}
                     </li>
                   ) : (
                     shown.map((n) => {
@@ -163,14 +164,14 @@ export function NotesDrawer() {
                                 <span className="truncate">{n.anchor.label}</span>
                               </button>
                             ) : (
-                              <span className="text-2xs text-ink-4">Note générale</span>
+                              <span className="text-2xs text-ink-4">{tr('Note générale', 'General note')}</span>
                             )}
                             {readOnly ? null : (
                               <span className="flex shrink-0 gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
-                                <button onClick={() => update(n.id, { resolved: !n.resolved })} className="rounded p-1 text-ink-3 hover:text-positive" aria-label={n.resolved ? 'Rouvrir' : 'Marquer comme traitée'}>
+                                <button onClick={() => update(n.id, { resolved: !n.resolved })} className="rounded p-1 text-ink-3 hover:text-positive" aria-label={n.resolved ? tr('Rouvrir', 'Reopen') : tr('Marquer comme traitée', 'Mark as resolved')}>
                                   <Check size={13} />
                                 </button>
-                                <button onClick={() => remove(n.id)} className="rounded p-1 text-ink-3 hover:text-critical" aria-label="Supprimer">
+                                <button onClick={() => remove(n.id)} className="rounded p-1 text-ink-3 hover:text-critical" aria-label={tr('Supprimer', 'Delete')}>
                                   <Trash2 size={13} />
                                 </button>
                               </span>
@@ -184,9 +185,9 @@ export function NotesDrawer() {
 
                 <footer className="border-t border-rule px-4 py-3">
                   {readOnly ? (
-                    <p className="text-2xs text-ink-3">Démonstration en lecture seule : copiez-la depuis la page Entités pour prendre des notes.</p>
+                    <p className="text-2xs text-ink-3">{tr('Démonstration en lecture seule : copiez-la depuis la page Entités pour prendre des notes.', 'Read-only demo: copy it from the Entities page to take notes.')}</p>
                   ) : (
-                    <NoteComposer onSubmit={(tag, text) => add({ kind: 'general', id: '', label: 'Note générale' }, tag, text)} />
+                    <NoteComposer onSubmit={(tag, text) => add({ kind: 'general', id: '', label: tr('Note générale', 'General note') }, tag, text)} />
                   )}
                 </footer>
               </motion.aside>

@@ -8,6 +8,7 @@ import * as RadixDialog from '@radix-ui/react-dialog'
 import { Check, ChevronDown, X } from 'lucide-react'
 import { Link as RouterLink } from 'react-router-dom'
 import { cn } from '@/lib/utils'
+import { tr } from '@/i18n'
 
 /* ==========================================================================
    Bouton
@@ -135,7 +136,7 @@ export function Select({
   value,
   onValueChange,
   options,
-  placeholder = 'Sélectionner…',
+  placeholder = tr('Sélectionner…', 'Select…'),
   className,
   ariaLabel,
 }: {
@@ -224,7 +225,7 @@ export function Textarea({
 }
 
 /* ==========================================================================
-   Choix exclusif — dessiné comme une liste de cartes, pour que la réponse
+   Choix exclusif, dessiné comme une liste de cartes, pour que la réponse
    reste lisible quand l'intitulé est long.
    ========================================================================== */
 
@@ -430,7 +431,7 @@ export function Dialog({
               ) : null}
             </div>
             <RadixDialog.Close asChild>
-              <button className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label="Fermer">
+              <button className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Fermer', 'Close')}>
                 <X size={15} />
               </button>
             </RadixDialog.Close>
@@ -450,7 +451,7 @@ export function Dialog({
 export const DialogClose = RadixDialog.Close
 
 /* ==========================================================================
-   Barre de filtres — segments exclusifs, denses.
+   Barre de filtres : segments exclusifs, denses.
    ========================================================================== */
 
 export function SegmentedControl<T extends string>({

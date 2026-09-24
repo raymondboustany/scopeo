@@ -1,5 +1,5 @@
 /**
- * Génère l'entité de démonstration — Finexa, fintech de 50 salariés.
+ * Génère l'entité de démonstration : Finexa, fintech de 50 salariés.
  *
  * Les réponses sont saisies ici ; tout le reste (verdicts, périmètre, score,
  * instantané public) est calculé par les moteurs de l'application, pour que la
@@ -12,7 +12,7 @@ import path from 'node:path'
 import { deriveScoping } from '../src/lib/hooks'
 import { buildSnapshot } from '../src/engines/scores'
 import { isComplete, visibleQuestions } from '../src/data/questionnaire'
-import type { Answers, CoverageEntry, CoverageLevel, EntityNote, EntityProfile, EntityRecord, InternalContact, MeasureStatus } from '../src/types/domain'
+import type { Answers, CoverageEntry, CoverageLevel, EntityNote, EntityProfile, EntityRecord, InternalContact, IsoAssessment, MeasureStatus } from '../src/types/domain'
 
 const answers: Answers = {
   secteur: 'infra_numerique',
@@ -42,7 +42,10 @@ const answers: Answers = {
   cra_categorie: 'defaut',
   cra_exclu: 'non',
   incidents_recents: 'recent',
-  certification: 'demarche',
+  ia_roles: ['deployeur'],
+  ia_pratiques: 'non',
+  ia_haut_risque: ['aucun'],
+  ia_transparence: ['interaction'],
 }
 
 // Couverture : une fintech jeune, bien outillée techniquement, plus faible
@@ -66,6 +69,7 @@ const OWNERS: Record<string, string> = {
   tiers: 'Achats',
   donnees: 'DPO',
   documentation: 'Conformité',
+  ia: 'DPO',
 }
 
 const contacts: InternalContact[] = [
@@ -93,6 +97,24 @@ const profile: EntityProfile = {
     { id: 's2', name: 'Claire Morel', role: 'DPO', email: 'dpo@finexa.example' },
     { id: 's3', name: 'Inès Garnier', role: 'Conformité', email: 'conformite@finexa.example' },
   ],
+  // Démarche ISO 27001 engagée sur tout le périmètre, sans certification à ce stade.
+  iso27001: { status: 'partiel', perimeter: 'integral' },
+}
+
+// Déclaration ISO 27001 : saisie groupée par thème, détaillée sur les contrôles
+// technologiques, avec une exclusion qui déclenche l'alerte réglementaire.
+const iso_controls: IsoAssessment = {
+  themes: {
+    A5: { applicability: 'applicable', implementation: 'partiel' },
+    A6: { applicability: 'applicable', implementation: 'mis_en_oeuvre' },
+    A7: { applicability: 'applicable', implementation: 'partiel' },
+    A8: { applicability: 'applicable', implementation: 'mis_en_oeuvre' },
+  },
+  controls: {
+    '8.16': { applicability: 'non_applicable', justification: 'Supervision confiée au prestataire d’hébergement, hors du système de management.' },
+    '8.28': { applicability: 'applicable', implementation: 'partiel' },
+  },
+  detailed: ['A8'],
 }
 
 const at = '2026-09-18T10:00:00.000Z'
@@ -117,6 +139,7 @@ const base: EntityRecord = {
   seen_alerts: [],
   profile,
   notes,
+  iso_controls,
   public_snapshot: null,
   share_enabled: true,
   share_token: 'demo',
@@ -134,14 +157,18 @@ if (!isComplete(answers)) {
 const first = deriveScoping(base)
 const now = new Date().toISOString()
 const coverage: Record<string, CoverageEntry> = {}
+// Protection et détection ne sont pas saisies à la main : le module ISO 27001
+// les pré-remplit, ce que la démonstration doit montrer.
+const ISO_FILLED = ['protection', 'detection']
 first.prioritised.forEach((p, i) => {
+  if (ISO_FILLED.includes(p.theme.domain)) return
   const level = levelFor(p.themeId, p.theme.domain, i)
   if (level === 'non_evalue') return
   coverage[p.themeId] = { level, owner: OWNERS[p.theme.domain], updatedAt: now }
 })
 
 const measures: Record<string, MeasureStatus> = {}
-// Entité financière : DORA prime, les mesures ANSSI ne s'imposent pas (article 4 de NIS 2).
+// Entité financière : DORA prime, les mesures ANSSI ne s'imposent pas (article 4 de NIS2).
 const anssiObjectives = first.anssiApplies ? first.recyf : []
 anssiObjectives.forEach((o) =>
   o.measures.forEach((m, j) => {
@@ -154,7 +181,7 @@ anssiObjectives.forEach((o) =>
 
 const entity = { ...base, coverage, measures }
 const scoping = deriveScoping(entity)
-const snapshot = buildSnapshot(answers, scoping.qualification, scoping.prioritised, scoping.applicable)
+const snapshot = buildSnapshot(answers, scoping.qualification, scoping.prioritised, scoping.applicable, profile.iso27001)
 
 const seed = {
   entity: {
@@ -167,6 +194,7 @@ const seed = {
     contacts,
     profile,
     notes,
+    iso_controls,
     public_snapshot: snapshot,
   },
 }
@@ -176,7 +204,7 @@ writeFileSync(out, JSON.stringify(seed, null, 2) + '\n', 'utf-8')
 
 console.log('Verdicts :')
 for (const [r, v] of Object.entries(scoping.qualification!.verdicts)) console.log(`  ${r.padEnd(5)} ${v.status.padEnd(11)} ${v.qualification ?? ''}`)
-console.log(`Catégorie NIS 2 : ${scoping.nis2Category}`)
+console.log(`Catégorie NIS2 : ${scoping.nis2Category}`)
 console.log(`Exigences unifiées : ${scoping.prioritised.length}, score ${Math.round(scoping.scores.global.score * 100)} %`)
 for (const [r, l] of Object.entries(scoping.scores.byRegulation)) console.log(`  ${r.padEnd(5)} ${Math.round(l!.score * 100)} % (${l!.inPlace}/${l!.themes})`)
 console.log(`Mesures ANSSI : ${scoping.anssiApplies ? `${scoping.measures.en_place}/${scoping.measures.total} en place` : "sans objet (DORA prime)"}`)

@@ -1,0 +1,269 @@
+{
+  "AIACT-A4": {
+    "chapter": "Chapter I: General provisions",
+    "title": "AI literacy of staff",
+    "statement": "Take measures to develop the AI literacy of staff and of people using the systems on the entity's behalf, taking into account their knowledge, training and the context of use. Since the AI Omnibus, this is a best-efforts obligation: the entity must foster this literacy, without guaranteeing a given level for each person.",
+    "appliesTo": ["Provider", "Deployer"],
+    "requirements": {
+      "AIACT-A4-R1": "Identify the people who design, operate or use AI systems on the entity's behalf.",
+      "AIACT-A4-R2": "Put in place awareness and training actions adapted to roles and context of use.",
+      "AIACT-A4-R3": "Record the actions taken so as to be able to justify them to the authority."
+    },
+    "deadline": "Applicable since 2 February 2025",
+    "evidence": ["AI awareness programme", "Training materials and attendance sheets", "Acceptable use charter for AI tools"],
+    "guidance": ["AI literacy questions and answers"]
+  },
+  "AIACT-A5": {
+    "chapter": "Chapter II: Prohibited AI practices",
+    "title": "Prohibited AI practices",
+    "statement": "Do not place on the market, put into service or use any AI system amounting to a prohibited practice: manipulation or exploitation of vulnerabilities, social scoring, crime prediction based solely on profiling, untargeted scraping of facial images, emotion recognition at work or school, biometric categorisation based on sensitive data, real-time remote biometric identification for law enforcement outside the exceptions.",
+    "appliesTo": ["Provider", "Deployer", "Importer", "Distributor"],
+    "requirements": {
+      "AIACT-A5-R1": "Review every AI use case against the prohibited practices and record the conclusion.",
+      "AIACT-A5-R2": "Immediately stop any use amounting to a prohibited practice.",
+      "AIACT-A5-R3": "Build a prior check into new AI projects to prevent a prohibited practice from being introduced."
+    },
+    "deadline": "Applicable since 2 February 2025",
+    "evidence": ["Documented review of use cases against Article 5", "AI project approval procedure"],
+    "guidance": ["Guidelines on prohibited practices"]
+  },
+  "AIACT-A6": {
+    "article": "Article 6 and Article 49(2)",
+    "shortRef": "Art. 6 and 49(2)",
+    "chapter": "Chapter III: High-risk AI systems",
+    "title": "Inventory and classification of AI systems",
+    "statement": "Inventory the AI systems provided or used and determine, for each, whether it falls within a high-risk area. A provider who considers that an Annex III system is not high-risk under Article 6(3) must document its assessment before placing it on the market and register the system in the EU database.",
+    "appliesTo": ["Provider", "Deployer"],
+    "requirements": {
+      "AIACT-A6-R1": "Keep an inventory of AI systems with their purpose, provider, role for the entity and owner.",
+      "AIACT-A6-R2": "Classify each system according to the regulation's risk levels and justify the classification.",
+      "AIACT-A6-R3": ["Document any Article 6(3) derogation and register the system concerned in the EU database.", "Provider relying on the derogation"],
+      "AIACT-A6-R4": "Review the classification at each substantial modification or change of intended purpose."
+    },
+    "deadline": "Inventory kept up to date, reviewed for each new use case",
+    "evidence": ["Inventory of AI systems", "Reasoned classification sheets", "Proof of registration of derogating systems"]
+  },
+  "AIACT-A9": {
+    "chapter": "Chapter III: Requirements for high-risk systems",
+    "title": "Risk management system",
+    "statement": "Establish, implement, document and maintain a risk management system covering the whole life cycle of the high-risk system: identification of risks to health, safety and fundamental rights, estimation, control measures and testing.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A9-R1": "Identify and analyse known and reasonably foreseeable risks to health, safety and fundamental rights.",
+      "AIACT-A9-R2": "Adopt risk management measures and assess residual risks.",
+      "AIACT-A9-R3": "Test the system to identify the most appropriate measures, before placing it on the market.",
+      "AIACT-A9-R4": "Review the risk management system iteratively throughout the life cycle."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["System risk management file", "Test reports", "Register of accepted residual risks"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A10": {
+    "chapter": "Chapter III: Requirements for high-risk systems",
+    "title": "Data and data governance",
+    "statement": "Develop the system on training, validation and test data sets subject to appropriate governance practices: design choices, origin and collection of data, preparation, examination of possible biases and measures to detect and correct them.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A10-R1": "Document the origin, collection and preparation of the data sets.",
+      "AIACT-A10-R2": "Examine biases likely to affect health, safety or fundamental rights, and correct them.",
+      "AIACT-A10-R3": "Check the relevance, representativeness and accuracy of the data for the intended purpose."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Data set description sheets", "Bias analysis report"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A11-12": {
+    "article": "Articles 11 and 12",
+    "chapter": "Chapter III: Requirements for high-risk systems",
+    "title": "Technical documentation and logging",
+    "statement": "Draw up the Annex IV technical documentation before placing on the market and keep it up to date. Design the system to automatically record relevant events throughout its lifetime, to ensure traceability.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A11-R1": "Write technical documentation covering at least the elements of Annex IV.",
+      "AIACT-A11-R2": "Keep the documentation up to date at each change to the system.",
+      "AIACT-A12-R1": "Equip the system with automatic logging of events relevant to traceability.",
+      "AIACT-A12-R2": "Keep logs under the provider's control for at least six months."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Technical documentation in line with Annex IV", "Logging specification", "Log retention policy"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A13-14": {
+    "article": "Articles 13 and 14",
+    "chapter": "Chapter III: Requirements for high-risk systems",
+    "title": "Transparency to deployers and human oversight",
+    "statement": "Design the system so that deployers can interpret its output, and supply clear instructions for use. Allow effective oversight by natural persons, through appropriate interfaces, including the ability to stop the system.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A13-R1": "Provide instructions for use setting out the system's characteristics, capabilities, limitations and performance.",
+      "AIACT-A14-R1": "Provide for human oversight measures proportionate to the risk and level of autonomy.",
+      "AIACT-A14-R2": "Allow the person in charge of oversight to not use, disregard or stop the system."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Instructions for use", "Description of human oversight measures"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A15": {
+    "chapter": "Chapter III: Requirements for high-risk systems",
+    "title": "Accuracy, robustness and cybersecurity",
+    "statement": "Achieve an appropriate level of accuracy, robustness and cybersecurity throughout the life cycle, including against AI-specific attacks: data or model poisoning, adversarial examples, confidentiality attacks.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A15-R1": "Declare accuracy levels and relevant metrics in the instructions for use.",
+      "AIACT-A15-R2": "Make the system resilient to errors, faults and inconsistencies, including through redundancy.",
+      "AIACT-A15-R3": "Protect the system against AI-specific attacks: poisoning, adversarial examples, confidentiality attacks."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Robustness test reports", "AI-specific threat analysis", "Model security measures"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A16-17": {
+    "article": "Articles 16 and 17",
+    "chapter": "Chapter III: Obligations of providers",
+    "title": "Quality management system",
+    "statement": "Put in place a quality management system documented as policies, procedures and instructions: compliance strategy, design and control, testing, data management, risk management, post-market monitoring, incident reporting and responsibilities.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A17-R1": "Document a regulatory compliance and change management strategy.",
+      "AIACT-A17-R2": "Formalise design, verification, validation and testing procedures.",
+      "AIACT-A17-R3": "Define an accountability framework covering management and staff."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Quality manual", "Design and test procedures", "Responsibility matrix"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A43-49": {
+    "article": "Articles 43, 47, 48 and 49",
+    "shortRef": "Art. 43 to 49",
+    "chapter": "Chapter III: Conformity assessment and registration",
+    "title": "Conformity assessment, CE marking and registration",
+    "statement": "Submit the system to the applicable conformity assessment procedure, draw up the EU declaration of conformity, affix the CE marking and register the system in the EU database before placing it on the market.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A43-R1": "Carry out the conformity assessment procedure, by internal control or with a notified body as applicable.",
+      "AIACT-A47-R1": "Draw up the EU declaration of conformity and affix the CE marking.",
+      "AIACT-A49-R1": "Register the provider and the system in the EU database."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["EU declaration of conformity", "Conformity assessment file", "Proof of registration in the EU database"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A72": {
+    "chapter": "Chapter IX: Post-market monitoring",
+    "title": "Post-market monitoring",
+    "statement": "Establish and document a post-market monitoring system that collects and analyses the system's performance data throughout its life cycle, based on a plan included in the technical documentation.",
+    "appliesTo": ["Provider of a high-risk system"],
+    "requirements": {
+      "AIACT-A72-R1": "Write a post-market monitoring plan.",
+      "AIACT-A72-R2": "Collect feedback from deployers and analyse performance continuously."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Post-market monitoring plan", "Performance analysis reports"],
+    "conditions": ["Provider of a high-risk AI system"]
+  },
+  "AIACT-A73": {
+    "chapter": "Chapter IX: Sharing of information on serious incidents",
+    "title": "Reporting serious incidents",
+    "statement": "Report any serious incident to the market surveillance authority of the Member State where it occurred, immediately after establishing a causal link with the system and no later than 15 days after becoming aware of it. The deadline drops to 2 days for a widespread infringement or disruption of critical infrastructure, and to 10 days in case of death.",
+    "appliesTo": ["Provider of a high-risk system", "Deployer of a high-risk system"],
+    "requirements": {
+      "AIACT-A73-R1": "Define serious incident criteria and the escalation chain to the market surveillance authority.",
+      "AIACT-A73-R2": "Report on time: 2 days, 10 days or 15 days depending on the nature of the incident, with an incomplete initial report if needed.",
+      "AIACT-A73-R3": "Investigate without altering the system before informing the authority."
+    },
+    "deadline": "2 days, 10 days or 15 days depending on severity",
+    "evidence": ["Serious incident reporting procedure", "Incident register"],
+    "conditions": ["Provider or deployer of a high-risk AI system"]
+  },
+  "AIACT-A26": {
+    "chapter": "Chapter III: Obligations of deployers",
+    "title": "Obligations of deployers of high-risk systems",
+    "statement": "Use the system in line with its instructions, entrust human oversight to competent people with the necessary authority, ensure input data is relevant, monitor operation, keep logs for at least six months and inform the workers concerned before putting the system into service at the workplace.",
+    "appliesTo": ["Deployer of a high-risk system"],
+    "requirements": {
+      "AIACT-A26-R1": "Take technical and organisational measures to use the system in line with its instructions.",
+      "AIACT-A26-R2": "Designate and train the people in charge of human oversight.",
+      "AIACT-A26-R3": "Keep the logs generated under its control for at least six months.",
+      "AIACT-A26-R4": "Inform the provider and then the authority of any risk or serious incident, and suspend use if necessary.",
+      "AIACT-A26-R5": "Inform employee representatives and the workers concerned before putting the system into service."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Designation of the people in charge of human oversight", "Log retention policy", "Information of employee representative bodies"],
+    "conditions": ["Deployer of a high-risk AI system"]
+  },
+  "AIACT-A27": {
+    "chapter": "Chapter III: Obligations of deployers",
+    "title": "Fundamental rights impact assessment",
+    "statement": "Before first use of a high-risk system, public deployers, private entities providing public services, and deployers of credit-scoring or life and health insurance pricing systems assess the system's impact on fundamental rights and notify the result to the market surveillance authority.",
+    "appliesTo": ["Public or essential-services deployer"],
+    "requirements": {
+      "AIACT-A27-R1": "Describe the processes, period and frequency of use, and the categories of people affected.",
+      "AIACT-A27-R2": "Identify risks of harm and the human oversight and redress measures.",
+      "AIACT-A27-R3": "Notify the results of the assessment to the market surveillance authority.",
+      "AIACT-A27-R4": "Build on the data protection impact assessment where one exists."
+    },
+    "deadline": "Before first use of the system",
+    "evidence": ["Fundamental rights impact assessment", "Notification acknowledgement from the authority"],
+    "conditions": ["Public deployer, or deployer for credit scoring or insurance pricing"],
+    "guidance": ["CNIL recommendations on AI systems"]
+  },
+  "AIACT-A25": {
+    "chapter": "Chapter III: Obligations along the value chain",
+    "title": "Responsibilities along the AI value chain",
+    "statement": "A deployer, importer or distributor becomes the provider of a high-risk system, with all the corresponding obligations, if it markets it under its own name, substantially modifies it or changes its intended purpose. Contracts with component suppliers must specify the information and assistance needed.",
+    "appliesTo": ["Deployer", "Importer", "Distributor"],
+    "requirements": {
+      "AIACT-A25-R1": "Check, for each system acquired, that no modification or rebranding turns the entity into a provider.",
+      "AIACT-A25-R2": "Provide contractually for the information, technical capabilities and assistance needed for compliance."
+    },
+    "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
+    "evidence": ["Role analysis per AI system", "Contract clauses with providers"],
+    "conditions": ["Deployer, importer or distributor of AI systems"]
+  },
+  "AIACT-A50": {
+    "chapter": "Chapter IV: Transparency obligations",
+    "title": "Transparency towards people",
+    "statement": "Inform people that they are interacting with an AI system, mark synthetic content in a machine-readable format, disclose deep fakes and generated texts published to inform the public, and inform people exposed to emotion recognition or biometric categorisation.",
+    "appliesTo": ["Provider", "Deployer"],
+    "requirements": {
+      "AIACT-A50-R1": "Inform people, at the latest at first interaction, that they are dealing with an AI.",
+      "AIACT-A50-R2": ["Mark generated content in a machine-readable format.", "Provider of a generative system"],
+      "AIACT-A50-R3": ["Disclose that a deep fake or a text of public interest was generated or manipulated by AI.", "Deployer"],
+      "AIACT-A50-R4": ["Inform people exposed to emotion recognition or biometric categorisation.", "Deployer"]
+    },
+    "deadline": "Applicable since 2 August 2026; marking by 2 December 2026 for systems already on the market",
+    "evidence": ["Information notices in interfaces", "Content marking specification", "Editorial policy on generated content"],
+    "conditions": ["Use subject to transparency obligations"]
+  },
+  "AIACT-A53": {
+    "chapter": "Chapter V: General-purpose AI models",
+    "title": "Obligations of providers of general-purpose AI models",
+    "statement": "Keep the model's technical documentation up to date, inform the providers who integrate it, put in place a copyright compliance policy and publish a sufficiently detailed summary of the content used for training.",
+    "appliesTo": ["Provider of a general-purpose AI model"],
+    "requirements": {
+      "AIACT-A53-R1": "Keep the Annex XI technical documentation available to the AI Office.",
+      "AIACT-A53-R2": "Give integrators the Annex XII documentation on the model's capabilities and limitations.",
+      "AIACT-A53-R3": "Put in place a copyright compliance policy, including rights reservations.",
+      "AIACT-A53-R4": "Publish the training data summary using the AI Office template."
+    },
+    "deadline": "Applicable since 2 August 2025",
+    "evidence": ["Model technical documentation", "Documentation for integrators", "Copyright policy", "Public training data summary"],
+    "conditions": ["Provider of a general-purpose AI model"],
+    "guidance": ["Code of practice for general-purpose models"]
+  },
+  "AIACT-A55": {
+    "chapter": "Chapter V: General-purpose AI models",
+    "title": "Models with systemic risk",
+    "statement": "Evaluate the model with standardised protocols, including adversarial testing, assess and mitigate systemic risks, report serious incidents to the AI Office without undue delay and ensure an adequate level of cybersecurity for the model and its infrastructure.",
+    "appliesTo": ["Provider of a model with systemic risk"],
+    "requirements": {
+      "AIACT-A55-R1": "Evaluate the model and carry out documented adversarial testing.",
+      "AIACT-A55-R2": "Assess and mitigate systemic risks at Union level.",
+      "AIACT-A55-R3": "Report serious incidents and corrective measures to the AI Office without undue delay.",
+      "AIACT-A55-R4": "Protect the model and its physical infrastructure with appropriate cybersecurity measures."
+    },
+    "deadline": "Applicable since 2 August 2025",
+    "evidence": ["Evaluation and adversarial testing reports", "Systemic risk assessment", "Procedure for reporting to the AI Office"],
+    "conditions": ["Model with systemic risk"]
+  }
+}

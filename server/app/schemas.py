@@ -9,7 +9,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, PlainSerializer
+from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, SecretStr
 
 
 def _as_utc(value: datetime) -> str:
@@ -24,12 +24,38 @@ UTCDateTime = Annotated[datetime, PlainSerializer(_as_utc, return_type=str)]
 Role = Literal["consultant", "dpo", "rssi", "juriste", "dirigeant", "auditeur", "autre"]
 
 
-class UserCreate(BaseModel):
+class RegisterPayload(BaseModel):
+    """Création d'un profil. Le mot de passe ne quitte pas la requête qui le traite."""
+
     name: str = Field(min_length=1, max_length=120)
     role: Role = "consultant"
     organisation: str = Field(default="", max_length=160)
     email: str = Field(default="", max_length=200)
-    is_guest: bool = False
+    password: SecretStr
+    password_confirm: SecretStr
+
+
+class LoginPayload(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    password: SecretStr
+
+
+class PasswordSetupPayload(BaseModel):
+    """Premier mot de passe d'un profil créé avant l'authentification."""
+
+    name: str = Field(min_length=1, max_length=120)
+    password: SecretStr
+    password_confirm: SecretStr
+
+
+class PasswordChangePayload(BaseModel):
+    current: SecretStr
+    password: SecretStr
+    password_confirm: SecretStr
+
+
+class DeleteProfilePayload(BaseModel):
+    password: SecretStr | None = None
 
 
 class UserUpdate(BaseModel):
@@ -37,7 +63,6 @@ class UserUpdate(BaseModel):
     role: Role | None = None
     organisation: str | None = Field(default=None, max_length=160)
     email: str | None = Field(default=None, max_length=200)
-    is_guest: bool | None = None
     onboarded: bool | None = None
 
 
@@ -75,6 +100,7 @@ class EntityUpdate(BaseModel):
     profile: dict[str, Any] | None = None
     notes: list[Any] | None = None
     public_snapshot: dict[str, Any] | None = None
+    iso_controls: dict[str, Any] | None = None
 
 
 class EntitySummary(BaseModel):
@@ -110,6 +136,7 @@ class EntityRead(BaseModel):
     profile: dict[str, Any]
     notes: list[Any]
     public_snapshot: dict[str, Any] | None
+    iso_controls: dict[str, Any]
     share_enabled: bool
     share_token: str
     is_demo: bool
@@ -135,3 +162,13 @@ class PublicView(BaseModel):
     is_demo: bool
     updated_at: UTCDateTime
     snapshot: dict[str, Any] | None
+
+
+class FileRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    name: str
+    content_type: str
+    size: int
+    created_at: UTCDateTime

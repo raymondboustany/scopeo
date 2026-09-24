@@ -1,0 +1,1054 @@
+{
+ "GOV-01": {
+  "title": "Accountability of the management body",
+  "summary": "The three main texts raise compliance to management-body level, but with very uneven legal consequences. The GDPR requires compliance to be demonstrated without targeting managers personally; NIS2 makes managers accountable for breaches of Article 21 and allows them to be banned from office; DORA gives them ultimate responsibility for the ICT risk management framework.",
+  "unifiedAction": "Set up a single governance body (a security and compliance committee) that formally approves policies, monitors indicators and records its decisions. A single, properly drafted resolution counts as approval under each of these texts.",
+  "mappings": {
+   "RGPD": [
+    "Implement measures to demonstrate compliance, and review them.",
+    "Liability lies with the legal person. The regulation provides for no personal penalty on managers."
+   ],
+   "NIS2": [
+    "Have the management body approve the measures, oversee their implementation and train its members.",
+    "Managers can be held liable for breaches of Article 21 and temporarily banned from management functions (Art. 32(6))."
+   ],
+   "DORA": [
+    "The management body defines, approves, oversees and is accountable for the ICT risk management framework.",
+    "Duty of regular training and an explicit budget allocation: DORA is the only text requiring an identified budget."
+   ],
+   "AIACT": [
+    "The quality management system includes an accountability framework covering management and staff.",
+    "No personal liability of managers is provided for: the obligation falls on the provider."
+   ]
+  },
+  "strictest": [
+   "Mandatory training of management body members and personal liability that may go as far as a ban from office.",
+   "It is the only text with a sanction reaching the individual manager. Calibrating governance on NIS2 automatically satisfies the GDPR and most of DORA; the reverse is not true."
+  ],
+  "evidence": [
+   "Security and compliance governance charter",
+   "Dated approval minutes",
+   "Management training certificates"
+  ]
+ },
+ "GOV-02": {
+  "title": "Dedicated function and point of contact",
+  "summary": "Each text requires a reference person, but their statuses are incompatible: the data protection officer must be independent and free of conflicts of interest, while the NIS2 point of contact and the DORA officer are operational functions. Merging these roles in one person creates an enforceable conflict of interest.",
+  "unifiedAction": "Map the roles required by each applicable text and assign them separately, documenting the absence of conflict of interest for the DPO role. One department can coordinate them, but the DPO cannot be the person deciding on the means of processing.",
+  "mappings": {
+   "RGPD": [
+    "Designate a data protection officer where the Article 37 criteria are met, and a representative if the entity is not established in the Union.",
+    "The DPO receives no instructions on how to carry out their tasks and cannot be dismissed for performing them."
+   ],
+   "NIS2": [
+    "Designate a point of contact for the national authority and, where relevant, a representative in the Union.",
+    "The ReCyF makes this point of contact ANSSI's main counterpart, expected of essential entities only."
+   ],
+   "DORA": [
+    "Identify an independent ICT risk control function and designate a crisis communication officer.",
+    "Independence here concerns the control function, not communication."
+   ],
+   "CRA": [
+    "Designate a single point of contact allowing users to reach the manufacturer, notably to report a vulnerability.",
+    "The contact faces product users, not an authority."
+   ]
+  },
+  "strictest": [
+   "Functional independence of the DPO, no conflict of interest, reporting to the highest level, protection from penalties for performing their tasks.",
+   "It is the only status requirement, not a mere designation. A security officer who decides on the means of processing cannot also be the DPO: the CNIL has already sanctioned such a combination."
+  ],
+  "evidence": [
+   "Organisation chart of regulatory roles",
+   "Engagement letters",
+   "Conflict-of-interest analysis"
+  ]
+ },
+ "GOV-03": {
+  "title": "Registration and identity declaration",
+  "summary": "Making oneself known to the authority is specific to the cyber texts. The GDPR abolished prior notification in 2018; NIS2 and DORA, on the contrary, organise a census, with opposite logics: declarative and identity-based for NIS2, prudential and contractual for DORA.",
+  "unifiedAction": "Build a single regulatory identity sheet (legal name, establishments, IP ranges, sectors, Member States served, contacts) and keep it as the single source for all declarations. Set a two-week alert on any change.",
+  "mappings": {
+   "NIS2": [
+    "Provide identity, contact details, IP ranges, sector and Member States served; report any change within two weeks.",
+    "Registration is declarative: it is up to the entity to come forward, even if not asked."
+   ],
+   "DORA": [
+    "Submit the register of information on ICT arrangements to the competent authority annually.",
+    "This is not an identity registration but a periodic submission of structured data, in fifteen mandatory templates."
+   ]
+  },
+  "evidence": [
+   "Regulatory identity sheet",
+   "Registration acknowledgements",
+   "Log of declared changes"
+  ]
+ },
+ "GOV-04": {
+  "title": "Training and awareness",
+  "summary": "All the texts require training, but they do not target the same audiences. NIS2 and DORA make management training mandatory, which the GDPR does not.",
+  "unifiedAction": "Build an annual three-tier programme (management body, staff, sensitive profiles) covering data protection, cybersecurity and resilience, with attendance tracking and assessment. One programme, three tracks.",
+  "mappings": {
+   "RGPD": [
+    "Ensure anyone acting under authority only processes data on instructions, which means they have been trained.",
+    null
+   ],
+   "NIS2": [
+    "Mandatory training for management body members, and cyber hygiene for all users.",
+    "The ReCyF extends awareness to service providers acting on the entity's behalf."
+   ],
+   "DORA": [
+    "Mandatory awareness and training programmes for staff and the management body, proportionate to risk.",
+    null
+   ],
+   "AIACT": [
+    "Develop staff AI literacy and train the people in charge of human oversight.",
+    "Since the AI Omnibus, Article 4 is a best-efforts obligation: AI literacy must be fostered, without guaranteeing an individual level."
+   ]
+  },
+  "evidence": [
+   "Annual training plan",
+   "Attendance sheets",
+   "Awareness test results"
+  ]
+ },
+ "RSK-01": {
+  "title": "Risk analysis and risk-based approach",
+  "summary": "This is the most cost-effective sharing point of the whole set-up: all the texts require a risk analysis. Scopes differ, however: individuals' rights for the GDPR, networks and systems for NIS2, critical functions for DORA, the product placed on the market for the CRA.",
+  "unifiedAction": "Run a single risk analysis, structured by asset and function, whose outputs feed every reading: impact on individuals, on services, on critical functions, on physical continuity. One method (EBIOS Risk Manager works well) and several outputs.",
+  "mappings": {
+   "RGPD": [
+    "Assess the risk to the rights and freedoms of natural persons and calibrate measures accordingly.",
+    "Risk is assessed from the data subject's standpoint, not the organisation's. The other texts do not make this shift in perspective."
+   ],
+   "NIS2": [
+    "Base measures on an all-hazards approach covering the physical environment.",
+    "The ReCyF reserves the obligation of a formal risk analysis method for essential entities (objective 16)."
+   ],
+   "DORA": [
+    "Documented framework, reviewed annually and after every major incident, based on the inventory of critical or important functions.",
+    null
+   ],
+   "CRA": [
+    "Cybersecurity risk assessment per product, documented and updated throughout the support period.",
+    "Risk is assessed at the level of the product and its reasonably foreseeable use, not of the organisation making it."
+   ],
+   "AIACT": [
+    "Risk management system covering the whole life cycle of a high-risk system, and assessment of systemic risks of general-purpose models.",
+    "Risks to be covered include fundamental rights, not just information security."
+   ]
+  },
+  "evidence": [
+   "Documented risk analysis method",
+   "Risk register",
+   "Records of review"
+  ]
+ },
+ "RSK-02": {
+  "title": "Prior impact assessment",
+  "summary": "Only the GDPR requires a formal prior impact assessment, with consultation of the authority in case of high residual risk. No other text has an equivalent: NIS2 and DORA reason in terms of continuous assessment, not prior authorisation.",
+  "unifiedAction": "Build the trigger for an impact assessment into the project design milestone, reusing the outputs of the general risk analysis for threats and measures. Only the part on harm to rights and freedoms is GDPR-specific.",
+  "mappings": {
+   "RGPD": [
+    "Mandatory impact assessment in case of high risk; prior consultation of the authority if residual risk remains high.",
+    null
+   ],
+   "DORA": [
+    "Prior assessment of concentration risk before any arrangement covering a critical or important function.",
+    "Same ex ante logic, but focused on dependence on a third party rather than on individuals' rights."
+   ],
+   "AIACT": [
+    "Fundamental rights impact assessment before first use, for public deployers and credit-scoring or insurance systems.",
+    "The assessment can build on the GDPR impact assessment, but does not replace it: its scope is broader."
+   ]
+  },
+  "evidence": [
+   "Impact assessments carried out",
+   "Documented trigger criteria"
+  ]
+ },
+ "PRO-01": {
+  "title": "Technical and organisational security measures",
+  "summary": "The broadest and best-known overlap: GDPR Article 32, NIS2 Article 21 and DORA Article 9 all require security measures appropriate to the risk. But where the GDPR stops at a best-efforts obligation, NIS2 and DORA list named measures, and DORA sets their minimum content in a technical standard.",
+  "unifiedAction": "Establish a single information security policy whose structure follows the ten measures of NIS2 Article 21(2) and the chapters of Delegated Regulation 2024/1774. This structure covers GDPR Article 32, which is less demanding, by design.",
+  "mappings": {
+   "RGPD": [
+    "Appropriate measures ensuring a level of security appropriate to the risk, including pseudonymisation and encryption.",
+    "An obligation of result on the purpose, of means on the methods: no measure is named as mandatory."
+   ],
+   "NIS2": [
+    "Ten categories of measures listed by name in Article 21(2), applicable as a minimum.",
+    "Implementing Regulation 2024/2690 makes these measures quantified and enforceable for digital providers."
+   ],
+   "DORA": [
+    "ICT policies, procedures and tools ensuring resilience, continuity, availability and data security.",
+    "Delegated Regulation 2024/1774 sets the mandatory minimum content of each policy: the highest level of detail of all the texts."
+   ],
+   "CRA": [
+    "Essential security requirements for the product placed on the market (Annex I, Part I).",
+    "An obligation of result on the product, not on the company's information system."
+   ],
+   "AIACT": [
+    "Appropriate level of accuracy, robustness and cybersecurity, including against AI-specific attacks.",
+    "Data poisoning, adversarial examples and model confidentiality attacks are specific threats that traditional frameworks do not cover."
+   ]
+  },
+  "evidence": [
+   "Information security policy",
+   "Catalogue of measures and controls",
+   "Effectiveness assessment reports"
+  ]
+ },
+ "PRO-02": {
+  "title": "Encryption and cryptography",
+  "summary": "The GDPR cites encryption as an appropriate measure and makes it a ground for not communicating a breach to individuals. NIS2 and DORA go further by requiring a formal cryptography policy, including key life-cycle management.",
+  "unifiedAction": "Write a single cryptography policy defining algorithms, key lengths, use cases and life-cycle management, then apply it at rest and in transit. This policy serves both as an Article 32 measure and as a potential Article 34 exemption.",
+  "mappings": {
+   "RGPD": [
+    "Encryption cited as an appropriate measure; no communication to individuals needed if data is rendered unintelligible.",
+    "It is the only GDPR provision where a specific technical measure has a direct legal effect."
+   ],
+   "NIS2": [
+    "Policies and procedures on the use of cryptography and, where appropriate, encryption.",
+    null
+   ],
+   "DORA": [
+    "Encryption of data at rest, in transit and, where relevant, in use.",
+    "DORA is the only text to explicitly target encryption in use."
+   ],
+   "CRA": [
+    "Protection of the confidentiality and integrity of data stored, transmitted or processed by the product, notably through encryption.",
+    null
+   ]
+  },
+  "evidence": [
+   "Cryptography policy",
+   "Inventory of keys and certificates",
+   "Protocol configuration"
+  ]
+ },
+ "PRO-03": {
+  "title": "Identity and access management",
+  "summary": "Three texts converge on access control, but NIS2 is the only one to explicitly name multi-factor authentication, and the ReCyF devotes two whole objectives to it, with a clear distinction between user access and administrative access.",
+  "unifiedAction": "Deploy a single identity management set-up: least privilege, periodic access reviews, multi-factor authentication on remote access and privileged accounts, and strict separation of administration accounts.",
+  "mappings": {
+   "RGPD": [
+    "Ensure confidentiality, and limit data accessibility to what is strictly necessary.",
+    null
+   ],
+   "NIS2": [
+    "Access control policies, asset management, and multi-factor or continuous authentication as needed.",
+    null
+   ],
+   "DORA": [
+    "Least-privilege access management, with reinforced controls on privileged access.",
+    null
+   ],
+   "CRA": [
+    "Protection of the product against unauthorised access through authentication and access management mechanisms.",
+    null
+   ]
+  },
+  "evidence": [
+   "Access control policy",
+   "Access review reports",
+   "Multi-factor authentication deployment scope"
+  ]
+ },
+ "PRO-04": {
+  "title": "Security by design, development and change",
+  "summary": "The GDPR requires data protection by design and by default; NIS2 targets security in acquisition, development and maintenance; DORA governs ICT change management. Three wordings of the same engineering discipline.",
+  "unifiedAction": "Insert a single security and data protection milestone into the project life cycle, covering security requirements, minimisation, default settings, code review and a change procedure with rollback.",
+  "mappings": {
+   "RGPD": [
+    "Data protection by design and by default: minimising volume, extent, retention and accessibility.",
+    "\"By default\" is a stand-alone obligation: the initial configuration must be the most protective, without user action."
+   ],
+   "NIS2": [
+    "Security in acquisition, development and maintenance, including vulnerability handling and disclosure.",
+    null
+   ],
+   "DORA": [
+    "Documented ICT change management procedure, with validation and reversibility.",
+    null
+   ],
+   "CRA": [
+    "Security by design, secure-by-default configuration, reduced attack surface.",
+    "The CRA is the most demanding text on design: it makes it a condition for placing on the market."
+   ],
+   "AIACT": [
+    "System resilience built in from the design stage, through redundancy and appropriate security measures.",
+    null
+   ]
+  },
+  "evidence": [
+   "Project methodology including the security milestone",
+   "Secure development policy",
+   "Change log"
+  ]
+ },
+ "PRO-05": {
+  "title": "Physical and environmental security",
+  "summary": "None of the texts builds a detailed physical protection regime, but none excludes it. NIS2 expressly targets the physical environment in its all-hazards approach, and the ReCyF turns it into concrete measures: visitor log, physical access rights strictly on need, reinforced protection of server rooms for essential entities.",
+  "unifiedAction": "Treat physical security as a full part of the security policy: access control to premises, intrusion detection, monitoring, protection of areas hosting critical systems.",
+  "mappings": {
+   "RGPD": [
+    "Security of processing implicitly covers the physical protection of media.",
+    "No named physical requirement: it follows from the general security obligation."
+   ],
+   "NIS2": [
+    "The all-hazards approach expressly covers the physical environment of networks and systems.",
+    null
+   ],
+   "DORA": [
+    "Protection of relevant physical components and infrastructure.",
+    null
+   ]
+  },
+  "evidence": [
+   "Site physical security plan",
+   "Premises access control procedures",
+   "Visitor log"
+  ]
+ },
+ "PRO-06": {
+  "title": "Human resources security",
+  "summary": "NIS2 governs the people life cycle (joining, moving, leaving) and the ReCyF adds confidentiality clauses in employment contracts. Any check carried out for this purpose is itself processing that must comply with the GDPR: a clear case where one text creates an obligation under another.",
+  "unifiedAction": "Formalise joiner, mover and leaver procedures with systematic removal of access, identify sensitive functions, and frame any background check with a GDPR-compliant legal basis and information to individuals.",
+  "mappings": {
+   "RGPD": [
+    "Any background check is processing, subject to a legal basis, minimisation and information.",
+    "Criminal offence data falls under Article 10 and can only be processed under the control of official authority."
+   ],
+   "NIS2": [
+    "Human resources security and cyber hygiene practices.",
+    null
+   ]
+  },
+  "evidence": [
+   "Joiner / mover / leaver procedures",
+   "List of sensitive functions",
+   "Legal basis for checks"
+  ]
+ },
+ "DET-01": {
+  "title": "Logging and traceability",
+  "summary": "Logging illustrates a recurring tension: the cyber texts push for broad collection and retention, while the GDPR requires minimisation and limited retention. Logs containing identifiers and IP addresses are personal data.",
+  "unifiedAction": "Define a single logging policy setting, per log category, what is collected, why, for how long and who has access, then enter this policy in the record of processing. Detection needs set the floor, minimisation sets the ceiling.",
+  "mappings": {
+   "RGPD": [
+    "Limit retention to the necessary period and document the processing that logging represents.",
+    "The CNIL generally uses six months as the default retention period for technical logs, unless a legal obligation says otherwise."
+   ],
+   "NIS2": [
+    "Logging needed to detect, qualify and investigate incidents.",
+    null
+   ],
+   "DORA": [
+    "Logging of incidents and monitoring of activities, with retention allowing root-cause analysis.",
+    "Technical standards require retention consistent with prudential investigation needs."
+   ],
+   "AIACT": [
+    "Automatic logging of events by design, and retention of logs by the deployer for at least six months.",
+    null
+   ]
+  },
+  "strictest": [
+   "Retention sufficient for root-cause analysis and prudential reconstruction of incidents, which exceeds the default retention period for technical logs.",
+   "When DORA applies, retention must be raised to prudential level, but it must then be justified and documented in the record of processing. It is the duration, not the collection, that must be decided."
+  ],
+  "evidence": [
+   "Logging policy",
+   "Retention matrix per log type",
+   "Entry in the record of processing"
+  ]
+ },
+ "DET-02": {
+  "title": "Security detection and monitoring",
+  "summary": "NIS2 and DORA require an active detection capability. The ReCyF reserves advanced monitoring for essential entities, making it one of the few points where the NIS2 category materially changes the investment required.",
+  "unifiedAction": "Set up a detection capability sized on the category: detection and alert handling for all entities, continuous monitoring with event analysis for essential entities and financial entities.",
+  "mappings": {
+   "NIS2": [
+    "Capacity to identify and respond to incidents; optional participation in sharing arrangements.",
+    null
+   ],
+   "DORA": [
+    "Mechanisms for rapid detection of anomalous activities, multiple alert layers, defined thresholds.",
+    null
+   ],
+   "RGPD": [
+    "Without detection capability, the 72-hour notification deadline becomes unworkable.",
+    "The detection obligation is indirect but binding: the authority assesses the date of awareness against the means the organisation should have had."
+   ],
+   "AIACT": [
+    "Post-market monitoring of the system's performance throughout its life cycle.",
+    "Monitoring covers the system's performance and compliance, not security threats."
+   ]
+  },
+  "evidence": [
+   "Description of the detection set-up",
+   "Alert handling procedure",
+   "Coverage indicators"
+  ]
+ },
+ "DET-03": {
+  "title": "Vulnerability management",
+  "summary": "NIS2 addresses vulnerabilities from the angle of coordinated disclosure; DORA from that of periodic testing. Combining the two gives a complete cycle: discover, qualify, fix, verify.",
+  "unifiedAction": "Run a single vulnerability management cycle with monitoring, fix deadlines differentiated by criticality, and a coordinated disclosure channel reachable from outside.",
+  "mappings": {
+   "NIS2": [
+    "Vulnerability handling and disclosure, built into secure development and maintenance.",
+    null
+   ],
+   "DORA": [
+    "Vulnerability assessments, open-source analyses, network security analyses, with deficiencies remediated on an agreed schedule.",
+    null
+   ],
+   "RGPD": [
+    "Failing to fix a known vulnerability is regularly held to breach the security obligation.",
+    null
+   ],
+   "CRA": [
+    "Software bill of materials, fixes without delay, regular testing, coordinated disclosure and publication of fixed vulnerabilities.",
+    "The only text requiring a software bill of materials and publication of fixed vulnerabilities."
+   ]
+  },
+  "evidence": [
+   "Vulnerability management procedure",
+   "Fix deadlines by criticality",
+   "Coordinated disclosure policy"
+  ]
+ },
+ "REP-01": {
+  "title": "Incident management process",
+  "summary": "All the texts require an incident management process, but each sets its own qualification threshold: personal data breach for the GDPR, significant incident for NIS2, major incident for DORA, severe incident affecting product security for the CRA. A single event can fall under several qualifications at once.",
+  "unifiedAction": "Build a single incident management procedure whose qualification step applies all the grids in parallel and automatically triggers the corresponding notifications. The process is shared; only the qualification is multiple.",
+  "mappings": {
+   "RGPD": [
+    "Qualify the breach, document every incident even if not notified, assess the risk to individuals.",
+    null
+   ],
+   "NIS2": [
+    "Incident management process and qualification of a significant incident on two alternative criteria.",
+    null
+   ],
+   "DORA": [
+    "Documented process, classification on seven criteria, root-cause analysis after every major disruption.",
+    "DORA is the only text imposing a quantified classification grid through a technical standard."
+   ],
+   "CRA": [
+    "Qualification of severe incidents affecting the security of a product.",
+    null
+   ],
+   "AIACT": [
+    "Collect feedback from deployers and investigate after any serious incident, without altering the system before informing the authority.",
+    null
+   ]
+  },
+  "evidence": [
+   "Single incident management procedure",
+   "Multi-regime qualification grid",
+   "Incident register"
+  ]
+ },
+ "REP-02": {
+  "title": "Notifying incidents to the authority",
+  "summary": "This is the most operational divergence of the whole set-up: several notification regimes, several authorities, several clocks. An incident affecting a bank and personal data can require a report to the ACPR, a warning to ANSSI and a notification to the CNIL, with different deadlines and contents.",
+  "unifiedAction": "Build a single notification matrix (event, qualification, authority, deadline, template, owner) and rehearse it. The shortest clock drives the mobilisation of the crisis unit, even if the other deadlines are longer.",
+  "mappings": {
+   "RGPD": [
+    "Notification to the CNIL within 72 hours of becoming aware, unless the risk to rights and freedoms is unlikely.",
+    null
+   ],
+   "NIS2": [
+    "Early warning to the CSIRT within 24 hours, incident notification within 72 hours, final report within one month.",
+    "Single 24-hour deadline for trust service providers."
+   ],
+   "DORA": [
+    "Initial notification, intermediate report and final report to the competent authority, within the deadlines of Delegated Regulation 2025/301, using mandatory harmonised templates.",
+    null
+   ],
+   "CRA": [
+    "Early warning within 24 hours, notification within 72 hours, final report 14 days after a fix or one month after notification, via ENISA's single platform.",
+    "Triggered by a product, not an information system: a software publisher may have to notify under the CRA without being subject to NIS2."
+   ],
+   "AIACT": [
+    "Report serious incidents to the market surveillance authority: 2 days, 10 days or 15 days depending on severity.",
+    "The clock only starts once the causal link is established or reasonably likely, with a cap counted from awareness."
+   ]
+  },
+  "strictest": [
+   "The DORA initial notification is the earliest of the whole set-up, and it uses a mandatory harmonised template that the entity cannot choose to skip.",
+   "For a financial entity processing personal data, the design constraint is this: the crisis unit must be able to produce a first structured report within a few hours, when the GDPR qualification of the breach is often not yet established. Size for DORA, then roll out NIS2 and the GDPR."
+  ],
+  "evidence": [
+   "Multi-authority notification matrix",
+   "Pre-filled templates per regime",
+   "Notification exercise reports"
+  ]
+ },
+ "REP-03": {
+  "title": "Communicating with individuals and recipients",
+  "summary": "Beyond the authority, the texts require informing those affected by the incident: data subjects for the GDPR, service recipients for NIS2, clients for DORA, product users for the CRA. The triggers differ: high risk, impact on service provision, impact on financial interests, exploited vulnerability.",
+  "unifiedAction": "Prepare a set of communication templates per audience and per trigger, validated in advance by legal and communications, so that drafting is not done under the pressure of the crisis.",
+  "mappings": {
+   "RGPD": [
+    "Communication to data subjects in case of high risk, unless data has been rendered unintelligible by encryption.",
+    null
+   ],
+   "NIS2": [
+    "Informing service recipients of significant incidents and of measures against cyber threats.",
+    null
+   ],
+   "DORA": [
+    "Informing clients when the incident affects their financial interests; crisis communication plan.",
+    null
+   ],
+   "CRA": [
+    "Informing users of exploited vulnerabilities and severe incidents, with the measures they can take.",
+    null
+   ]
+  },
+  "evidence": [
+   "Communication templates per audience",
+   "Crisis communication plan",
+   "History of communications issued"
+  ]
+ },
+ "RES-01": {
+  "title": "Business continuity and recovery",
+  "summary": "The GDPR requires the ability to restore data availability in a timely manner; NIS2 and DORA build a full continuity regime. DORA is the most prescriptive: quantified recovery objectives, annual tests, reporting of losses.",
+  "unifiedAction": "Build a single business continuity plan, based on the critical functions identified, with recovery time and recovery point objectives per function, tested at least annually.",
+  "mappings": {
+   "RGPD": [
+    "Ability to restore availability of and access to data in a timely manner after an incident.",
+    null
+   ],
+   "NIS2": [
+    "Business continuity, backup management, disaster recovery and crisis management.",
+    null
+   ],
+   "DORA": [
+    "ICT continuity policy, recovery objectives, annual tests, record of activities during disruptions.",
+    "DORA also requires estimating and reporting to the authorities the aggregated costs and losses of major incidents."
+   ]
+  },
+  "evidence": [
+   "Business continuity plan",
+   "Recovery objectives per function",
+   "Annual test reports"
+  ]
+ },
+ "RES-02": {
+  "title": "Crisis management",
+  "summary": "NIS2 and DORA require a formal crisis organisation. The ReCyF adds an often overlooked requirement: backup communication means independent of the everyday information system, precisely because a cyber crisis can make email unusable.",
+  "unifiedAction": "Formalise a single crisis set-up (membership, trigger criteria, log, backup communication outside the main information system) and exercise it at a defined frequency.",
+  "mappings": {
+   "NIS2": [
+    "Crisis management and secured emergency communication systems within the entity.",
+    null
+   ],
+   "DORA": [
+    "Crisis management function, communication plans, a person designated for external communication.",
+    null
+   ]
+  },
+  "evidence": [
+   "Crisis management set-up",
+   "Offline crisis directory",
+   "Exercise reports"
+  ]
+ },
+ "RES-03": {
+  "title": "Backup and restoration",
+  "summary": "DORA is clearly more demanding here than the other texts: it requires physical and logical segregation of backup systems and verification of restored data in an isolated environment before going back into production, two measures that neither the GDPR nor NIS2 name.",
+  "unifiedAction": "Define a single backup policy aligned on the DORA level: scope and frequency by criticality, physical and logical isolation, periodic restoration tests in a separate environment.",
+  "mappings": {
+   "RGPD": [
+    "Restoring availability of and access to data after an incident.",
+    null
+   ],
+   "NIS2": [
+    "Backup management as part of business continuity.",
+    null
+   ],
+   "DORA": [
+    "Physical and logical segregation of backups, verification of restored data in an isolated environment, redundant capacity of equivalent level.",
+    "A requirement drawn directly from ransomware cases that encrypted backups along with production."
+   ]
+  },
+  "evidence": [
+   "Backup policy",
+   "Evidence of backup isolation",
+   "Restoration test reports"
+  ]
+ },
+ "RES-04": {
+  "title": "Testing, exercises and audits",
+  "summary": "All the texts ask for the effectiveness of measures to be verified, but intensity varies widely: simple regular evaluation for the GDPR, audits reserved for essential entities in the ReCyF, a full programme and threat-led penetration tests every three years for DORA.",
+  "unifiedAction": "Build a single multi-year control plan combining internal controls, audits, technical tests and exercises, whose depth is calibrated on the most demanding regime applicable to the entity.",
+  "mappings": {
+   "RGPD": [
+    "A process for regularly testing, assessing and evaluating the effectiveness of measures.",
+    "No frequency or method imposed."
+   ],
+   "NIS2": [
+    "Policies for assessing effectiveness; essential entities are subject to security audits at their own expense.",
+    "The ReCyF reserves the periodic audit obligation for essential entities (objective 17)."
+   ],
+   "DORA": [
+    "Annual testing programme on critical functions, mandated range of tests, threat-led penetration tests at least every three years for identified entities.",
+    null
+   ],
+   "CRA": [
+    "Conformity assessment according to the product category, and effective and regular security testing.",
+    "For class II and critical products, third-party assessment is mandatory."
+   ],
+   "AIACT": [
+    "Conformity assessment before placing on the market, by internal control or a notified body.",
+    null
+   ]
+  },
+  "strictest": [
+   "Threat-led penetration test at least every three years, in live production, on a scope validated and attested by the authority.",
+   "It is the only arrangement where the authority validates the scope upstream and attests the result downstream. A testing programme calibrated on this requirement easily absorbs NIS2 and GDPR expectations."
+  ],
+  "evidence": [
+   "Multi-year control plan",
+   "Audit and test reports",
+   "Authority attestations where applicable"
+  ]
+ },
+ "RES-05": {
+  "title": "Security maintenance and end of life",
+  "summary": "The same subject seen from both sides of the business relationship. The CRA requires the manufacturer to guarantee security updates for at least five years and to announce end of support; NIS2 and DORA require the user entity to run only supported versions and to anticipate end-of-life systems. A company that publishes software and uses others carries both obligations.",
+  "unifiedAction": "Keep a single register of products and components with their end-of-support date (those the entity guarantees as manufacturer, and those it depends on as a user) and plan each migration before the deadline.",
+  "mappings": {
+   "CRA": [
+    "Support period of at least five years, free security updates kept for ten years, and display of the end-of-support date.",
+    "The manufacturer's obligation towards its customers."
+   ],
+   "NIS2": [
+    "Secure maintenance of systems and fixing of vulnerabilities.",
+    "The ReCyF requires versions supported by their publisher, and compensating measures for any obsolete version (5.B.7 and 5.B.9)."
+   ],
+   "DORA": [
+    "ICT systems kept up to date and assessment of end-of-life systems.",
+    "The user's obligation: relying on an unsupported system for a critical function is an ICT risk to be treated."
+   ]
+  },
+  "evidence": [
+   "Register of end-of-support dates",
+   "Migration plan for end-of-life components",
+   "Support period policy for published products"
+  ]
+ },
+ "TIE-01": {
+  "title": "Contractual framework with third parties",
+  "summary": "The GDPR and DORA both impose mandatory contract terms, but they barely overlap: GDPR Article 28 covers data processing, DORA Article 30 covers service resilience. A contract compliant with one is not compliant with the other.",
+  "unifiedAction": "Build a single body of clauses organised in three blocks (data protection under GDPR Article 28, resilience and service under DORA Article 30, supply chain security under NIS2 Article 21(2)(d)) and tailor it to the type of provider.",
+  "mappings": {
+   "RGPD": [
+    "Eight mandatory terms: subject matter, duration, nature, purpose, data types, categories of data subjects, the controller's obligations and rights, plus documented instructions, confidentiality, security, assistance, fate of data, audit and sub-processing.",
+    null
+   ],
+   "NIS2": [
+    "Include security requirements in relationships with direct suppliers and service providers.",
+    "No standard clause is imposed: it is an obligation of result on controlling supplier risk."
+   ],
+   "DORA": [
+    "Minimum terms of paragraph 2 and reinforced terms of paragraph 3 for critical functions: quantitative service levels, cooperation in testing, unrestricted access and audit, exit strategies.",
+    "Unrestricted audit rights are a hard requirement: a clause limiting audit to an annual questionnaire does not satisfy Article 30."
+   ],
+   "AIACT": [
+    "Written contract specifying the information, technical capabilities and assistance needed between the provider and third parties supplying components.",
+    null
+   ]
+  },
+  "strictest": [
+   "Unrestricted rights of access, inspection and audit, quantitative performance targets, and an exit strategy with a sufficient transition period.",
+   "These clauses are the hardest to obtain from large cloud providers, and they are the ones supervisors check first. They must be negotiated upfront, as no derogation is provided for."
+  ],
+  "evidence": [
+   "Body of clauses by block",
+   "Contractual compliance grid",
+   "Register of reviewed contracts"
+  ]
+ },
+ "TIE-02": {
+  "title": "Third-party register and mapping",
+  "summary": "The GDPR requires recipients to be listed in the record of processing; DORA imposes a register of information whose structure is set by fifteen linked templates; NIS2 asks for a map of the ecosystem. All three cover the same providers, with different attributes.",
+  "unifiedAction": "Keep a single supplier repository whose attributes are the superset of the three requirements, and generate by extraction the DORA register of information, the recipients section of the GDPR record and the NIS2 map.",
+  "mappings": {
+   "RGPD": [
+    "List in the record the categories of recipients and any transfers.",
+    null
+   ],
+   "NIS2": [
+    "Map the ecosystem of direct suppliers and service providers and rate their criticality.",
+    null
+   ],
+   "DORA": [
+    "Register of information on all ICT arrangements, at entity, sub-consolidated and consolidated level, submitted annually to the authority.",
+    "The fifteen templates of Implementing Regulation 2024/2956 are linked by identifiers: an inconsistency between tables makes the register inadmissible."
+   ]
+  },
+  "evidence": [
+   "Single supplier repository",
+   "Generated DORA register of information",
+   "Ecosystem map"
+  ]
+ },
+ "TIE-03": {
+  "title": "Supply chain security",
+  "summary": "NIS2 requires assessing each direct supplier's specific vulnerabilities and the quality of its practices, including its secure development procedures. DORA adds control of further subcontracting chains, governed since 2025 by a dedicated technical standard.",
+  "unifiedAction": "Set up a supplier assessment proportionate to criticality, requiring visibility of downstream subcontractors, and review it periodically rather than only at contract signature.",
+  "mappings": {
+   "NIS2": [
+    "Take into account each supplier's specific vulnerabilities, the overall quality of its practices and EU coordinated risk assessments.",
+    null
+   ],
+   "DORA": [
+    "Control of subcontracting chains, visibility of downstream subcontractors, account taken of the lead overseer's recommendations.",
+    "Delegated Regulation 2025/532 requires assessing subcontracting before authorising it, not noting it afterwards."
+   ],
+   "RGPD": [
+    "Written authorisation for sub-processing and flow-down of the same contractual obligations.",
+    null
+   ],
+   "CRA": [
+    "Due diligence on integrated third-party components, including open-source software, and a bill of dependencies.",
+    "The CRA looks at the chain upstream of the product (integrated components), where NIS2 and DORA look at service providers."
+   ],
+   "AIACT": [
+    "A deployer, importer or distributor becomes the provider if it rebrands, substantially modifies or changes the purpose of a high-risk system.",
+    "Together with CRA Article 21, it is the only automatic role requalification rule across the five texts."
+   ]
+  },
+  "evidence": [
+   "Supplier assessment grid by criticality",
+   "Map of downstream subcontractors",
+   "Periodic reviews"
+  ]
+ },
+ "TIE-04": {
+  "title": "Concentration and exit strategy",
+  "summary": "This is DORA's own contribution, with no equivalent in the other texts: assess concentration risk before contracting, and have an exit strategy with a transition period. The GDPR only deals with what happens to data at the end of the contract.",
+  "unifiedAction": "Document, for each provider supporting a critical function, a substitutability analysis and an operational exit strategy, not just a reversibility clause.",
+  "mappings": {
+   "DORA": [
+    "Prior assessment of concentration risk, exit strategies, transition periods, ability to stop using a service when the overseer orders it.",
+    "Concentration risk is also assessed across connected providers, not just per individual provider."
+   ],
+   "RGPD": [
+    "Deletion or return of data at the end of the service, at the controller's choice.",
+    "The GDPR deals with exit from the data angle, not from the service continuity angle."
+   ]
+  },
+  "evidence": [
+   "Concentration analyses",
+   "Exit strategies per critical provider",
+   "Tested reversibility plans"
+  ]
+ },
+ "DON-01": {
+  "title": "Lawfulness, purpose and minimisation",
+  "summary": "A GDPR-specific area, but one that constrains the others: logs, access inventories, security monitoring and background checks are all processing that must rest on a legal basis and respect minimisation.",
+  "unifiedAction": "Treat security and resilience set-ups as processing in their own right: enter them in the record, give them a legal basis and limit their retention. This is where a poorly run cyber initiative creates GDPR risk.",
+  "mappings": {
+   "RGPD": [
+    "Legal basis, specified purpose, minimisation, accuracy, storage limitation.",
+    null
+   ],
+   "NIS2": [
+    "Identity management and logging create processing subject to the GDPR.",
+    "NIS2 Article 2(14) expressly preserves the application of data protection law."
+   ],
+   "CRA": [
+    "Minimisation of data processed by the product to what is strictly necessary for its intended use.",
+    null
+   ],
+   "AIACT": [
+    "Governance of training, validation and test data sets: origin, preparation, bias.",
+    "The AI Omnibus allows, subject to strict necessity, processing of special categories of data to detect and correct bias."
+   ]
+  },
+  "evidence": [
+   "Record of processing including security set-ups",
+   "Documented legal bases",
+   "Retention matrix"
+  ]
+ },
+ "DON-02": {
+  "title": "Data subject rights",
+  "summary": "An exclusively GDPR area. No overlap, but a practical interaction: security set-ups must be designed to allow rights to be exercised; an immutable log that prevents any rectification creates a legal dead end.",
+  "unifiedAction": "Check, for each technical security and resilience set-up, that it does not prevent rights from being exercised, especially erasure in backups and rectification in logs.",
+  "mappings": {
+   "RGPD": [
+    "Information, access, rectification, erasure, restriction, portability, objection, framing of automated decisions.",
+    null
+   ],
+   "DORA": [
+    "Backup policies must be designed taking erasure requests into account.",
+    "The interplay between prudential retention and the right to erasure must be documented, legal retention taking precedence over erasure."
+   ]
+  },
+  "evidence": [
+   "Request handling procedure",
+   "Analysis of backups' impact on the right to erasure"
+  ]
+ },
+ "DON-03": {
+  "title": "International transfers",
+  "summary": "The GDPR governs transfers outside the Union; DORA requires knowing and notifying where data and processing are located. The two requirements converge on the same map, used differently.",
+  "unifiedAction": "Keep a single map of data and processing locations, including remote access from third countries, and derive from it the GDPR transfer basis and the DORA contract term.",
+  "mappings": {
+   "RGPD": [
+    "Adequacy decision, appropriate safeguards or derogation, supplemented by a transfer impact assessment.",
+    "Remote access from a third country is a transfer, even without copying the data."
+   ],
+   "DORA": [
+    "Contractual statement of where services are provided and data processed, and prior notification of any change.",
+    "The requirement is about prudential traceability, not protection of individuals: it applies even to non-personal data."
+   ]
+  },
+  "evidence": [
+   "Map of flows and locations",
+   "Standard contractual clauses",
+   "Transfer impact assessments"
+  ]
+ },
+ "DON-04": {
+  "title": "Location and sovereignty",
+  "summary": "None of the texts requires data to be located in the Union. DORA comes close through the prudential route (mandatory presence in the Union for designated critical providers established in third countries) and the ReCyF through the qualification of providers.",
+  "unifiedAction": "Document location choices and their justification, and anticipate the Union-presence requirements on critical providers, without confusing a legal obligation with a sovereignty recommendation.",
+  "mappings": {
+   "DORA": [
+    "Location known contractually; a designated critical provider established outside the Union must set up a subsidiary there within twelve months.",
+    null
+   ],
+   "RGPD": [
+    "Appropriate safeguards can in practice lead to favouring hosting in the Union.",
+    "The regulation imposes no location: it is the transfer impact assessment that may lead there."
+   ],
+   "NIS2": [
+    "Member States may require products and services certified under a European scheme.",
+    null
+   ]
+  },
+  "evidence": [
+   "Register of locations",
+   "Justification of hosting choices"
+  ]
+ },
+ "DOC-01": {
+  "title": "Documentation and policies",
+  "summary": "All the texts require a body of documentation, and it is what inspectors ask for first. The risk is not missing documents but their multiplication: three competing security policies are worth less than a single, properly indexed one.",
+  "unifiedAction": "Build a single documentation set, with a framework policy and topic policies, each carrying a mapping table to the articles it satisfies. This table is what turns an internal document into evidence of compliance.",
+  "mappings": {
+   "RGPD": [
+    "Documented measures to demonstrate compliance.",
+    null
+   ],
+   "NIS2": [
+    "Security policy and evidence immediately available in case of inspection.",
+    "Since essential entities are subject to ex ante supervision, evidence must be kept ready at all times."
+   ],
+   "DORA": [
+    "Documented framework covering ICT strategies, policies, procedures, protocols and tools.",
+    null
+   ],
+   "CRA": [
+    "Annex VII technical documentation and EU declaration of conformity, kept for at least ten years.",
+    null
+   ],
+   "AIACT": [
+    "Annex IV technical documentation, a documented quality management system, and documentation of general-purpose models.",
+    "Technical documentation is kept ten years after placing on the market, as for the CRA."
+   ]
+  },
+  "evidence": [
+   "Indexed documentation set",
+   "Document-to-article mapping table",
+   "Document management plan"
+  ]
+ },
+ "DOC-02": {
+  "title": "Regulatory registers",
+  "summary": "Several separate registers are required (processing for the GDPR, ICT information for DORA, breaches and incidents for both) with different mandated structures. They cannot be merged, but they can share their sources.",
+  "unifiedAction": "Feed the registers from a common base (asset inventory, supplier repository, incident register) rather than keeping them separately. The output format differs; the input data is largely the same.",
+  "mappings": {
+   "RGPD": [
+    "Record of processing activities and internal breach register, including breaches not notified.",
+    null
+   ],
+   "DORA": [
+    "Register of information on ICT arrangements and record of activities during disruptions.",
+    "The register of information follows fifteen standardised, linked templates; it tolerates no inconsistency between tables."
+   ],
+   "NIS2": [
+    "Incident register and register of compliance gaps.",
+    null
+   ],
+   "AIACT": [
+    "Registration of the provider and high-risk systems in the EU database.",
+    null
+   ]
+  },
+  "evidence": [
+   "Record of processing",
+   "ICT register of information",
+   "Incident and gap registers"
+  ]
+ },
+ "DOC-03": {
+  "title": "System mapping and asset inventory",
+  "summary": "This is the silent prerequisite for almost everything: NIS2 makes it its first security objective, DORA its Article 8, and the GDPR assumes it to keep an accurate record. Without an inventory, none of the other requirements can be demonstrated.",
+  "unifiedAction": "Build and maintain a single map (activities and services, systems supporting them, hardware and software assets, internal and external dependencies, an owner per entry) and review it annually.",
+  "mappings": {
+   "NIS2": [
+    "Inventory of activities, services and information systems, and asset inventory.",
+    "The ReCyF also requires listing activities that do not ground the entity's category, and justifying any scope exclusion."
+   ],
+   "DORA": [
+    "Inventory of business functions, ICT assets, dependencies and end-of-life systems, reviewed annually.",
+    null
+   ],
+   "RGPD": [
+    "The record of processing requires knowing the systems that carry it out.",
+    null
+   ],
+   "AIACT": [
+    "Inventory of AI systems provided or used, with their reasoned classification.",
+    "The AI inventory is best kept as a view of the general map, not as an isolated register."
+   ]
+  },
+  "evidence": [
+   "Map of activities and services",
+   "Asset inventory with owners",
+   "Dependency matrix"
+  ]
+ },
+ "HIE-01": {
+  "title": "Lex specialis: DORA prevails over NIS2",
+  "summary": "DORA expressly declares itself lex specialis in relation to NIS2. NIS2 Article 4 draws the consequence: where a sectoral act imposes requirements of at least equivalent effect, the corresponding NIS2 provisions no longer apply. A financial entity subject to DORA therefore does not apply NIS2's risk-management and notification regime in parallel.",
+  "unifiedAction": "For a financial entity, apply DORA as the reference regime for ICT risk management and incident notification. NIS2 still has effects on points not covered by DORA, and the entity remains part of the NIS2 ecosystem (cooperation group, CSIRT).",
+  "mappings": {
+   "DORA": [
+    "Full ICT risk management and major incident notification regime, applicable to financial entities.",
+    null
+   ],
+   "NIS2": [
+    "Regime set aside for financial entities on points covered by DORA.",
+    "The exclusion is functional, not total: it covers risk management and notification, not necessarily the whole directive."
+   ]
+  },
+  "precedence": "DORA recital 16: \"this Regulation constitutes lex specialis with regard to Directive (EU) 2022/2555\". NIS2 Article 4: the provisions of the directive do not apply where sectoral acts impose requirements of at least equivalent effect.",
+  "evidence": [
+   "DORA / NIS2 interplay note",
+   "Article 4 equivalence analysis"
+  ]
+ },
+ "IA-01": {
+  "title": "Inventory and classification of AI systems",
+  "summary": "The AI Act only applies to what is known: without an inventory, no classification by risk level is possible. The GDPR already requires processing to be recorded, and many AI systems process personal data. The two inventories often describe the same tools from two angles.",
+  "unifiedAction": "Keep a single inventory of AI systems, linked to the record of processing: for each system, purpose, provider, the entity's role, data processed, reasoned risk level and owner. Review the classification for each new use case.",
+  "mappings": {
+   "AIACT": [
+    "Inventory and classify AI systems; document and register any Article 6(3) derogation.",
+    "Classification is the entity's responsibility: classifying too low is itself a breach."
+   ],
+   "RGPD": [
+    "Enter in the record the processing of personal data carried out with AI systems.",
+    null
+   ]
+  },
+  "evidence": [
+   "Inventory of AI systems",
+   "Classification sheets",
+   "Link with the record of processing"
+  ]
+ },
+ "IA-02": {
+  "title": "Prohibited AI practices",
+  "summary": "Article 5 prohibits uses, not technologies. Several of these bans overlap with processing the GDPR already strictly governed, such as biometric categorisation based on sensitive data. The AI Act turns them into outright bans, with the highest penalty cap in EU digital law.",
+  "unifiedAction": "Submit every AI project to a prior review against Article 5 and the Commission guidelines, recorded in the inventory. Treat any doubt as a blocker until a reasoned decision is made.",
+  "mappings": {
+   "AIACT": [
+    "Do not place on the market or use any system amounting to a prohibited practice.",
+    "No legal basis or consent can make a prohibited practice lawful."
+   ],
+   "RGPD": [
+    "Processing biometric or sensitive data is only permitted under one of the Article 9 exceptions.",
+    "The GDPR allows such processing under conditions; the AI Act bans certain uses whatever the conditions."
+   ]
+  },
+  "strictest": [
+   "Absolute ban on the Article 5 practices, punishable by up to €35M or 7% of worldwide turnover.",
+   "Where the GDPR frames sensitive data processing through lawfulness conditions, the AI Act bans the use itself. Processing that complies with the GDPR can therefore still be prohibited under the AI Act, never the reverse."
+  ],
+  "evidence": [
+   "Review of use cases against Article 5",
+   "AI project approval procedure"
+  ]
+ },
+ "IA-03": {
+  "title": "Transparency towards individuals",
+  "summary": "The GDPR requires informing people about the processing of their data; the AI Act requires telling them they are interacting with an AI or that content was generated. Both pieces of information are given at the same time and are best placed in the same notices.",
+  "unifiedAction": "Write single notices at the relevant touchpoints (chatbot, generated content, emotion recognition) that cover both the GDPR information and AI Act transparency, and technically mark generated content.",
+  "mappings": {
+   "AIACT": [
+    "Inform people of interaction with an AI, mark generated content, provide clear instructions to deployers.",
+    "Machine-readable marking is a technical obligation: a plain text notice is not enough."
+   ],
+   "RGPD": [
+    "Inform concisely, transparently and accessibly, including about the existence of automated decision-making.",
+    null
+   ]
+  },
+  "evidence": [
+   "Information notices",
+   "Content marking specification",
+   "Instructions for use"
+  ]
+ },
+ "IA-04": {
+  "title": "Human oversight of AI-assisted decisions",
+  "summary": "GDPR Article 22 gives people the right not to be subject to a decision based solely on automated processing. The AI Act organises, on the system side, the human oversight that makes this safeguard effective. The two complement each other: one sets the right, the other the mechanism.",
+  "unifiedAction": "Designate, train and empower people in charge of human oversight of high-risk systems, able to disregard or stop the system, and document the human intervention procedure open to the people concerned.",
+  "mappings": {
+   "AIACT": [
+    "Design effective human oversight and entrust it to competent, trained people with the necessary authority.",
+    null
+   ],
+   "RGPD": [
+    "Guarantee the right to obtain human intervention, to express one's point of view and to contest an automated decision.",
+    "Rubber-stamp human review that systematically endorses the system's output does not take the decision outside Article 22."
+   ]
+  },
+  "evidence": [
+   "Designation of the people in charge of oversight",
+   "Human intervention procedure",
+   "Records of reviewed decisions"
+  ]
+ },
+ "IA-05": {
+  "title": "Quality and governance of training data",
+  "summary": "The AI Act requires relevant, representative data sets examined for bias; the GDPR requires accurate, minimised data collected for a specified purpose. Reusing personal data to train a model combines both requirements.",
+  "unifiedAction": "Document each training data set (origin, legal basis, preparation, bias analysis) and check that reuse is compatible with the original purpose. Publish the training data summary for general-purpose models.",
+  "mappings": {
+   "AIACT": [
+    "Data set governance and public summary of training data for general-purpose models.",
+    null
+   ],
+   "RGPD": [
+    "Lawfulness, purpose limitation, minimisation and accuracy of personal data used for training.",
+    "Reusing data to train a model is a new processing operation, which needs its own legal basis."
+   ]
+  },
+  "evidence": [
+   "Data set description sheets",
+   "Purpose compatibility analysis",
+   "Bias analysis report"
+  ]
+ }
+}

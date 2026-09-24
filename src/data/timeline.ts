@@ -1,4 +1,6 @@
 import type { TimelineEvent } from '@/types/domain'
+import { LANG } from '@/i18n'
+import EN from '@/i18n/en/timeline.json'
 
 /**
  * Échéancier réglementaire.
@@ -9,9 +11,9 @@ import type { TimelineEvent } from '@/types/domain'
  * sans la supprimer ; et les échéances récurrentes, qui structurent le plan
  * de charge annuel.
  *
- * Arrêté au 23 septembre 2026.
+ * Arrêté au 24 septembre 2026.
  */
-export const TIMELINE: TimelineEvent[] = [
+const TIMELINE_FR: TimelineEvent[] = [
   {
     id: 'TL-RGPD-APP',
     date: '2018-05-25',
@@ -24,16 +26,16 @@ export const TIMELINE: TimelineEvent[] = [
     id: 'TL-PUB-333',
     date: '2022-12-27',
     regulation: 'TRANSVERSE',
-    title: "Publication de NIS 2 et de DORA",
+    title: "Publication de NIS2 et de DORA",
     detail:
-      "Les deux textes paraissent le même jour au Journal officiel L 333. Cette simultanéité n'est pas fortuite : ils forment un dispositif articulé, où DORA est la lex specialis financière de NIS 2.",
+      "Les deux textes paraissent le même jour au Journal officiel L 333. Cette simultanéité n'est pas fortuite : ils forment un dispositif articulé, où DORA est la lex specialis financière de NIS2.",
     kind: 'acte',
   },
   {
     id: 'TL-NIS2-VIG',
     date: '2023-01-16',
     regulation: 'NIS2',
-    title: "Entrée en vigueur de NIS 2",
+    title: "Entrée en vigueur de NIS2",
     detail: "Vingtième jour suivant la publication. Le délai de transposition de vingt et un mois commence à courir.",
     kind: 'acte',
   },
@@ -50,7 +52,7 @@ export const TIMELINE: TimelineEvent[] = [
     id: 'TL-NIS2-TRANSPO',
     date: '2024-10-17',
     regulation: 'NIS2',
-    title: "Échéance de transposition de NIS 2",
+    title: "Échéance de transposition de NIS2",
     detail:
       "Date limite pour l'adoption des dispositions nationales. La France ne l'a pas respectée : au 22 septembre 2026, le projet de loi résilience n'est toujours pas promulgué.",
     kind: 'transposition',
@@ -69,7 +71,7 @@ export const TIMELINE: TimelineEvent[] = [
     id: 'TL-DORA-ITS-REG',
     date: '2024-11-29',
     regulation: 'DORA',
-    title: "Modèles du registre d'information — règlement d'exécution (UE) 2024/2956",
+    title: "Modèles du registre d'information, règlement d'exécution (UE) 2024/2956",
     detail: "Quinze modèles de tableaux liés par des identifiants, fixant la structure exacte du registre à remettre annuellement.",
     kind: 'acte',
   },
@@ -86,7 +88,7 @@ export const TIMELINE: TimelineEvent[] = [
     id: 'TL-NIS2-A27',
     date: '2025-01-17',
     regulation: 'NIS2',
-    title: "Transmission des informations d'identification — article 27",
+    title: "Transmission des informations d'identification (article 27)",
     detail:
       "Échéance à laquelle les fournisseurs numériques devaient transmettre leurs informations d'identification aux autorités compétentes, en vue du registre tenu par l'ENISA.",
     kind: 'echeance',
@@ -124,7 +126,7 @@ export const TIMELINE: TimelineEvent[] = [
     regulation: 'DORA',
     title: "Entrée en vigueur des normes techniques sur la sous-traitance",
     detail:
-      "Règlement délégué (UE) 2025/532 : ce que l'entité financière doit établir avant d'autoriser une chaîne de sous-traitance — visibilité sur les sous-traitants ultérieurs, risque de concentration, localisation des données.",
+      "Règlement délégué (UE) 2025/532 : ce que l'entité financière doit établir avant d'autoriser une chaîne de sous-traitance : visibilité sur les sous-traitants ultérieurs, risque de concentration, localisation des données.",
     kind: 'acte',
   },
   {
@@ -142,7 +144,7 @@ export const TIMELINE: TimelineEvent[] = [
     regulation: 'TRANSVERSE',
     title: "Proposition du paquet Digital Omnibus",
     detail:
-      "La Commission propose de modifier le RGPD, la directive vie privée et communications électroniques, NIS 2 et DORA. Le volet « intelligence artificielle » a été adopté par le Conseil le 29 juin 2026 ; le volet « données » reste en négociation.",
+      "La Commission propose de modifier le RGPD, la directive vie privée et communications électroniques, NIS2 et DORA. Le volet « intelligence artificielle » a été adopté par le Conseil le 29 juin 2026 ; le volet « données » reste en négociation.",
     kind: 'projet',
   },
   {
@@ -160,7 +162,7 @@ export const TIMELINE: TimelineEvent[] = [
     regulation: 'NIS2',
     title: "Publication du ReCyF version 2.5",
     detail:
-      "L'ANSSI publie le Référentiel Cyber France : vingt objectifs de sécurité et cent cinquante-deux moyens acceptables de conformité, avec une applicabilité distincte pour les entités importantes et essentielles. Document de travail, mais c'est aujourd'hui la grille de lecture la plus opérationnelle de NIS 2 en France.",
+      "L'ANSSI publie le Référentiel Cyber France : vingt objectifs de sécurité et cent cinquante-deux moyens acceptables de conformité, avec une applicabilité distincte pour les entités importantes et essentielles. Document de travail, mais c'est aujourd'hui la grille de lecture la plus opérationnelle de NIS2 en France.",
     kind: 'acte',
   },
   {
@@ -201,7 +203,7 @@ export const TIMELINE: TimelineEvent[] = [
     date: '2026-09-11',
     regulation: 'CRA',
     title: "Obligations de signalement du CRA",
-    detail: "L'article 14 s'applique : tout fabricant notifie les vulnérabilités activement exploitées et les incidents graves via la plateforme unique de l'ENISA — alerte sous 24 heures, notification sous 72 heures. L'obligation vaut aussi pour les produits déjà sur le marché.",
+    detail: "L'article 14 s'applique : tout fabricant notifie les vulnérabilités activement exploitées et les incidents graves via la plateforme unique de l'ENISA, avec une alerte sous 24 heures et une notification sous 72 heures. L'obligation vaut aussi pour les produits déjà sur le marché.",
     kind: 'application',
     appliesWhen: [{ key: 'cra_roles', op: 'has', value: ['fabricant'], label: 'Fabricant de produits numériques' }],
   },
@@ -210,7 +212,7 @@ export const TIMELINE: TimelineEvent[] = [
     date: '2026-10-07',
     regulation: 'NIS2',
     title: "Examen du projet de loi résilience à l'Assemblée nationale",
-    detail: "La conférence des présidents du 22 septembre 2026 a inscrit le texte transposant NIS 2 à l'ordre du jour de la séance publique à partir du 7 octobre. C'est le premier signal concret d'un calendrier de mise en conformité exigible en France.",
+    detail: "La conférence des présidents du 22 septembre 2026 a inscrit le texte transposant NIS2 à l'ordre du jour de la séance publique à partir du 7 octobre. C'est le premier signal concret d'un calendrier de mise en conformité exigible en France.",
     kind: 'transposition',
   },
   {
@@ -227,7 +229,7 @@ export const TIMELINE: TimelineEvent[] = [
     regulation: 'TRANSVERSE',
     title: "Promulgation attendue de la loi résilience",
     detail:
-      "Le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité transpose NIS 2 et la directive d'accompagnement de DORA. Après l'examen en séance publique ouvert le 7 octobre, suivront la navette, les décrets d'application et le ReCyF définitif. Date indicative.",
+      "Le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité transpose NIS2 et la directive d'accompagnement de DORA. Après l'examen en séance publique ouvert le 7 octobre, suivront la navette, les décrets d'application et le ReCyF définitif. Date indicative.",
     kind: 'projet',
   },
   {
@@ -238,10 +240,78 @@ export const TIMELINE: TimelineEvent[] = [
     detail: "Les États membres réexaminent et mettent à jour la liste des entités essentielles et importantes, au moins tous les deux ans.",
     kind: 'echeance',
   },
+  {
+    id: 'TL-AI-VIG',
+    date: '2024-08-01',
+    regulation: 'AIACT',
+    title: "Entrée en vigueur de l'AI Act",
+    detail: "Le règlement (UE) 2024/1689 entre en vigueur vingt jours après sa publication au Journal officiel du 12 juillet 2024. Son application s'échelonne ensuite par paliers.",
+    kind: 'acte',
+  },
+  {
+    id: 'TL-AI-INTERDIT',
+    date: '2025-02-02',
+    regulation: 'AIACT',
+    title: "Pratiques interdites et maîtrise de l'IA",
+    detail: "Les chapitres I et II s'appliquent : les pratiques de l'article 5 sont interdites et les fournisseurs comme les déployeurs doivent développer la maîtrise de l'IA de leur personnel.",
+    kind: 'application',
+  },
+  {
+    id: 'TL-AI-GPAI',
+    date: '2025-08-02',
+    regulation: 'AIACT',
+    title: "Modèles d'IA à usage général et gouvernance",
+    detail: "Les obligations des fournisseurs de modèles d'IA à usage général, la gouvernance européenne et le régime des sanctions deviennent applicables.",
+    kind: 'application',
+  },
+  {
+    id: 'TL-AI-OMNIBUS',
+    date: '2026-07-27',
+    regulation: 'AIACT',
+    title: "Entrée en vigueur de l'Omnibus IA",
+    detail: "Le règlement (UE) 2026/1744 reporte les obligations des systèmes à haut risque, assouplit l'obligation de maîtrise de l'IA et étend les allègements des PME aux petites entreprises à moyenne capitalisation.",
+    kind: 'acte',
+  },
+  {
+    id: 'TL-AI-APP',
+    date: '2026-08-02',
+    regulation: 'AIACT',
+    title: "Application générale de l'AI Act",
+    detail: "Le règlement devient applicable, notamment les obligations de transparence de l'article 50 : information sur l'interaction avec une IA, marquage des contenus générés, signalement des hypertrucages.",
+    kind: 'application',
+    appliesWhen: [{ key: 'ia_roles', op: 'has', value: ['fournisseur', 'deployeur', 'importateur'], label: "Fournisseur ou déployeur de systèmes d'IA" }],
+  },
+  {
+    id: 'TL-AI-OMNI-DEC',
+    date: '2026-12-02',
+    regulation: 'AIACT',
+    title: 'Nouvelle interdiction et fin du délai de marquage',
+    detail: "Interdiction des systèmes générant des contenus pédopornographiques ou intimes non consentis, et fin du délai accordé aux systèmes déjà sur le marché pour marquer les contenus qu'ils génèrent.",
+    kind: 'echeance',
+    appliesWhen: [{ key: 'ia_roles', op: 'has', value: ['fournisseur', 'deployeur', 'importateur'], label: "Fournisseur ou déployeur de systèmes d'IA" }],
+  },
+  {
+    id: 'TL-AI-HR3',
+    date: '2027-12-02',
+    regulation: 'AIACT',
+    title: "Systèmes d'IA à haut risque de l'annexe III",
+    detail: "Date reportée par l'Omnibus IA : gestion des risques, gouvernance des données, documentation technique, contrôle humain, évaluation de la conformité et obligations des déployeurs deviennent exigibles pour les domaines de l'annexe III.",
+    kind: 'application',
+    appliesWhen: [{ key: 'ia_haut_risque', op: 'has', value: ['biometrie', 'infrastructures', 'education', 'emploi', 'services_essentiels', 'autorites'], label: "Système relevant de l'annexe III" }],
+  },
+  {
+    id: 'TL-AI-HR1',
+    date: '2028-08-02',
+    regulation: 'AIACT',
+    title: "Systèmes d'IA à haut risque de l'annexe I",
+    detail: "Date reportée par l'Omnibus IA pour les systèmes d'IA composants de sécurité de produits couverts par la législation d'harmonisation de l'annexe I : machines, jouets, dispositifs médicaux, ascenseurs.",
+    kind: 'application',
+    appliesWhen: [{ key: 'ia_haut_risque', op: 'has', value: ['produit'], label: "Composant de sécurité d'un produit réglementé" }],
+  },
 ]
 
 /** Échéances récurrentes, sans date fixe, qui structurent le plan de charge annuel. */
-export const RECURRING_DUTIES = [
+const DUTIES_FR = [
   {
     id: 'DUTY-DORA-REGISTRE',
     regulation: 'DORA' as const,
@@ -327,7 +397,48 @@ export const RECURRING_DUTIES = [
     regulation: 'CRA' as const,
     title: "Suivi des périodes d'assistance",
     cadence: 'Continue',
-    detail: "Chaque produit reçoit des mises à jour de sécurité pendant sa période d'assistance — au moins cinq ans — et la date de fin est affichée au moment de l'achat.",
+    detail: "Chaque produit reçoit des mises à jour de sécurité pendant sa période d'assistance, d'au moins cinq ans, et la date de fin est affichée au moment de l'achat.",
     basis: 'Article 13, paragraphes 8 et 19',
   },
+  {
+    id: 'DUTY-AI-INVENTAIRE',
+    regulation: 'AIACT' as const,
+    title: "Revue de l'inventaire et de la classification des systèmes d'IA",
+    cadence: "À chaque nouveau cas d'usage",
+    detail: "Chaque nouveau système, modification substantielle ou changement de destination déclenche une revue de la classification et des pratiques interdites.",
+    basis: 'Articles 5, 6 et 25',
+  },
+  {
+    id: 'DUTY-AI-JOURNAUX',
+    regulation: 'AIACT' as const,
+    title: 'Conservation des journaux des systèmes à haut risque',
+    cadence: 'Continue',
+    detail: "Les journaux générés automatiquement sont conservés au moins six mois par le fournisseur et par le déployeur, pour la partie sous leur contrôle.",
+    basis: 'Articles 19 et 26, paragraphe 6',
+  },
 ]
+
+const EVENTS_EN = EN.events as Record<string, string[]>
+const DUTIES_EN = EN.duties as Record<string, string[]>
+
+export const TIMELINE: TimelineEvent[] =
+  LANG === 'en'
+    ? TIMELINE_FR.map((e) => {
+        const x = EVENTS_EN[e.id]
+        if (!x) return e
+        return {
+          ...e,
+          title: x[0],
+          detail: x[1],
+          appliesWhen: e.appliesWhen?.map((c) => ({ ...c, label: x[2] ?? c.label })),
+        }
+      })
+    : TIMELINE_FR
+
+export const RECURRING_DUTIES =
+  LANG === 'en'
+    ? DUTIES_FR.map((d) => {
+        const x = DUTIES_EN[d.id]
+        return x ? { ...d, title: x[0], cadence: x[1], detail: x[2], basis: x[3] } : d
+      })
+    : DUTIES_FR
