@@ -50,14 +50,15 @@ Five steps, in order. Each one feeds the next, and every screen stays available 
 
 ```mermaid
 flowchart LR
-  A["<b>1. Scope</b><br/>35 questions, each tied<br/>to an article"] --> B["<b>2. Assess</b><br/>40 unified requirements,<br/>one answer for all texts"]
-  B --> C["<b>3. Prioritise</b><br/>scored order and<br/>four-wave roadmap"]
-  C --> D["<b>4. Prepare reporting</b><br/>authorities, deadlines,<br/>escalation chain"]
-  D --> E["<b>5. Report</b><br/>executive summary, full<br/>report, quick-reference sheet"]
-  A -. determines .-> T[("Applicable texts<br/>GDPR, NIS2 (ReCyF), DORA,<br/>CRA, AI Act")]
-  T -.-> B
-  I(["Optional<br/>ISO 27001 initiative"]) -. pre-fills .-> B
+  A["<b>1. Scope</b><br/>which texts apply,<br/>and why"] --> B["<b>2. Assess</b><br/>one answer per<br/>unified requirement"]
+  B --> C["<b>3. Prioritise</b><br/>scored order,<br/>four-wave roadmap"]
+  C --> D["<b>4. Prepare reporting</b><br/>who to notify,<br/>how fast"]
+  D --> E["<b>5. Report</b><br/>three PDF<br/>deliverables"]
+  classDef step fill:#f4f1ff,stroke:#6547e8,stroke-width:1.5px,color:#17132b
+  class A,B,C,D,E step
 ```
+
+Step 1 establishes the applicable texts (GDPR, NIS2 (ReCyF), DORA, CRA, AI Act), which drive every following screen. The optional ISO 27001 module, offered at the end of step 1, can pre-fill part of step 2.
 
 ## Who it is for
 
@@ -341,14 +342,15 @@ Cinq étapes, dans l'ordre. Chacune alimente la suivante, et chaque écran reste
 
 ```mermaid
 flowchart LR
-  A["<b>1. Qualifier</b><br/>35 questions, chacune<br/>rattachée à un article"] --> B["<b>2. Évaluer</b><br/>40 exigences unifiées,<br/>une réponse pour tous les textes"]
-  B --> C["<b>3. Prioriser</b><br/>ordre justifié et feuille<br/>de route en quatre vagues"]
-  C --> D["<b>4. Préparer le signalement</b><br/>autorités, délais,<br/>chaîne d'escalade"]
-  D --> E["<b>5. Restituer</b><br/>note au comité, rapport<br/>complet, fiche réflexe"]
-  A -. établit .-> T[("Textes applicables<br/>RGPD, NIS2 (ReCyF), DORA,<br/>CRA, AI Act")]
-  T -.-> B
-  I(["Facultatif<br/>démarche ISO 27001"]) -. pré-remplit .-> B
+  A["<b>1. Qualifier</b><br/>quels textes s'appliquent,<br/>et pourquoi"] --> B["<b>2. Évaluer</b><br/>une réponse par<br/>exigence unifiée"]
+  B --> C["<b>3. Prioriser</b><br/>ordre justifié, feuille<br/>de route en quatre vagues"]
+  C --> D["<b>4. Préparer le signalement</b><br/>qui notifier,<br/>dans quel délai"]
+  D --> E["<b>5. Restituer</b><br/>trois livrables<br/>PDF"]
+  classDef step fill:#f4f1ff,stroke:#6547e8,stroke-width:1.5px,color:#17132b
+  class A,B,C,D,E step
 ```
+
+L'étape 1 établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, CRA, AI Act), qui commandent tous les écrans suivants. Le module ISO 27001 facultatif, proposé à la fin de l'étape 1, peut pré-remplir une partie de l'étape 2.
 
 ## À qui elle s'adresse
 
