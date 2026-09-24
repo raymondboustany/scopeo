@@ -12,7 +12,7 @@ export function ThemeToggle() {
   const label = theme === 'light' ? tr('Passer en thème sombre', 'Switch to dark theme') : tr('Passer en thème clair', 'Switch to light theme')
   return (
     <Tooltip content={label}>
-      <button onClick={toggle} aria-label={label} className="rounded-md p-2 text-ink-3 transition-colors hover:bg-raised hover:text-ink">
+      <button onClick={toggle} aria-label={label} className="flex size-8 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-tint hover:text-ink">
         {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
       </button>
     </Tooltip>
@@ -36,7 +36,7 @@ export function LanguageToggle({ className }: { className?: string }) {
         aria-label={label}
         lang={next}
         className={cn(
-          'inline-flex h-9 items-center gap-1.5 rounded-md px-2 font-mono text-[11px] font-semibold uppercase text-ink-3 transition-colors hover:bg-raised hover:text-ink',
+          'inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-[11px] font-semibold uppercase tracking-wide text-ink-3 transition-colors hover:bg-tint hover:text-ink',
           className,
         )}
       >

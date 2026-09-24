@@ -235,7 +235,7 @@ export function Tour() {
                 <Mark size={12} />
                 {tr(`Étape ${step + 1} sur ${STEPS.length}`, `Step ${step + 1} of ${STEPS.length}`)}
               </span>
-              <button onClick={finish} className="rounded-md p-1 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Quitter le parcours', 'Exit the tour')}>
+              <button onClick={finish} className="rounded-md p-1 text-ink-3 hover:bg-tint hover:text-ink" aria-label={tr('Quitter le parcours', 'Exit the tour')}>
                 <X size={15} />
               </button>
             </div>

@@ -6,6 +6,16 @@
 
 ## [Non publié]
 
+### English
+
+- Redesigned light and dark themes: application frame with an inset content panel, refined neutral grays, hairline borders and soft layered shadows, clearer selected states, badges with a fine tinted outline, consistent buttons, fields, tabs and dialogs. Every text keeps a contrast of at least 4.5:1, checked by an automated test.
+- README visuals redone in high definition: framed product shots, a light and dark hero image, and a full-colour animated walkthrough.
+
+### Français
+
+- Refonte des thèmes clair et sombre : cadre d'application avec panneau de contenu encastré, gris neutres affinés, filets fins et ombres douces superposées, sélections plus lisibles, pastilles au contour teinté, boutons, champs, onglets et fenêtres harmonisés. Chaque texte garde un contraste d'au moins 4,5:1, vérifié par un test automatique.
+- Visuels du README refaits en haute définition : captures mises en scène, image d'en-tête en thème clair et sombre, et visite animée en couleurs réelles.
+
 ## [2.0.0] - 2026-09-24
 
 ### English

@@ -10,7 +10,7 @@ export function NextStep({ to, label, hint }: { to: string; label: string; hint?
   return (
     <Link
       to={to}
-      className="group mt-2 flex items-center justify-between gap-4 rounded-lg border border-rule-2 bg-surface px-5 py-4 transition-colors hover:border-rule-3 hover:bg-raised"
+      className="group mt-2 flex items-center justify-between gap-4 rounded-lg border border-rule-2 bg-surface px-5 py-4 transition-colors hover:border-rule-3 hover:bg-tint"
     >
       <span className="min-w-0">
         <span className="block font-mono text-[10px] uppercase tracking-[0.12em] text-ink-4">{tr('Étape suivante', 'Next step')}</span>

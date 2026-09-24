@@ -167,7 +167,7 @@ export default function ReportPage() {
                 </li>
               ))}
             </ul>
-            <div className="flex flex-wrap gap-2 border-t border-rule bg-sunken px-5 py-3">
+            <div className="flex flex-wrap gap-2 rounded-b-xl border-t border-rule bg-raised px-5 py-3">
               <Button variant="primary" disabled={busy !== null} onClick={() => generate(k.id, 'apercu')}>
                 {busy === k.id ? tr('Génération…', 'Generating…') : tr('Aperçu', 'Preview')}
               </Button>

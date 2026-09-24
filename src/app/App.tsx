@@ -48,6 +48,7 @@ function useScrollReset() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
+    document.getElementById('main-scroll')?.scrollTo({ top: 0, behavior: 'instant' })
   }, [pathname])
 }
 

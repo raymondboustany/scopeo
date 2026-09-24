@@ -40,7 +40,7 @@ export function NoteComposer({ onSubmit, autoFocus = false, compact = false }: {
             onClick={() => setTag(t)}
             className={cn(
               'h-6 rounded-md px-2 text-[11px] font-medium transition-colors',
-              tag === t ? TONE_CLASS[TAG_META[t].tone] : 'text-ink-3 hover:bg-raised hover:text-ink',
+              tag === t ? TONE_CLASS[TAG_META[t].tone] : 'text-ink-3 hover:bg-tint hover:text-ink',
             )}
           >
             {TAG_META[t].label}

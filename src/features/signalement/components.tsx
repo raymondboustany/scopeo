@@ -259,10 +259,10 @@ export function ContactCards({ contacts, readOnly }: { contacts: InternalContact
               </div>
               {readOnly ? null : (
                 <div className="flex flex-col gap-1">
-                  <button onClick={() => setEditing(c)} className="rounded p-1 text-2xs text-ink-3 hover:bg-raised hover:text-ink">
+                  <button onClick={() => setEditing(c)} className="rounded p-1 text-2xs text-ink-3 hover:bg-tint hover:text-ink">
                     {tr('Modifier', 'Edit')}
                   </button>
-                  <button onClick={() => remove(c.id)} className="rounded p-1 text-ink-4 hover:bg-raised hover:text-critical" aria-label={tr('Supprimer le contact', 'Delete contact')}>
+                  <button onClick={() => remove(c.id)} className="rounded p-1 text-ink-4 hover:bg-tint hover:text-critical" aria-label={tr('Supprimer le contact', 'Delete contact')}>
                     <Trash2 size={12} />
                   </button>
                 </div>

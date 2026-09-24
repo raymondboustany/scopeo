@@ -86,7 +86,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
                 }
                 className={cn(
                   'rounded-lg px-3 py-2.5 text-left transition-colors disabled:cursor-not-allowed',
-                  status === o.value ? 'bg-accent-wash ring-2 ring-accent' : 'bg-sunken hover:bg-overlay',
+                  'choice',
                 )}
               >
                 <span className={cn('block text-sm font-medium', status === o.value ? 'text-accent-strong' : 'text-ink')}>{o.label}</span>
@@ -103,7 +103,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
           ) : null}
 
           {asksPerimeter ? (
-            <div className="rounded-lg bg-sunken p-4">
+            <div className="rounded-xl border border-rule bg-raised p-4">
               <p className="text-sm font-medium text-ink">
                 {tr(
                   `La démarche ISO 27001 couvre-t-elle l'intégralité du périmètre concerné par ${named}, ou seulement une partie ?`,
@@ -181,7 +181,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
           ) : null}
 
           {showFollowUp && (status === 'partiel' || status === 'aucune') ? (
-            <div className="rounded-lg border border-rule-2 bg-sunken p-4">
+            <div className="rounded-xl border border-rule bg-raised p-4">
               <p className="flex items-center gap-2 text-sm font-medium text-ink">
                 <ListChecks size={14} className="text-ink-3" />
                 {status === 'partiel'

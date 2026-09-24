@@ -19,7 +19,7 @@ Open source regulatory scoping and gap assessment platform for the **GDPR**, **N
 
 <br>
 
-<img src="docs/assets/demo-en.gif" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, assessment, ISO 27001" width="100%">
+<img src="docs/assets/en/hero.jpg" alt="Scopeo dashboard in light and dark themes" width="100%">
 
 </div>
 
@@ -44,6 +44,14 @@ Scopeo answers them in a few hours of interviews, with reasoning that can be che
 
 ---
 
+## See it in action
+
+<p align="center">
+  <img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, assessment, ISO 27001, corpus, notification, reports, dark theme" width="100%">
+</p>
+
+---
+
 ## Features
 
 <table>
@@ -54,10 +62,10 @@ Scopeo answers them in a few hours of interviews, with reasoning that can be che
 35 questions, each tied to the article it establishes. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
 
 </td>
-<td width="50%"><img src="docs/assets/en/qualification.png" alt="Scoping and before / after comparator"></td>
+<td width="50%"><img src="docs/assets/en/qualification.jpg" alt="Scoping and before / after comparator"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/en/dashboard.png" alt="Dashboard"></td>
+<td width="50%"><img src="docs/assets/en/dashboard.jpg" alt="Dashboard"></td>
 <td width="50%" valign="top">
 
 ### Diagnosis at a glance
@@ -72,10 +80,10 @@ Overall and per-framework coverage, a five-step scoping path, alerts on upcoming
 40 unified requirements link the obligations of the five texts. The **Shared actions** view shows which combinations of texts a single action covers; divergences and precedence are named, with the rule that prevails.
 
 </td>
-<td width="50%"><img src="docs/assets/en/mutualisation.png" alt="Shared actions view of the crosswalk"></td>
+<td width="50%"><img src="docs/assets/en/mutualisation.jpg" alt="Shared actions view of the crosswalk"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/en/iso-overlap.png" alt="ISO 27001 module: excluded controls and overlap by framework"></td>
+<td width="50%"><img src="docs/assets/en/iso-overlap.jpg" alt="ISO 27001 module: excluded controls and overlap by framework"></td>
 <td width="50%" valign="top">
 
 ### Optional ISO 27001 module
@@ -90,10 +98,10 @@ At the end of the scoping questionnaire, one optional question asks where the en
 Under the NIS2 requirements, the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category. A valid ISO 27001 certificate over the whole scope is recognised for objectives 2 and 16, as the ReCyF provides.
 
 </td>
-<td width="50%"><img src="docs/assets/en/corpus.png" alt="Regulatory corpus"></td>
+<td width="50%"><img src="docs/assets/en/corpus.jpg" alt="Regulatory corpus"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/en/signalement.png" alt="Who to notify in case of an incident"></td>
+<td width="50%"><img src="docs/assets/en/signalement.jpg" alt="Who to notify in case of an incident"></td>
 <td width="50%" valign="top">
 
 ### Who to notify, starting today
@@ -108,7 +116,9 @@ Notification duties apply before compliance work is done. The platform names the
 <details>
 <summary>Dark theme preview</summary>
 <br>
-<img src="docs/assets/en/dashboard-dark.png" alt="Dashboard in dark theme">
+<img src="docs/assets/en/dashboard-dark.jpg" alt="Dashboard in dark theme">
+<br><br>
+<img src="docs/assets/en/croisements-dark.jpg" alt="Crosswalk map in dark theme">
 </details>
 
 ---
@@ -282,7 +292,7 @@ Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD
 
 <br>
 
-<img src="docs/assets/demo-fr.gif" alt="Parcours : connexion, tableau de bord, qualification, croisements, évaluation, ISO 27001" width="100%">
+<img src="docs/assets/fr/hero.jpg" alt="Tableau de bord de Scopeo en thème clair et en thème sombre" width="100%">
 
 </div>
 
@@ -307,6 +317,14 @@ Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiabl
 
 ---
 
+## En action
+
+<p align="center">
+  <img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, évaluation, ISO 27001, corpus, signalement, rapports, thème sombre" width="100%">
+</p>
+
+---
+
 ## Fonctionnalités
 
 <table>
@@ -317,10 +335,10 @@ Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiabl
 35 questions, chacune rattachée à l'article qu'elle établit. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre quand une réponse change.
 
 </td>
-<td width="50%"><img src="docs/assets/fr/qualification.png" alt="Qualification et comparateur avant / après"></td>
+<td width="50%"><img src="docs/assets/fr/qualification.jpg" alt="Qualification et comparateur avant / après"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/fr/dashboard.png" alt="Tableau de bord"></td>
+<td width="50%"><img src="docs/assets/fr/dashboard.jpg" alt="Tableau de bord"></td>
 <td width="50%" valign="top">
 
 ### Diagnostic en un coup d'œil
@@ -335,10 +353,10 @@ Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes su
 40 exigences unifiées relient les obligations des cinq textes. La vue **Mutualisation** montre les combinaisons de textes qu'une action unique permet de couvrir ; les divergences et hiérarchies sont nommées, avec la règle qui commande.
 
 </td>
-<td width="50%"><img src="docs/assets/fr/mutualisation.png" alt="Vue Mutualisation des croisements"></td>
+<td width="50%"><img src="docs/assets/fr/mutualisation.jpg" alt="Vue Mutualisation des croisements"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/fr/iso-overlap.png" alt="Module ISO 27001 : contrôles exclus et recoupement par référentiel"></td>
+<td width="50%"><img src="docs/assets/fr/iso-overlap.jpg" alt="Module ISO 27001 : contrôles exclus et recoupement par référentiel"></td>
 <td width="50%" valign="top">
 
 ### Module ISO 27001 facultatif
@@ -353,10 +371,10 @@ Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes su
 Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité. Un certificat ISO 27001 valide sur tout le périmètre est reconnu pour les objectifs 2 et 16, comme le prévoit le ReCyF.
 
 </td>
-<td width="50%"><img src="docs/assets/fr/corpus.png" alt="Corpus réglementaire"></td>
+<td width="50%"><img src="docs/assets/fr/corpus.jpg" alt="Corpus réglementaire"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/fr/signalement.png" alt="Qui notifier en cas d'incident"></td>
+<td width="50%"><img src="docs/assets/fr/signalement.jpg" alt="Qui notifier en cas d'incident"></td>
 <td width="50%" valign="top">
 
 ### Qui notifier, dès aujourd'hui
@@ -371,7 +389,9 @@ Les obligations de notification s'appliquent avant même la mise en conformité.
 <details>
 <summary>Aperçu du thème sombre</summary>
 <br>
-<img src="docs/assets/fr/dashboard-dark.png" alt="Tableau de bord en thème sombre">
+<img src="docs/assets/fr/dashboard-dark.jpg" alt="Tableau de bord en thème sombre">
+<br><br>
+<img src="docs/assets/fr/croisements-dark.jpg" alt="Carte de croisement en thème sombre">
 </details>
 
 ---

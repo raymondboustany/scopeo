@@ -50,7 +50,7 @@ function NavItem({ entry, collapsed, disabled }: { entry: NavEntry; collapsed: b
       <Tooltip content={tr("Chargez d'abord une entité.", 'Load an entity first.')} side="right">
         <span
           className={cn(
-            'flex cursor-not-allowed items-center gap-3 rounded-md px-2.5 py-2 text-sm text-ink-4',
+            'flex h-8 cursor-not-allowed items-center gap-2.5 rounded-md px-2.5 text-[13px] text-ink-4',
             collapsed && 'justify-center px-0',
           )}
         >
@@ -67,9 +67,9 @@ function NavItem({ entry, collapsed, disabled }: { entry: NavEntry; collapsed: b
       data-tour={entry.tour}
       className={({ isActive }) =>
         cn(
-          'group relative flex items-center gap-3 rounded-md px-2.5 py-2 text-sm transition-colors',
+          'group relative flex h-8 items-center gap-2.5 rounded-md px-2.5 text-[13px] transition-colors',
           collapsed && 'justify-center px-0',
-          isActive ? 'font-medium text-accent-strong' : 'text-ink-2 hover:bg-raised hover:text-ink',
+          isActive ? 'font-medium text-ink' : 'text-ink-2 hover:bg-tint hover:text-ink',
         )
       }
     >
@@ -78,11 +78,11 @@ function NavItem({ entry, collapsed, disabled }: { entry: NavEntry; collapsed: b
           {isActive ? (
             <motion.span
               layoutId="nav-active"
-              className="absolute inset-0 rounded-md bg-accent-wash"
+              className="absolute inset-0 rounded-md bg-surface shadow-xs ring-1 ring-rule-2"
               transition={{ type: 'spring', stiffness: 500, damping: 40 }}
             />
           ) : null}
-          <span className={cn('relative shrink-0 transition-colors', isActive ? 'text-accent-strong' : 'text-ink-3 group-hover:text-ink-2')}>
+          <span className={cn('relative shrink-0 transition-colors [&_svg]:size-4', isActive ? 'text-accent' : 'text-ink-3 group-hover:text-ink-2')}>
             {entry.icon}
           </span>
           {collapsed ? null : <span className="relative truncate">{entry.label}</span>}
@@ -112,21 +112,22 @@ function Sidebar({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?
       data-tour="sidebar"
       onClick={onNavigate}
       className={cn(
-        'no-print flex h-full flex-col border-r border-rule bg-chrome transition-[width] duration-300 ease-out',
+        'no-print flex h-full flex-col bg-chrome transition-[width] duration-300 ease-out',
+        mobile && 'border-r border-rule',
         mobile ? 'w-72' : collapsed ? 'w-[var(--rail-collapsed)]' : 'w-[var(--rail)]',
       )}
     >
-      <div className={cn('flex h-[var(--bar)] shrink-0 items-center border-b border-rule', collapsed ? 'justify-center' : 'px-4')}>
+      <div className={cn('flex h-[var(--bar)] shrink-0 items-center', collapsed ? 'justify-center' : 'px-4')}>
         <Wordmark collapsed={collapsed} />
       </div>
 
-      <div className={cn('flex-1 overflow-y-auto py-4', collapsed ? 'px-2' : 'px-3')}>
+      <div className={cn('flex-1 overflow-y-auto pb-4 pt-2', collapsed ? 'px-2' : 'px-3')}>
         {NAV_GROUPS.map((g) => (
           <div key={g.id} className="mb-5 last:mb-0">
             {collapsed ? (
               <div className="mx-auto mb-2 h-px w-6 bg-rule-2" aria-hidden />
             ) : (
-              <div className="label-caps px-2.5 pb-2">{g.label}</div>
+              <div className="px-2.5 pb-1.5 text-[11px] font-medium text-ink-4">{g.label}</div>
             )}
             <ul className="space-y-0.5">
               {NAV.filter((n) => n.group === g.id && (!n.needsQualification || qualified)).map((n) => (
@@ -140,12 +141,12 @@ function Sidebar({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?
       </div>
 
       {mobile ? null : (
-        <div className={cn('border-t border-rule p-2', collapsed ? 'flex justify-center' : '')}>
+        <div className={cn('p-2', collapsed ? 'flex justify-center' : '')}>
           <button
             onClick={toggle}
             aria-label={collapsed ? tr('Déplier la navigation', 'Expand navigation') : tr('Replier la navigation', 'Collapse navigation')}
             className={cn(
-              'flex items-center gap-2 rounded-md px-2.5 py-2 text-xs text-ink-3 transition-colors hover:bg-raised hover:text-ink',
+              'flex h-8 items-center gap-2 rounded-md px-2.5 text-xs text-ink-3 transition-colors hover:bg-tint hover:text-ink',
               collapsed ? 'justify-center' : 'w-full',
             )}
           >
@@ -171,7 +172,7 @@ function EntitySwitcher() {
       <DropdownMenu.Trigger asChild>
         <button
           data-tour="entity-switcher"
-          className="inline-flex h-9 max-w-[16rem] items-center gap-2 rounded-md border border-rule-2 bg-raised px-3 text-sm text-ink transition-colors hover:border-rule-3"
+          className="inline-flex h-8 max-w-[16rem] items-center gap-2 rounded-md border border-rule-2 bg-surface px-2.5 text-[13px] text-ink shadow-xs transition-colors hover:border-rule-3 hover:bg-tint"
         >
           <span className={cn('size-2 shrink-0 rounded-full', current ? 'bg-positive' : 'bg-ink-4')} aria-hidden />
           <span className="truncate font-medium">{current?.name ?? tr('Aucune entité', 'No entity')}</span>
@@ -179,7 +180,7 @@ function EntitySwitcher() {
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content align="start" sideOffset={6} className="z-50 w-72 rounded-lg border border-rule bg-surface p-1.5 shadow-pop">
+        <DropdownMenu.Content align="start" sideOffset={6} className="z-50 w-72 rounded-xl border border-rule bg-surface p-1.5 shadow-pop">
           <div className="label-caps px-2 py-1.5">{tr('Entités de ce profil', 'Entities in this profile')}</div>
           {entities.length === 0 ? <p className="px-2 py-2 text-xs text-ink-3">{tr("Aucune entité pour l'instant.", 'No entities yet.')}</p> : null}
           {entities.map((e) => (
@@ -189,7 +190,7 @@ function EntitySwitcher() {
                 void flushAll()
                 selectEntity(e.id)
               }}
-              className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[highlighted]:text-ink"
+              className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-tint data-[highlighted]:text-ink"
             >
               <span className="truncate">{e.name}</span>
               {e.id === current?.id ? <Check size={14} className="shrink-0 text-accent" /> : null}
@@ -198,7 +199,7 @@ function EntitySwitcher() {
           <DropdownMenu.Separator className="my-1.5 h-px bg-rule-2" />
           <DropdownMenu.Item
             onSelect={() => navigate('/app/entites?nouvelle=1')}
-            className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[highlighted]:text-ink"
+            className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-tint data-[highlighted]:text-ink"
           >
             <Plus size={14} />
             {tr('Nouvelle entité', 'New entity')}
@@ -247,8 +248,8 @@ function UserMenu() {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className="inline-flex h-9 items-center gap-2 rounded-md border border-transparent px-2 text-sm text-ink-2 transition-colors hover:border-rule-2 hover:bg-raised hover:text-ink">
-          <span className="flex size-6 items-center justify-center rounded-full bg-accent-wash text-2xs font-semibold text-accent">
+        <button className="inline-flex h-8 items-center gap-2 rounded-md px-1.5 text-[13px] text-ink-2 transition-colors hover:bg-tint hover:text-ink">
+          <span className="flex size-6 items-center justify-center rounded-full bg-accent bg-gradient-to-br from-[#8b74ff] to-[#5a3fe0] text-[11px] font-semibold text-white shadow-xs">
             {(user?.name ?? '?').slice(0, 1).toUpperCase()}
           </span>
           <span className="hidden max-w-[8rem] truncate md:inline">{user?.name ?? ''}</span>
@@ -256,7 +257,7 @@ function UserMenu() {
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content align="end" sideOffset={6} className="z-50 w-60 rounded-lg border border-rule bg-surface p-1.5 shadow-pop">
+        <DropdownMenu.Content align="end" sideOffset={6} className="z-50 w-60 rounded-xl border border-rule bg-surface p-1.5 shadow-pop">
           <div className="px-2 py-2">
             <div className="truncate text-sm font-medium text-ink">{user?.name}</div>
             <div className="text-2xs text-ink-3">
@@ -280,7 +281,7 @@ function UserMenu() {
             <DropdownMenu.Item
               key={item.label}
               onSelect={item.onSelect}
-              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[highlighted]:text-ink"
+              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-tint data-[highlighted]:text-ink"
             >
               <span className="text-ink-3">{item.icon}</span>
               {item.label}
@@ -312,7 +313,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <div className="flex min-h-screen bg-paper">
+    <div className="flex min-h-screen bg-paper lg:h-screen lg:overflow-hidden lg:bg-frame">
       <div className="sticky top-0 hidden h-screen lg:block">
         <Sidebar />
       </div>
@@ -331,7 +332,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Sidebar mobile onNavigate={() => setMobileOpen(false)} />
               <button
                 onClick={() => setMobileOpen(false)}
-                className="absolute right-3 top-3 rounded-md p-1.5 text-ink-3 hover:bg-raised"
+                className="absolute right-3 top-3 rounded-md p-1.5 text-ink-3 hover:bg-tint"
                 aria-label={tr('Fermer la navigation', 'Close navigation')}
               >
                 <X size={16} />
@@ -341,12 +342,15 @@ export function AppShell({ children }: { children: ReactNode }) {
         ) : null}
       </AnimatePresence>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="no-print sticky top-0 z-30 flex h-[var(--bar)] shrink-0 items-center justify-between gap-3 border-b border-rule bg-paper/80 px-4 backdrop-blur-md sm:px-6">
+      <div
+        id="main-scroll"
+        className="flex min-w-0 flex-1 flex-col bg-paper lg:my-2 lg:mr-2 lg:overflow-y-auto lg:rounded-xl lg:border lg:border-rule lg:shadow-panel"
+      >
+        <header className="no-print sticky top-0 z-30 flex h-[var(--bar)] shrink-0 items-center justify-between gap-3 border-b border-rule bg-paper/85 px-4 backdrop-blur-md sm:px-6">
           <div className="flex min-w-0 items-center gap-2">
             <button
               onClick={() => setMobileOpen(true)}
-              className="rounded-md p-2 text-ink-2 hover:bg-raised lg:hidden"
+              className="rounded-md p-2 text-ink-2 hover:bg-tint lg:hidden"
               aria-label={tr('Ouvrir la navigation', 'Open navigation')}
             >
               <Menu size={18} />
@@ -359,16 +363,16 @@ export function AppShell({ children }: { children: ReactNode }) {
             <button
               onClick={() => setPaletteOpen(true)}
               data-tour="search"
-              className="hidden h-9 items-center gap-2 rounded-md border border-rule-2 bg-raised px-3 text-sm text-ink-3 transition-colors hover:border-rule-3 hover:text-ink sm:inline-flex"
+              className="hidden h-8 w-56 items-center gap-2 rounded-md border border-rule-2 bg-surface pl-2.5 pr-1.5 text-[13px] text-ink-3 shadow-xs transition-colors hover:border-rule-3 hover:text-ink-2 sm:inline-flex"
             >
               <Search size={14} />
-              {tr('Rechercher', 'Search')}
-              <kbd className="rounded border border-rule-2 bg-paper px-1.5 font-mono text-[10px] text-ink-3">Ctrl K</kbd>
+              <span className="flex-1 text-left">{tr('Rechercher…', 'Search…')}</span>
+              <kbd className="rounded-[5px] border border-rule-2 bg-raised px-1.5 py-px font-sans text-[10px] font-medium text-ink-3">Ctrl K</kbd>
             </button>
             <Tooltip content={tr('Parcours guidé', 'Guided tour')}>
               <button
                 onClick={() => openTour(0)}
-                className="flex size-9 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-raised hover:text-ink"
+                className="flex size-8 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-tint hover:text-ink"
                 aria-label={tr('Relancer le parcours guidé', 'Restart the guided tour')}
               >
                 <CircleHelp size={17} />
@@ -382,7 +386,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        <main className="min-w-0 flex-1 px-4 py-7 sm:px-6 lg:px-10">
+        <main className="min-w-0 flex-1 px-4 py-8 sm:px-6 lg:px-10">
           {/*
            * Entrée animée seulement : attendre la sortie de l'écran précédent
            * (mode « wait ») bloque l'affichage lorsque l'écran suivant est

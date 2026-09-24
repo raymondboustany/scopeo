@@ -160,13 +160,13 @@ function EntityCard({
         </button>
         <Dropdown.Root>
           <Dropdown.Trigger asChild>
-            <button className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr(`Actions pour ${entity.name}`, `Actions for ${entity.name}`)}>
+            <button className="rounded-md p-1.5 text-ink-3 hover:bg-tint hover:text-ink" aria-label={tr(`Actions pour ${entity.name}`, `Actions for ${entity.name}`)}>
               <MoreHorizontal size={15} />
             </button>
           </Dropdown.Trigger>
           <Dropdown.Portal>
             <Dropdown.Content align="end" sideOffset={4} className="z-50 min-w-40 rounded-md border border-rule bg-surface p-1 shadow-pop">
-              <Dropdown.Item onSelect={onRename} className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[highlighted]:text-ink">
+              <Dropdown.Item onSelect={onRename} className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-tint data-[highlighted]:text-ink">
                 <Pencil size={13} /> {tr('Renommer', 'Rename')}
               </Dropdown.Item>
               <Dropdown.Item onSelect={onDelete} className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 text-sm text-critical outline-none data-[highlighted]:bg-critical-wash">
@@ -261,7 +261,7 @@ function CreateDialog({
               onClick={() => setMode(v)}
               className={cn(
                 'rounded-lg px-3 py-2.5 text-left transition-colors',
-                mode === v ? 'bg-accent-wash ring-2 ring-accent' : 'bg-sunken hover:bg-overlay',
+                'choice',
               )}
             >
               <span className={cn('block text-sm font-medium', mode === v ? 'text-accent-strong' : 'text-ink')}>{label}</span>

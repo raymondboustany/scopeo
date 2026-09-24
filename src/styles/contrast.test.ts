@@ -47,7 +47,7 @@ const THEMES = { clair: block(':root {'), sombre: block(":root[data-theme='dark'
 
 for (const [name, t] of Object.entries(THEMES)) {
   const solid = (k: string): Rgb => parse(t[k]).rgb
-  const surfaces = ['paper', 'surface', 'sunken', 'raised', 'chrome', 'overlay'] as const
+  const surfaces = ['frame', 'paper', 'surface', 'sunken', 'raised', 'chrome', 'overlay'] as const
 
   describe(`thème ${name}`, () => {
     it('garde les encres lisibles sur toutes les surfaces (4,5:1)', () => {

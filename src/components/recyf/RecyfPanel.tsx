@@ -99,7 +99,7 @@ function Objective({
   const n = o.measures.length
   return (
     <li id={`recyf-${o.n}`}>
-      <button onClick={() => setOpen((v) => !v)} className="flex w-full items-start gap-3 px-4 py-2.5 text-left hover:bg-raised/40" aria-expanded={open}>
+      <button onClick={() => setOpen((v) => !v)} className="flex w-full items-start gap-3 px-4 py-2.5 text-left hover:bg-tint/40" aria-expanded={open}>
         <ChevronRight size={13} className={cn('mt-0.5 shrink-0 text-ink-3 transition-transform', open && 'rotate-90')} />
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-2">

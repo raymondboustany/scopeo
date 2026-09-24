@@ -24,7 +24,7 @@ export function FeedbackButton() {
       <Tooltip content={tr('Signaler un problème ou proposer une idée', 'Report a problem or suggest an idea')}>
         <button
           onClick={() => setOpen(true)}
-          className="flex size-9 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-raised hover:text-ink"
+          className="flex size-8 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-tint hover:text-ink"
           aria-label={tr('Signaler un problème ou proposer une idée', 'Report a problem or suggest an idea')}
         >
           <MessageSquarePlus size={17} />
@@ -97,7 +97,7 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
               onClick={() => set({ kind: k.value })}
               className={cn(
                 'rounded-lg px-3 py-2.5 text-left transition-colors',
-                draft.kind === k.value ? 'bg-accent-wash ring-2 ring-accent' : 'bg-sunken hover:bg-overlay',
+                'choice',
               )}
             >
               <span className={cn('block text-sm font-medium', draft.kind === k.value ? 'text-accent-strong' : 'text-ink')}>{k.label}</span>

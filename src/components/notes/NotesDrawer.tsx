@@ -38,7 +38,7 @@ export function NotesButton() {
         onClick={() => setOpen(true)}
         data-tour="notes"
         aria-label={tr("Ouvrir le journal d'entretien", 'Open the interview log')}
-        className="relative flex size-9 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-raised hover:text-ink"
+        className="relative flex size-8 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-tint hover:text-ink"
       >
         <NotebookPen size={17} />
         {pending > 0 ? (
@@ -108,13 +108,13 @@ export function NotesDrawer() {
                           setCopied(true)
                           setTimeout(() => setCopied(false), 1500)
                         }}
-                        className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink"
+                        className="rounded-md p-1.5 text-ink-3 hover:bg-tint hover:text-ink"
                         aria-label={tr('Copier le journal', 'Copy the log')}
                       >
                         {copied ? <Check size={15} /> : <ClipboardCopy size={15} />}
                       </button>
                     </Tooltip>
-                    <Dialog.Close className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Fermer', 'Close')}>
+                    <Dialog.Close className="rounded-md p-1.5 text-ink-3 hover:bg-tint hover:text-ink" aria-label={tr('Fermer', 'Close')}>
                       <X size={15} />
                     </Dialog.Close>
                   </div>
@@ -127,7 +127,7 @@ export function NotesDrawer() {
                       onClick={() => setFilter(f)}
                       className={cn(
                         'h-7 shrink-0 rounded-md px-2 text-xs transition-colors',
-                        filter === f ? 'bg-accent-wash font-medium text-accent-strong' : 'text-ink-3 hover:bg-raised hover:text-ink',
+                        filter === f ? 'bg-accent-wash font-medium text-accent-strong' : 'text-ink-3 hover:bg-tint hover:text-ink',
                       )}
                     >
                       {f === 'ouvertes' ? tr('Ouvertes', 'Open') : f === 'toutes' ? tr('Toutes', 'All') : TAG_META[f].label}

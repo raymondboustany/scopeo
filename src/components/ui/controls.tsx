@@ -19,13 +19,13 @@ type ButtonSize = 'sm' | 'md'
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    'bg-accent text-accent-ink border-accent hover:bg-accent-hover hover:border-accent-hover disabled:bg-overlay disabled:border-rule-2 disabled:text-ink-4 disabled:shadow-none',
+    'bg-accent text-accent-ink border-transparent shadow-[var(--s-top),var(--s-xs)] hover:bg-accent-hover disabled:bg-overlay disabled:text-ink-4 disabled:shadow-none',
   secondary:
-    'bg-surface text-ink border-edge shadow-card hover:bg-raised hover:border-ink-3 disabled:text-ink-4 disabled:hover:bg-surface',
+    'bg-surface text-ink border-rule-2 shadow-xs hover:border-rule-3 hover:bg-raised disabled:text-ink-4 disabled:hover:bg-surface',
   ghost:
-    'bg-transparent text-ink-2 border-transparent hover:bg-raised hover:text-ink disabled:text-ink-4 disabled:hover:bg-transparent',
+    'bg-transparent text-ink-2 border-transparent hover:bg-tint hover:text-ink disabled:text-ink-4 disabled:hover:bg-transparent',
   danger:
-    'bg-transparent text-critical border-critical-line hover:bg-critical-wash disabled:text-ink-4 disabled:border-rule',
+    'bg-surface text-critical border-critical-line shadow-xs hover:bg-critical-wash disabled:text-ink-4 disabled:border-rule',
 }
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -54,8 +54,8 @@ export function LinkButton({
     <RouterLink
       to={to}
       className={cn(
-        'inline-flex select-none items-center justify-center gap-1.5 rounded-md border font-medium transition-all active:scale-[0.98]',
-        size === 'sm' ? 'h-8 px-3 text-xs' : 'h-9 px-4 text-sm',
+        'inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-md border font-medium transition-[background-color,border-color,box-shadow,transform] duration-150 active:scale-[0.985]',
+        size === 'sm' ? 'h-7 px-2.5 text-xs' : 'h-8 px-3.5 text-[13px]',
         VARIANTS[variant],
         className,
       )}
@@ -74,9 +74,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <button
       ref={ref}
       className={cn(
-        'inline-flex select-none items-center justify-center gap-1.5 rounded-md border font-medium transition-all active:scale-[0.98]',
-        'disabled:cursor-not-allowed',
-        size === 'sm' ? 'h-8 px-3 text-xs' : 'h-9 px-4 text-sm',
+        'inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-md border font-medium transition-[background-color,border-color,box-shadow,transform] duration-150 active:scale-[0.985]',
+        'disabled:cursor-not-allowed disabled:active:scale-100',
+        size === 'sm' ? 'h-7 px-2.5 text-xs' : 'h-8 px-3.5 text-[13px]',
         VARIANTS[variant],
         className,
       )}
@@ -118,7 +118,7 @@ export function Tooltip({
           side={side}
           sideOffset={6}
           collisionPadding={12}
-          className="z-50 max-w-xs rounded-md bg-ink px-3 py-2 text-xs leading-relaxed text-paper shadow-pop"
+          className="z-50 max-w-xs rounded-lg bg-ink px-2.5 py-1.5 text-xs leading-relaxed text-paper shadow-pop"
         >
           {content}
           <RadixTooltip.Arrow className="fill-[var(--c-ink)]" width={10} height={5} />
@@ -152,8 +152,8 @@ export function Select({
       <RadixSelect.Trigger
         aria-label={ariaLabel}
         className={cn(
-          'inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-edge bg-raised px-3 text-sm text-ink transition-colors',
-          'hover:border-ink-3 data-[placeholder]:text-ink-3',
+          'inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-edge bg-surface px-3 text-[13px] text-ink shadow-xs transition-colors',
+          'hover:border-ink-3 focus:border-accent focus:outline-none focus:ring-[3px] focus:ring-accent/20 data-[placeholder]:text-ink-3',
           className,
         )}
       >
@@ -166,14 +166,14 @@ export function Select({
         <RadixSelect.Content
           position="popper"
           sideOffset={4}
-          className="z-50 max-h-80 w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border border-rule bg-surface shadow-pop"
+          className="z-50 max-h-80 w-[var(--radix-select-trigger-width)] overflow-hidden rounded-xl border border-rule bg-surface shadow-pop"
         >
           <RadixSelect.Viewport className="p-1">
             {options.map((o) => (
               <RadixSelect.Item
                 key={o.value}
                 value={o.value}
-                className="relative flex cursor-pointer select-none items-center rounded-sm py-2 pl-7 pr-2 text-sm text-ink-2 outline-none data-[highlighted]:bg-raised data-[state=checked]:text-ink"
+                className="relative flex cursor-pointer select-none items-center rounded-md py-1.5 pl-7 pr-2 text-[13px] text-ink-2 outline-none data-[highlighted]:bg-tint data-[state=checked]:font-medium data-[state=checked]:text-ink"
               >
                 <RadixSelect.ItemIndicator className="absolute left-2">
                   <Check size={13} className="text-accent" />
@@ -198,8 +198,8 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
       <input
         ref={ref}
         className={cn(
-          'h-9 w-full rounded-md border border-edge bg-raised px-3 text-sm text-ink transition-colors focus:border-accent-line',
-          'placeholder:text-ink-4 hover:border-ink-3',
+          'h-9 w-full rounded-md border border-edge bg-surface px-3 text-[13px] text-ink shadow-xs transition-[border-color,box-shadow]',
+          'placeholder:text-ink-4 hover:border-ink-3 focus:border-accent focus:outline-none focus:ring-[3px] focus:ring-accent/20',
           className,
         )}
         {...props}
@@ -215,8 +215,8 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        'w-full rounded-md border border-edge bg-raised px-3 py-2 text-sm leading-relaxed text-ink transition-colors focus:border-accent-line',
-        'placeholder:text-ink-4 hover:border-ink-3',
+        'w-full rounded-md border border-edge bg-surface px-3 py-2 text-[13px] leading-relaxed text-ink shadow-xs transition-[border-color,box-shadow]',
+        'placeholder:text-ink-4 hover:border-ink-3 focus:border-accent focus:outline-none focus:ring-[3px] focus:ring-accent/20',
         className,
       )}
       {...props}
@@ -259,17 +259,17 @@ export function OptionList({
             name={name}
             onClick={() => (multiple ? onToggle?.(o.value) : onChange?.(o.value))}
             className={cn(
-              'flex w-full items-start gap-3 rounded-md border px-3.5 py-3 text-left transition-all',
+              'flex w-full items-start gap-3 rounded-lg border px-3.5 py-3 text-left transition-[border-color,background-color,box-shadow] duration-150',
               selected
-                ? 'border-accent-line bg-accent-wash'
-                : 'border-edge bg-raised hover:border-ink-3 hover:bg-overlay',
+                ? 'border-accent bg-accent-wash ring-1 ring-accent'
+                : 'border-rule-2 bg-surface shadow-xs hover:border-rule-3 hover:bg-raised',
             )}
           >
             <span
               className={cn(
                 'mt-0.5 flex size-4 shrink-0 items-center justify-center border',
                 multiple ? 'rounded-xs' : 'rounded-full',
-                selected ? 'border-accent bg-accent' : 'border-edge bg-paper',
+                selected ? 'border-accent bg-accent' : 'border-edge bg-surface',
               )}
               aria-hidden
             >
@@ -314,7 +314,7 @@ export function Switch({
       aria-label={label}
       className="relative h-5 w-9 shrink-0 rounded-full border border-edge bg-overlay transition-colors data-[state=checked]:border-accent data-[state=checked]:bg-accent"
     >
-      <RadixSwitch.Thumb className="block size-3.5 translate-x-0.5 rounded-full bg-ink transition-transform data-[state=checked]:translate-x-[17px]" />
+      <RadixSwitch.Thumb className="block size-3.5 translate-x-0.5 rounded-full bg-white shadow-[0_1px_2px_rgb(0_0_0/0.25)] transition-transform data-[state=checked]:translate-x-[17px]" />
     </RadixSwitch.Root>
   )
 }
@@ -347,7 +347,7 @@ export function Slider({
       <RadixSlider.Track className="relative h-1.5 w-full grow rounded-full bg-overlay">
         <RadixSlider.Range className="absolute h-full rounded-full bg-accent" />
       </RadixSlider.Track>
-      <RadixSlider.Thumb className="block size-4 rounded-full border-2 border-accent bg-ink transition-transform hover:scale-110" />
+      <RadixSlider.Thumb className="block size-4 rounded-full border-2 border-accent bg-white shadow-xs transition-transform hover:scale-110" />
     </RadixSlider.Root>
   )
 }
@@ -375,13 +375,13 @@ export function TabTrigger({
     <RadixTabs.Trigger
       value={value}
       className={cn(
-        '-mb-px inline-flex items-center gap-1.5 border-b-2 border-transparent px-3.5 py-2.5 text-sm text-ink-3 transition-colors',
-        'hover:text-ink data-[state=active]:border-accent data-[state=active]:font-medium data-[state=active]:text-ink',
+        'group -mb-px inline-flex h-10 items-center gap-2 border-b-2 border-transparent px-3 text-[13px] font-medium text-ink-3 transition-colors',
+        'hover:text-ink data-[state=active]:border-accent data-[state=active]:text-ink',
       )}
     >
       {children}
       {typeof count === 'number' ? (
-        <span className="font-mono text-2xs text-ink-4">{count}</span>
+        <span className="rounded-full bg-overlay px-1.5 text-[10px] font-semibold tabular-nums leading-4 text-ink-3 group-data-[state=active]:bg-accent-wash group-data-[state=active]:text-accent-strong">{count}</span>
       ) : null}
     </RadixTabs.Trigger>
   )
@@ -413,17 +413,17 @@ export function Dialog({
   return (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
       <RadixDialog.Portal>
-        <RadixDialog.Overlay className="fixed inset-0 z-50 bg-[rgb(16_20_28_/_0.5)]" />
+        <RadixDialog.Overlay className="fixed inset-0 z-50 bg-[rgb(10_12_16_/_0.45)] backdrop-blur-[2px]" />
         <RadixDialog.Content
           className={cn(
             'fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 overflow-auto',
-            'rounded-lg border border-rule-2 bg-surface shadow-modal',
+            'rounded-xl border border-rule bg-surface shadow-modal',
             wide ? 'max-w-3xl' : 'max-w-lg',
           )}
         >
-          <div className="flex items-start justify-between gap-4 border-b border-rule px-5 py-3.5">
+          <div className="flex items-start justify-between gap-4 border-b border-rule px-5 py-4">
             <div>
-              <RadixDialog.Title className="text-base font-semibold text-ink">{title}</RadixDialog.Title>
+              <RadixDialog.Title className="text-[15px] font-semibold tracking-[-0.01em] text-ink">{title}</RadixDialog.Title>
               {description ? (
                 <RadixDialog.Description className="mt-0.5 text-xs text-ink-3">
                   {description}
@@ -431,14 +431,14 @@ export function Dialog({
               ) : null}
             </div>
             <RadixDialog.Close asChild>
-              <button className="rounded-md p-1.5 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Fermer', 'Close')}>
+              <button className="rounded-md p-1.5 text-ink-3 hover:bg-tint hover:text-ink" aria-label={tr('Fermer', 'Close')}>
                 <X size={15} />
               </button>
             </RadixDialog.Close>
           </div>
           <div className="px-5 py-4">{children}</div>
           {footer ? (
-            <div className="flex items-center justify-end gap-2 border-t border-rule bg-sunken px-5 py-3">
+            <div className="flex items-center justify-end gap-2 rounded-b-xl border-t border-rule bg-raised px-5 py-3">
               {footer}
             </div>
           ) : null}
@@ -478,7 +478,7 @@ export function SegmentedControl<T extends string>({
          * illisibles, et un repli sur plusieurs lignes casserait la lecture
          * du groupe comme choix exclusif.
          */
-        'flex w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-md border border-rule-2 bg-sunken p-1',
+        'flex w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-lg bg-overlay p-[3px]',
         'sm:inline-flex sm:w-auto sm:max-w-full',
         className,
       )}
@@ -492,13 +492,13 @@ export function SegmentedControl<T extends string>({
             aria-selected={active}
             onClick={() => onChange(o.value)}
             className={cn(
-              'inline-flex h-7 shrink-0 items-center gap-1.5 rounded-sm px-2.5 text-xs transition-colors',
-              active ? 'bg-surface font-medium text-ink shadow-card ring-1 ring-rule-3' : 'text-ink-3 hover:text-ink',
+              'inline-flex h-7 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition-[color,background-color,box-shadow] duration-150',
+              active ? 'bg-elevated text-ink shadow-xs ring-1 ring-rule-2' : 'text-ink-3 hover:text-ink',
             )}
           >
             {o.label}
             {typeof o.count === 'number' ? (
-              <span className="font-mono text-2xs text-ink-4">{o.count}</span>
+              <span className={cn('tabular-nums text-[10px] font-semibold', active ? 'text-ink-3' : 'text-ink-4')}>{o.count}</span>
             ) : null}
           </button>
         )

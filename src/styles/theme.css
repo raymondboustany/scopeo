@@ -11,166 +11,184 @@
 
 /* --------------------------------------------------------------------------
    1. Valeurs : thème clair par défaut, thème sombre en option
+
+   Principes : gris neutres légèrement froids ; filets d'un pixel plutôt que
+   des aplats ; ombres très douces, superposées ; un seul accent violet ; les
+   couleurs pleines pour les remplissages, des variantes plus soutenues pour
+   le texte, qui tiennent toujours 4,5:1.
    -------------------------------------------------------------------------- */
 :root {
-  /* Surfaces */
-  --c-paper:         #e6eaf1;
+  /* Surfaces : cadre de l'application, panneau de contenu, cartes */
+  --c-frame:         #eef0f3;
+  --c-paper:         #f9fafb;
   --c-surface:       #ffffff;
-  --c-sunken:        #edf0f5;
-  --c-raised:        #f6f8fb;
-  --c-chrome:        #f4f6fa;
-  --c-overlay:       #dde3ec;
-  --c-stage:         #e3e2f7;
+  --c-sunken:        #f4f5f7;
+  --c-raised:        #f7f8fa;
+  --c-chrome:        #eef0f3;
+  --c-overlay:       #eceef1;
+  --c-stage:         #eeecfd;
+  --c-tint:          rgb(14 16 20 / 0.045);
+  --c-elevated:      #ffffff;
 
   /* Encre */
-  --c-ink:           #111827;
-  --c-ink-2:         #3d4551;
-  --c-ink-3:         #575d68;
-  --c-ink-4:         #59616f;
+  --c-ink:           #0e1014;
+  --c-ink-2:         #3a3f47;
+  --c-ink-3:         #555b66;
+  --c-ink-4:         #626875;
   --c-ink-inv:       #ffffff;
 
-  /* Filets : séparation des conteneurs ; « edge » : contour des contrôles (3:1 au moins) */
-  --c-rule:          #d2d8e2;
-  --c-rule-2:        #c1c9d6;
-  --c-rule-3:        #a6b0c0;
-  --c-edge:          #6f798b;
+  /* Filets ; « edge » : contour des champs de saisie (3:1 au moins) */
+  --c-rule:          #e5e7eb;
+  --c-rule-2:        #dadde2;
+  --c-rule-3:        #c3c7ce;
+  --c-edge:          #878e9a;
 
-  /* Couleurs de texte des statuts et de l'accent : plus soutenues que les remplissages, pour tenir 4,5:1 */
-  --c-positive-text: #0f7147;
-  --c-caution-text:  #8e5700;
-  --c-critical-text: #b73027;
-  --c-brass-text:    #745409;
-  --c-accent-text:   #5128ea;
+  /* Texte coloré : variantes soutenues des couleurs pleines */
+  --c-positive-text: #0f6b3c;
+  --c-caution-text:  #8a5100;
+  --c-critical-text: #b0261c;
+  --c-brass-text:    #735008;
+  --c-accent-text:   #5232dc;
 
   /* Accent unique */
-  --c-accent:        #6d4aed;
-  --c-accent-hover:  #5b39dc;
+  --c-accent:        #6547e8;
+  --c-accent-hover:  #5535d8;
   --c-accent-ink:    #ffffff;
-  --c-accent-wash:   rgb(109 74 237 / 0.15);
-  --c-accent-line:   rgb(109 74 237 / 0.5);
-  --c-accent-strong: #4a2bc4;
+  --c-accent-wash:   rgb(101 71 232 / 0.08);
+  --c-accent-line:   rgb(101 71 232 / 0.3);
+  --c-accent-strong: #4a2dc8;
 
-  --c-brass:         #9a730e;
-  --c-brass-wash:    rgb(214 160 30 / 0.16);
-  --c-brass-line:    rgb(154 115 14 / 0.3);
+  --c-brass:         #a16a07;
+  --c-brass-wash:    #fbf4e2;
+  --c-brass-line:    rgb(161 106 7 / 0.26);
 
   /* Référentiels : teinte pleine (graphiques), fond et encre (badges) */
-  --c-rgpd:          #3d68bf;
-  --c-rgpd-wash:     #e5ecf9;
-  --c-rgpd-line:     rgb(61 104 191 / 0.3);
-  --c-rgpd-ink:      #2a4f96;
-  --c-nis2:          #0a8f9c;
-  --c-nis2-wash:     #dcf2f3;
-  --c-nis2-line:     rgb(10 143 156 / 0.3);
-  --c-nis2-ink:      #056a74;
-  --c-dora:          #a67c00;
-  --c-dora-wash:     #f7eed2;
-  --c-dora-line:     rgb(166 124 0 / 0.3);
-  --c-dora-ink:      #7a5a00;
-  --c-cra:           #a8336e;
-  --c-cra-wash:      #f7e3ed;
-  --c-cra-line:      rgb(168 51 110 / 0.3);
-  --c-cra-ink:       #85234f;
-  --c-aiact:         #4f7a1f;
-  --c-aiact-wash:    #e8f1dc;
-  --c-aiact-line:    rgb(79 122 31 / 0.3);
-  --c-aiact-ink:     #3b5d16;
+  --c-rgpd:          #3b6fd4;
+  --c-rgpd-wash:     #eef3fd;
+  --c-rgpd-line:     rgb(59 111 212 / 0.26);
+  --c-rgpd-ink:      #24509f;
+  --c-nis2:          #0e94a3;
+  --c-nis2-wash:     #e8f6f7;
+  --c-nis2-line:     rgb(14 148 163 / 0.28);
+  --c-nis2-ink:      #09646e;
+  --c-dora:          #b0850a;
+  --c-dora-wash:     #fbf5e1;
+  --c-dora-line:     rgb(176 133 10 / 0.3);
+  --c-dora-ink:      #735604;
+  --c-cra:           #b73a78;
+  --c-cra-wash:      #fcf0f6;
+  --c-cra-line:      rgb(183 58 120 / 0.24);
+  --c-cra-ink:       #8f2658;
+  --c-aiact:         #5a8a24;
+  --c-aiact-wash:    #eff6e6;
+  --c-aiact-line:    rgb(90 138 36 / 0.28);
+  --c-aiact-ink:     #3d5f18;
 
   /* Statuts : vert en place, orange partiel, rouge absent */
-  --c-positive:      #13925b;
-  --c-positive-wash: #e0f4ea;
-  --c-positive-line: rgb(19 146 91 / 0.3);
-  --c-caution:       #c97a00;
-  --c-caution-wash:  #fdf0da;
-  --c-caution-line:  rgb(201 122 0 / 0.32);
-  --c-critical:      #d33a2f;
-  --c-critical-wash: #fde6e3;
-  --c-critical-line: rgb(211 58 47 / 0.3);
+  --c-positive:      #16a05a;
+  --c-positive-wash: #ebf8f0;
+  --c-positive-line: rgb(22 160 90 / 0.26);
+  --c-caution:       #db7c05;
+  --c-caution-wash:  #fdf5e6;
+  --c-caution-line:  rgb(219 124 5 / 0.28);
+  --c-critical:      #dc3a2f;
+  --c-critical-wash: #fdefed;
+  --c-critical-line: rgb(220 58 47 / 0.24);
   --c-neutral:       #6b7280;
-  --c-neutral-wash:  #eef0f3;
-  --c-neutral-line:  rgb(107 114 128 / 0.25);
+  --c-neutral-wash:  #f2f3f5;
+  --c-neutral-line:  rgb(107 114 128 / 0.22);
 
-  --s-card:  0 1px 2px rgb(16 24 40 / 0.08), 0 1px 3px rgb(16 24 40 / 0.05);
-  --s-pop:   0 10px 28px -8px rgb(16 24 40 / 0.18);
-  --s-modal: 0 28px 64px -16px rgb(16 24 40 / 0.3);
+  /* Ombres : empilées, très diffuses, jamais un halo unique */
+  --s-xs:    0 1px 2px rgb(16 18 24 / 0.05);
+  --s-card:  0 1px 2px rgb(16 18 24 / 0.04), 0 1px 1px rgb(16 18 24 / 0.02);
+  --s-panel: 0 1px 3px rgb(16 18 24 / 0.05), 0 0 0 1px rgb(16 18 24 / 0.02);
+  --s-pop:   0 2px 6px rgb(16 18 24 / 0.06), 0 12px 32px -8px rgb(16 18 24 / 0.16);
+  --s-modal: 0 4px 12px rgb(16 18 24 / 0.08), 0 32px 72px -16px rgb(16 18 24 / 0.3);
+  --s-top:   inset 0 1px 0 rgb(255 255 255 / 0.6);
 
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --c-paper:         #0b0d11;
-  --c-surface:       #13161c;
-  --c-sunken:        #0e1115;
-  --c-raised:        #191d24;
-  --c-chrome:        #0f1216;
-  --c-overlay:       #222730;
-  --c-stage:         #141726;
+  --c-frame:         #08090b;
+  --c-paper:         #0e0f12;
+  --c-surface:       #141519;
+  --c-sunken:        #0b0c0e;
+  --c-raised:        #1a1b20;
+  --c-chrome:        #08090b;
+  --c-overlay:       #212329;
+  --c-stage:         #121326;
+  --c-tint:          rgb(255 255 255 / 0.05);
+  --c-elevated:      #2a2c33;
 
-  --c-ink:           #f0f2f5;
-  --c-ink-2:         #c3c8d0;
-  --c-ink-3:         #a4aab4;
-  --c-ink-4:         #8f96a3;
-  --c-ink-inv:       #0b0d11;
+  --c-ink:           #f1f2f4;
+  --c-ink-2:         #c2c6cd;
+  --c-ink-3:         #a0a5ae;
+  --c-ink-4:         #8d929c;
+  --c-ink-inv:       #0b0c0e;
 
-  --c-rule:          #272c35;
-  --c-rule-2:        #343a45;
-  --c-rule-3:        #474e5b;
-  --c-edge:          #68707e;
+  --c-rule:          #202227;
+  --c-rule-2:        #2b2e34;
+  --c-rule-3:        #3b3e46;
+  --c-edge:          #616772;
 
-  --c-positive-text: #2cc47f;
-  --c-caution-text:  #f59e0b;
-  --c-critical-text: #f47d74;
-  --c-brass-text:    #d4a72c;
-  --c-accent-text:   #a691ff;
+  --c-positive-text: #3fcd88;
+  --c-caution-text:  #f5a524;
+  --c-critical-text: #f6857c;
+  --c-brass-text:    #dcb24a;
+  --c-accent-text:   #a998ff;
 
-  --c-accent:        #8467ff;
-  --c-accent-hover:  #9a82ff;
-  --c-accent-ink:    #0b0d11;
-  --c-accent-wash:   rgb(132 103 255 / 0.16);
-  --c-accent-line:   rgb(132 103 255 / 0.4);
-  --c-accent-strong: #b3a2ff;
+  --c-accent:        #6a4ff0;
+  --c-accent-hover:  #5f44e4;
+  --c-accent-ink:    #ffffff;
+  --c-accent-wash:   rgb(130 108 255 / 0.14);
+  --c-accent-line:   rgb(130 108 255 / 0.38);
+  --c-accent-strong: #b9adff;
 
   --c-brass:         #d4a72c;
-  --c-brass-wash:    rgb(212 167 44 / 0.14);
-  --c-brass-line:    rgb(212 167 44 / 0.34);
+  --c-brass-wash:    rgb(212 167 44 / 0.12);
+  --c-brass-line:    rgb(212 167 44 / 0.3);
 
-  --c-rgpd:          #4777d2;
-  --c-rgpd-wash:     rgb(71 119 210 / 0.2);
-  --c-rgpd-line:     rgb(71 119 210 / 0.4);
-  --c-rgpd-ink:      #9bb8f0;
-  --c-nis2:          #00a6b5;
-  --c-nis2-wash:     rgb(0 166 181 / 0.2);
-  --c-nis2-line:     rgb(0 166 181 / 0.4);
-  --c-nis2-ink:      #6fd6df;
-  --c-dora:          #b08505;
-  --c-dora-wash:     rgb(176 133 5 / 0.22);
-  --c-dora-line:     rgb(176 133 5 / 0.42);
-  --c-dora-ink:      #e6c160;
-  --c-cra:           #ab366e;
-  --c-cra-wash:      rgb(171 54 110 / 0.24);
-  --c-cra-line:      rgb(171 54 110 / 0.45);
-  --c-cra-ink:       #ec9cc2;
-  --c-aiact:         #6f9e35;
-  --c-aiact-wash:    rgb(111 158 53 / 0.2);
-  --c-aiact-line:    rgb(111 158 53 / 0.42);
-  --c-aiact-ink:     #b2d98a;
+  --c-rgpd:          #5286e6;
+  --c-rgpd-wash:     rgb(82 134 230 / 0.14);
+  --c-rgpd-line:     rgb(82 134 230 / 0.32);
+  --c-rgpd-ink:      #a5c1f5;
+  --c-nis2:          #14afbf;
+  --c-nis2-wash:     rgb(20 175 191 / 0.13);
+  --c-nis2-line:     rgb(20 175 191 / 0.32);
+  --c-nis2-ink:      #7ad9e2;
+  --c-dora:          #c49a1f;
+  --c-dora-wash:     rgb(196 154 31 / 0.14);
+  --c-dora-line:     rgb(196 154 31 / 0.34);
+  --c-dora-ink:      #ebc96d;
+  --c-cra:           #c9508c;
+  --c-cra-wash:      rgb(201 80 140 / 0.15);
+  --c-cra-line:      rgb(201 80 140 / 0.34);
+  --c-cra-ink:       #f0a6ca;
+  --c-aiact:         #75a93a;
+  --c-aiact-wash:    rgb(117 169 58 / 0.14);
+  --c-aiact-line:    rgb(117 169 58 / 0.34);
+  --c-aiact-ink:     #b7dc90;
 
   --c-positive:      #22b872;
-  --c-positive-wash: rgb(34 184 114 / 0.16);
-  --c-positive-line: rgb(34 184 114 / 0.35);
+  --c-positive-wash: rgb(34 184 114 / 0.12);
+  --c-positive-line: rgb(34 184 114 / 0.3);
   --c-caution:       #f59e0b;
-  --c-caution-wash:  rgb(245 158 11 / 0.15);
-  --c-caution-line:  rgb(245 158 11 / 0.35);
+  --c-caution-wash:  rgb(245 158 11 / 0.12);
+  --c-caution-line:  rgb(245 158 11 / 0.3);
   --c-critical:      #f0554a;
-  --c-critical-wash: rgb(240 85 74 / 0.15);
-  --c-critical-line: rgb(240 85 74 / 0.38);
-  --c-neutral:       #737a87;
-  --c-neutral-wash:  rgb(115 122 135 / 0.16);
-  --c-neutral-line:  rgb(115 122 135 / 0.3);
+  --c-critical-wash: rgb(240 85 74 / 0.12);
+  --c-critical-line: rgb(240 85 74 / 0.32);
+  --c-neutral:       #7d838d;
+  --c-neutral-wash:  rgb(125 131 141 / 0.12);
+  --c-neutral-line:  rgb(125 131 141 / 0.26);
 
-  --s-card:  none;
-  --s-pop:   0 12px 32px -8px rgb(0 0 0 / 0.7);
-  --s-modal: 0 32px 80px -16px rgb(0 0 0 / 0.85);
+  --s-xs:    0 1px 2px rgb(0 0 0 / 0.4);
+  --s-card:  inset 0 1px 0 rgb(255 255 255 / 0.03);
+  --s-panel: 0 0 0 1px rgb(255 255 255 / 0.02);
+  --s-pop:   0 0 0 1px rgb(255 255 255 / 0.04), 0 16px 40px -8px rgb(0 0 0 / 0.7);
+  --s-modal: 0 0 0 1px rgb(255 255 255 / 0.05), 0 32px 80px -16px rgb(0 0 0 / 0.85);
+  --s-top:   inset 0 1px 0 rgb(255 255 255 / 0.12);
 
   color-scheme: dark;
 }
@@ -179,6 +197,9 @@
    2. Jetons Tailwind
    -------------------------------------------------------------------------- */
 @theme inline {
+  --color-frame:        var(--c-frame);
+  --color-tint:         var(--c-tint);
+  --color-elevated:     var(--c-elevated);
   --color-paper:        var(--c-paper);
   --color-surface:      var(--c-surface);
   --color-sunken:       var(--c-sunken);
@@ -272,7 +293,9 @@
   --radius-lg:  9px;
   --radius-xl:  12px;
 
+  --shadow-xs:    var(--s-xs);
   --shadow-card:  var(--s-card);
+  --shadow-panel: var(--s-panel);
   --shadow-pop:   var(--s-pop);
   --shadow-modal: var(--s-modal);
 
@@ -311,8 +334,6 @@
 .bg-brass-wash    { box-shadow: inset 0 0 0 1px var(--c-brass-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
 .bg-accent-wash   { box-shadow: inset 0 0 0 1px var(--c-accent-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
 .bg-neutral-wash  { box-shadow: inset 0 0 0 1px var(--c-neutral-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
-/* Zones creusées (bandeaux, boutons de choix, cadres de saisie) : un filet les détache du fond de page. */
-.bg-sunken        { box-shadow: inset 0 0 0 1px var(--c-rule-2), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
 .bg-rgpd-wash     { box-shadow: inset 0 0 0 1px var(--c-rgpd-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
 .bg-nis2-wash     { box-shadow: inset 0 0 0 1px var(--c-nis2-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
 .bg-dora-wash     { box-shadow: inset 0 0 0 1px var(--c-dora-line), var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000); }
@@ -411,9 +432,9 @@
    -------------------------------------------------------------------------- */
 @layer components {
   .label-caps {
-    font-size: var(--text-2xs);
+    font-size: 0.6875rem;
     font-weight: 500;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--c-ink-3);
   }
@@ -440,6 +461,21 @@
     background: var(--c-surface);
     border: 1px solid var(--c-rule);
     box-shadow: var(--s-card);
+  }
+
+  /* Carte de choix (statut, mode, nature d'un signalement) : blanche, filet
+     fin ; la sélection prend l'accent en contour et en fond. */
+  .choice {
+    background: var(--c-surface);
+    border: 1px solid var(--c-rule-2);
+    box-shadow: var(--s-xs);
+    transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+  }
+  .choice:hover { border-color: var(--c-rule-3); }
+  .choice[aria-checked='true'] {
+    background: var(--c-accent-wash);
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 1px var(--c-accent);
   }
 
   .hatch {

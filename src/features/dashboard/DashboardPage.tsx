@@ -277,7 +277,7 @@ function Qualified() {
                       markSeen([a.id])
                       navigate(a.href)
                     }}
-                    className="group flex w-full items-start gap-3 px-5 py-3 text-left transition-colors hover:bg-raised/60"
+                    className="group flex w-full items-start gap-3 px-5 py-3 text-left transition-colors hover:bg-tint/60"
                   >
                     <span className="mt-1.5 flex w-2 justify-center">
                       {a.level === 'critical' ? (
@@ -458,7 +458,7 @@ function Journey() {
             to={s.to}
             aria-current={current ? 'step' : undefined}
             className={cn(
-              'group relative flex items-start gap-3 border-rule px-4 py-3.5 transition-colors hover:bg-raised',
+              'group relative flex items-start gap-3 border-rule px-4 py-3.5 transition-colors hover:bg-tint',
               i > 0 && 'border-t sm:border-l sm:border-t-0',
               current && 'bg-raised',
             )}

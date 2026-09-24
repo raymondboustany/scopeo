@@ -119,7 +119,7 @@ export default function QualificationPage() {
                       ? 'border-accent bg-accent text-accent-ink'
                       : isDone
                         ? 'border-rule-2 bg-raised text-ink-2 hover:bg-overlay'
-                        : 'border-rule bg-surface text-ink-3 hover:bg-raised',
+                        : 'border-rule bg-surface text-ink-3 hover:bg-tint',
                   )}
                 >
                   {isDone && !isCurrent ? <Check size={11} className="text-positive" /> : null}
@@ -151,7 +151,7 @@ export default function QualificationPage() {
                 ))}
               </div>
 
-              <div className="flex items-center justify-between gap-3 border-t border-rule bg-sunken px-5 py-3">
+              <div className="flex items-center justify-between gap-3 rounded-b-xl border-t border-rule bg-raised px-5 py-3">
                 <Button icon={<ChevronLeft size={13} />} disabled={sectionIndex === 0} onClick={() => setSectionIndex((i) => Math.max(0, i - 1))}>
                   {tr('Précédent', 'Previous')}
                 </Button>

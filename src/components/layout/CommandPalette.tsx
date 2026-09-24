@@ -72,10 +72,10 @@ export function CommandPalette({
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-[rgb(22_24_27_/_0.4)] backdrop-blur-[1px]" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-[rgb(10_12_16_/_0.45)] backdrop-blur-[2px]" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed left-1/2 top-[12vh] z-50 w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-md border border-rule-2 bg-surface shadow-modal"
+          className="fixed left-1/2 top-[12vh] z-50 w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-xl border border-rule bg-surface shadow-modal"
         >
           <Dialog.Title className="sr-only">{tr('Recherche dans le corpus réglementaire', 'Search the regulatory corpus')}</Dialog.Title>
           <Command shouldFilter={false} loop>
@@ -86,9 +86,9 @@ export function CommandPalette({
                 onValueChange={setQuery}
                 autoFocus
                 placeholder={tr('Article, exigence, thème de croisement, objectif ReCyF, contrôle ISO…', 'Article, requirement, crosswalk theme, ReCyF objective, ISO control…')}
-                className="h-11 w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-4"
+                className="h-12 w-full bg-transparent text-[14px] text-ink outline-none placeholder:text-ink-4"
               />
-              <kbd className="shrink-0 rounded-xs border border-rule-2 bg-sunken px-1 font-mono text-[10px] text-ink-4">
+              <kbd className="shrink-0 rounded-[5px] border border-rule-2 bg-raised px-1.5 py-px text-[10px] font-medium text-ink-3">
                 esc
               </kbd>
             </div>

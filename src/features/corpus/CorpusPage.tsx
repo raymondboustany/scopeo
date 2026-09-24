@@ -221,7 +221,7 @@ export default function CorpusPage() {
                               }
                               className={cn(
                                 'w-full rounded-md px-3 py-2 text-left transition-colors',
-                                isSel ? 'bg-accent-wash' : 'hover:bg-raised',
+                                isSel ? 'bg-accent-wash' : 'hover:bg-tint',
                               )}
                             >
                               <span className={cn('block text-sm leading-snug', isSel ? 'font-medium text-accent-strong' : o.inScope ? 'text-ink' : 'text-ink-3')}>

@@ -112,7 +112,7 @@ export default function CrosswalkOverlap({
                 <button
                   onClick={() => setOpen(isOpen ? null : key)}
                   aria-expanded={isOpen}
-                  className={cn('grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-4 px-5 py-2.5 text-left transition-colors hover:bg-raised', isOpen && 'bg-raised')}
+                  className={cn('grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-4 px-5 py-2.5 text-left transition-colors hover:bg-tint', isOpen && 'bg-raised')}
                 >
                   <span className="flex gap-1.5">
                     {regs.map((r) => {

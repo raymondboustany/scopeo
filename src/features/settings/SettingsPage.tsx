@@ -168,7 +168,7 @@ export default function SettingsPage() {
             </label>
           </div>
           {update.error ? <p className="px-5 pb-3 text-xs text-critical">{update.error.message}</p> : null}
-          <div className="flex flex-wrap items-center justify-end gap-2 border-t border-rule bg-sunken px-5 py-3">
+          <div className="flex flex-wrap items-center justify-end gap-2 rounded-b-xl border-t border-rule bg-raised px-5 py-3">
             <Button variant="primary" disabled={!dirty || !form.name.trim() || update.isPending} onClick={save}>
               {tr('Enregistrer', 'Save')}
             </Button>

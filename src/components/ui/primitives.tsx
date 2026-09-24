@@ -27,9 +27,9 @@ export function RegChip({
     <span
       title={id === 'NIS2' ? frameworkNote() : undefined}
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-md font-semibold whitespace-nowrap',
-        size === 'sm' ? 'h-5 px-1.5 text-[10px]' : 'h-6 px-2 text-2xs',
-        muted ? 'bg-overlay text-ink-3 shadow-[inset_0_0_0_1px_var(--c-rule-2)]' : cn(s.wash, s.text),
+        'inline-flex items-center gap-1.5 rounded-md font-medium whitespace-nowrap',
+        size === 'sm' ? 'h-5 px-1.5 text-[10.5px]' : 'h-[22px] px-2 text-[11px]',
+        muted ? 'bg-neutral-wash text-ink-3' : cn(s.wash, s.text),
         className,
       )}
     >
@@ -51,7 +51,7 @@ export function FrameworkNote({ className }: { className?: string }) {
 type Tone = 'neutral' | 'accent' | 'positive' | 'caution' | 'critical' | 'brass'
 
 const TONE: Record<Tone, string> = {
-  neutral: 'bg-overlay text-ink-2 shadow-[inset_0_0_0_1px_var(--c-rule-2)]',
+  neutral: 'bg-neutral-wash text-ink-2',
   accent: 'bg-accent-wash text-accent-strong',
   positive: 'bg-positive-wash text-positive',
   caution: 'bg-caution-wash text-caution',
@@ -73,7 +73,7 @@ export function Tag({
   return (
     <span
       className={cn(
-        'inline-flex h-5 items-center gap-1 rounded-md px-1.5 text-2xs font-medium whitespace-nowrap',
+        'inline-flex h-5 items-center gap-1 rounded-md px-1.5 text-[11px] font-medium whitespace-nowrap',
         mono && 'font-mono',
         TONE[tone],
         className,
@@ -88,7 +88,7 @@ export function Tag({
 export function LevelPill({ level, className }: { level: CoverageLevel | MeasureStatus; className?: string }) {
   const s = LEVEL_STYLE[level]
   return (
-    <span className={cn('inline-flex h-6 items-center gap-1.5 rounded-md px-2 text-2xs font-semibold', s.wash, s.text, className)}>
+    <span className={cn('inline-flex h-[22px] items-center gap-1.5 rounded-md px-2 text-[11px] font-medium', s.wash, s.text, className)}>
       <span className={cn('size-1.5 rounded-full', s.dot)} aria-hidden />
       {s.label}
     </span>
@@ -148,8 +148,8 @@ export function Card({
   return (
     <Tag_
       className={cn(
-        'card-glow rounded-lg transition-colors duration-150',
-        interactive && 'hover:border-rule-3',
+        'card-glow rounded-xl transition-[border-color,box-shadow] duration-150',
+        interactive && 'hover:border-rule-2 hover:shadow-[var(--s-pop)]',
         className,
       )}
     >
@@ -176,8 +176,8 @@ export function CardHeader({
       <div className="flex min-w-0 items-start gap-3">
         {icon ? <IconTile>{icon}</IconTile> : null}
         <div className="min-w-0">
-          <h2 className="text-base font-semibold text-ink">{title}</h2>
-          {subtitle ? <p className="mt-0.5 text-xs text-ink-3">{subtitle}</p> : null}
+          <h2 className="text-[15px] font-semibold tracking-[-0.01em] text-ink">{title}</h2>
+          {subtitle ? <p className="mt-0.5 text-[12.5px] leading-snug text-ink-3">{subtitle}</p> : null}
         </div>
       </div>
       {aside ? <div className="shrink-0">{aside}</div> : null}
@@ -200,9 +200,9 @@ export function IconTile({
   return (
     <span
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-md border',
+        'flex shrink-0 items-center justify-center rounded-lg border',
         size === 'sm' ? 'size-7' : size === 'lg' ? 'size-11' : 'size-9',
-        !color && 'border-transparent bg-accent-wash text-accent-strong',
+        !color && 'border-accent-line bg-accent-wash text-accent',
         className,
       )}
       style={
@@ -282,7 +282,7 @@ export function Callout({
   className?: string
 }) {
   const style: Record<Tone, string> = {
-    neutral: 'bg-sunken',
+    neutral: 'border border-rule bg-raised',
     accent: 'bg-accent-wash',
     positive: 'bg-positive-wash',
     caution: 'bg-caution-wash',
@@ -290,7 +290,7 @@ export function Callout({
     brass: 'bg-brass-wash',
   }
   return (
-    <div className={cn('rounded-lg px-4 py-3', style[tone], className)}>
+    <div className={cn('rounded-xl px-4 py-3.5', style[tone], className)}>
       {title ? (
         <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-ink">
           {icon}
@@ -307,7 +307,7 @@ export function Disclaimer({ className, compact = false }: { className?: string;
   return (
     <div
       className={cn(
-        'flex items-start gap-2.5 rounded-lg bg-sunken text-ink-3',
+        'flex items-start gap-2.5 rounded-xl border border-rule bg-raised text-ink-3',
         compact ? 'px-3 py-2 text-2xs' : 'px-4 py-3 text-xs',
         className,
       )}
@@ -404,7 +404,7 @@ export function Stat({
         <span className="label-caps truncate">{label}</span>
       </div>
       <div className={cn('mt-1.5 flex items-baseline gap-1 tabular font-semibold', color)}>
-        <span className="text-2xl leading-none tracking-tight">{value}</span>
+        <span className="text-[26px] leading-none tracking-[-0.02em]">{value}</span>
         {unit ? <span className="text-xs font-normal text-ink-3">{unit}</span> : null}
       </div>
       {hint ? <div className="mt-1.5 text-2xs leading-snug text-ink-3">{hint}</div> : null}
@@ -510,7 +510,7 @@ export function EmptyState({
   className?: string
 }) {
   return (
-    <div className={cn('card-glow rounded-lg px-6 py-12 text-center', className)}>
+    <div className={cn('card-glow rounded-xl px-6 py-14 text-center', className)}>
       {icon ? <div className="mb-4 flex justify-center"><IconTile size="lg">{icon}</IconTile></div> : null}
       <h3 className="text-lg font-semibold text-ink">{title}</h3>
       {children ? <div className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-3">{children}</div> : null}
@@ -537,13 +537,13 @@ export function PageHeader({
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className={cn('mb-7', className)}
+      className={cn('mb-8', className)}
     >
-      <div className="flex flex-wrap items-start justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 max-w-3xl">
-          {eyebrow ? <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-4">{eyebrow}</div> : null}
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">{title}</h1>
-          {lead ? <p className="mt-2 text-base leading-relaxed text-ink-2">{lead}</p> : null}
+          {eyebrow ? <div className="mb-1.5 text-xs font-medium text-accent">{eyebrow}</div> : null}
+          <h1 className="text-[28px] font-semibold leading-[1.15] tracking-[-0.025em] text-ink">{title}</h1>
+          {lead ? <p className="mt-2.5 max-w-2xl text-[14.5px] leading-relaxed text-ink-3">{lead}</p> : null}
         </div>
         {actions ? <div className="no-print flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
       </div>

@@ -97,7 +97,7 @@ export default function SignalementPage() {
         <button
           onClick={() => setSimOpen((v) => !v)}
           aria-expanded={simOpen}
-          className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-raised"
+          className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-tint"
         >
           <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-accent-wash text-accent-strong">
             <FlaskConical size={16} />

@@ -160,7 +160,7 @@ export default function TimelinePage() {
                   <li key={e.id}>
                     <button
                       onClick={() => select_(e.id)}
-                      className={cn('flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors hover:bg-raised/60', e.id === selectedId && 'bg-accent-wash')}
+                      className={cn('flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors hover:bg-tint/60', e.id === selectedId && 'bg-accent-wash')}
                     >
                       <span className={cn('w-24 shrink-0 font-mono text-2xs', past ? 'text-ink-4' : 'text-ink-2')}>{formatDate(e.date)}</span>
                       {e.regulation === 'TRANSVERSE' ? <Tag>{LANE_LABEL.TRANSVERSE}</Tag> : <RegChip id={e.regulation} size="sm" />}
@@ -473,7 +473,7 @@ function EventDetail({
             <Tag tone={kind.tone}>{kind.label}</Tag>
             {qualified ? concerns ? <Tag tone="accent">{tr("Concerne l'entité", 'Concerns the entity')}</Tag> : <Tag>{tr("Ne concerne pas l'entité", 'Does not concern the entity')}</Tag> : null}
           </div>
-          <button onClick={onClose} className="rounded-md p-1 text-ink-3 hover:bg-raised hover:text-ink" aria-label={tr('Fermer le détail', 'Close details')}>
+          <button onClick={onClose} className="rounded-md p-1 text-ink-3 hover:bg-tint hover:text-ink" aria-label={tr('Fermer le détail', 'Close details')}>
             <X size={14} />
           </button>
         </div>

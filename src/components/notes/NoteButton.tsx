@@ -25,7 +25,7 @@ export function NoteButton({ anchor, className }: { anchor: NoteAnchor; classNam
           aria-label={here.length ? tr(`${here.length} note(s) sur « ${anchor.label} »`, `${here.length} note(s) on "${anchor.label}"`) : tr(`Ajouter une note sur « ${anchor.label} »`, `Add a note on "${anchor.label}"`)}
           className={cn(
             'inline-flex h-7 items-center gap-1 rounded-md px-1.5 text-2xs transition-colors',
-            here.length ? 'bg-accent-wash text-accent-strong' : 'text-ink-4 hover:bg-raised hover:text-ink-2',
+            here.length ? 'bg-accent-wash text-accent-strong' : 'text-ink-4 hover:bg-tint hover:text-ink-2',
             className,
           )}
         >
