@@ -200,7 +200,7 @@ function Matrix({
               </th>
             ))}
             {iso ? (
-              <th scope="col" className="w-[5.25rem] px-1.5 py-2.5">
+              <th scope="col" className="w-[6.25rem] px-1.5 py-2.5">
                 <IsoHeader />
               </th>
             ) : null}

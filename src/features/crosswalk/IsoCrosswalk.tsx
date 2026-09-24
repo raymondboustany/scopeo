@@ -22,6 +22,15 @@ const SUMMARY: Record<IsoThemeSummary, { label: string; tone: string; dot: strin
   non_renseigne: { label: tr('À renseigner', 'To fill in'), tone: 'bg-overlay text-ink-3', dot: 'bg-rule-3' },
 }
 
+/** Libellés courts, pour tenir dans la cellule étroite de la matrice. */
+const CELL_LABEL: Record<IsoThemeSummary, string> = {
+  couvert: tr('Couvert', 'Covered'),
+  partiel: tr('Partiel', 'Partial'),
+  ecart: tr('Écart', 'Gap'),
+  exclu: tr('Exclu', 'Excluded'),
+  non_renseigne: '',
+}
+
 const CONTROL_STATUS: Record<IsoControlStatus, { label: string; dot: string }> = {
   mis_en_oeuvre: { label: tr('Mis en œuvre', 'Implemented'), dot: 'bg-positive' },
   partiel: { label: tr('Partiellement mis en œuvre', 'Partially implemented'), dot: 'bg-caution' },
@@ -32,8 +41,8 @@ const CONTROL_STATUS: Record<IsoControlStatus, { label: string; dot: string }> =
 
 export function IsoHeader() {
   return (
-    <span className="inline-flex h-5 items-center gap-1 rounded-md bg-overlay px-1.5 text-[10px] font-medium text-ink-2">
-      <BadgeCheck size={10} /> ISO 27001
+    <span className="inline-flex h-5 items-center gap-1 whitespace-nowrap rounded-md bg-overlay px-1.5 text-[10px] font-medium text-ink-2">
+      <BadgeCheck size={10} className="shrink-0" /> ISO 27001
     </span>
   )
 }
@@ -73,13 +82,13 @@ export function IsoCell({ view }: { view: IsoThemeView }) {
     >
       <span
         className={cn(
-          'inline-flex items-center gap-1 rounded-xs px-1 py-0.5 text-[10px] font-medium',
+          'inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-xs px-1 py-0.5 text-[10px] font-medium',
           s.tone,
           tentative && 'border border-dashed border-rule-3',
         )}
       >
-        <span className={cn('size-1.5 rounded-full', s.dot)} aria-hidden />
-        {view.summary === 'non_renseigne' ? `${view.controls.length} ${tr('ctrl.', 'ctrl.')}` : s.label}
+        <span className={cn('size-1.5 shrink-0 rounded-full', s.dot)} aria-hidden />
+        {view.summary === 'non_renseigne' ? `${view.controls.length} ${tr('ctrl.', 'ctrl.')}` : CELL_LABEL[view.summary]}
       </span>
     </Tooltip>
   )
