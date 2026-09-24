@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Question ou discussion
+  - name: Question or discussion / Question ou discussion
     url: https://github.com/raymondboustany/scopeo/discussions
-    about: Posez vos questions d'usage ou proposez une idée ouverte dans les Discussions.
-  - name: Signaler une vulnérabilité
+    about: Ask usage questions or share an open idea in Discussions. / Posez vos questions d'usage ou proposez une idée ouverte dans les Discussions.
+  - name: Report a vulnerability / Signaler une vulnérabilité
     url: https://github.com/raymondboustany/scopeo/security/advisories/new
-    about: Ne publiez pas de vulnérabilité dans une issue publique, voir SECURITY.md.
+    about: Do not disclose a vulnerability in a public issue, see SECURITY.md. / Ne publiez pas de vulnérabilité dans une issue publique, voir SECURITY.md.

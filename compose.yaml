@@ -1,7 +1,8 @@
-# Scopeo : démarrage avec Docker Compose
+# Scopeo: start with Docker Compose / démarrage avec Docker Compose
 #
-#   docker compose up -d        puis ouvrir http://localhost:8000
+#   docker compose up -d        then open / puis ouvrir http://localhost:8000
 #
+# To build the image from source instead of downloading it:
 # Pour construire l'image à partir des sources plutôt que la télécharger :
 #   docker compose build && docker compose up -d
 
@@ -12,6 +13,8 @@ services:
     pull_policy: missing
     container_name: scopeo
     restart: unless-stopped
+    # Reachable from this computer only. See SECURITY.md before exposing it on a
+    # network (TLS encryption required).
     # Accessible depuis ce poste uniquement. Voir SECURITY.md avant de l'exposer
     # sur un réseau (chiffrement TLS nécessaire).
     ports:

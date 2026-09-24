@@ -1,7 +1,9 @@
 name: Release
 
-# Publier une version : mettre à jour CHANGELOG.md et la version de
-# package.json, puis pousser une étiquette :  git tag v1.1.0 && git push --tags
+# To publish a version: update CHANGELOG.md (English and French) and the version in
+# package.json, then push a tag:  git tag v1.1.0 && git push --tags
+# Publier une version : mettre à jour CHANGELOG.md (anglais et français) et la version
+# de package.json, puis pousser une étiquette.
 
 on:
   push:
@@ -13,7 +15,7 @@ permissions:
 
 jobs:
   portable:
-    name: Archive portable et note de version
+    name: Portable archive and release notes / Archive portable et note de version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +48,7 @@ jobs:
           files: release/*-portable.zip
 
   image:
-    name: Image Docker (GHCR)
+    name: Docker image (GHCR) / Image Docker (GHCR)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

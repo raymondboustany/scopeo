@@ -1,31 +1,39 @@
-name: Évolution réglementaire
-description: Un texte, une date, une autorité ou une interprétation à mettre à jour dans le corpus.
+name: Regulatory update / Évolution réglementaire
+description: A text, date, authority or interpretation to update in the corpus. / Un texte, une date, une autorité ou une interprétation à mettre à jour dans le corpus.
 labels: [corpus]
 body:
   - type: dropdown
     id: regulation
     attributes:
-      label: Texte concerné
+      label: Text concerned / Texte concerné
       multiple: true
-      options: [RGPD, NIS2 (ReCyF), DORA, CRA, AI Act, ISO 27001, Transposition française, Autre]
+      options:
+        - GDPR / RGPD
+        - NIS2 (ReCyF)
+        - DORA
+        - CRA
+        - AI Act
+        - ISO 27001
+        - French transposition / Transposition française
+        - Other / Autre
     validations:
       required: true
   - type: textarea
     id: change
     attributes:
-      label: Ce qui a changé
-      description: Nouvelle date, acte d'exécution publié, obligation modifiée, erreur constatée…
+      label: What changed / Ce qui a changé
+      description: New date, implementing act published, amended obligation, error found... / Nouvelle date, acte d'exécution publié, obligation modifiée, erreur constatée...
     validations:
       required: true
   - type: input
     id: source
     attributes:
-      label: Source officielle
-      description: Lien vers EUR-Lex, Légifrance, le site de l'autorité… Une source officielle est indispensable.
+      label: Official source / Source officielle
+      description: Link to EUR-Lex, Légifrance, the authority's website... An official source is required. / Lien vers EUR-Lex, Légifrance, le site de l'autorité... Une source officielle est indispensable.
     validations:
       required: true
   - type: textarea
     id: impact
     attributes:
-      label: Écrans ou règles concernés
-      description: Qualification, obligation, croisement, échéancier, délais de notification…
+      label: Screens or rules concerned / Écrans ou règles concernés
+      description: Scoping, obligation, crosswalk, timeline, notification deadlines... / Qualification, obligation, croisement, échéancier, délais de notification...

@@ -1,46 +1,51 @@
-name: Anomalie
-description: Un comportement inattendu de l'application.
+name: Bug report / Anomalie
+description: Unexpected behaviour of the platform. / Un comportement inattendu de la plateforme.
 labels: [bug]
 body:
   - type: markdown
     attributes:
-      value: Merci de prendre le temps de signaler ce problème. N'incluez aucune donnée réelle d'entreprise.
+      value: |
+        Thank you for taking the time to report this. Do not include any real company data.
+        Merci de prendre le temps de signaler ce problème. N'incluez aucune donnée réelle d'entreprise.
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: Ce qui se passe, et ce que vous attendiez.
+      description: What happens, and what you expected. / Ce qui se passe, et ce que vous attendiez.
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
-      label: Étapes pour reproduire
+      label: Steps to reproduce / Étapes pour reproduire
       placeholder: |
-        1. Ouvrir la démonstration Finexa
-        2. Aller sur « Qualification »
-        3. …
+        1. Open the Finexa demo / Ouvrir la démonstration Finexa
+        2. Go to "Scoping" / Aller sur « Qualification »
+        3. ...
     validations:
       required: true
   - type: dropdown
     id: install
     attributes:
-      label: Mode d'installation
-      options: [Docker Compose, Docker, Sans Docker (archive, start.bat / start.sh), Installation depuis les sources]
+      label: Installation method / Mode d'installation
+      options:
+        - Docker Compose
+        - Portable archive, no Docker (start.bat / start.sh) / Archive portable, sans Docker
+        - From source / Depuis les sources
     validations:
       required: true
   - type: input
     id: version
     attributes:
       label: Version
-      placeholder: v1.0.0
+      placeholder: v2.0.0
   - type: input
     id: env
     attributes:
-      label: Système et navigateur
+      label: System and browser / Système et navigateur
       placeholder: Windows 11, Chrome 140
   - type: textarea
     id: logs
     attributes:
-      label: Journaux ou captures
+      label: Logs or screenshots / Journaux ou captures
       render: shell

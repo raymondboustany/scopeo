@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   web:
-    name: Interface (lint, types, tests, compilation)
+    name: Web interface / Interface (lint, types, tests, build)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
       - run: npx vite build
 
   api:
-    name: Serveur (tests)
+    name: Server / Serveur (tests)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,7 +45,7 @@ jobs:
       - run: python -m pytest -q
 
   docker:
-    name: Image Docker
+    name: Docker image / Image Docker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
