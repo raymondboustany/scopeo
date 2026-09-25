@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Check, Copy, ExternalLink, MessageSquarePlus } from 'lucide-react'
 import { Button, Dialog, Input, Textarea, Tooltip } from '@/components/ui/controls'
-import { cn } from '@/lib/utils'
+import { cn, copyText } from '@/lib/utils'
 import { tr } from '@/i18n'
 import {
   FEEDBACK_KINDS,
@@ -44,13 +44,10 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
   const set = (patch: Partial<FeedbackDraft>) => setDraft((d) => ({ ...d, ...patch }))
 
   async function copy() {
-    try {
-      await navigator.clipboard.writeText(feedbackText(draft, tech))
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2500)
-    } catch {
-      // Presse-papiers indisponible : le texte reste sélectionnable dans l'aperçu ci-dessous.
-    }
+    // Presse-papiers indisponible : le texte reste sélectionnable dans l'aperçu ci-dessous.
+    if (!(await copyText(feedbackText(draft, tech)))) return
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2500)
   }
 
   return (

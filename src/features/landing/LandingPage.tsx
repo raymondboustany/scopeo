@@ -9,7 +9,7 @@ import { CodeInput, Field, ForcedPasswordChange, MIN_PASSWORD, PasswordInput, Pa
 import { useAuthStatus, useGuest, useLdapLogin, useLogin, useMfaVerify, useRegister, useSsoResume, useUpdateUser } from '@/lib/queries'
 import { api, ApiError, messageFor } from '@/lib/api'
 import { useSession } from '@/lib/store'
-import { cn } from '@/lib/utils'
+import { cn, parseDate } from '@/lib/utils'
 import { needsMfa, type AuthStatus, type UserProfile, type UserRole } from '@/types/domain'
 import { REGULATION_ORDER } from '@/data/regulations'
 import { TIMELINE } from '@/data/timeline'
@@ -23,7 +23,7 @@ import { USER_ROLES as ROLES } from '@/components/auth/roles'
 function useWatchItems() {
   const now = Date.now()
   const DAY = 86_400_000
-  return TIMELINE.map((e) => ({ e, days: Math.round((new Date(e.date).getTime() - now) / DAY) }))
+  return TIMELINE.map((e) => ({ e, days: Math.round((parseDate(e.date).getTime() - now) / DAY) }))
     .filter(({ days }) => days >= -120 && days <= 540)
     .sort((a, b) => a.e.date.localeCompare(b.e.date))
     .map(({ e, days }) => ({

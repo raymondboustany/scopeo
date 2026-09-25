@@ -47,7 +47,19 @@ def _load_key() -> bytes:
         return base64.urlsafe_b64encode(hashlib.sha256(configured.encode("utf-8")).digest())
     path = Path(DATA_DIR) / "secret.key"
     if path.exists():
-        return path.read_bytes().strip()
+        key = path.read_bytes().strip()
+        try:
+            Fernet(key)
+        except ValueError:
+            # Fichier vide ou altéré (copie interrompue, disque plein) : on n'en recrée
+            # pas un en silence, ce qui rendrait les secrets chiffrés illisibles.
+            raise SystemExit(
+                f"Scopeo: {path} is damaged. Restore it from a backup, or delete it to create a new one "
+                "(two-factor authentication and directory or SSO secrets must then be set again).\n"
+                f"Scopeo : {path} est endommagé. Restaurez-le depuis une sauvegarde, ou supprimez-le pour en créer un nouveau "
+                "(la double authentification et les secrets d'annuaire ou de SSO devront alors être ressaisis)."
+            ) from None
+        return key
     key = Fernet.generate_key()
     # Création exclusive : lisible par le seul compte qui fait tourner le serveur.
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)

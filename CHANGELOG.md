@@ -4,6 +4,60 @@
 
 **Français.** Les évolutions notables du projet sont consignées ici, en anglais puis en français pour chaque version. Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/). Les mises à jour du corpus réglementaire figurent dans une rubrique dédiée.
 
+## [1.1.0] - 2026-09-25
+
+### English
+
+#### Added
+
+- Recovery command for a locked-out administrator, run on the server: `python -m app.recover "Account name"`.
+- Directory: Active Directory nested groups, sign-in as `DOMAIN\user` or `user@company.com`, internal certificate authority, allowed group by name or DN.
+- Account search in the administration space.
+- Request size limit and throttling of guest sessions.
+
+#### Fixed
+
+- First start of `start.bat` on a new Windows computer.
+- `start.sh`: executable, clear message when `python3-venv` is missing, automatic choice of a recent Python.
+- Docker image: runs with any user ID (OpenShift), clear message when the data folder is not writable.
+- A person moved in the directory keeps their account.
+- Deadlines shown one day early outside mainland France (French Caribbean, French Polynesia, Quebec).
+- "Copy" buttons over plain HTTP on a local network.
+- Stability under load with many simultaneous users.
+- Clear messages for an expired directory password and a damaged encryption key.
+- Accessibility of the effort indicator.
+
+#### Maintenance
+
+- Documentation: troubleshooting, proxy and offline installation, single instance, recovery.
+- Continuous integration actions updated.
+
+### Français
+
+#### Ajouts
+
+- Commande de secours pour un administrateur bloqué, à lancer sur le serveur : `python -m app.recover "Nom du compte"`.
+- Annuaire : groupes imbriqués d'Active Directory, connexion en `DOMAINE\utilisateur` ou `utilisateur@entreprise.fr`, autorité de certification interne, groupe autorisé par nom ou DN.
+- Recherche de comptes dans l'espace d'administration.
+- Limite de taille des requêtes et freinage des sessions invitées.
+
+#### Corrections
+
+- Premier lancement de `start.bat` sur un poste Windows neuf.
+- `start.sh` : exécutable, message clair si `python3-venv` manque, choix automatique d'un Python récent.
+- Image Docker : fonctionne avec tout identifiant utilisateur (OpenShift), message clair si le dossier de données n'est pas accessible en écriture.
+- Une personne déplacée dans l'annuaire garde son compte.
+- Échéances affichées un jour trop tôt hors de la métropole (Antilles, Polynésie, Québec).
+- Boutons « Copier » en HTTP simple sur un réseau local.
+- Stabilité sous charge avec de nombreux utilisateurs simultanés.
+- Messages clairs pour un mot de passe d'annuaire expiré et une clé de chiffrement endommagée.
+- Accessibilité de l'indicateur d'effort.
+
+#### Maintenance
+
+- Documentation : dépannage, installation derrière un proxy ou hors ligne, instance unique, procédure de secours.
+- Actions d'intégration continue mises à jour.
+
 ## [1.0.0] - 2026-09-25
 
 ### English
@@ -124,4 +178,5 @@ Première version publique.
 - Textes officiels en français et en anglais (Journal officiel de l'UE) et ReCyF v2.5 (ANSSI) dans le dossier `texts/`.
 - État du droit arrêté au 24 septembre 2026.
 
+[1.1.0]: https://github.com/raymondboustany/scopeo/releases/tag/v1.1.0
 [1.0.0]: https://github.com/raymondboustany/scopeo/releases/tag/v1.0.0

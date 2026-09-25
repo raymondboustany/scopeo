@@ -51,6 +51,13 @@ const ERROR_MESSAGES: Record<string, () => string> = {
   ldap_disabled: () => tr("La connexion par annuaire n'est pas activée.", 'Directory sign-in is not enabled.'),
   ldap_unavailable: () =>
     tr("L'annuaire ne répond pas. Réessayez ou contactez l'administrateur.", 'The directory is not responding. Try again or contact the administrator.'),
+  request_too_large: () =>
+    tr('Contenu trop volumineux pour être enregistré.', 'Content too large to be saved.'),
+  ldap_password_expired: () =>
+    tr(
+      'Votre mot de passe a expiré ou doit être changé. Changez-le sur votre poste, puis réessayez.',
+      'Your password has expired or must be changed. Change it on your computer, then try again.',
+    ),
   mfa_challenge_expired: () =>
     tr('La vérification a expiré. Reconnectez-vous.', 'Verification has expired. Please sign in again.'),
   mfa_invalid_code: () => tr('Code incorrect.', 'Incorrect code.'),
@@ -98,6 +105,8 @@ const ERROR_MESSAGES: Record<string, () => string> = {
   token_forbidden: () => tr('Action impossible avec un jeton d’API.', 'Not allowed with an API token.'),
   backup_unsupported: () =>
     tr('Sauvegarde intégrée disponible avec la base SQLite uniquement.', 'Built-in backup is only available with the SQLite database.'),
+  ldap_ca_invalid: () =>
+    tr("Le certificat d'autorité n'est pas un certificat PEM valide.", 'The authority certificate is not a valid PEM certificate.'),
   ldap_filter_invalid: () =>
     tr('Le filtre doit être entre parenthèses et contenir {username}.', 'The filter must be in parentheses and contain {username}.'),
   password_mismatch: () => tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.'),

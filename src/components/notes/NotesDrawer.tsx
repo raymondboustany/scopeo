@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { Check, ClipboardCopy, CornerDownRight, NotebookPen, Trash2, X } from 'lucide-react'
 import { Tooltip } from '@/components/ui/controls'
 import { useSession } from '@/lib/store'
-import { cn, formatDate } from '@/lib/utils'
+import { cn, copyText, formatDate } from '@/lib/utils'
 import { NOTE_TAGS, type EntityNote, type NoteTag } from '@/types/domain'
 import { anchorRoute, TAG_META, useNotes } from './notes'
 import { NoteComposer, TagBadge } from './NoteComposer'
@@ -104,7 +104,7 @@ export function NotesDrawer() {
                     <Tooltip content={copied ? tr('Copié', 'Copied') : tr('Copier en texte (compte rendu)', 'Copy as text (minutes)')}>
                       <button
                         onClick={async () => {
-                          await navigator.clipboard.writeText(toMarkdown(notes))
+                          if (!(await copyText(toMarkdown(notes)))) return
                           setCopied(true)
                           setTimeout(() => setCopied(false), 1500)
                         }}

@@ -1,6 +1,7 @@
 import type { Answers, RegulationId, TimelineEvent } from '@/types/domain'
 import { TIMELINE } from '@/data/timeline'
 import { COLON, tr } from '@/i18n'
+import { parseDate } from '@/lib/utils'
 
 /**
  * Alertes du tableau de bord.
@@ -42,7 +43,7 @@ export function regulatoryAlerts(
 ): Alert[] {
   return TIMELINE.filter((e) => e.regulation === 'TRANSVERSE' || applicable.includes(e.regulation))
     .filter((e) => conditionsMet(e, answers))
-    .map((e) => ({ e, date: new Date(e.date) }))
+    .map((e) => ({ e, date: parseDate(e.date) }))
     .filter(({ date }) => date.getTime() - now.getTime() <= 45 * DAY && now.getTime() - date.getTime() <= 20 * DAY)
     .map(({ e, date }) => {
       const upcoming = date.getTime() >= now.getTime()
@@ -73,7 +74,7 @@ export function relevantEvents(applicable: RegulationId[], answers: Answers): Ti
 /** Prochains jalons à venir, du plus proche au plus lointain. */
 export function nextMilestones(applicable: RegulationId[], answers: Answers, now = new Date(), count = 3): TimelineEvent[] {
   return relevantEvents(applicable, answers)
-    .filter((e) => new Date(e.date).getTime() >= now.getTime() - DAY / 2)
+    .filter((e) => parseDate(e.date).getTime() >= now.getTime() - DAY / 2)
     .sort((a, b) => a.date.localeCompare(b.date))
     .slice(0, count)
 }

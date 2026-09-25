@@ -316,6 +316,7 @@ class LdapConfigBase(BaseModel):
     name_attribute: str = Field(default="displayName", max_length=80)
     email_attribute: str = Field(default="mail", max_length=80)
     group_dn: str = Field(default="", max_length=400)
+    ca_certificate: str = Field(default="", max_length=20000)
 
 
 class LdapConfigRead(LdapConfigBase):

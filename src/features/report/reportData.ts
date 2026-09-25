@@ -13,6 +13,7 @@ import { nextMilestones, relevantEvents } from '@/engines/alerts'
 import { isoCertificateValid } from '@/engines/scores'
 import { isoProgress } from '@/engines/iso'
 import { COLON, tr } from '@/i18n'
+import { parseDate } from '@/lib/utils'
 
 /**
  * Données des rapports.
@@ -298,7 +299,7 @@ export function buildReportData(s: Scoping): ReportData {
     frictions,
     milestones: nextMilestones(s.applicable, entity.answers, now, 3),
     upcoming: relevantEvents(s.applicable, entity.answers)
-      .filter((e) => new Date(e.date).getTime() >= now.getTime() - 86_400_000)
+      .filter((e) => parseDate(e.date).getTime() >= now.getTime() - 86_400_000)
       .sort((a, b) => a.date.localeCompare(b.date))
       .slice(0, 8),
     duties: RECURRING_DUTIES.filter((d) => s.applicable.includes(d.regulation)),

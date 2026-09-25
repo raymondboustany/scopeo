@@ -13,7 +13,7 @@ import { LANG, tr } from '@/i18n'
  * l'écran et le navigateur.
  */
 
-export const APP_VERSION = '1.0.0'
+export const APP_VERSION = '1.1.0'
 export const REPO_URL = 'https://github.com/raymondboustany/scopeo'
 
 export type FeedbackKind = 'bug' | 'idee' | 'corpus'

@@ -1,7 +1,7 @@
 {
   "name": "scopeo",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Open source regulatory scoping platform for the GDPR, NIS2 (ReCyF), DORA, the CRA and the AI Act",
   "scripts": {

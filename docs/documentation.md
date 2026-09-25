@@ -66,7 +66,7 @@ Reference screens (**Corpus**, **Crosswalk**, **Timeline**) are available at any
 
 ## 5. Security model
 
-- **Authentication**: bcrypt passwords (10 characters minimum); TOTP (RFC 6238) with replay protection and limited attempts; ten single-use recovery codes stored as HMAC digests; LDAP "search then bind" with escaped filter and refusal of empty passwords; OIDC authorization code flow with PKCE, state bound to the browser, nonce, and full ID token validation (signature, issuer, audience, expiry).
+- **Authentication**: bcrypt passwords (10 characters minimum); TOTP (RFC 6238) with replay protection and limited attempts; ten single-use recovery codes stored as HMAC digests; LDAP "search then bind" with escaped filter, refusal of empty passwords, Active Directory nested groups and accounts tied to the directory's immutable identifier; OIDC authorization code flow with PKCE, state bound to the browser, nonce, and full ID token validation (signature, issuer, audience, expiry).
 - **Sessions**: random token in an `HttpOnly`, `SameSite=Strict` cookie (`Secure` behind HTTPS); only its SHA-256 digest is stored; configurable lifetime; revoked on sign-out, password change, suspension or security reset; survives server restarts.
 - **Authorisation**: every entity is checked against its owner on each request; the administrator role is checked by the server on every `/api/admin` route; API tokens cannot reach administration or account security.
 - **Requests**: write requests require a dedicated header (cross-site request protection); sign-in throttling; security headers (CSP, `X-Frame-Options`, `Referrer-Policy`, `X-Content-Type-Options`, HSTS behind HTTPS).
@@ -183,7 +183,7 @@ Browser ── HTTPS ── (reverse proxy) ── Scopeo server (FastAPI) ─�
 | Folder | Content |
 |---|---|
 | `src/` | Interface (React 19, TypeScript, Vite, Tailwind CSS 4), regulatory engines, PDF |
-| `server/app/` | API: `main.py` (routes), `admin.py`, `auth.py` (passwords, sessions), `security.py` (encryption, TOTP), `directory.py` (LDAP), `sso.py` (OIDC), `backup.py`, `models.py`, `db.py` (migrations) |
+| `server/app/` | API: `main.py` (routes), `admin.py`, `auth.py` (passwords, sessions), `security.py` (encryption, TOTP), `directory.py` (LDAP), `sso.py` (OIDC), `backup.py`, `recover.py` (administrator recovery), `models.py`, `db.py` (migrations) |
 | `server/tests/` | API tests (pytest) |
 | `texts/` | Official texts, French and English |
 | `deploy/` | Team deployment (Docker Compose + Caddy) |
@@ -205,6 +205,8 @@ Database migrations run automatically at start-up (added columns); no manual ste
 **Can several people work on the same entity?** Not at the same time: each entity belongs to one profile. Use export and import to hand over an engagement; managers review the PDF deliverables.
 
 **We lost the administrator.** A new administrator is appointed automatically at start-up if no active administrator can sign in. Otherwise, another administrator can restore access.
+
+**The only administrator is locked out** (phone and recovery codes lost, or `secret.key` lost). On the server, run `python -m app.recover "Account name"` from the `server` folder with the platform's Python (`server/.venv`), or `docker compose exec scopeo python -m app.recover "Account name"`. The account becomes an active administrator again, its two-factor authentication is turned off and a temporary password is shown. The action is recorded in the log.
 
 **Someone lost their phone.** An administrator turns off their two-factor authentication (Accounts → … → Turn off two-factor authentication), after checking their identity by another means.
 
@@ -278,7 +280,7 @@ Les écrans de référence (**Corpus**, **Croisements**, **Échéancier**) sont 
 
 ## 5. Modèle de sécurité
 
-- **Authentification** : mots de passe bcrypt (10 caractères au moins) ; TOTP (RFC 6238) avec protection contre le rejeu et essais limités ; dix codes de récupération à usage unique conservés en empreintes HMAC ; LDAP « rechercher puis lier » avec filtre échappé et refus des mots de passe vides ; OIDC en flux « code d'autorisation » avec PKCE, `state` lié au navigateur, nonce, et validation complète du jeton d'identité (signature, émetteur, audience, échéance).
+- **Authentification** : mots de passe bcrypt (10 caractères au moins) ; TOTP (RFC 6238) avec protection contre le rejeu et essais limités ; dix codes de récupération à usage unique conservés en empreintes HMAC ; LDAP « rechercher puis lier » avec filtre échappé, refus des mots de passe vides, groupes imbriqués d'Active Directory et comptes rattachés à l'identifiant immuable de l'annuaire ; OIDC en flux « code d'autorisation » avec PKCE, `state` lié au navigateur, nonce, et validation complète du jeton d'identité (signature, émetteur, audience, échéance).
 - **Sessions** : jeton aléatoire dans un cookie `HttpOnly`, `SameSite=Strict` (`Secure` derrière HTTPS) ; seule son empreinte SHA-256 est conservée ; durée réglable ; révocation à la déconnexion, au changement de mot de passe, à la suspension ou à la réinitialisation de la sécurité ; résiste aux redémarrages du serveur.
 - **Autorisations** : chaque entité est vérifiée auprès de son propriétaire à chaque requête ; le rôle administrateur est vérifié par le serveur sur chaque route `/api/admin` ; les jetons d'API n'atteignent ni l'administration, ni la sécurité du compte.
 - **Requêtes** : les écritures exigent un en-tête dédié (protection contre les requêtes intersites) ; freinage des connexions ; en-têtes de sécurité (CSP, `X-Frame-Options`, `Referrer-Policy`, `X-Content-Type-Options`, HSTS derrière HTTPS).
@@ -395,7 +397,7 @@ Navigateur ── HTTPS ── (mandataire inverse) ── Serveur Scopeo (FastA
 | Dossier | Contenu |
 |---|---|
 | `src/` | Interface (React 19, TypeScript, Vite, Tailwind CSS 4), moteurs réglementaires, PDF |
-| `server/app/` | API : `main.py` (routes), `admin.py`, `auth.py` (mots de passe, sessions), `security.py` (chiffrement, TOTP), `directory.py` (LDAP), `sso.py` (OIDC), `backup.py`, `models.py`, `db.py` (migrations) |
+| `server/app/` | API : `main.py` (routes), `admin.py`, `auth.py` (mots de passe, sessions), `security.py` (chiffrement, TOTP), `directory.py` (LDAP), `sso.py` (OIDC), `backup.py`, `recover.py` (secours administrateur), `models.py`, `db.py` (migrations) |
 | `server/tests/` | Tests de l'API (pytest) |
 | `texts/` | Textes officiels, en français et en anglais |
 | `deploy/` | Déploiement d'équipe (Docker Compose + Caddy) |
@@ -417,6 +419,8 @@ Les migrations de la base s'exécutent automatiquement au démarrage (colonnes a
 **Plusieurs personnes peuvent-elles travailler sur la même entité ?** Pas simultanément : chaque entité appartient à un profil. L'export et l'import permettent de transmettre une mission ; les responsables relisent les livrables PDF.
 
 **Nous avons perdu l'administrateur.** Un nouvel administrateur est nommé automatiquement au démarrage si aucun administrateur actif ne peut se connecter. Sinon, un autre administrateur peut rétablir l'accès.
+
+**Le seul administrateur est bloqué** (téléphone et codes de récupération perdus, ou `secret.key` perdu). Sur le serveur, lancez `python -m app.recover "Nom du compte"` depuis le dossier `server` avec le Python de la plateforme (`server/.venv`), ou `docker compose exec scopeo python -m app.recover "Nom du compte"`. Le compte redevient administrateur actif, sa double authentification est désactivée et un mot de passe provisoire s'affiche. L'action est inscrite au journal.
 
 **Une personne a perdu son téléphone.** Un administrateur désactive sa double authentification (Comptes → … → Désactiver la double authentification), après avoir vérifié son identité par un autre moyen.
 

@@ -7,7 +7,7 @@ import { CodeInput } from '@/components/auth/fields'
 import { api } from '@/lib/api'
 import { keys } from '@/lib/queries'
 import type { MfaSetup, UserProfile } from '@/types/domain'
-import { cn } from '@/lib/utils'
+import { cn, copyText } from '@/lib/utils'
 import { tr } from '@/i18n'
 
 type Flow = null | 'setup' | 'codes' | 'renew' | 'disable'
@@ -291,7 +291,7 @@ function RecoveryCodesDialog({ codes, name, onClose }: { codes: string[]; name: 
         <Button
           icon={copied ? <Check size={14} /> : <Copy size={14} />}
           onClick={async () => {
-            await navigator.clipboard.writeText(text)
+            if (!(await copyText(text))) return
             setCopied(true)
             setKept(true)
           }}

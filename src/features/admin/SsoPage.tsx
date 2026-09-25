@@ -7,6 +7,7 @@ import { Field } from '@/components/auth/fields'
 import { api, messageFor } from '@/lib/api'
 import type { LdapTestReport, SsoConfig, SsoConfigRead } from '@/types/domain'
 import { tr } from '@/i18n'
+import { copyText } from '@/lib/utils'
 
 /** Adresse de l'émetteur pour les fournisseurs courants : à compléter par l'administrateur. */
 const PRESETS = [
@@ -88,8 +89,7 @@ function SsoForm({ initial }: { initial: SsoConfigRead }) {
               size="sm"
               icon={copied ? <Check size={13} /> : <Copy size={13} />}
               onClick={async () => {
-                await navigator.clipboard.writeText(data.redirect_uri)
-                setCopied(true)
+                if (await copyText(data.redirect_uri)) setCopied(true)
               }}
             >
               {copied ? tr('Copiée', 'Copied') : tr('Copier', 'Copy')}

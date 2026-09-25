@@ -30,7 +30,8 @@ COPY --from=web /build/dist /app/dist
 
 RUN useradd --system --uid 10001 scopeo \
  && mkdir -p /data \
- && chown -R scopeo /data
+ && chown -R scopeo:0 /data \
+ && chmod -R g=u /data
 USER scopeo
 
 VOLUME ["/data"]

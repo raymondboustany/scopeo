@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { CircleCheck, CircleX, FlaskConical, KeyRound, Network, Search, ShieldCheck, UsersRound } from 'lucide-react'
-import { Button, Input, Switch } from '@/components/ui/controls'
+import { Button, Input, Switch, Textarea } from '@/components/ui/controls'
 import { Callout, Card, CardHeader, PageHeader, Tag } from '@/components/ui/primitives'
 import { Field } from '@/components/auth/fields'
 import { api } from '@/lib/api'
@@ -30,6 +30,15 @@ const DETAIL_LABEL: Record<string, string> = {
   ldap_url_invalid: tr('Adresse invalide.', 'Invalid address.'),
   ldap_base_dn_required: tr('Base de recherche manquante.', 'Search base missing.'),
   ldap_filter_invalid: tr('Filtre invalide.', 'Invalid filter.'),
+  ldap_ca_invalid: tr("Certificat d'autorité illisible.", 'Unreadable authority certificate.'),
+  ldap_not_in_group: tr("L'utilisateur n'appartient pas au groupe autorisé.", 'The user is not in the allowed group.'),
+}
+
+/** Détail d'une étape : code traduit, suivi des groupes trouvés pour un refus d'appartenance. */
+function detailText(detail: string): string {
+  const [code, extra] = detail.split('|')
+  const label = DETAIL_LABEL[code] ?? code
+  return extra ? `${label} ${tr('Groupes trouvés :', 'Groups found:')} ${extra}` : label
 }
 
 function toForm(c: LdapConfigRead): LdapConfig {
@@ -110,6 +119,22 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
             </span>
             <Switch checked={form.verify_certificate} onCheckedChange={(v) => set('verify_certificate', v)} label={tr('Vérifier le certificat', 'Verify the certificate')} />
           </label>
+          {form.verify_certificate ? (
+            <div className="sm:col-span-2">
+              <Field
+                label={tr("Certificat de l'autorité de certification", 'Certificate authority certificate')}
+                hint={tr("facultatif, format PEM : si le certificat de l'annuaire est émis par une autorité interne", 'optional, PEM format: if the directory certificate is issued by an internal authority')}
+              >
+                <Textarea
+                  value={form.ca_certificate}
+                  onChange={(e) => set('ca_certificate', e.target.value)}
+                  rows={3}
+                  className="font-mono text-2xs"
+                  placeholder="-----BEGIN CERTIFICATE-----"
+                />
+              </Field>
+            </div>
+          ) : null}
         </div>
         {form.url.startsWith('ldap://') && !form.start_tls ? (
           <div className="px-5 pb-5">
@@ -174,8 +199,8 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
           icon={<UsersRound size={16} />}
         />
         <div className="p-5">
-          <Field label={tr('DN du groupe', 'Group DN')} hint={tr('facultatif', 'optional')}>
-            <Input value={form.group_dn} onChange={(e) => set('group_dn', e.target.value)} placeholder="CN=Scopeo,OU=Groupes,DC=exemple,DC=fr" className="font-mono text-xs" />
+          <Field label={tr('Groupe autorisé', 'Allowed group')} hint={tr('nom du groupe ou DN complet, facultatif', 'group name or full DN, optional')}>
+            <Input value={form.group_dn} onChange={(e) => set('group_dn', e.target.value)} placeholder="Scopeo  ou  CN=Scopeo,OU=Groupes,DC=exemple,DC=fr" className="font-mono text-xs" />
           </Field>
         </div>
       </Card>
@@ -204,7 +229,7 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
                   {s.ok ? <CircleCheck size={16} className="mt-0.5 shrink-0 text-positive" /> : <CircleX size={16} className="mt-0.5 shrink-0 text-critical" />}
                   <span className="min-w-0">
                     <span className="block text-ink">{STEP_LABEL[s.id] ?? s.id}</span>
-                    {s.detail ? <span className="block break-all font-mono text-2xs text-ink-3">{DETAIL_LABEL[s.detail] ?? s.detail}</span> : null}
+                    {s.detail ? <span className="block break-all font-mono text-2xs text-ink-3">{detailText(s.detail)}</span> : null}
                   </span>
                 </li>
               ))}

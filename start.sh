@@ -11,14 +11,27 @@ PORT="${SCOPEO_PORT:-8000}"
 VENV_PY="server/.venv/bin/python"
 
 # --- Python -----------------------------------------------------------------
-if [ ! -x "$VENV_PY" ]; then
-  PY="$(command -v python3 || command -v python || true)"
+# Un environnement incomplet (échec d'un premier essai) est recréé.
+if [ ! -x "$VENV_PY" ] || ! "$VENV_PY" -m pip --version >/dev/null 2>&1; then
+  PY=""
+  for candidate in python3 python3.14 python3.13 python3.12 python3.11 python; do
+    if command -v "$candidate" >/dev/null 2>&1       && "$candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' 2>/dev/null; then
+      PY="$(command -v "$candidate")"
+      break
+    fi
+  done
   if [ -z "$PY" ]; then
     echo "Python 3.11 ou plus récent est requis : https://www.python.org/downloads/" >&2
     exit 1
   fi
   echo "Installation du serveur local…"
-  "$PY" -m venv server/.venv
+  rm -rf server/.venv
+  if ! "$PY" -m venv server/.venv; then
+    rm -rf server/.venv
+    echo "" >&2
+    echo "Le module venv de Python est absent. Debian, Ubuntu : sudo apt install python3-venv" >&2
+    exit 1
+  fi
 fi
 
 # Composants du serveur : installés au premier lancement, puis à chaque

@@ -12,7 +12,9 @@ import jwt
 import pytest
 from cryptography.hazmat.primitives.asymmetric import rsa
 from fastapi.testclient import TestClient
-from sqlmodel import Session, select
+from datetime import datetime, timezone
+
+from sqlmodel import Session, select, update
 
 from app import sso
 from app.auth import SessionStore, sessions
@@ -133,8 +135,7 @@ def test_un_jeton_expire_ou_d_un_compte_suspendu_est_refuse(client):
     enable_tokens(client)
     token = client.post("/api/auth/tokens", json={"name": "Court", "expires_days": 1}).json()["token"]
     with Session(engine) as session:
-        row = session.exec(select(ApiToken)).one()
-        row.expires_at = row.created_at
+        session.exec(update(ApiToken).values(expires_at=datetime(2000, 1, 1, tzinfo=timezone.utc)))
         session.commit()
     with TestClient(app) as api:
         assert api.get("/api/auth/me", headers={"Authorization": f"Bearer {token}"}).status_code == 401

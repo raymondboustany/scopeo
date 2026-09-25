@@ -398,3 +398,95 @@ def test_ldap_desactive_refuse_la_connexion(client, fake_directory):
     register(client)
     r = client.post("/api/auth/ldap", json={"username": "alice", "password": "alice-secret"})
     assert r.json()["detail"] == "ldap_disabled"
+
+
+def test_groupe_ldap_par_nom_simple_et_certificat_d_autorite_valide(client, fake_directory):
+    register(client)
+    r = client.put("/api/admin/ldap", json={**LDAP_CONFIG, "group_dn": "scopeo"})
+    assert r.status_code == 200, r.text
+    with other_client() as c2:
+        assert c2.post("/api/auth/ldap", json={"username": "alice", "password": "alice-secret"}).status_code == 200
+        c2.post("/api/auth/logout")
+        assert c2.post("/api/auth/ldap", json={"username": "bob", "password": "bob-secret"}).status_code == 401
+    report = client.post("/api/admin/ldap/test", json={"config": {**LDAP_CONFIG, "group_dn": "inconnu"}, "username": "alice"}).json()
+    group = next(s for s in report["steps"] if s["id"] == "group")
+    assert group["ok"] is False and group["detail"].startswith("ldap_not_in_group")
+    bad = client.put("/api/admin/ldap", json={**LDAP_CONFIG, "ca_certificate": "pas un certificat"})
+    assert bad.json()["detail"] == "ldap_ca_invalid"
+
+
+def test_identifiant_windows_et_utilisateur_deplace_dans_l_annuaire(client, fake_directory):
+    register(client)
+    _configure_ldap(client)
+    seed = Connection(fake_directory, client_strategy=MOCK_SYNC)
+    seed.strategy.add_entry(f"cn=chloe,ou=paris,{BASE_DN}", {"userPassword": "chloe-secret", "uid": "chloe", "entryUUID": "5f0c-chloe", "displayName": "Chloé", "objectClass": "person"})
+    seed.strategy.add_entry(f"cn=scopeo2,ou=groups,{BASE_DN}", {"member": [f"cn=chloe,ou=paris,{BASE_DN}"], "objectClass": "groupOfNames"})
+    client.put("/api/admin/ldap", json={**LDAP_CONFIG, "group_dn": ""})
+    with other_client() as c2:
+        # Forme « DOMAINE\identifiant » saisie sur un poste Windows.
+        first = c2.post("/api/auth/ldap", json={"username": "EXEMPLE\\chloe", "password": "chloe-secret"})
+        assert first.status_code == 200, first.text
+        c2.post("/api/auth/logout")
+        # Déplacée dans une autre unité : même compte, pas de doublon.
+        seed.strategy.add_entry(f"cn=chloe,ou=lyon,{BASE_DN}", {"userPassword": "chloe-secret", "uid": "chloe", "entryUUID": "5f0c-chloe", "displayName": "Chloé", "objectClass": "person"})
+        seed.strategy.remove_entry(f"cn=chloe,ou=paris,{BASE_DN}")
+        again = c2.post("/api/auth/ldap", json={"username": "chloe", "password": "chloe-secret"})
+        assert again.status_code == 200, again.text
+        assert again.json()["id"] == first.json()["id"]
+    with Session(engine) as session:
+        user = session.get(User, first.json()["id"])
+        assert user.ldap_dn == f"cn=chloe,ou=lyon,{BASE_DN}" and user.ldap_uid == "entryUUID:5f0c-chloe"
+    # Chloé part ; une homonyme arrive au même DN : elle n'hérite pas du compte.
+    seed.strategy.remove_entry(f"cn=chloe,ou=lyon,{BASE_DN}")
+    seed.strategy.add_entry(f"cn=chloe,ou=lyon,{BASE_DN}", {"userPassword": "autre-secret", "uid": "chloe", "entryUUID": "9a1b-autre", "displayName": "Chloé", "objectClass": "person"})
+    with other_client() as c3:
+        newcomer = c3.post("/api/auth/ldap", json={"username": "chloe", "password": "autre-secret"})
+        assert newcomer.status_code == 200, newcomer.text
+        assert newcomer.json()["id"] != first.json()["id"]
+
+
+# ---------------------------------------------------------------------------
+# Abus : volumes et sessions invitées
+# ---------------------------------------------------------------------------
+
+
+def test_requete_trop_volumineuse_refusee_avant_lecture(client):
+    user = register(client)
+    entity = client.post(f"/api/users/{user['id']}/entities", json={"name": "Volume"}).json()
+    big = {"answers": {"x": "A" * (3 * 1024 * 1024)}}
+    r = client.patch(f"/api/entities/{entity['id']}", json=big)
+    assert r.status_code == 413 and r.json()["detail"] == "request_too_large"
+    # Sans être connecté non plus.
+    with other_client() as c2:
+        assert c2.post("/api/auth/login", content=b"{" + b" " * (3 * 1024 * 1024) + b"}", headers={"Content-Type": "application/json"}).status_code == 413
+    # La déclaration d'applicabilité garde sa propre limite (5 Mo).
+    r = client.put(f"/api/entities/{entity['id']}/soa?name=soa.csv", content=b"a" * (4 * 1024 * 1024), headers={"Content-Type": "text/csv"})
+    assert r.status_code == 200
+
+
+def test_sessions_invitees_limitees_par_adresse(client):
+    register(client)
+    with other_client() as c2:
+        codes = [c2.post("/api/auth/guest").status_code for _ in range(21)]
+    assert codes[:20] == [201] * 20 and codes[20] == 429
+
+
+# ---------------------------------------------------------------------------
+# Secours depuis le serveur
+# ---------------------------------------------------------------------------
+
+
+def test_commande_de_secours_retablit_un_administrateur_bloque(client, capsys):
+    from app import recover
+
+    admin = register(client, name="Seule Admin")
+    _enable_mfa(client)
+    client.post("/api/auth/logout")
+    assert login(client, "Seule Admin").json()["mfa_required"] is True
+    assert recover.main(["recover", "inconnue"]) == 1
+    assert recover.main(["recover", "seule admin"]) == 0
+    temporary = capsys.readouterr().out.rsplit(": ", 1)[1].strip()
+    r = login(client, "Seule Admin", temporary)
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["id"] == admin["id"] and body["is_admin"] is True and body["mfa_enabled"] is False and body["must_change_password"] is True

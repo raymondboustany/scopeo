@@ -297,7 +297,7 @@ function ObligationDetail({
             <Tag tone={binding.tone}>{binding.label}</Tag>
             <span className="inline-flex items-center gap-1.5 text-2xs text-ink-3">
               {tr('Effort', 'Effort')}
-              <span className="flex gap-0.5" aria-label={tr(`Effort ${o.effort} sur 5`, `Effort ${o.effort} out of 5`)}>
+              <span className="flex gap-0.5" role="img" aria-label={tr(`Effort ${o.effort} sur 5`, `Effort ${o.effort} out of 5`)}>
                 {[1, 2, 3, 4, 5].map((n) => (
                   <span key={n} className={cn('h-1.5 w-3 rounded-full', n <= o.effort ? 'bg-accent' : 'bg-overlay')} />
                 ))}

@@ -9,13 +9,22 @@ export function cn(...inputs: ClassValue[]): string {
 const DATE_FMT = new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'long', year: 'numeric' })
 const DATE_SHORT = new Intl.DateTimeFormat(LOCALE, { day: '2-digit', month: '2-digit', year: 'numeric' })
 
+/**
+ * Date ISO vers Date. Une date seule (« 2027-12-02 ») est lue à minuit heure
+ * locale : lue en UTC, elle s'afficherait la veille aux Antilles ou au Québec.
+ */
+export function parseDate(iso: string): Date {
+  const day = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso)
+  return day ? new Date(Number(day[1]), Number(day[2]) - 1, Number(day[3])) : new Date(iso)
+}
+
 export function formatDate(iso: string): string {
-  const d = new Date(iso)
+  const d = parseDate(iso)
   return Number.isNaN(d.getTime()) ? iso : DATE_FMT.format(d)
 }
 
 export function formatDateShort(iso: string): string {
-  const d = new Date(iso)
+  const d = parseDate(iso)
   return Number.isNaN(d.getTime()) ? iso : DATE_SHORT.format(d)
 }
 
@@ -54,6 +63,33 @@ export function slugify(s: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
+}
+
+/**
+ * Copie dans le presse-papiers. L'API moderne n'existe que sur HTTPS ou sur ce
+ * poste : servie en HTTP sur le réseau, la copie passe par une zone de texte
+ * temporaire. Renvoie `false` si aucune des deux méthodes n'a fonctionné.
+ */
+export async function copyText(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch {
+    const area = document.createElement('textarea')
+    area.value = text
+    area.setAttribute('readonly', '')
+    area.style.position = 'fixed'
+    area.style.opacity = '0'
+    document.body.appendChild(area)
+    area.select()
+    try {
+      return document.execCommand('copy')
+    } catch {
+      return false
+    } finally {
+      area.remove()
+    }
+  }
 }
 
 export function uid(): string {

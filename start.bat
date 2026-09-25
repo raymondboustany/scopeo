@@ -12,21 +12,18 @@ if "%SCOPEO_PORT%"=="" set SCOPEO_PORT=8000
 set VENV_PY=server\.venv\Scripts\python.exe
 
 rem --- Python ----------------------------------------------------------------
-if not exist "%VENV_PY%" (
-  set PY=
-  where py >nul 2>nul && set PY=py -3
-  if not defined PY ( where python >nul 2>nul && set PY=python )
-  if not defined PY (
-    echo.
-    echo  Python 3.11 ou plus recent est requis : https://www.python.org/downloads/
-    echo  Cochez "Add python.exe to PATH" pendant l'installation, puis relancez.
-    echo.
-    pause
-    exit /b 1
-  )
-  echo Installation du serveur local...
-  call %PY% -m venv server\.venv || goto :error
-)
+rem Hors d'un bloc entre parentheses : %PY% y serait lu avant d'etre defini.
+if exist "%VENV_PY%" goto :deps
+set "PY="
+where py >nul 2>nul && set "PY=py -3"
+if not defined PY where python >nul 2>nul && set "PY=python"
+if not defined PY goto :nopython
+rem Version verifiee : ecarte aussi le raccourci "python" du Microsoft Store.
+%PY% -c "import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)" >nul 2>nul || goto :nopython
+echo Installation du serveur local...
+%PY% -m venv server\.venv || goto :error
+
+:deps
 
 rem Composants du serveur : installes au premier lancement, puis a chaque
 rem changement de server\requirements.txt (nouvelle version de l'archive).
@@ -60,6 +57,14 @@ echo.
 start "" cmd /c "timeout /t 3 >nul & start http://127.0.0.1:%SCOPEO_PORT%"
 "%VENV_PY%" -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port %SCOPEO_PORT%
 exit /b 0
+
+:nopython
+echo.
+echo  Python 3.11 ou plus recent est requis : https://www.python.org/downloads/
+echo  Cochez "Add python.exe to PATH" pendant l'installation, puis relancez.
+echo.
+pause
+exit /b 1
 
 :error
 echo.

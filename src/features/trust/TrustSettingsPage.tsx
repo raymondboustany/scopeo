@@ -7,6 +7,7 @@ import { useShare } from '@/lib/queries'
 import { buildSnapshot } from '@/engines/scores'
 import { SnapshotView } from './SnapshotView'
 import { tr } from '@/i18n'
+import { copyText } from '@/lib/utils'
 
 const PUBLISHED = [
   tr('Nom de l’entité et secteur', 'Entity name and sector'),
@@ -38,7 +39,7 @@ export default function TrustSettingsPage() {
   const url = publicUrl(entity.share_token)
 
   const copy = async () => {
-    await navigator.clipboard.writeText(url)
+    if (!(await copyText(url))) return
     setCopied(true)
     setTimeout(() => setCopied(false), 1800)
   }

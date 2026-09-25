@@ -4,7 +4,7 @@ import { Check, Copy, PlugZap, Plus, Trash2 } from 'lucide-react'
 import { Button, Dialog, Input, Select } from '@/components/ui/controls'
 import { Card, CardHeader } from '@/components/ui/primitives'
 import { api } from '@/lib/api'
-import { formatDateShort } from '@/lib/utils'
+import { copyText, formatDateShort } from '@/lib/utils'
 import { tr } from '@/i18n'
 
 const DURATIONS = [
@@ -134,8 +134,7 @@ export function ApiTokensCard() {
             size="sm"
             icon={copied ? <Check size={13} /> : <Copy size={13} />}
             onClick={async () => {
-              await navigator.clipboard.writeText(issued ?? '')
-              setCopied(true)
+              if (await copyText(issued ?? '')) setCopied(true)
             }}
           >
             {copied ? tr('Copié', 'Copied') : tr('Copier', 'Copy')}

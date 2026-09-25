@@ -15,7 +15,7 @@ import { REGULATION_ORDER } from '@/data/regulations'
 import { conditionsMet } from '@/engines/alerts'
 import { useScoping } from '@/lib/hooks'
 import { useEntityEditor } from '@/lib/queries'
-import { cn, formatDate } from '@/lib/utils'
+import { cn, formatDate, parseDate } from '@/lib/utils'
 import type { RegulationId, TimelineEvent } from '@/types/domain'
 import { REG_LABEL } from '@/components/ui/tokens'
 import { COLON, LOCALE, tr } from '@/i18n'
@@ -66,7 +66,7 @@ export default function TimelinePage() {
   // Le prochain jalon qui concerne l'entité clignote tant qu'il n'a pas été consulté.
   const seen = [...(entity?.seen_alerts ?? []), ...seenLocal]
   const nearest = TIMELINE.filter(concerns)
-    .filter((e) => new Date(e.date).getTime() >= now.getTime() - DAY / 2)
+    .filter((e) => parseDate(e.date).getTime() >= now.getTime() - DAY / 2)
     .sort((a, b) => a.date.localeCompare(b.date))[0]
   const nearestPulses = nearest ? !seen.includes(`TL:${nearest.id}`) : false
 
@@ -136,7 +136,7 @@ export default function TimelinePage() {
           <span className="text-ink-2">{tr(`Prochain jalon pour ${entity?.name ?? 'vous'} :`, `Next milestone for ${entity?.name ?? 'you'}:`)}</span>
           <span className="font-medium text-ink">{nearest.title}</span>
           <span className="ml-auto font-mono text-2xs text-accent">
-            {formatDate(nearest.date)} · {tr(`dans ${Math.max(0, Math.round((new Date(nearest.date).getTime() - now.getTime()) / DAY))} j`, `in ${Math.max(0, Math.round((new Date(nearest.date).getTime() - now.getTime()) / DAY))} d`)}
+            {formatDate(nearest.date)} · {tr(`dans ${Math.max(0, Math.round((parseDate(nearest.date).getTime() - now.getTime()) / DAY))} j`, `in ${Math.max(0, Math.round((parseDate(nearest.date).getTime() - now.getTime()) / DAY))} d`)}
           </span>
         </button>
       ) : null}
@@ -155,7 +155,7 @@ export default function TimelinePage() {
             <CardHeader title={tr('Liste chronologique', 'Chronological list')} subtitle={tr(`${events.length} jalon${events.length > 1 ? 's' : ''} affiché${events.length > 1 ? 's' : ''}`, `${events.length} milestone${events.length > 1 ? 's' : ''} shown`)} />
             <ol className="divide-y divide-rule">
               {events.map((e) => {
-                const past = new Date(e.date).getTime() < now.getTime() - DAY / 2
+                const past = parseDate(e.date).getTime() < now.getTime() - DAY / 2
                 return (
                   <li key={e.id}>
                     <button
@@ -239,7 +239,7 @@ function TimelineChart({
 
   // Domaine : tout le calendrier, avec une marge d'un semestre de part et d'autre.
   const base = useMemo(() => {
-    const dates = TIMELINE.map((e) => new Date(e.date).getTime())
+    const dates = TIMELINE.map((e) => parseDate(e.date).getTime())
     return scaleTime()
       .domain([new Date(Math.min(...dates) - 180 * DAY), new Date(Math.max(...dates) + 180 * DAY)])
       .range([LEFT, width - 16])
@@ -300,7 +300,7 @@ function TimelineChart({
     const e = TIMELINE.find((x) => x.id === selectedId)
     if (!e) return
     lastFocused.current = selectedId
-    focusOn(new Date(e.date), Math.max(t.k, 4))
+    focusOn(parseDate(e.date), Math.max(t.k, 4))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId])
 
@@ -381,9 +381,9 @@ function TimelineChart({
             {/* Jalons */}
             {events.map((e, i) => {
               if (!visibleLanes.includes(e.regulation)) return null
-              const cx = x(new Date(e.date))
+              const cx = x(parseDate(e.date))
               const cy = laneY(e.regulation)
-              const past = new Date(e.date).getTime() < now.getTime() - DAY / 2
+              const past = parseDate(e.date).getTime() < now.getTime() - DAY / 2
               const color = laneColor(e.regulation)
               const isSel = e.id === selectedId
               const isNear = e.id === nearestId
@@ -461,7 +461,7 @@ function EventDetail({
   qualified: boolean
   onClose: () => void
 }) {
-  const days = Math.round((new Date(e.date).getTime() - now.getTime()) / DAY)
+  const days = Math.round((parseDate(e.date).getTime() - now.getTime()) / DAY)
   const kind = KIND_LABEL[e.kind]
   return (
     <Card className="overflow-hidden">

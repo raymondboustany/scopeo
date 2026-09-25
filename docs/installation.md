@@ -123,6 +123,9 @@ Serving Scopeo to several people requires a server and HTTPS: follow the [deploy
 | The "The local server is not responding" page appears | The platform is not started: run `start.bat` or `docker compose up -d` again. |
 | `docker` is not recognised | Docker Desktop is not running, or the terminal was opened before it was installed: restart the terminal. |
 | `start.bat` says Python is required | Reinstall Python, ticking "Add python.exe to PATH". |
+| `./start.sh` answers "Permission denied" | Type `sh start.sh` instead, or run `chmod +x start.sh` once. |
+| `start.sh` asks for `python3-venv` | On Debian or Ubuntu, run `sudo apt install python3-venv`, then start again. |
+| The first start fails with a network error | The first start downloads the server components: check the internet connection. Behind a company proxy, set `HTTPS_PROXY` (see the [deployment guide](deployment.md#good-to-know)). |
 | Port 8000 is already in use | Another application uses that port: close it, or see the advanced configuration in the README. |
 
 For any other problem, [open an issue](https://github.com/raymondboustany/scopeo/issues/new/choose) describing the installation method you used, or use the feedback button in the platform.
@@ -252,6 +255,9 @@ Servir Scopeo à plusieurs personnes suppose un serveur et du HTTPS : suivez le 
 | La page « Le serveur local ne répond pas » s'affiche | La plateforme n'est pas démarrée : relancez `start.bat` ou `docker compose up -d`. |
 | `docker` n'est pas reconnu | Docker Desktop n'est pas démarré, ou le terminal a été ouvert avant son installation : redémarrez le terminal. |
 | `start.bat` indique que Python est requis | Réinstallez Python en cochant « Add python.exe to PATH ». |
+| `./start.sh` répond « Permission denied » | Tapez plutôt `sh start.sh`, ou lancez une fois `chmod +x start.sh`. |
+| `start.sh` demande `python3-venv` | Sous Debian ou Ubuntu, lancez `sudo apt install python3-venv`, puis relancez. |
+| Le premier lancement échoue avec une erreur réseau | Le premier lancement télécharge les composants du serveur : vérifiez la connexion internet. Derrière un proxy d'entreprise, définissez `HTTPS_PROXY` (voir le [guide de déploiement](deployment.md#bon-à-savoir)). |
 | Le port 8000 est déjà utilisé | Une autre application occupe ce port : fermez-la, ou reportez-vous à la configuration avancée du README. |
 
 Pour tout autre problème, [ouvrez une issue](https://github.com/raymondboustany/scopeo/issues/new/choose) en décrivant la méthode d'installation utilisée, ou utilisez le bouton de signalement de la plateforme.

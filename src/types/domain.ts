@@ -546,6 +546,7 @@ export interface LdapConfig {
   name_attribute: string
   email_attribute: string
   group_dn: string
+  ca_certificate: string
 }
 
 export interface LdapConfigRead extends LdapConfig {

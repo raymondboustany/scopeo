@@ -30,6 +30,7 @@ const ACTIONS: Record<string, string> = {
   sso_updated: tr('Connexion unique modifiée', 'Single sign-on changed'),
   account_created_sso: tr('Compte créé par la connexion unique', 'Account created through single sign-on'),
   admin_granted_auto: tr('Rôle administrateur attribué automatiquement', 'Administrator role granted automatically'),
+  admin_recovered: tr('Accès administrateur rétabli depuis le serveur', 'Administrator access restored from the server'),
   api_token_created: tr("Jeton d'API créé", 'API token created'),
   api_token_revoked: tr("Jeton d'API révoqué", 'API token revoked'),
   backup_downloaded: tr('Sauvegarde téléchargée', 'Backup downloaded'),

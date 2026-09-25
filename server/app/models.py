@@ -64,6 +64,8 @@ class User(SQLModel, table=True):
     auth_source: str = "local"
     ldap_dn: str | None = Field(default=None, index=True)
     ldap_username: str | None = Field(default=None)
+    # Identifiant immuable fourni par l'annuaire (objectGUID, entryUUID).
+    ldap_uid: str | None = Field(default=None, index=True)
     # Connexion unique (OIDC) : émetteur et identifiant stable fournis par le fournisseur.
     oidc_issuer: str | None = Field(default=None)
     oidc_sub: str | None = Field(default=None, index=True)

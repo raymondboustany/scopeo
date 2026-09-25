@@ -20,7 +20,6 @@ from pathlib import Path
 from urllib.parse import quote
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from sqlmodel import Session, col, func, select
@@ -102,6 +101,7 @@ DIST = Path(__file__).resolve().parents[2] / "dist"
 # au-delà de ce délai sans modification, la suivante ouvre une nouvelle session.
 REVISION_WINDOW = timedelta(minutes=10)
 MAX_REVISIONS = 40
+GUEST_LIMIT = 20
 
 # Déclaration d'applicabilité : formats de tableur et de document courants.
 SOA_MAX_BYTES = 5 * 1024 * 1024
@@ -199,9 +199,43 @@ async def lifespan(_app: FastAPI):
     yield
 
 
+# Taille maximale d'une requête. Une fiche complète pèse quelques centaines de Ko :
+# au-delà, la requête est refusée avant d'être lue en mémoire ou enregistrée.
+MAX_BODY_BYTES = 2 * 1024 * 1024
+
+
+class BodyLimit:
+    """Refuse les corps de requête trop gros, qu'ils soient annoncés ou envoyés par morceaux."""
+
+    def __init__(self, app) -> None:
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+        limit = SOA_MAX_BYTES + 64 * 1024 if scope["path"].endswith("/soa") else MAX_BODY_BYTES
+        declared = dict(scope["headers"]).get(b"content-length", b"")
+        if declared.isdigit() and int(declared) > limit:
+            await JSONResponse({"detail": "request_too_large"}, status_code=status.HTTP_413_CONTENT_TOO_LARGE)(scope, receive, send)
+            return
+        received = 0
+
+        async def limited():
+            nonlocal received
+            message = await receive()
+            if message["type"] == "http.request":
+                received += len(message.get("body", b""))
+                if received > limit:
+                    raise HTTPException(status.HTTP_413_CONTENT_TOO_LARGE, "request_too_large")
+            return message
+
+        await self.app(scope, limited, send)
+
+
 app = FastAPI(
     title="Scopeo",
-    version="1.0.0",
+    version="1.1.0",
     description="API de la plateforme Scopeo. Authentification par cookie de session (interface) ou par jeton personnel `Authorization: Bearer scp_…` (intégrations).",
     lifespan=lifespan,
     # Description OpenAPI publiée pour les intégrations ; pas d'interface Swagger,
@@ -210,14 +244,7 @@ app = FastAPI(
     redoc_url=None,
     openapi_url="/api/openapi.json",
 )
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:4173"],
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allow_headers=["Content-Type", "X-Scopeo", "Accept-Language"],
-)
+app.add_middleware(BodyLimit)
 
 
 @app.middleware("http")
@@ -363,6 +390,8 @@ def register(payload: RegisterPayload, response: Response, session: Session = De
     if not name:
         raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, "name_required")
     _check_new_password(payload.password.get_secret_value(), payload.password_confirm.get_secret_value())
+    # Hachage hors du verrou : il est volontairement coûteux et ne doit pas sérialiser les créations.
+    password_hash = hash_password(payload.password.get_secret_value())
     with _register_lock:
         first = not has_accounts(session)
         if not first and not global_settings(session).registration_open:
@@ -374,7 +403,7 @@ def register(payload: RegisterPayload, response: Response, session: Session = De
             role=payload.role,
             organisation=payload.organisation,
             email=payload.email,
-            password_hash=hash_password(payload.password.get_secret_value()),
+            password_hash=password_hash,
             is_admin=first,
             last_login_at=now(),
         )
@@ -426,8 +455,19 @@ def login(payload: LoginPayload, request: Request, response: Response, session: 
 
 def _ldap_account(session: Session, found: directory.DirectoryUser) -> User:
     """Compte local rattaché à l'utilisateur de l'annuaire, créé à la première connexion."""
-    user = session.exec(select(User).where(User.auth_source == "ldap", User.ldap_dn == found.dn)).first()
+    user = None
+    if found.uid:
+        user = session.exec(select(User).where(User.auth_source == "ldap", User.ldap_uid == found.uid)).first()
+    if user is None:
+        user = session.exec(select(User).where(User.auth_source == "ldap", User.ldap_dn == found.dn)).first()
+        # Même DN mais autre identifiant immuable : un homonyme a remplacé une personne
+        # partie. Il ne reprend pas son compte.
+        if user is not None and found.uid and user.ldap_uid and user.ldap_uid != found.uid:
+            user = None
     if user is not None:
+        # Utilisateur déplacé dans l'annuaire : même compte, DN mis à jour.
+        user.ldap_dn = found.dn
+        user.ldap_uid = found.uid or user.ldap_uid
         user.ldap_username = found.username
         if found.email and not user.email:
             user.email = found.email
@@ -435,7 +475,7 @@ def _ldap_account(session: Session, found: directory.DirectoryUser) -> User:
     name = found.name.strip() or found.username
     if _find_by_name(session, name):
         name = f"{name} ({found.username})"
-    user = User(name=name, email=found.email, auth_source="ldap", ldap_dn=found.dn, ldap_username=found.username)
+    user = User(name=name, email=found.email, auth_source="ldap", ldap_dn=found.dn, ldap_uid=found.uid or None, ldap_username=found.username)
     session.add(user)
     audit(session, None, "account_created_ldap", name, found.dn)
     session.flush()
@@ -444,7 +484,7 @@ def _ldap_account(session: Session, found: directory.DirectoryUser) -> User:
 
 @app.post("/api/auth/ldap", response_model=UserRead | MfaChallengeRead)
 def ldap_login(payload: LdapLoginPayload, request: Request, response: Response, session: Session = Depends(get_session)):
-    key = _throttle_key(request, f"ldap|{payload.username}")
+    key = _throttle_key(request, f"ldap|{directory.normalize_username(payload.username)}")
     _throttled(key)
     try:
         found = directory.authenticate(ldap_config(session), payload.username, payload.password.get_secret_value())
@@ -455,6 +495,8 @@ def ldap_login(payload: LdapLoginPayload, request: Request, response: Response, 
             raise _error(status.HTTP_404_NOT_FOUND, "ldap_disabled")
         if exc.code in {"ldap_unreachable", "ldap_tls_failed", "ldap_service_bind_failed"}:
             raise _error(status.HTTP_502_BAD_GATEWAY, "ldap_unavailable")
+        if exc.code == "ldap_password_expired":
+            raise _error(status.HTTP_401_UNAUTHORIZED, "ldap_password_expired")
         raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
     user = _ldap_account(session, found)
     if user.disabled:
@@ -498,12 +540,18 @@ def mfa_verify(payload: MfaVerifyPayload, response: Response, session: Session =
 
 
 @app.post("/api/auth/guest", response_model=UserRead, status_code=status.HTTP_201_CREATED)
-def guest(response: Response, session: Session = Depends(get_session)) -> UserRead:
+def guest(request: Request, response: Response, session: Session = Depends(get_session)) -> UserRead:
     """Session d'essai sans mot de passe : ses données sont effacées à la déconnexion."""
     if not has_accounts(session):
         raise _error(status.HTTP_403_FORBIDDEN, "setup_required")
     if not global_settings(session).guest_enabled:
         raise _error(status.HTTP_403_FORBIDDEN, "guest_disabled")
+    # Ouverte sans mot de passe : au plus GUEST_LIMIT sessions par adresse et par quart d'heure.
+    key = _throttle_key(request, "|guest")
+    wait = throttle.retry_after(key, GUEST_LIMIT)
+    if wait:
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "too_many_attempts", headers={"Retry-After": str(wait)})
+    throttle.fail(key)
     user = User(name="Invité", role="autre", is_guest=True)
     session.add(user)
     session.commit()
@@ -1000,7 +1048,7 @@ async def upload_soa(
     if not body:
         raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, "empty_file")
     if len(body) > SOA_MAX_BYTES:
-        raise _error(status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, "file_too_large")
+        raise _error(status.HTTP_413_CONTENT_TOO_LARGE, "file_too_large")
     for row in session.exec(select(EntityFile).where(EntityFile.entity_id == entity.id, EntityFile.kind == "soa")).all():
         session.delete(row)
     record = EntityFile(entity_id=entity.id, name=_safe_filename(name), content_type=content_type, size=len(body), data=body)

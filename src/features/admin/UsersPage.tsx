@@ -11,6 +11,7 @@ import {
   Network,
   Plus,
   RefreshCw,
+  Search,
   ShieldCheck,
   ShieldOff,
   Trash2,
@@ -22,7 +23,7 @@ import { Card, PageHeader, Tag } from '@/components/ui/primitives'
 import { Field } from '@/components/auth/fields'
 import { api } from '@/lib/api'
 import { useCurrentUser } from '@/lib/queries'
-import { cn, formatDateShort } from '@/lib/utils'
+import { cn, copyText, formatDateShort } from '@/lib/utils'
 import type { AdminUser, UserRole } from '@/types/domain'
 import { tr } from '@/i18n'
 import { ROLE_SHORT, USER_ROLES as ROLES } from '@/components/auth/roles'
@@ -48,6 +49,7 @@ export default function UsersPage() {
   const { data: me } = useCurrentUser()
   const { data: users = [], isLoading } = useQuery({ queryKey: ['admin', 'users'], queryFn: api.admin.users })
   const [pending, setPending] = useState<Pending | null>(null)
+  const [query, setQuery] = useState('')
   const [actionError, setActionError] = useState<string | null>(null)
   const refresh = () => {
     void qc.invalidateQueries({ queryKey: ['admin'] })
@@ -59,6 +61,12 @@ export default function UsersPage() {
     onSuccess: refresh,
     onError: (e) => setActionError(e.message),
   })
+
+  const shown = useMemo(() => {
+    const q = query.trim().toLocaleLowerCase()
+    if (!q) return users
+    return users.filter((u) => [u.name, u.organisation, u.email, u.ldap_username ?? ''].some((v) => v.toLocaleLowerCase().includes(q)))
+  }, [users, query])
 
   const stats = useMemo(() => {
     const active = users.filter((u) => !u.disabled)
@@ -101,6 +109,22 @@ export default function UsersPage() {
         ))}
       </div>
 
+      {users.length > 8 ? (
+        <div className="flex items-center gap-3">
+          <div className="relative w-80">
+            <Search size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-4" />
+            <Input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={tr('Rechercher un nom, une organisation, un courriel…', 'Search a name, organisation, email…')}
+              className="pl-8"
+              aria-label={tr('Rechercher un compte', 'Search an account')}
+            />
+          </div>
+          <span className="text-xs tabular-nums text-ink-3">{tr(`${shown.length} sur ${users.length}`, `${shown.length} of ${users.length}`)}</span>
+        </div>
+      ) : null}
+
       {actionError ? (
         <p role="alert" className="rounded-lg bg-critical-wash px-4 py-2.5 text-sm text-critical">
           {actionError}
@@ -127,7 +151,7 @@ export default function UsersPage() {
                   </td>
                 </tr>
               ) : null}
-              {users.map((u) => (
+              {shown.map((u) => (
                 <tr key={u.id} className={cn('border-b border-rule last:border-0', u.disabled && 'bg-raised/60')}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
@@ -473,8 +497,7 @@ function IssuedDialog({ name, password, onClose }: { name: string; password: str
           size="sm"
           icon={copied ? <Check size={13} /> : <Copy size={13} />}
           onClick={async () => {
-            await navigator.clipboard.writeText(password)
-            setCopied(true)
+            if (await copyText(password)) setCopied(true)
           }}
         >
           {copied ? tr('Copié', 'Copied') : tr('Copier', 'Copy')}

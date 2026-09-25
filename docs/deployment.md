@@ -66,7 +66,7 @@ Sign in with the administrator profile, then **profile menu → Administration**
 
 1. **Settings**: enter the **public address** (`https://…`), close **self-service profile creation**, disable **guest mode** if you do not need it, choose the **session length**.
 2. **Accounts**: create accounts with a temporary password, or let people sign in through the directory or single sign-on. Appoint a second administrator.
-3. **LDAP directory** (on-premises Active Directory, OpenLDAP): address in `ldaps://`, service account with read-only rights, search base, filter, optional group. Use the **Test** button, then switch it on.
+3. **LDAP directory** (on-premises Active Directory, OpenLDAP): address in `ldaps://`, service account with read-only rights, search base, filter, optional group (name or full DN; Active Directory nested groups are followed). If the directory certificate comes from an internal authority, paste that authority's certificate (PEM). Use the **Test** button, then switch it on. People can type `alice`, `DOMAINlice` or `alice@company.com`.
 4. **Single sign-on (SSO)** (organisations in the cloud or hybrid): see below.
 5. **Log**: every administration action is recorded.
 
@@ -128,6 +128,15 @@ The database is migrated automatically at start-up. Take a backup first.
 | Hybrid | Scopeo in the cloud, directory on premises: open a private link (VPN) so Scopeo reaches the directory over `ldaps://`, or prefer single sign-on, which needs no network opening. |
 
 In every case, scoping data stays on the server you run. Only identity is exchanged with the directory or the identity provider.
+
+## Good to know
+
+- **One instance only.** Scopeo keeps its data in a SQLite file: run a single container (Kubernetes: `replicas: 1`, `strategy: Recreate`). Two instances on the same data would break two-factor sign-in and single sign-on.
+- **Host folder instead of a volume.** The container runs as user `10001`. If you mount a folder of the server (`-v ./data:/data`), give it to that user first: `sudo chown 10001 ./data`. Any user ID with group `0` also works (OpenShift).
+- **Podman.** Build with `podman build --format docker` to keep the health check.
+- **Proxy.** The launchers and `pip` use the standard `HTTPS_PROXY` and `HTTP_PROXY` variables.
+- **Offline server.** On a computer with internet access, run `pip download -d wheels -r server/requirements.txt` for the same system and Python version, copy the `wheels` folder, then start with `PIP_NO_INDEX=1` and `PIP_FIND_LINKS=wheels`.
+- **Request size.** Requests are limited to 2 MB (5 MB for a Statement of Applicability). A reverse proxy can apply the same limit earlier.
 
 ---
 
@@ -197,7 +206,7 @@ Connectez-vous avec le profil administrateur, puis **menu du profil → Administ
 
 1. **Réglages** : renseignez l'**adresse publique** (`https://…`), fermez la **création libre de profils**, désactivez le **mode invité** si vous n'en avez pas besoin, choisissez la **durée des sessions**.
 2. **Comptes** : créez des comptes avec un mot de passe provisoire, ou laissez les personnes se connecter par l'annuaire ou la connexion unique. Nommez un second administrateur.
-3. **Annuaire LDAP** (Active Directory sur site, OpenLDAP) : adresse en `ldaps://`, compte de service en lecture seule, base de recherche, filtre, groupe facultatif. Utilisez le bouton **Tester**, puis activez.
+3. **Annuaire LDAP** (Active Directory sur site, OpenLDAP) : adresse en `ldaps://`, compte de service en lecture seule, base de recherche, filtre, groupe facultatif (nom ou DN complet ; les groupes imbriqués d'Active Directory sont suivis). Si le certificat de l'annuaire est émis par une autorité interne, collez le certificat de cette autorité (PEM). Utilisez le bouton **Tester**, puis activez. Les personnes peuvent saisir `alice`, `DOMAINElice` ou `alice@entreprise.fr`.
 4. **Connexion unique (SSO)** (organisations dans le cloud ou hybrides) : voir ci-dessous.
 5. **Journal** : chaque action d'administration y est consignée.
 
@@ -259,3 +268,12 @@ La base est migrée automatiquement au démarrage. Faites une sauvegarde avant.
 | Hybride | Scopeo dans le cloud, annuaire sur site : ouvrez une liaison privée (VPN) pour que Scopeo joigne l'annuaire en `ldaps://`, ou préférez la connexion unique, qui ne demande aucune ouverture réseau. |
 
 Dans tous les cas, les données de cadrage restent sur le serveur que vous exploitez. Seule l'identité est échangée avec l'annuaire ou le fournisseur d'identité.
+
+## Bon à savoir
+
+- **Une seule instance.** Scopeo conserve ses données dans un fichier SQLite : lancez un seul conteneur (Kubernetes : `replicas: 1`, `strategy: Recreate`). Deux instances sur les mêmes données casseraient la double authentification et la connexion unique.
+- **Dossier du serveur au lieu d'un volume.** Le conteneur tourne sous l'utilisateur `10001`. Si vous montez un dossier du serveur (`-v ./data:/data`), donnez-le d'abord à cet utilisateur : `sudo chown 10001 ./data`. Tout identifiant utilisateur du groupe `0` convient aussi (OpenShift).
+- **Podman.** Construisez avec `podman build --format docker` pour conserver le contrôle de santé.
+- **Proxy.** Les lanceurs et `pip` utilisent les variables standard `HTTPS_PROXY` et `HTTP_PROXY`.
+- **Serveur sans internet.** Sur un poste connecté, lancez `pip download -d wheels -r server/requirements.txt` pour le même système et la même version de Python, copiez le dossier `wheels`, puis démarrez avec `PIP_NO_INDEX=1` et `PIP_FIND_LINKS=wheels`.
+- **Taille des requêtes.** Les requêtes sont limitées à 2 Mo (5 Mo pour une déclaration d'applicabilité). Un mandataire inverse peut appliquer la même limite plus tôt.

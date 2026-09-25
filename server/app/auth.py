@@ -176,12 +176,16 @@ class LoginThrottle:
     def _recent(self, key: str, now: float) -> list[float]:
         return [t for t in self._failures.get(key, []) if now - t < self.WINDOW]
 
-    def retry_after(self, key: str) -> int:
+    def retry_after(self, key: str, limit: int | None = None) -> int:
         now = time.time()
         with self._lock:
             recent = self._recent(key, now)
-            self._failures[key] = recent
-            if len(recent) < self.MAX_FAILURES:
+            if recent:
+                self._failures[key] = recent
+            else:
+                # Pas d'entrée vide conservée : la table ne grossit pas avec des clés inconnues.
+                self._failures.pop(key, None)
+            if len(recent) < (limit or self.MAX_FAILURES):
                 return 0
             return int(self.WINDOW - (now - recent[0])) + 1
 
