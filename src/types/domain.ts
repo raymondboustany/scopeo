@@ -436,7 +436,7 @@ export interface UserProfile {
   onboarded: boolean
   is_admin: boolean
   admin_onboarded: boolean
-  auth_source: 'local' | 'ldap'
+  auth_source: AuthSource
   mfa_enabled: boolean
   must_change_password: boolean
   recovery_codes_left: number
@@ -444,6 +444,9 @@ export interface UserProfile {
   updated_at: string
   entity_count: number
 }
+
+/** Origine du compte : mot de passe local, annuaire LDAP ou connexion unique (OIDC). */
+export type AuthSource = 'local' | 'ldap' | 'oidc'
 
 /** Mot de passe accepté, code de second facteur attendu. */
 export interface MfaChallenge {
@@ -464,6 +467,9 @@ export interface AuthStatus {
   guest_enabled: boolean
   ldap_enabled: boolean
   ldap_label: string
+  sso_enabled: boolean
+  sso_label: string
+  api_tokens_enabled: boolean
 }
 
 export interface MfaSetup {
@@ -480,8 +486,9 @@ export interface AdminUser {
   email: string
   is_admin: boolean
   disabled: boolean
-  auth_source: 'local' | 'ldap'
+  auth_source: AuthSource
   ldap_username: string | null
+  has_password: boolean
   mfa_enabled: boolean
   must_change_password: boolean
   entity_count: number
@@ -493,6 +500,38 @@ export interface GlobalSettings {
   registration_open: boolean
   guest_enabled: boolean
   session_hours: number
+  public_url: string
+  api_tokens_enabled: boolean
+}
+
+export interface SsoConfig {
+  enabled: boolean
+  label: string
+  issuer: string
+  client_id: string
+  scopes: string
+  allowed_domains: string
+  groups_claim: string
+  required_group: string
+}
+
+export interface SsoConfigRead extends SsoConfig {
+  has_client_secret: boolean
+  redirect_uri: string
+}
+
+export interface SsoConfigUpdate extends SsoConfig {
+  client_secret: string | null
+  clear_client_secret: boolean
+}
+
+export interface ApiTokenInfo {
+  id: string
+  name: string
+  prefix: string
+  created_at: string
+  last_used_at: string | null
+  expires_at: string | null
 }
 
 export interface LdapConfig {

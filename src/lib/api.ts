@@ -7,8 +7,11 @@ import type {
   LdapConfigRead,
   LdapConfigUpdate,
   LdapTestReport,
+  ApiTokenInfo,
   LoginResult,
   MfaSetup,
+  SsoConfigRead,
+  SsoConfigUpdate,
   EntityProfile,
   EntityRecord,
   EntitySummary,
@@ -63,6 +66,38 @@ const ERROR_MESSAGES: Record<string, () => string> = {
     tr('Un autre administrateur doit effectuer cette action sur votre compte.', 'Another administrator must do this on your account.'),
   ldap_url_invalid: () => tr('Adresse invalide : ldap:// ou ldaps:// suivi du serveur.', 'Invalid address: ldap:// or ldaps:// followed by the server.'),
   ldap_base_dn_required: () => tr('La base de recherche est requise.', 'The search base is required.'),
+  sso_issuer_invalid: () =>
+    tr("L'émetteur doit être une adresse https://.", 'The issuer must be an https:// address.'),
+  sso_client_id_required: () => tr("L'identifiant client est requis.", 'The client ID is required.'),
+  sso_scopes_invalid: () => tr('Les portées doivent inclure « openid ».', 'Scopes must include "openid".'),
+  sso_disabled: () => tr("La connexion unique n'est pas activée.", 'Single sign-on is not enabled.'),
+  sso_cancelled: () => tr('Connexion annulée.', 'Sign-in cancelled.'),
+  sso_state_invalid: () =>
+    tr('La connexion a expiré ou a été interrompue. Réessayez.', 'Sign-in expired or was interrupted. Please try again.'),
+  sso_token_invalid: () =>
+    tr("La réponse du fournisseur d'identité n'a pas pu être vérifiée.", 'The identity provider response could not be verified.'),
+  sso_domain_forbidden: () =>
+    tr("Votre adresse n'appartient pas à un domaine autorisé.", 'Your address does not belong to an allowed domain.'),
+  sso_not_in_group: () =>
+    tr("Votre compte n'appartient pas au groupe autorisé.", 'Your account is not in the allowed group.'),
+  sso_unreachable: () =>
+    tr("Le fournisseur d'identité ne répond pas.", 'The identity provider is not responding.'),
+  sso_provider_error: () =>
+    tr("Le fournisseur d'identité a refusé la demande.", 'The identity provider rejected the request.'),
+  sso_discovery_invalid: () =>
+    tr('Configuration du fournisseur introuvable ou incomplète.', 'Provider configuration missing or incomplete.'),
+  sso_insecure_url: () => tr('Adresse non chiffrée refusée (https requis).', 'Unencrypted address refused (https required).'),
+  sso_no_id_token: () => tr("Le fournisseur n'a pas renvoyé d'identité.", 'The provider returned no identity.'),
+  mfa_managed_by_provider: () =>
+    tr("La double authentification est gérée par le fournisseur d'identité de votre organisation.", "Two-factor authentication is handled by your organisation's identity provider."),
+  public_url_invalid: () =>
+    tr("L'adresse publique doit commencer par https://.", 'The public address must start with https://.'),
+  api_tokens_disabled: () =>
+    tr("Les jetons d'API sont désactivés par l'administrateur.", 'API tokens are disabled by the administrator.'),
+  too_many_tokens: () => tr('Vingt jetons au plus par compte.', 'At most twenty tokens per account.'),
+  token_forbidden: () => tr('Action impossible avec un jeton d’API.', 'Not allowed with an API token.'),
+  backup_unsupported: () =>
+    tr('Sauvegarde intégrée disponible avec la base SQLite uniquement.', 'Built-in backup is only available with the SQLite database.'),
   ldap_filter_invalid: () =>
     tr('Le filtre doit être entre parenthèses et contenir {username}.', 'The filter must be in parentheses and contain {username}.'),
   password_mismatch: () => tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.'),
@@ -82,6 +117,11 @@ const ERROR_MESSAGES: Record<string, () => string> = {
     tr('Format de fichier non pris en charge.', 'Unsupported file format.'),
   file_too_large: () => tr('Fichier trop volumineux (5 Mo au plus).', 'File too large (5 MB maximum).'),
   empty_file: () => tr('Le fichier est vide.', 'The file is empty.'),
+}
+
+/** Message lisible pour un code d'erreur du serveur (utilisé aussi par les retours de redirection). */
+export function messageFor(code: string): string {
+  return ERROR_MESSAGES[code]?.() ?? code
 }
 
 export class ApiError extends Error {
@@ -195,6 +235,10 @@ export const api = {
     request<{ codes: string[] }>('/auth/mfa/recovery-codes', { method: 'POST', body: json({ code }) }),
   mfaDisable: (password: string, code: string) =>
     request<void>('/auth/mfa/disable', { method: 'POST', body: json({ password, code }) }),
+  tokens: () => request<ApiTokenInfo[]>('/auth/tokens'),
+  createToken: (name: string, expires_days: number) =>
+    request<ApiTokenInfo & { token: string }>('/auth/tokens', { method: 'POST', body: json({ name, expires_days }) }),
+  revokeToken: (id: string) => request<void>(`/auth/tokens/${id}`, { method: 'DELETE' }),
   guest: () => request<UserProfile>('/auth/guest', { method: 'POST' }),
   logout: () => request<void>('/auth/logout', { method: 'POST' }),
   changePassword: (current: string, password: string, password_confirm: string) =>
@@ -207,7 +251,8 @@ export const api = {
     patch: Partial<{ name: string; role: UserRole; organisation: string; email: string; onboarded: boolean; admin_onboarded: boolean }>,
   ) =>
     request<UserProfile>(`/users/${id}`, { method: 'PATCH', body: json(patch) }),
-  deleteUser: (id: string, password?: string) => request<void>(`/users/${id}`, { method: 'DELETE', body: json({ password: password ?? null }) }),
+  deleteUser: (id: string, password?: string, confirm?: string) =>
+    request<void>(`/users/${id}`, { method: 'DELETE', body: json({ password: password || null, confirm: confirm ?? null }) }),
 
   // Entités
   entities: (userId: string) => request<EntitySummary[]>(`/users/${userId}/entities`).then((l) => l.map(localizeDemoSummary)),
@@ -253,6 +298,10 @@ export const api = {
     testLdap: (config: LdapConfigUpdate, username: string) =>
       request<LdapTestReport>('/admin/ldap/test', { method: 'POST', body: json({ config, username }) }),
     audit: () => request<AuditEvent[]>('/admin/audit'),
+    sso: () => request<SsoConfigRead>('/admin/sso'),
+    saveSso: (c: SsoConfigUpdate) => request<SsoConfigRead>('/admin/sso', { method: 'PUT', body: json(c) }),
+    testSso: (c: SsoConfigUpdate) => request<LdapTestReport>('/admin/sso/test', { method: 'POST', body: json(c) }),
+    backup: () => request<Blob>('/admin/backup', { raw: true }),
   },
 
   publicView: (token: string) => request<PublicView>(`/public/${encodeURIComponent(token)}`),

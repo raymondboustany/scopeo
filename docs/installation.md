@@ -107,12 +107,14 @@ In the **Administration** space:
 - **Settings**: close self-service profile creation, disable guest mode, set the session length.
 - **Log**: administration actions and account security changes.
 
-Serving Scopeo to several people requires a reverse proxy with HTTPS: see [SECURITY.md](../SECURITY.md).
+- **Single sign-on**: let people sign in with their Microsoft, Google, Okta or Keycloak account.
+
+Serving Scopeo to several people requires a server and HTTPS: follow the [deployment guide](deployment.md). Everything else is described in the [documentation](documentation.md).
 
 ## Backing up your data
 
 - One entity: **Profile and data**, then **Export**. The resulting file can be re-imported on another computer.
-- Everything: copy the data folder (`server/data`, or the `scopeo-data` Docker volume). It holds the database `scopeo.db` and the key `secret.key`, which encrypts two-factor authentication and the LDAP service account password: keep them together.
+- Everything: **Administration → Settings → Download a backup**, or copy the data folder (`server/data`, or the `scopeo-data` Docker volume). It holds the database `scopeo.db` and the key `secret.key`, which encrypts security secrets: keep them together.
 
 ## Troubleshooting
 
@@ -234,12 +236,14 @@ Dans l'espace **Administration** :
 - **Réglages** : fermer la création libre de profils, désactiver le mode invité, fixer la durée des sessions.
 - **Journal** : les actions d'administration et les changements de sécurité des comptes.
 
-Servir Scopeo à plusieurs personnes suppose un mandataire inverse en HTTPS : voir [SECURITY.md](../SECURITY.md).
+- **Connexion unique** : permettre de se connecter avec son compte Microsoft, Google, Okta ou Keycloak.
+
+Servir Scopeo à plusieurs personnes suppose un serveur et du HTTPS : suivez le [guide de déploiement](deployment.md#déployer-scopeo-pour-une-équipe). Tout le reste est décrit dans la [documentation](documentation.md#documentation-de-scopeo).
 
 ## Sauvegarder vos données
 
 - Une entité : **Profil et données**, puis **Exporter**. Le fichier obtenu peut être réimporté sur un autre poste.
-- Tout : copiez le dossier de données (`server/data`, ou le volume Docker `scopeo-data`). Il contient la base `scopeo.db` et la clé `secret.key`, qui chiffre la double authentification et le mot de passe du compte de service LDAP : gardez-les ensemble.
+- Tout : **Administration → Réglages → Télécharger une sauvegarde**, ou copiez le dossier de données (`server/data`, ou le volume Docker `scopeo-data`). Il contient la base `scopeo.db` et la clé `secret.key`, qui chiffre les secrets de sécurité : gardez-les ensemble.
 
 ## En cas de problème
 

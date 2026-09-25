@@ -36,6 +36,8 @@ _USER_COLUMNS = {
     "auth_source": "VARCHAR NOT NULL DEFAULT 'local'",
     "ldap_dn": "VARCHAR",
     "ldap_username": "VARCHAR",
+    "oidc_issuer": "VARCHAR",
+    "oidc_sub": "VARCHAR",
     "mfa_enabled": "BOOLEAN NOT NULL DEFAULT 0",
     "mfa_secret": "VARCHAR",
     "mfa_pending_secret": "VARCHAR",

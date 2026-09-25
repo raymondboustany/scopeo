@@ -6,6 +6,7 @@ import {
   Copy,
   Crown,
   KeyRound,
+  KeySquare,
   MoreHorizontal,
   Network,
   Plus,
@@ -74,7 +75,8 @@ export default function UsersPage() {
       active: active.length,
       admins: active.filter((u) => u.is_admin).length,
       mfa: active.filter((u) => u.mfa_enabled).length,
-      ldap: users.filter((u) => u.auth_source === 'ldap').length,
+      mfaEligible: active.filter((u) => u.auth_source !== 'oidc').length,
+      external: users.filter((u) => u.auth_source !== 'local').length,
     }
   }, [users])
 
@@ -98,8 +100,8 @@ export default function UsersPage() {
         {[
           { label: tr('Comptes actifs', 'Active accounts'), value: stats.active },
           { label: tr('Administrateurs', 'Administrators'), value: stats.admins },
-          { label: tr('Double authentification', 'Two-factor authentication'), value: `${stats.mfa} / ${stats.active}` },
-          { label: tr("Comptes de l'annuaire", 'Directory accounts'), value: stats.ldap },
+          { label: tr('Double authentification', 'Two-factor authentication'), value: `${stats.mfa} / ${stats.mfaEligible}` },
+          { label: tr('Annuaire et connexion unique', 'Directory and single sign-on'), value: stats.external },
         ].map((s) => (
           <Card key={s.label} className="px-5 py-4">
             <div className="text-xs text-ink-3">{s.label}</div>
@@ -158,7 +160,12 @@ export default function UsersPage() {
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    {u.auth_source === 'ldap' ? (
+                    {u.auth_source === 'oidc' ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs text-ink-2">
+                        <KeySquare size={13} className="text-ink-3" />
+                        {tr('Connexion unique', 'Single sign-on')}
+                      </span>
+                    ) : u.auth_source === 'ldap' ? (
                       <span className="inline-flex items-center gap-1.5 text-xs text-ink-2">
                         <Network size={13} className="text-ink-3" />
                         {tr('Annuaire', 'Directory')}
@@ -177,7 +184,7 @@ export default function UsersPage() {
                         </Tag>
                       ) : null}
                       {u.disabled ? <Tag tone="critical">{tr('Suspendu', 'Suspended')}</Tag> : null}
-                      {u.mfa_enabled ? (
+                      {u.auth_source === 'oidc' ? null : u.mfa_enabled ? (
                         <Tag tone="positive">
                           <ShieldCheck size={11} />
                           {tr('Double auth.', '2FA')}
@@ -186,6 +193,7 @@ export default function UsersPage() {
                         <Tag>{tr('Sans double auth.', 'No 2FA')}</Tag>
                       )}
                       {u.must_change_password ? <Tag tone="caution">{tr('Mot de passe provisoire', 'Temporary password')}</Tag> : null}
+                      {u.auth_source === 'local' && !u.has_password ? <Tag tone="critical">{tr('Sans mot de passe', 'No password')}</Tag> : null}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-xs text-ink-2 tabular-nums">
@@ -215,8 +223,8 @@ export default function UsersPage() {
 
       <p className="text-xs leading-relaxed text-ink-3">
         {tr(
-          "Les comptes de l'annuaire sont créés à leur première connexion, en utilisateur ordinaire. Les invités ne figurent pas ici : leur session et leurs données disparaissent à la déconnexion.",
-          'Directory accounts are created at their first sign-in, as ordinary users. Guests are not listed: their session and data disappear on sign-out.',
+          "Les comptes de l'annuaire et de la connexion unique sont créés à leur première connexion, en utilisateur ordinaire. Un compte « Sans mot de passe » vient d'une version de développement : attribuez-lui un mot de passe provisoire ou supprimez-le. Les invités ne figurent pas ici : leurs données disparaissent à la déconnexion.",
+          'Directory and single sign-on accounts are created at their first sign-in, as ordinary users. An account marked "No password" comes from a development version: give it a temporary password or delete it. Guests are not listed: their data disappears on sign-out.',
         )}
       </p>
 

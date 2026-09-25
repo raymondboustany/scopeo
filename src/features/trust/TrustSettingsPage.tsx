@@ -53,7 +53,7 @@ export default function TrustSettingsPage() {
       />
 
       <Callout tone="caution" icon={<Construction size={14} />} title={tr('Fonctionnalité en démonstration, locale uniquement', 'Demo feature, local only')}>
-        {tr("Le Trust Center fonctionne pour l'instant sur ce poste : le lien public n'est consultable que depuis la machine qui fait tourner Scopeo. Le partage en ligne, accessible à un tiers depuis internet, arrivera dans une prochaine mise à jour.", 'The Trust Center currently runs on this machine only: the public link can only be opened from the computer running Scopeo. Online sharing, reachable by a third party over the internet, will come in a future update.')}
+        {tr("Le Trust Center est une fonction de démonstration : le lien public s'ouvre sans compte, mais seulement pour qui peut joindre le serveur Scopeo (ce poste, ou le réseau de votre organisation). Un partage prévu pour des tiers sur internet arrivera dans une prochaine mise à jour.", 'The Trust Center is a demo feature: the public link opens without an account, but only for people who can reach the Scopeo server (this machine, or your organisation network). Sharing designed for third parties over the internet will come in a future update.')}
       </Callout>
 
       <Card>

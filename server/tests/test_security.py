@@ -9,13 +9,15 @@ import pyotp
 import pytest
 from fastapi.testclient import TestClient
 from ldap3 import MOCK_SYNC, Connection, Server
-from sqlmodel import Session, delete, select
+from datetime import datetime, timezone
+
+from sqlmodel import Session, delete, select, update
 
 from app import directory
 from app.auth import sessions, throttle
 from app.db import engine
 from app.main import DEMO_USER_ID, app
-from app.models import AuditEvent, Entity, EntityFile, EntityRevision, Setting, User
+from app.models import ApiToken, AuditEvent, Entity, EntityFile, EntityRevision, Setting, User, UserSession
 from app.security import challenges
 
 PASSWORD = "correct horse battery"
@@ -29,6 +31,8 @@ def _wipe() -> None:
         session.exec(delete(EntityRevision).where(EntityRevision.entity_id.in_(demo_entities)))
         session.exec(delete(EntityFile).where(EntityFile.entity_id.in_(demo_entities)))
         session.exec(delete(Entity).where(Entity.user_id != DEMO_USER_ID))
+        session.exec(delete(UserSession))
+        session.exec(delete(ApiToken))
         session.exec(delete(User).where(User.id != DEMO_USER_ID))
         session.exec(delete(Setting))
         session.exec(delete(AuditEvent))
@@ -74,7 +78,8 @@ def other_client():
 
 def test_une_base_vide_ne_propose_que_la_creation_du_premier_compte(client):
     status = client.get("/api/auth/status").json()
-    assert status == {"has_accounts": False, "registration_open": True, "guest_enabled": False, "ldap_enabled": False, "ldap_label": ""}
+    assert status["has_accounts"] is False and status["registration_open"] is True
+    assert not status["guest_enabled"] and not status["ldap_enabled"] and not status["sso_enabled"]
     assert client.post("/api/auth/guest").json()["detail"] == "setup_required"
 
 
@@ -188,13 +193,13 @@ def test_reglages_globaux_inscription_et_mode_invite(client):
 
 def test_une_session_expire_apres_la_duree_fixee(client):
     register(client)
-    sessions.max_age = 1
-    try:
-        for s in sessions._sessions.values():
-            s.created_at -= 5
-        assert client.get("/api/auth/me").status_code == 401
-    finally:
-        sessions.max_age = 12 * 3600
+    token = client.cookies.get("scopeo_session")
+    assert sessions.get(token) is not None
+    with Session(engine) as session:
+        session.exec(update(UserSession).values(expires_at=datetime(2000, 1, 1, tzinfo=timezone.utc)))
+        session.commit()
+    assert sessions.get(token) is None
+    assert client.get("/api/auth/me").status_code == 401
 
 
 # ---------------------------------------------------------------------------

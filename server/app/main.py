@@ -12,6 +12,7 @@ Les messages d'erreur sont des codes stables (``invalid_credentials``,
 from __future__ import annotations
 
 import json
+import secrets
 import threading
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
@@ -20,15 +21,17 @@ from urllib.parse import quote
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from sqlmodel import Session, col, select
+from sqlmodel import Session, col, func, select
 
-from . import directory
+from . import directory, sso
 from .admin import router as admin_router
 from .auth import SESSION_COOKIE, hash_password, password_problem, sessions, throttle, verify_password
 from .db import engine, get_session, init_db
 from .deps import (
+    COOKIE_SECURE,
+    TOKEN_PREFIX,
     admin_count,
     apply_session_lifetime,
     audit,
@@ -41,12 +44,18 @@ from .deps import (
     has_accounts,
     ldap_config,
     open_session,
+    public_url,
     real_users,
+    sso_config,
+    token_digest,
     user_read,
     verify_identity,
 )
-from .models import Entity, EntityFile, EntityRevision, User, new_token, now
+from .models import ApiToken, Entity, EntityFile, EntityRevision, User, UserSession, new_token, now
 from .schemas import (
+    ApiTokenCreate,
+    ApiTokenCreated,
+    ApiTokenRead,
     AuthStatus,
     DeleteProfilePayload,
     EntityCreate,
@@ -165,14 +174,17 @@ def seed_demo() -> None:
         session.commit()
 
 
-def purge_empty_guests() -> None:
-    """Les sessions ne survivent pas à un redémarrage : un profil invité sans
-    entité n'est plus joignable et peut être supprimé."""
+def purge_stale_guests() -> None:
+    """Un invité sans session ouverte n'est plus joignable : ses données sont effacées.
+
+    La déconnexion le fait déjà ; ceci rattrape les sessions invitées expirées
+    ou abandonnées (navigateur fermé sans se déconnecter).
+    """
+    sessions.purge_expired()
     with Session(engine) as session:
         for user in session.exec(select(User).where(col(User.is_guest).is_(True))).all():
-            has_entity = session.exec(select(Entity.id).where(Entity.user_id == user.id)).first()
-            if has_entity is None:
-                session.delete(user)
+            if session.exec(select(UserSession.token_hash).where(UserSession.user_id == user.id)).first() is None:
+                delete_user_tree(session, user)
         session.commit()
 
 
@@ -180,14 +192,24 @@ def purge_empty_guests() -> None:
 async def lifespan(_app: FastAPI):
     init_db()
     seed_demo()
-    purge_empty_guests()
+    purge_stale_guests()
     with Session(engine) as session:
         ensure_admin(session)
         apply_session_lifetime(session)
     yield
 
 
-app = FastAPI(title="Scopeo", version="1.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="Scopeo",
+    version="1.0.0",
+    description="API de la plateforme Scopeo. Authentification par cookie de session (interface) ou par jeton personnel `Authorization: Bearer scp_…` (intégrations).",
+    lifespan=lifespan,
+    # Description OpenAPI publiée pour les intégrations ; pas d'interface Swagger,
+    # qui chargerait des ressources externes interdites par la politique de sécurité.
+    docs_url=None,
+    redoc_url=None,
+    openapi_url="/api/openapi.json",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -200,7 +222,10 @@ app.add_middleware(
 
 @app.middleware("http")
 async def security_middleware(request: Request, call_next):
-    if request.url.path.startswith("/api/") and request.method in {"POST", "PUT", "PATCH", "DELETE"}:
+    # Un jeton porté par l'en-tête Authorization ne peut pas être posé par un site
+    # tiers : l'en-tête anti-CSRF n'est exigé que des requêtes authentifiées par cookie.
+    bearer = request.headers.get("authorization", "").lower().startswith("bearer ")
+    if request.url.path.startswith("/api/") and request.method in {"POST", "PUT", "PATCH", "DELETE"} and not bearer:
         if request.headers.get(CSRF_HEADER) != "1":
             return JSONResponse({"detail": "csrf"}, status_code=status.HTTP_403_FORBIDDEN)
     response = await call_next(request)
@@ -208,6 +233,8 @@ async def security_middleware(request: Request, call_next):
     response.headers.setdefault("X-Frame-Options", "DENY")
     response.headers.setdefault("Referrer-Policy", "no-referrer")
     response.headers.setdefault("Cross-Origin-Opener-Policy", "same-origin")
+    if COOKIE_SECURE:
+        response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
     if not request.url.path.startswith("/api/"):
         response.headers.setdefault(
             "Content-Security-Policy",
@@ -316,6 +343,7 @@ _register_lock = threading.Lock()
 def auth_status(session: Session = Depends(get_session)) -> AuthStatus:
     settings = global_settings(session)
     ldap = ldap_config(session)
+    sso_conf = sso_config(session)
     first_run = not has_accounts(session)
     return AuthStatus(
         has_accounts=not first_run,
@@ -323,6 +351,9 @@ def auth_status(session: Session = Depends(get_session)) -> AuthStatus:
         guest_enabled=not first_run and settings.guest_enabled,
         ldap_enabled=not first_run and bool(ldap.get("enabled")),
         ldap_label=ldap.get("label") or "",
+        sso_enabled=not first_run and bool(sso_conf.get("enabled")),
+        sso_label=sso_conf.get("label") or "",
+        api_tokens_enabled=settings.api_tokens_enabled,
     )
 
 
@@ -527,6 +558,128 @@ def change_password(
 
 
 # ---------------------------------------------------------------------------
+# Connexion unique (OIDC)
+# ---------------------------------------------------------------------------
+
+
+def _sso_redirect(target: str) -> RedirectResponse:
+    response = RedirectResponse(target, status_code=status.HTTP_303_SEE_OTHER)
+    response.delete_cookie(sso.STATE_COOKIE, path="/api/auth/sso", samesite="lax", httponly=True, secure=COOKIE_SECURE)
+    return response
+
+
+@app.get("/api/auth/sso/start")
+def sso_start(request: Request, session: Session = Depends(get_session)) -> Response:
+    config = sso_config(session)
+    if not config.get("enabled") or not has_accounts(session):
+        return _sso_redirect("/#/?sso_error=sso_disabled")
+    try:
+        url, state = sso.start(config, public_url(session, request) + sso.CALLBACK_PATH)
+    except sso.SsoError as exc:
+        return _sso_redirect(f"/#/?sso_error={exc.code}")
+    response = RedirectResponse(url, status_code=status.HTTP_303_SEE_OTHER)
+    # « Lax » : le cookie doit revenir lors du retour, qui est une navigation depuis le fournisseur.
+    response.set_cookie(sso.STATE_COOKIE, state, max_age=sso.STATE_TTL, httponly=True, samesite="lax", secure=COOKIE_SECURE, path="/api/auth/sso")
+    return response
+
+
+def _sso_account(session: Session, identity: sso.SsoIdentity) -> User:
+    """Compte rattaché à l'identité du fournisseur, créé à la première connexion.
+
+    Jamais rapproché d'un compte existant par le seul courriel : ce serait
+    offrir un compte à quiconque contrôle une adresse identique chez le fournisseur.
+    """
+    user = session.exec(select(User).where(User.auth_source == "oidc", User.oidc_issuer == identity.issuer, User.oidc_sub == identity.subject)).first()
+    if user is not None:
+        if identity.email and not user.email:
+            user.email = identity.email
+        return user
+    name = identity.name or identity.email or "SSO"
+    if _find_by_name(session, name):
+        name = f"{name} ({identity.email or identity.subject[:8]})"
+    user = User(name=name, email=identity.email, auth_source="oidc", oidc_issuer=identity.issuer, oidc_sub=identity.subject)
+    session.add(user)
+    audit(session, None, "account_created_sso", name, identity.email)
+    session.flush()
+    return user
+
+
+@app.get("/api/auth/sso/callback")
+def sso_callback(request: Request, session: Session = Depends(get_session), state: str = "", code: str = "", error: str = "") -> Response:
+    if error:
+        return _sso_redirect("/#/?sso_error=sso_cancelled")
+    cookie_state = request.cookies.get(sso.STATE_COOKIE, "")
+    if not state or not code or not secrets.compare_digest(cookie_state, state):
+        return _sso_redirect("/#/?sso_error=sso_state_invalid")
+    config = sso_config(session)
+    if not config.get("enabled"):
+        return _sso_redirect("/#/?sso_error=sso_disabled")
+    try:
+        identity = sso.finish(config, state, code)
+    except sso.SsoError as exc:
+        return _sso_redirect(f"/#/?sso_error={exc.code}")
+    user = _sso_account(session, identity)
+    if user.disabled:
+        session.commit()
+        return _sso_redirect("/#/?sso_error=account_disabled")
+    user.last_login_at = now()
+    session.add(user)
+    session.commit()
+    response = _sso_redirect("/#/?sso=ok")
+    open_session(response, user)
+    return response
+
+
+# ---------------------------------------------------------------------------
+# Jetons d'accès personnels (intégrations)
+# ---------------------------------------------------------------------------
+
+
+def _tokens_allowed(session: Session, user: User) -> None:
+    if user.is_guest:
+        raise _error(status.HTTP_403_FORBIDDEN, "guest_forbidden")
+    if not global_settings(session).api_tokens_enabled:
+        raise _error(status.HTTP_403_FORBIDDEN, "api_tokens_disabled")
+
+
+@app.get("/api/auth/tokens", response_model=list[ApiTokenRead])
+def list_tokens(user: User = Depends(current_user), session: Session = Depends(get_session)) -> list[ApiToken]:
+    return list(session.exec(select(ApiToken).where(ApiToken.user_id == user.id).order_by(col(ApiToken.created_at).desc())).all())
+
+
+@app.post("/api/auth/tokens", response_model=ApiTokenCreated, status_code=status.HTTP_201_CREATED)
+def create_token(payload: ApiTokenCreate, user: User = Depends(current_user), session: Session = Depends(get_session)) -> ApiTokenCreated:
+    _tokens_allowed(session, user)
+    count = session.exec(select(func.count()).select_from(ApiToken).where(ApiToken.user_id == user.id)).one()
+    if count >= 20:
+        raise _error(status.HTTP_409_CONFLICT, "too_many_tokens")
+    secret = TOKEN_PREFIX + secrets.token_urlsafe(32)
+    row = ApiToken(
+        user_id=user.id,
+        name=payload.name.strip() or "API",
+        token_hash=token_digest(secret),
+        prefix=secret[:10],
+        expires_at=now() + timedelta(days=payload.expires_days) if payload.expires_days else None,
+    )
+    session.add(row)
+    audit(session, user, "api_token_created", user.name, row.name)
+    session.commit()
+    session.refresh(row)
+    return ApiTokenCreated(**ApiTokenRead.model_validate(row).model_dump(), token=secret)
+
+
+@app.delete("/api/auth/tokens/{token_id}", status_code=status.HTTP_204_NO_CONTENT)
+def revoke_token(token_id: str, user: User = Depends(current_user), session: Session = Depends(get_session)) -> Response:
+    row = session.get(ApiToken, token_id)
+    if row is None or row.user_id != user.id:
+        raise _error(status.HTTP_404_NOT_FOUND, "not_found")
+    session.delete(row)
+    audit(session, user, "api_token_revoked", user.name, row.name)
+    session.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+# ---------------------------------------------------------------------------
 # Second facteur
 # ---------------------------------------------------------------------------
 
@@ -534,6 +687,9 @@ def change_password(
 def _no_guest(user: User) -> None:
     if user.is_guest:
         raise _error(status.HTTP_403_FORBIDDEN, "guest_forbidden")
+    # Connexion unique : le second facteur relève du fournisseur d'identité.
+    if user.auth_source == "oidc":
+        raise _error(status.HTTP_403_FORBIDDEN, "mfa_managed_by_provider")
 
 
 def _check_identity(session: Session, user: User, password: str) -> None:
@@ -657,8 +813,13 @@ def delete_user(
 ) -> Response:
     _self_or_403(user, user_id)
     if not user.is_guest:
-        supplied = payload.password.get_secret_value() if payload.password else ""
-        _check_identity(session, user, supplied)
+        if user.auth_source == "oidc":
+            # Pas de mot de passe connu de Scopeo : confirmation par le nom du profil.
+            if (payload.confirm or "").strip() != user.name.strip():
+                raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
+        else:
+            supplied = payload.password.get_secret_value() if payload.password else ""
+            _check_identity(session, user, supplied)
         # Le dernier administrateur ne part pas en laissant d'autres comptes sans gestion.
         if user.is_admin and admin_count(session) <= 1 and len(real_users(session)) > 1:
             raise _error(status.HTTP_409_CONFLICT, "last_admin")

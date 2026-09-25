@@ -161,11 +161,20 @@ const ADMIN_STEPS: Step[] = [
     target: 'admin-nav-ldap',
   },
   {
+    id: 'admin-sso',
+    title: tr('La connexion unique', 'Single sign-on'),
+    body: tr(
+      "Pour une organisation sous Microsoft Entra ID, Google, Okta ou Keycloak : un bouton « Se connecter avec… » apparaît sur l'accueil, et le fournisseur gère mot de passe et double authentification.",
+      'For an organisation using Microsoft Entra ID, Google, Okta or Keycloak: a "Sign in with…" button appears on the home page, and the provider handles password and two-factor authentication.',
+    ),
+    target: 'admin-nav-sso',
+  },
+  {
     id: 'admin-reglages',
     title: tr('Les réglages', 'Settings'),
     body: tr(
-      'Ouvrir ou fermer la création libre de profils, autoriser le mode invité, fixer la durée des sessions.',
-      'Open or close self-service profile creation, allow guest mode, set the session length.',
+      'Création libre de profils, mode invité, durée des sessions, adresse publique, jetons d’API pour les intégrations, et sauvegarde.',
+      'Self-service profile creation, guest mode, session length, public address, API tokens for integrations, and backup.',
     ),
     target: 'admin-nav-settings',
   },

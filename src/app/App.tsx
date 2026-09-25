@@ -32,6 +32,7 @@ const Settings = lazy(() => import('@/features/settings/SettingsPage'))
 const AdminLayout = lazy(() => import('@/features/admin/AdminLayout'))
 const AdminUsers = lazy(() => import('@/features/admin/UsersPage'))
 const AdminLdap = lazy(() => import('@/features/admin/LdapPage'))
+const AdminSso = lazy(() => import('@/features/admin/SsoPage'))
 const AdminSettings = lazy(() => import('@/features/admin/SettingsAdminPage'))
 const AdminAudit = lazy(() => import('@/features/admin/AuditPage'))
 
@@ -128,8 +129,8 @@ function ServerDown() {
         }
       >
         {tr(
-          "La plateforme enregistre vos données sur un serveur qui tourne sur ce poste. Lancez-le avec ",
-          'The platform stores your data on a server running on this machine. Start it with ',
+          "La plateforme ne joint pas son serveur. Sur un serveur d'équipe, prévenez l'administrateur ; sur ce poste, lancez-le avec ",
+          'The platform cannot reach its server. On a team server, contact the administrator; on this machine, start it with ',
         )}
         <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">npm run dev</code>
         {tr(' puis rechargez.', ' then reload.')}
@@ -211,6 +212,7 @@ const router = createHashRouter([
     children: [
       { index: true, element: <AdminUsers /> },
       { path: 'annuaire', element: <AdminLdap /> },
+      { path: 'sso', element: <AdminSso /> },
       { path: 'reglages', element: <AdminSettings /> },
       { path: 'journal', element: <AdminAudit /> },
       { path: '*', element: <Navigate to="/admin" replace /> },

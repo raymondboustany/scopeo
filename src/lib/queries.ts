@@ -76,6 +76,12 @@ export function useLdapLogin() {
   })
 }
 
+/** Retour de la connexion unique : le serveur a déjà ouvert la session, on la reprend ici. */
+export function useSsoResume() {
+  const open = useOpenSession()
+  return useMutation({ mutationFn: () => api.me(), onSuccess: open })
+}
+
 export function useMfaVerify() {
   const open = useOpenSession()
   return useMutation({
@@ -130,7 +136,7 @@ export function useDeleteUser() {
   const qc = useQueryClient()
   const signOut = useSession((s) => s.signOut)
   return useMutation({
-    mutationFn: ({ id, password }: { id: string; password?: string }) => api.deleteUser(id, password),
+    mutationFn: ({ id, password, confirm }: { id: string; password?: string; confirm?: string }) => api.deleteUser(id, password, confirm),
     onSuccess: () => {
       signOut()
       qc.clear()

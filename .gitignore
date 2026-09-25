@@ -35,6 +35,7 @@ __pycache__/
 # Réglages locaux
 .env
 .env.*
+!.env.example
 
 # Artefacts de publication
 release/

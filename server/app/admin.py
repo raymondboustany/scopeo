@@ -7,10 +7,10 @@ un administrateur gère des accès, pas le contenu des cadrages.
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Request, Response, status
 from sqlmodel import Session, col, select
 
-from . import directory
+from . import backup, directory, sso
 from .auth import hash_password, password_problem, sessions
 from .db import get_session
 from .deps import (
@@ -18,13 +18,16 @@ from .deps import (
     admin_user,
     apply_session_lifetime,
     audit,
+    can_sign_in,
     delete_user_tree,
     entity_count,
     error,
     global_settings,
     ldap_config,
+    public_url,
     read_setting,
     real_users,
+    sso_config,
     write_setting,
 )
 from .models import AuditEvent, User, now
@@ -40,6 +43,8 @@ from .schemas import (
     LdapTestPayload,
     LdapTestRead,
     LdapTestStep,
+    SsoConfigRead,
+    SsoConfigUpdate,
 )
 from .security import encrypt
 
@@ -57,6 +62,7 @@ def _read(session: Session, user: User) -> AdminUserRead:
         disabled=user.disabled,
         auth_source=user.auth_source,
         ldap_username=user.ldap_username,
+        has_password=bool(user.password_hash),
         mfa_enabled=user.mfa_enabled,
         must_change_password=user.must_change_password,
         entity_count=entity_count(session, user),
@@ -127,7 +133,8 @@ def update_user(
     session: Session = Depends(get_session),
 ) -> AdminUserRead:
     user = _target(session, user_id)
-    losing_admin = (payload.is_admin is False and user.is_admin) or (payload.disabled is True and user.is_admin and not user.disabled)
+    effective_admin = user.is_admin and not user.disabled and can_sign_in(user)
+    losing_admin = effective_admin and (payload.is_admin is False or payload.disabled is True)
     if losing_admin and admin_count(session) <= 1:
         raise error(status.HTTP_409_CONFLICT, "last_admin")
     if user.id == admin.id and (payload.disabled or payload.is_admin is False):
@@ -139,11 +146,12 @@ def update_user(
     if payload.disabled is not None and payload.disabled != user.disabled:
         user.disabled = payload.disabled
         audit(session, admin, "user_disabled" if payload.disabled else "user_enabled", user.name)
-        if payload.disabled:
-            sessions.revoke_user(user.id)
     user.updated_at = now()
     session.add(user)
     session.commit()
+    # Après validation : les sessions sont dans la même base, hors de cette transaction.
+    if user.disabled:
+        sessions.revoke_user(user.id)
     session.refresh(user)
     return _read(session, user)
 
@@ -194,7 +202,7 @@ def delete_user(user_id: str, admin: User = Depends(admin_user), session: Sessio
     user = _target(session, user_id)
     if user.id == admin.id:
         raise error(status.HTTP_409_CONFLICT, "cannot_change_self")
-    if user.is_admin and admin_count(session) <= 1:
+    if user.is_admin and not user.disabled and can_sign_in(user) and admin_count(session) <= 1:
         raise error(status.HTTP_409_CONFLICT, "last_admin")
     name = user.name
     delete_user_tree(session, user)
@@ -216,6 +224,9 @@ def read_settings(session: Session = Depends(get_session)) -> GlobalSettings:
 
 @router.put("/settings", response_model=GlobalSettings)
 def update_settings(payload: GlobalSettings, admin: User = Depends(admin_user), session: Session = Depends(get_session)) -> GlobalSettings:
+    payload.public_url = payload.public_url.strip().rstrip("/")
+    if payload.public_url and not payload.public_url.startswith(("https://", "http://localhost", "http://127.0.0.1")):
+        raise error(status.HTTP_422_UNPROCESSABLE_CONTENT, "public_url_invalid")
     before = global_settings(session)
     write_setting(session, "global", payload.model_dump())
     changed = [k for k, v in payload.model_dump().items() if getattr(before, k) != v]
@@ -284,3 +295,70 @@ def test_ldap(payload: LdapTestPayload, session: Session = Depends(get_session))
 def read_audit(limit: int = 200, session: Session = Depends(get_session)) -> list[AuditEvent]:
     limit = max(1, min(limit, 1000))
     return list(session.exec(select(AuditEvent).order_by(col(AuditEvent.at).desc()).limit(limit)).all())
+
+
+# ---------------------------------------------------------------------------
+# Connexion unique (OIDC)
+# ---------------------------------------------------------------------------
+
+
+def _sso_read(session: Session, request: Request, config: dict) -> SsoConfigRead:
+    data = {k: v for k, v in config.items() if k != "client_secret"}
+    return SsoConfigRead(**data, has_client_secret=bool(config.get("client_secret")), redirect_uri=public_url(session, request) + sso.CALLBACK_PATH)
+
+
+def _sso_merge(session: Session, payload: SsoConfigUpdate) -> dict:
+    stored = read_setting(session, "sso", {})
+    config = {**sso.DEFAULTS, **payload.model_dump(exclude={"client_secret", "clear_client_secret"})}
+    config = {k: v.strip() if isinstance(v, str) else v for k, v in config.items()}
+    config["issuer"] = config["issuer"].rstrip("/")
+    if payload.clear_client_secret:
+        config["client_secret"] = None
+    elif payload.client_secret is not None and payload.client_secret.get_secret_value():
+        config["client_secret"] = encrypt(payload.client_secret.get_secret_value())
+    else:
+        config["client_secret"] = stored.get("client_secret")
+    return config
+
+
+@router.get("/sso", response_model=SsoConfigRead)
+def read_sso(request: Request, session: Session = Depends(get_session)) -> SsoConfigRead:
+    return _sso_read(session, request, sso_config(session))
+
+
+@router.put("/sso", response_model=SsoConfigRead)
+def update_sso(payload: SsoConfigUpdate, request: Request, admin: User = Depends(admin_user), session: Session = Depends(get_session)) -> SsoConfigRead:
+    config = _sso_merge(session, payload)
+    problem = sso.config_problem(config)
+    if problem:
+        raise error(status.HTTP_422_UNPROCESSABLE_CONTENT, problem)
+    was_enabled = bool(sso_config(session).get("enabled"))
+    write_setting(session, "sso", config)
+    action = "sso_enabled" if config["enabled"] and not was_enabled else "sso_disabled" if was_enabled and not config["enabled"] else "sso_updated"
+    audit(session, admin, action, config.get("issuer", ""))
+    session.commit()
+    sso.clear_cache()
+    return _sso_read(session, request, config)
+
+
+@router.post("/sso/test", response_model=LdapTestRead)
+def test_sso(payload: SsoConfigUpdate, session: Session = Depends(get_session)) -> LdapTestRead:
+    steps = sso.test(_sso_merge(session, payload))
+    return LdapTestRead(ok=all(ok for _, ok, _ in steps), steps=[LdapTestStep(id=i, ok=ok, detail=d) for i, ok, d in steps])
+
+
+# ---------------------------------------------------------------------------
+# Sauvegarde
+# ---------------------------------------------------------------------------
+
+
+@router.get("/backup")
+def download_backup(admin: User = Depends(admin_user), session: Session = Depends(get_session)) -> Response:
+    """Base et clé de chiffrement, dans une archive : à conserver chiffrée, hors du serveur."""
+    try:
+        data, name = backup.build_archive()
+    except RuntimeError:
+        raise error(status.HTTP_409_CONFLICT, "backup_unsupported")
+    audit(session, admin, "backup_downloaded", "", name)
+    session.commit()
+    return Response(content=data, media_type="application/zip", headers={"Content-Disposition": f'attachment; filename="{name}"'})

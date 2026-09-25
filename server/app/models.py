@@ -60,10 +60,13 @@ class User(SQLModel, table=True):
     disabled: bool = False
     # Mot de passe provisoire posé par un administrateur : à changer à la connexion.
     must_change_password: bool = False
-    # Origine du compte : ``local`` (mot de passe haché ici) ou ``ldap``.
+    # Origine du compte : ``local`` (mot de passe haché ici), ``ldap`` ou ``oidc``.
     auth_source: str = "local"
     ldap_dn: str | None = Field(default=None, index=True)
     ldap_username: str | None = Field(default=None)
+    # Connexion unique (OIDC) : émetteur et identifiant stable fournis par le fournisseur.
+    oidc_issuer: str | None = Field(default=None)
+    oidc_sub: str | None = Field(default=None, index=True)
     # Second facteur (TOTP) : graine chiffrée, codes de récupération en empreintes.
     mfa_enabled: bool = False
     mfa_secret: str | None = Field(default=None)
@@ -73,6 +76,32 @@ class User(SQLModel, table=True):
     last_login_at: datetime | None = Field(default=None)
     created_at: datetime = Field(default_factory=now)
     updated_at: datetime = Field(default_factory=now)
+
+
+class UserSession(SQLModel, table=True):
+    """Session ouverte. Seule l'empreinte SHA-256 du jeton est conservée."""
+
+    token_hash: str = Field(primary_key=True)
+    user_id: str = Field(foreign_key="user.id", index=True)
+    created_at: datetime = Field(default_factory=now)
+    expires_at: datetime | None = Field(default=None, index=True)
+
+
+class ApiToken(SQLModel, table=True):
+    """Jeton d'accès personnel pour les intégrations (scripts, outils GRC).
+
+    Il agit au nom de son titulaire, sur ses seules entités, sans accès à
+    l'administration ni aux réglages de sécurité du compte.
+    """
+
+    id: str = Field(default_factory=new_id, primary_key=True)
+    user_id: str = Field(foreign_key="user.id", index=True)
+    name: str
+    token_hash: str = Field(index=True, unique=True)
+    prefix: str
+    created_at: datetime = Field(default_factory=now)
+    last_used_at: datetime | None = Field(default=None)
+    expires_at: datetime | None = Field(default=None)
 
 
 class Setting(SQLModel, table=True):

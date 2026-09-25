@@ -88,6 +88,9 @@ class AuthStatus(BaseModel):
     guest_enabled: bool
     ldap_enabled: bool
     ldap_label: str
+    sso_enabled: bool = False
+    sso_label: str = ""
+    api_tokens_enabled: bool = False
 
 
 class PasswordChangePayload(BaseModel):
@@ -98,6 +101,31 @@ class PasswordChangePayload(BaseModel):
 
 class DeleteProfilePayload(BaseModel):
     password: SecretStr | None = None
+    # Comptes à connexion unique : confirmation par le nom du profil.
+    confirm: str | None = Field(default=None, max_length=120)
+
+
+class ApiTokenCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=80)
+    # Durée de validité en jours ; 0 pour un jeton sans échéance.
+    expires_days: int = Field(default=90, ge=0, le=730)
+
+
+class ApiTokenRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    name: str
+    prefix: str
+    created_at: UTCDateTime
+    last_used_at: UTCDateTime | None
+    expires_at: UTCDateTime | None
+
+
+class ApiTokenCreated(ApiTokenRead):
+    """Le jeton n'est montré qu'une fois, à sa création."""
+
+    token: str
 
 
 class UserUpdate(BaseModel):
@@ -240,6 +268,7 @@ class AdminUserRead(BaseModel):
     disabled: bool
     auth_source: str
     ldap_username: str | None
+    has_password: bool
     mfa_enabled: bool
     must_change_password: bool
     entity_count: int
@@ -269,6 +298,10 @@ class GlobalSettings(BaseModel):
     registration_open: bool = True
     guest_enabled: bool = True
     session_hours: int = Field(default=12, ge=1, le=720)
+    # Adresse publique (https://scopeo.exemple.fr) : nécessaire à la connexion unique.
+    public_url: str = Field(default="", max_length=300)
+    # Jetons d'accès personnels pour les intégrations : désactivés par défaut.
+    api_tokens_enabled: bool = False
 
 
 class LdapConfigBase(BaseModel):
@@ -309,6 +342,27 @@ class LdapTestStep(BaseModel):
 class LdapTestRead(BaseModel):
     ok: bool
     steps: list[LdapTestStep]
+
+
+class SsoConfigBase(BaseModel):
+    enabled: bool = False
+    label: str = Field(default="", max_length=80)
+    issuer: str = Field(default="", max_length=300)
+    client_id: str = Field(default="", max_length=300)
+    scopes: str = Field(default="openid profile email", max_length=300)
+    allowed_domains: str = Field(default="", max_length=400)
+    groups_claim: str = Field(default="groups", max_length=80)
+    required_group: str = Field(default="", max_length=300)
+
+
+class SsoConfigRead(SsoConfigBase):
+    has_client_secret: bool = False
+    redirect_uri: str = ""
+
+
+class SsoConfigUpdate(SsoConfigBase):
+    client_secret: SecretStr | None = None
+    clear_client_secret: bool = False
 
 
 class AuditRead(BaseModel):

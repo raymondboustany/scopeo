@@ -4,10 +4,10 @@ Portée volontairement limitée à un usage sur le poste :
 
 - mots de passe hachés avec bcrypt, jamais conservés en clair ;
 - session serveur, référencée par un cookie ``HttpOnly`` et ``SameSite=Strict`` ;
-  seule l'empreinte SHA-256 du jeton est gardée en mémoire, de sorte qu'une
-  copie de la mémoire ne permet pas de rejouer une session ;
+  seule l'empreinte SHA-256 du jeton est conservée en base, de sorte qu'une
+  copie de la base ne permet pas de rejouer une session ;
 - une session expire après la durée fixée par l'administrateur (12 heures par
-  défaut), à la déconnexion, ou à l'arrêt du serveur ;
+  défaut) ou à la déconnexion ; elle survit à un redémarrage du serveur ;
 - limitation des tentatives de connexion, pour ralentir un essai exhaustif.
 
 Le second facteur (TOTP) est traité dans ``security``, l'annuaire LDAP dans
@@ -22,8 +22,13 @@ import secrets
 import threading
 import time
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 
 import bcrypt
+from sqlmodel import Session as DbSession, delete
+
+from .db import engine
+from .models import UserSession
 
 SESSION_COOKIE = "scopeo_session"
 
@@ -73,16 +78,22 @@ def verify_password(password: str, hashed: str | None) -> bool:
 @dataclass
 class Session:
     user_id: str
-    created_at: float
+    created_at: datetime
+
+
+def _utc(value: datetime) -> datetime:
+    return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
 
 
 class SessionStore:
-    """Sessions en mémoire, indexées par l'empreinte du jeton."""
+    """Sessions conservées en base, indexées par l'empreinte du jeton.
+
+    Elles survivent à un redémarrage du serveur et expirent à l'échéance fixée
+    lors de leur ouverture (durée réglée par l'administrateur).
+    """
 
     def __init__(self) -> None:
-        self._sessions: dict[str, Session] = {}
-        self._lock = threading.Lock()
-        # Durée de vie d'une session, en secondes ; 0 pour aucune limite.
+        # Durée de vie d'une nouvelle session, en secondes ; 0 pour aucune limite.
         self.max_age = 12 * 3600
 
     @staticmethod
@@ -91,37 +102,57 @@ class SessionStore:
 
     def create(self, user_id: str) -> str:
         token = secrets.token_urlsafe(32)
-        with self._lock:
-            self._sessions[self._digest(token)] = Session(user_id=user_id, created_at=time.time())
+        now = datetime.now(timezone.utc)
+        expires = now + timedelta(seconds=self.max_age) if self.max_age else None
+        with DbSession(engine) as db:
+            db.add(UserSession(token_hash=self._digest(token), user_id=user_id, created_at=now, expires_at=expires))
+            db.commit()
         return token
 
     def get(self, token: str | None) -> Session | None:
         if not token:
             return None
-        key = self._digest(token)
-        with self._lock:
-            session = self._sessions.get(key)
-            if session is not None and self.max_age and time.time() - session.created_at > self.max_age:
-                del self._sessions[key]
+        with DbSession(engine) as db:
+            row = db.get(UserSession, self._digest(token))
+            if row is None:
                 return None
-            return session
+            if row.expires_at is not None and _utc(row.expires_at) < datetime.now(timezone.utc):
+                db.delete(row)
+                db.commit()
+                return None
+            return Session(user_id=row.user_id, created_at=_utc(row.created_at))
 
     def revoke(self, token: str | None) -> Session | None:
         if not token:
             return None
-        with self._lock:
-            return self._sessions.pop(self._digest(token), None)
+        with DbSession(engine) as db:
+            row = db.get(UserSession, self._digest(token))
+            if row is None:
+                return None
+            found = Session(user_id=row.user_id, created_at=_utc(row.created_at))
+            db.delete(row)
+            db.commit()
+            return found
 
     def revoke_user(self, user_id: str, keep: str | None = None) -> None:
         """Ferme toutes les sessions d'un profil, sauf éventuellement la courante."""
         kept = self._digest(keep) if keep else None
-        with self._lock:
-            for key in [k for k, s in self._sessions.items() if s.user_id == user_id and k != kept]:
-                del self._sessions[key]
+        with DbSession(engine) as db:
+            query = delete(UserSession).where(UserSession.user_id == user_id)
+            if kept:
+                query = query.where(UserSession.token_hash != kept)
+            db.exec(query)
+            db.commit()
+
+    def purge_expired(self) -> None:
+        with DbSession(engine) as db:
+            db.exec(delete(UserSession).where(UserSession.expires_at < datetime.now(timezone.utc)))
+            db.commit()
 
     def clear(self) -> None:
-        with self._lock:
-            self._sessions.clear()
+        with DbSession(engine) as db:
+            db.exec(delete(UserSession))
+            db.commit()
 
 
 sessions = SessionStore()

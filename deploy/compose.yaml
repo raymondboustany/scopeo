@@ -1,0 +1,54 @@
+# Scopeo for a team: HTTPS with Caddy / Scopeo pour une équipe : HTTPS avec Caddy
+#
+# 1. Copy .env.example to .env and set SCOPEO_DOMAIN.
+#    Copier .env.example en .env et renseigner SCOPEO_DOMAIN.
+# 2. Point the domain's DNS record to this server (ports 80 and 443 open).
+#    Faire pointer le DNS du domaine vers ce serveur (ports 80 et 443 ouverts).
+# 3. docker compose up -d
+#
+# Caddy obtains and renews the certificate automatically (Let's Encrypt), or uses
+# your internal certificate authority: see docs/deployment.md.
+# Caddy obtient et renouvelle le certificat automatiquement (Let's Encrypt), ou
+# utilise votre autorité de certification interne : voir docs/deployment.md.
+
+services:
+  scopeo:
+    image: ghcr.io/raymondboustany/scopeo:latest
+    restart: unless-stopped
+    environment:
+      SCOPEO_PUBLIC_URL: https://${SCOPEO_DOMAIN:?Set SCOPEO_DOMAIN in .env}
+      # Session cookie sent over HTTPS only, and HSTS header.
+      # Cookie de session limité à HTTPS, et en-tête HSTS.
+      SCOPEO_COOKIE_SECURE: "1"
+      # Optional: encryption key for security secrets (otherwise secret.key in the volume).
+      # Facultatif : clé de chiffrement des secrets (sinon secret.key dans le volume).
+      SCOPEO_SECRET_KEY: ${SCOPEO_SECRET_KEY:-}
+      # Trust the client address forwarded by Caddy (sign-in throttling, log).
+      # Faire confiance à l'adresse client transmise par Caddy (freinage des connexions).
+      FORWARDED_ALLOW_IPS: "*"
+    volumes:
+      - scopeo-data:/data
+    # No published port: only Caddy reaches Scopeo.
+    # Aucun port publié : seul Caddy joint Scopeo.
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - scopeo
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      SCOPEO_DOMAIN: ${SCOPEO_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  scopeo-data:
+  caddy-data:
+  caddy-config:

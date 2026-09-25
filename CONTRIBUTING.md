@@ -41,8 +41,10 @@ src/data/          Corpus: texts, obligations, crosswalk, ReCyF, ISO 27001, time
 src/engines/       Pure, tested logic: scoping, scope, prioritisation, scores, deadlines, ISO mapping
 src/i18n/          English interface and English versions of the corpus
 src/features/      One folder per screen
-server/app/        FastAPI API: persistence, authentication (MFA, LDAP), administration; no regulatory logic
+server/app/        FastAPI API: persistence, authentication (MFA, LDAP, SSO), administration, API tokens, backup; no regulatory logic
 texts/fr, texts/en Official texts as published (PDF)
+deploy/            Team deployment (Docker Compose + Caddy)
+docs/              Documentation, installation and deployment guides
 ```
 
 Every regulatory rule lives in `src/engines` or `src/data`, never in an interface component, and comes with a test citing the article it rests on. French is the reference version of the corpus; the English version lives in `src/i18n/en/`.
@@ -108,8 +110,10 @@ src/data/          Corpus : textes, obligations, croisements, ReCyF, ISO 27001, 
 src/engines/       Logique pure et testée : qualification, périmètre, priorisation, scores, délais, correspondance ISO
 src/i18n/          Interface en anglais et versions anglaises du corpus
 src/features/      Un dossier par écran
-server/app/        API FastAPI : persistance, authentification (MFA, LDAP), administration ; aucune logique réglementaire
+server/app/        API FastAPI : persistance, authentification (MFA, LDAP, SSO), administration, jetons d'API, sauvegarde ; aucune logique réglementaire
 texts/fr, texts/en Textes officiels tels que publiés (PDF)
+deploy/            Déploiement d'équipe (Docker Compose + Caddy)
+docs/              Documentation, guides d'installation et de déploiement
 ```
 
 Toute règle réglementaire vit dans `src/engines` ou `src/data`, jamais dans un composant d'interface, et s'accompagne d'un test citant l'article qui la fonde. Le français est la version de référence du corpus ; la version anglaise se trouve dans `src/i18n/en/`.

@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { Database, Download, KeyRound, Languages, LogOut, Trash2, Upload, UserRound } from 'lucide-react'
 import { Button, Dialog, Input, SegmentedControl, Select } from '@/components/ui/controls'
 import { Callout, Card, CardHeader, PageHeader, Tag } from '@/components/ui/primitives'
-import { useChangePassword, useCurrentUser, useDeleteUser, useEntities, useLogout, useUpdateUser, queryClient, keys, flushAll } from '@/lib/queries'
+import { useAuthStatus, useChangePassword, useCurrentUser, useDeleteUser, useEntities, useLogout, useUpdateUser, queryClient, keys, flushAll } from '@/lib/queries'
 import { useSession } from '@/lib/store'
 import { api } from '@/lib/api'
 import { useScoping } from '@/lib/hooks'
 import { slugify } from '@/lib/utils'
 import { MfaCard } from './MfaCard'
+import { ApiTokensCard } from './ApiTokensCard'
 import { LANG, setLang, tr, type Lang } from '@/i18n'
 import type { EntityRecord, UserRole } from '@/types/domain'
 
@@ -45,6 +46,7 @@ export default function SettingsPage() {
   const [draft, setDraft] = useState<{ name: string; role: UserRole; organisation: string; email: string } | null>(null)
   const [deleting, setDeleting] = useState(false)
   const [deletePassword, setDeletePassword] = useState('')
+  const { data: status } = useAuthStatus()
   const [pw, setPw] = useState({ current: '', password: '', confirm: '' })
   const [pwDone, setPwDone] = useState(false)
   const [importMsg, setImportMsg] = useState<{ tone: 'positive' | 'critical'; text: string } | null>(null)
@@ -177,20 +179,27 @@ export default function SettingsPage() {
         </Card>
       )}
 
-      {user.auth_source === 'ldap' ? (
+      {user.auth_source !== 'local' && !user.is_guest ? (
         <Card>
           <CardHeader
             title={tr('Mot de passe', 'Password')}
-            subtitle={tr(
-              "Votre compte provient de l'annuaire de votre organisation : le mot de passe se change dans l'annuaire, pas dans Scopeo.",
-              "Your account comes from your organisation's directory: the password is changed in the directory, not in Scopeo.",
-            )}
+            subtitle={
+              user.auth_source === 'oidc'
+                ? tr(
+                    "Vous vous connectez avec le compte de votre organisation (connexion unique) : mot de passe et double authentification sont gérés par votre fournisseur d'identité.",
+                    "You sign in with your organisation account (single sign-on): password and two-factor authentication are handled by your identity provider.",
+                  )
+                : tr(
+                    "Votre compte provient de l'annuaire de votre organisation : le mot de passe se change dans l'annuaire, pas dans Scopeo.",
+                    "Your account comes from your organisation's directory: the password is changed in the directory, not in Scopeo.",
+                  )
+            }
             icon={<KeyRound size={16} />}
           />
         </Card>
       ) : null}
 
-      {user.is_guest || user.auth_source === 'ldap' ? null : (
+      {user.is_guest || user.auth_source !== 'local' ? null : (
         <Card>
           <CardHeader
             title={tr('Mot de passe', 'Password')}
@@ -231,7 +240,9 @@ export default function SettingsPage() {
         </Card>
       )}
 
-      {user.is_guest ? null : <MfaCard user={user} />}
+      {user.is_guest || user.auth_source === 'oidc' ? null : <MfaCard user={user} />}
+
+      {user.is_guest || !status?.api_tokens_enabled ? null : <ApiTokensCard />}
 
       <Card>
         <CardHeader title={tr('Langue de l’interface', 'Interface language')} icon={<Languages size={16} />} />
@@ -298,8 +309,8 @@ export default function SettingsPage() {
         <div className="space-y-2 p-5 text-sm leading-relaxed text-ink-2">
           <p>
             {tr(
-              "Tout est enregistré dans une base SQLite sur ce poste, par le serveur local de la plateforme : ",
-              "Everything is stored in a SQLite database on this machine, by the platform's local server: ",
+              "Tout est enregistré dans une base SQLite, sur la machine qui fait tourner Scopeo (ce poste, ou le serveur de votre organisation) : ",
+              "Everything is stored in a SQLite database, on the machine running Scopeo (this computer, or your organisation's server): ",
             )}
             <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">server/data/scopeo.db</code>{' '}
             {tr('(modifiable par la variable', '(configurable with the')} <code className="font-mono text-xs">SCOPEO_DATA_DIR</code>
@@ -315,8 +326,8 @@ export default function SettingsPage() {
           </p>
           <p>
             {tr(
-              "Aucune donnée ne quitte le poste. La vue du Trust Center, en démonstration, n'est consultable que depuis cette machine.",
-              'No data leaves the machine. The Trust Center view, still a demo, can only be opened from this machine.',
+              "Aucune donnée de cadrage n'est envoyée à un service extérieur : pas de télémétrie, pas de nuage imposé. La connexion par annuaire ou par connexion unique n'échange que l'identité.",
+              'No scoping data is sent to an outside service: no telemetry, no mandatory cloud. Directory or single sign-on only exchanges identity.',
             )}
           </p>
           <p className="text-ink-3">
@@ -364,10 +375,10 @@ export default function SettingsPage() {
             <Button
               variant="danger"
               icon={<Trash2 size={13} />}
-              disabled={del.isPending || (!user.is_guest && !deletePassword)}
+              disabled={del.isPending || (!user.is_guest && (user.auth_source === 'oidc' ? deletePassword.trim() !== user.name.trim() : !deletePassword))}
               onClick={async () => {
                 try {
-                  await del.mutateAsync({ id: user.id, password: deletePassword })
+                  await del.mutateAsync(user.auth_source === 'oidc' ? { id: user.id, confirm: deletePassword } : { id: user.id, password: deletePassword })
                   navigate('/')
                 } catch {
                   setDeletePassword('')
@@ -380,9 +391,16 @@ export default function SettingsPage() {
         }
       >
         <p className="text-sm text-ink-2">{tr('Pensez à exporter les entités que vous souhaitez conserver.', 'Remember to export the entities you want to keep.')}</p>
-        {user.is_guest ? null : (
+        {user.is_guest ? null : user.auth_source === 'oidc' ? (
           <label className="mt-4 block">
-            <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Confirmez avec votre mot de passe', 'Confirm with your password')}</span>
+            <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr(`Saisissez « ${user.name} » pour confirmer`, `Type "${user.name}" to confirm`)}</span>
+            <Input value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
+          </label>
+        ) : (
+          <label className="mt-4 block">
+            <span className="mb-1.5 block text-xs font-medium text-ink-2">
+              {user.auth_source === 'ldap' ? tr("Confirmez avec le mot de passe de l'annuaire", 'Confirm with your directory password') : tr('Confirmez avec votre mot de passe', 'Confirm with your password')}
+            </span>
             <Input type="password" autoComplete="current-password" value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
           </label>
         )}

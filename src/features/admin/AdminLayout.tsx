@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useRef, type ReactNode } from 'react'
 import { Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { ArrowLeft, CircleHelp, History, LogOut, Network, SlidersHorizontal, UsersRound } from 'lucide-react'
+import { ArrowLeft, CircleHelp, History, KeySquare, LogOut, Network, SlidersHorizontal, UsersRound } from 'lucide-react'
 import { Mark } from '@/components/layout/Brand'
 import { LanguageToggle, ThemeToggle } from '@/components/layout/ThemeToggle'
 import { Tooltip } from '@/components/ui/controls'
@@ -21,6 +21,7 @@ import { tr } from '@/i18n'
 const NAV: { to: string; label: string; icon: ReactNode; tour: string }[] = [
   { to: '/admin', label: tr('Comptes', 'Accounts'), icon: <UsersRound size={16} />, tour: 'admin-nav-users' },
   { to: '/admin/annuaire', label: tr('Annuaire LDAP', 'LDAP directory'), icon: <Network size={16} />, tour: 'admin-nav-ldap' },
+  { to: '/admin/sso', label: tr('Connexion unique (SSO)', 'Single sign-on (SSO)'), icon: <KeySquare size={16} />, tour: 'admin-nav-sso' },
   { to: '/admin/reglages', label: tr('Réglages', 'Settings'), icon: <SlidersHorizontal size={16} />, tour: 'admin-nav-settings' },
   { to: '/admin/journal', label: tr('Journal', 'Log'), icon: <History size={16} />, tour: 'admin-nav-audit' },
 ]

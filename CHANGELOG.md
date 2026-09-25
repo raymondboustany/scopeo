@@ -41,7 +41,16 @@ First public release.
 - Password-protected profiles (bcrypt), server-side sessions with a configurable lifetime, throttling of sign-in attempts, protection against cross-site requests.
 - Optional two-factor authentication (TOTP) per user, with QR code and single-use recovery codes.
 - Sign-in through an LDAP directory (Active Directory, OpenLDAP), enabled by an administrator, with a step-by-step connection test.
-- Separate administration space: accounts, temporary passwords, suspension, administrator role, unlocking of two-factor authentication, LDAP directory, global settings and log. The first profile created is the administrator; an administrator never sees other people's entities. The role is checked by the server on every route.
+- Single sign-on through OpenID Connect (Microsoft Entra ID, Google Workspace, Okta, Keycloak), with PKCE, full token validation, and optional restriction by email domain and group.
+- Separate administration space: accounts, temporary passwords, suspension, administrator role, unlocking of two-factor authentication, LDAP directory, single sign-on, settings, backup and log. The first profile created is the administrator; an administrator never sees other people's entities. The role is checked by the server on every route.
+- Sessions stored server-side that survive a restart; security secrets encrypted at rest; HSTS behind HTTPS.
+
+#### Integration and deployment
+
+- REST API described in OpenAPI (`/api/openapi.json`) and personal API tokens (off by default), limited to their owner's entities.
+- Team deployment with Docker Compose and Caddy (automatic HTTPS), for on-premises, cloud or hybrid setups.
+- Built-in backup (download or scheduled command) with restore instructions.
+- Full documentation: usage, security model, configuration, integrations, adaptation.
 
 #### Workspace
 
@@ -91,7 +100,16 @@ Première version publique.
 - Profils protégés par mot de passe (bcrypt), sessions tenues côté serveur avec une durée réglable, freinage des tentatives de connexion, protection contre les requêtes intersites.
 - Double authentification (TOTP) facultative pour chaque utilisateur, avec QR code et codes de récupération à usage unique.
 - Connexion par annuaire LDAP (Active Directory, OpenLDAP), activée par un administrateur, avec un test de connexion pas à pas.
-- Espace d'administration séparé : comptes, mots de passe provisoires, suspension, rôle administrateur, déblocage de la double authentification, annuaire LDAP, réglages globaux et journal. Le premier profil créé est administrateur ; un administrateur ne voit jamais les entités des autres. Le rôle est vérifié par le serveur sur chaque route.
+- Connexion unique par OpenID Connect (Microsoft Entra ID, Google Workspace, Okta, Keycloak), avec PKCE, validation complète du jeton, et restriction facultative par domaine de courriel et par groupe.
+- Espace d'administration séparé : comptes, mots de passe provisoires, suspension, rôle administrateur, déblocage de la double authentification, annuaire LDAP, connexion unique, réglages, sauvegarde et journal. Le premier profil créé est administrateur ; un administrateur ne voit jamais les entités des autres. Le rôle est vérifié par le serveur sur chaque route.
+- Sessions tenues côté serveur et conservées après un redémarrage ; secrets de sécurité chiffrés au repos ; HSTS derrière HTTPS.
+
+#### Intégration et déploiement
+
+- API REST décrite en OpenAPI (`/api/openapi.json`) et jetons d'API personnels (désactivés par défaut), limités aux entités de leur titulaire.
+- Déploiement d'équipe avec Docker Compose et Caddy (HTTPS automatique), sur site, dans le cloud ou en hybride.
+- Sauvegarde intégrée (téléchargement ou commande planifiable) avec instructions de restauration.
+- Documentation complète : usage, modèle de sécurité, configuration, intégrations, adaptation.
 
 #### Espace de travail
 

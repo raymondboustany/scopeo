@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowLeft, ArrowRight, Building2, LockKeyhole, Scale, ShieldCheck, Sparkles, UserPlus, UserRound } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Building2, KeySquare, LockKeyhole, Scale, ShieldCheck, Sparkles, UserPlus, UserRound } from 'lucide-react'
 import { Mark } from '@/components/layout/Brand'
 import { Button, Input, SegmentedControl, Select } from '@/components/ui/controls'
 import { RegChip } from '@/components/ui/primitives'
 import { CodeInput, Field, ForcedPasswordChange, MIN_PASSWORD, PasswordInput, PasswordRules } from '@/components/auth/fields'
-import { useAuthStatus, useGuest, useLdapLogin, useLogin, useMfaVerify, useRegister, useUpdateUser } from '@/lib/queries'
-import { api, ApiError } from '@/lib/api'
+import { useAuthStatus, useGuest, useLdapLogin, useLogin, useMfaVerify, useRegister, useSsoResume, useUpdateUser } from '@/lib/queries'
+import { api, ApiError, messageFor } from '@/lib/api'
 import { useSession } from '@/lib/store'
 import { cn } from '@/lib/utils'
 import { needsMfa, type AuthStatus, type UserProfile, type UserRole } from '@/types/domain'
@@ -135,7 +135,7 @@ export default function LandingPage() {
               <Scale size={13} className="mt-0.5 shrink-0" aria-hidden />
               <span>
                 <strong className="font-medium text-ink-2">{tr("Plateforme d'aide au cadrage, pas un avis juridique.", 'A scoping aid, not legal advice.')}</strong>{' '}
-                {tr('Données enregistrées sur ce poste uniquement.', 'Data stored on this machine only.')}
+                {tr('Données hébergées chez vous : sur ce poste ou sur le serveur de votre organisation.', 'Data hosted by you: on this machine or on your organisation’s server.')}
               </span>
             </p>
           </motion.section>
@@ -220,11 +220,23 @@ function AuthPanel() {
   const [step, setStep] = useState<Step>({ kind: 'signin' })
   const enter = useEnter()
   const signIn = useSession((s) => s.signIn)
+  const [params, setParams] = useSearchParams()
+  const resume = useSsoResume()
+  const resumed = useRef(false)
+  const ssoError = params.get('sso_error')
 
   const afterAuth = (user: UserProfile) => {
     if (user.must_change_password) setStep({ kind: 'change', user })
     else void enter(user)
   }
+
+  // Retour du fournisseur d'identité : la session est ouverte côté serveur.
+  useEffect(() => {
+    if (params.get('sso') !== 'ok' || resumed.current) return
+    resumed.current = true
+    setParams({}, { replace: true })
+    resume.mutate(undefined, { onSuccess: (user) => void enter(user) })
+  }, [params, setParams, resume, enter])
 
   if (isLoading) {
     return <div className="flex h-72 items-center justify-center text-sm text-ink-3">{tr('Chargement…', 'Loading…')}</div>
@@ -262,6 +274,7 @@ function AuthPanel() {
         <SignIn
           key="signin"
           status={status}
+          ssoError={ssoError ? messageFor(ssoError) : null}
           onCreate={() => setStep({ kind: 'create' })}
           onMfa={(challenge) => setStep({ kind: 'mfa', challenge })}
           onUser={afterAuth}
@@ -287,11 +300,13 @@ function AuthPanel() {
 
 function SignIn({
   status,
+  ssoError,
   onCreate,
   onMfa,
   onUser,
 }: {
   status: AuthStatus
+  ssoError: string | null
   onCreate: () => void
   onMfa: (challenge: string) => void
   onUser: (user: UserProfile) => void
@@ -350,6 +365,33 @@ function SignIn({
         {tr('Connexion', 'Sign in')}
       </h2>
       <p className="mt-1 text-sm text-ink-3">{tr('Ouvrez votre profil pour retrouver vos entités.', 'Open your profile to get back to your entities.')}</p>
+
+      {status.sso_enabled ? (
+        <>
+          {/* Navigation complète vers le fournisseur d'identité : pas de requête en arrière-plan. */}
+          <a
+            href="/api/auth/sso/start"
+            className="mt-5 flex h-10 w-full items-center justify-center gap-2 rounded-md border border-rule-2 bg-surface text-sm font-medium text-ink shadow-xs transition-colors hover:border-rule-3 hover:bg-tint"
+          >
+            <KeySquare size={15} className="text-accent" />
+            {tr(`Se connecter avec ${status.sso_label || 'le compte de l’organisation'}`, `Sign in with ${status.sso_label || 'your organisation account'}`)}
+          </a>
+          {ssoError ? (
+            <p role="alert" className="mt-2 text-xs text-critical">
+              {ssoError}
+            </p>
+          ) : null}
+          <div className="mt-5 flex items-center gap-3 text-2xs text-ink-4">
+            <span className="h-px flex-1 bg-rule" />
+            {tr('ou', 'or')}
+            <span className="h-px flex-1 bg-rule" />
+          </div>
+        </>
+      ) : ssoError ? (
+        <p role="alert" className="mt-3 text-xs text-critical">
+          {ssoError}
+        </p>
+      ) : null}
 
       {status.ldap_enabled ? (
         <SegmentedControl

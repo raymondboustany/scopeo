@@ -6,7 +6,7 @@
 
 **Know what applies, and where to start.**
 
-Open source regulatory scoping and gap assessment platform for the **GDPR**, **NIS2**, **DORA**, the **Cyber Resilience Act** and the **AI Act**. Runs on your machine, with no third-party service.
+Open source regulatory scoping and gap assessment platform for the **GDPR**, **NIS2**, **DORA**, the **Cyber Resilience Act** and the **AI Act**. Self-hosted, on your computer or your organisation's server: your data stays with you.
 
 [![CI](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/v/release/raymondboustany/scopeo?label=version)](https://github.com/raymondboustany/scopeo/releases/latest)
@@ -15,7 +15,7 @@ Open source regulatory scoping and gap assessment platform for the **GDPR**, **N
 
 **English** · [Français](#français)
 
-[How it works](#how-it-works) · [Quick start](#quick-start) · [Features](#features) · [Sample reports](#sample-reports) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
+[How it works](#how-it-works) · [Quick start](#quick-start) · [Features](#features) · [Security](#privacy-and-security) · [Documentation](docs/documentation.md) · [Contributing](CONTRIBUTING.md)
 
 <br>
 
@@ -129,9 +129,9 @@ Notification duties apply before compliance work is done. The platform names the
 
 **Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in four phases, from 0 to 3 months to beyond 12 months · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes.
 
-### Accounts and administration
+### Accounts, administration and integration
 
-Built to be shared within a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP), global settings and a log. Each user can turn on **two-factor authentication** (TOTP) with recovery codes. An administrator never sees other people's entities, and the role is checked by the server on every request.
+Works on one computer or shared by a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP) or **single sign-on** (OpenID Connect: Microsoft Entra ID, Google, Okta, Keycloak), settings, backups and a log. Each user can turn on **two-factor authentication** (TOTP). An administrator never sees other people's entities, and the role is checked by the server on every request. For integrations: REST API described in OpenAPI, personal API tokens, JSON export.
 
 <details>
 <summary>Dark theme preview</summary>
@@ -157,7 +157,7 @@ Three PDF deliverables, generated from the fictitious demo entity *Finexa*:
 
 ## Quick start
 
-> **First install?** The [step-by-step installation guide](docs/installation.md) covers every step, with no technical prerequisite.
+> **First install?** The [step-by-step installation guide](docs/installation.md) covers every step, with no technical prerequisite. **For a team** (shared server, HTTPS, directory, single sign-on), follow the [deployment guide](docs/deployment.md).
 
 ### Docker Compose (recommended)
 
@@ -208,7 +208,10 @@ npm run dev        # http://localhost:5173, with hot reload
 | `SCOPEO_HOST` | `127.0.0.1` | Listening address |
 | `SCOPEO_DATA_DIR` | `server/data` (`/data` under Docker) | SQLite database folder |
 | `SCOPEO_COOKIE_SECURE` | off | Mark the session cookie `Secure` when served over HTTPS |
-| `SCOPEO_SECRET_KEY` | `secret.key` file in the data folder | Key encrypting security secrets (two-factor seeds, LDAP service account) |
+| `SCOPEO_SECRET_KEY` | `secret.key` file in the data folder | Key encrypting security secrets (two-factor seeds, LDAP and SSO secrets) |
+| `SCOPEO_PUBLIC_URL` | address of the request | Public `https://` address, needed for single sign-on |
+
+Full reference: [documentation](docs/documentation.md#6-configuration-reference).
 
 </details>
 
@@ -262,7 +265,7 @@ Official texts are kept as PDF, in French and in English, in [texts/](texts/READ
 ┌──────────────────────────────┐        ┌───────────────────────────┐
 │ Interface: React, TypeScript │  /api  │ Server: FastAPI           │
 │ Regulatory engines           │ ─────► │ SQLite persistence        │
-│ PDF reports                  │        │ Accounts, sessions, LDAP  │
+│ PDF reports                  │        │ Accounts, LDAP, SSO, API  │
 └──────────────────────────────┘        └───────────────────────────┘
 ```
 
@@ -274,11 +277,15 @@ All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) ru
 
 ## Privacy and security
 
-- Data stays on the machine: no telemetry, no call to a third-party service.
-- Each profile is protected by a password, hashed with bcrypt and never stored in clear, or by the organisation's directory. Two-factor authentication (TOTP) is available to every user. Sessions are server-side, carried by an `HttpOnly`, `SameSite=Strict` cookie, and expire after a length set by the administrator.
-- Security secrets are encrypted in the database. Administrators manage access, never the content of scoping work.
-- The server listens on `127.0.0.1` by default. Read [SECURITY.md](SECURITY.md) before exposing it on a network.
-- The Trust Center is still a demo feature: it only works locally for now. Online sharing will come in a future update.
+Scoping data describes an organisation's weaknesses. Scopeo is built accordingly.
+
+- **Your data stays with you**: on your computer or your organisation's server. No telemetry, no mandatory cloud service; the directory or identity provider, when enabled, only receives identity requests.
+- **Strong authentication**: bcrypt passwords, optional two-factor authentication (TOTP) with recovery codes, LDAP directory or single sign-on (OpenID Connect with PKCE); sign-in throttling.
+- **Controlled access**: each entity is private to its owner; the administrator role is checked by the server on every request and never gives access to scoping content; API tokens are limited to their owner's entities.
+- **Protected sessions and secrets**: server-side sessions in an `HttpOnly`, `SameSite=Strict` cookie, with a lifetime set by the administrator; security secrets encrypted at rest; security headers, HSTS behind HTTPS.
+- **Traceability and recovery**: log of administration and account security events; built-in and scheduled backups.
+- The server listens on `127.0.0.1` by default. To share it, follow the [deployment guide](docs/deployment.md) (HTTPS required) and [SECURITY.md](SECURITY.md).
+- The Trust Center is still a demo feature: its public link only works for people who can reach your server.
 
 ---
 
@@ -306,11 +313,11 @@ Code released under the [MIT](LICENSE) licence. Regulatory texts remain the prop
 
 **Savoir ce qui s'applique, et par quoi commencer.**
 
-Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD**, **NIS2**, **DORA**, le **Cyber Resilience Act** et l'**AI Act**. Elle fonctionne sur votre poste, sans service tiers.
+Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD**, **NIS2**, **DORA**, le **Cyber Resilience Act** et l'**AI Act**. Auto-hébergée, sur votre poste ou le serveur de votre organisation : vos données restent chez vous.
 
 [English](#scopeo) · **Français**
 
-[Comment ça marche](#comment-ça-marche) · [Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Rapports d'exemple](#rapports-dexemple) · [Feuille de route](ROADMAP.md) · [Contribuer](CONTRIBUTING.md)
+[Comment ça marche](#comment-ça-marche) · [Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Sécurité](#confidentialité-et-sécurité) · [Documentation](docs/documentation.md#documentation-de-scopeo) · [Contribuer](CONTRIBUTING.md)
 
 <br>
 
@@ -424,9 +431,9 @@ Les obligations de notification s'appliquent avant même la mise en conformité.
 
 **Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable · feuille de route en quatre phases, de 0 à 3 mois à plus de 12 mois · échéancier réglementaire · fiche entité · notes d'entretien · Trust Center en lecture seule (local pour l'instant) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · interface en français et en anglais · thèmes clair et sombre.
 
-### Comptes et administration
+### Comptes, administration et intégration
 
-Conçue pour être partagée au sein d'une équipe. Le premier profil créé est administrateur : dans un espace séparé, il gère les comptes (mots de passe provisoires, suspension, rôle administrateur), la connexion par l'**annuaire LDAP** de l'organisation (Active Directory, OpenLDAP), les réglages globaux et un journal. Chaque utilisateur peut activer la **double authentification** (TOTP) avec des codes de récupération. Un administrateur ne voit jamais les entités des autres, et le rôle est vérifié par le serveur à chaque requête.
+Fonctionne sur un poste ou partagée par une équipe. Le premier profil créé est administrateur : dans un espace séparé, il gère les comptes (mots de passe provisoires, suspension, rôle administrateur), la connexion par l'**annuaire LDAP** de l'organisation (Active Directory, OpenLDAP) ou par **connexion unique** (OpenID Connect : Microsoft Entra ID, Google, Okta, Keycloak), les réglages, les sauvegardes et un journal. Chaque utilisateur peut activer la **double authentification** (TOTP). Un administrateur ne voit jamais les entités des autres, et le rôle est vérifié par le serveur à chaque requête. Pour les intégrations : API REST décrite en OpenAPI, jetons d'API personnels, export JSON.
 
 <details>
 <summary>Aperçu du thème sombre</summary>
@@ -452,7 +459,7 @@ Trois livrables PDF, générés à partir de l'entité de démonstration fictive
 
 ## Démarrage rapide
 
-> **Première installation ?** Le [guide d'installation pas à pas](docs/installation.md) détaille chaque étape, sans prérequis technique.
+> **Première installation ?** Le [guide d'installation pas à pas](docs/installation.md) détaille chaque étape, sans prérequis technique. **Pour une équipe** (serveur partagé, HTTPS, annuaire, connexion unique), suivez le [guide de déploiement](docs/deployment.md#déployer-scopeo-pour-une-équipe).
 
 ### Docker Compose (recommandé)
 
@@ -503,7 +510,10 @@ npm run dev        # http://localhost:5173, avec rechargement automatique
 | `SCOPEO_HOST` | `127.0.0.1` | Adresse d'écoute |
 | `SCOPEO_DATA_DIR` | `server/data` (`/data` sous Docker) | Dossier de la base SQLite |
 | `SCOPEO_COOKIE_SECURE` | désactivé | Marque le cookie de session `Secure` derrière HTTPS |
-| `SCOPEO_SECRET_KEY` | fichier `secret.key` du dossier de données | Clé de chiffrement des secrets de sécurité (graines de double authentification, compte de service LDAP) |
+| `SCOPEO_SECRET_KEY` | fichier `secret.key` du dossier de données | Clé de chiffrement des secrets de sécurité (graines de double authentification, secrets LDAP et SSO) |
+| `SCOPEO_PUBLIC_URL` | adresse de la requête | Adresse publique `https://`, nécessaire à la connexion unique |
+
+Référence complète : [documentation](docs/documentation.md#6-référence-de-configuration).
 
 </details>
 
@@ -557,7 +567,7 @@ Les textes officiels sont conservés en PDF, en français et en anglais, dans [t
 ┌──────────────────────────────┐        ┌───────────────────────────┐
 │ Interface : React, TypeScript│  /api  │ Serveur : FastAPI         │
 │ Moteurs réglementaires       │ ─────► │ Persistance SQLite        │
-│ Rapports PDF                 │        │ Comptes, sessions, LDAP   │
+│ Rapports PDF                 │        │ Comptes, LDAP, SSO, API   │
 └──────────────────────────────┘        └───────────────────────────┘
 ```
 
@@ -569,11 +579,15 @@ Toute la logique réglementaire (qualification, périmètre, priorisation, déla
 
 ## Confidentialité et sécurité
 
-- Les données ne quittent pas le poste : aucune télémétrie, aucun appel à un service tiers.
-- Chaque profil est protégé par un mot de passe, haché avec bcrypt et jamais conservé en clair, ou par l'annuaire de l'organisation. La double authentification (TOTP) est proposée à chaque utilisateur. La session est tenue côté serveur, portée par un cookie `HttpOnly` et `SameSite=Strict`, et expire après une durée fixée par l'administrateur.
-- Les secrets de sécurité sont chiffrés dans la base. Les administrateurs gèrent les accès, jamais le contenu des cadrages.
-- Le serveur écoute sur `127.0.0.1` par défaut. Lisez [SECURITY.md](SECURITY.md) avant de l'exposer sur un réseau.
-- Le Trust Center est encore une fonction de démonstration : il ne fonctionne qu'en local pour l'instant. Le partage en ligne arrivera dans une prochaine mise à jour.
+Les données de cadrage décrivent les faiblesses d'une organisation. Scopeo est conçu en conséquence.
+
+- **Vos données restent chez vous** : sur votre poste ou le serveur de votre organisation. Aucune télémétrie, aucun service cloud imposé ; l'annuaire ou le fournisseur d'identité, s'ils sont activés, ne reçoivent que des demandes d'identité.
+- **Authentification robuste** : mots de passe bcrypt, double authentification (TOTP) facultative avec codes de récupération, annuaire LDAP ou connexion unique (OpenID Connect avec PKCE) ; freinage des tentatives de connexion.
+- **Accès maîtrisés** : chaque entité reste privée à son propriétaire ; le rôle administrateur est vérifié par le serveur à chaque requête et ne donne jamais accès au contenu des cadrages ; les jetons d'API sont limités aux entités de leur titulaire.
+- **Sessions et secrets protégés** : sessions tenues côté serveur dans un cookie `HttpOnly` et `SameSite=Strict`, d'une durée fixée par l'administrateur ; secrets de sécurité chiffrés au repos ; en-têtes de sécurité, HSTS derrière HTTPS.
+- **Traçabilité et reprise** : journal des actions d'administration et des événements de sécurité des comptes ; sauvegardes intégrées et planifiables.
+- Le serveur écoute sur `127.0.0.1` par défaut. Pour le partager, suivez le [guide de déploiement](docs/deployment.md#déployer-scopeo-pour-une-équipe) (HTTPS obligatoire) et [SECURITY.md](SECURITY.md).
+- Le Trust Center reste une fonction de démonstration : son lien public ne fonctionne que pour qui peut joindre votre serveur.
 
 ---
 

@@ -25,6 +25,14 @@ const ACTIONS: Record<string, string> = {
   ldap_enabled: tr('Annuaire LDAP activé', 'LDAP directory turned on'),
   ldap_disabled: tr('Annuaire LDAP désactivé', 'LDAP directory turned off'),
   ldap_updated: tr('Annuaire LDAP modifié', 'LDAP directory changed'),
+  sso_enabled: tr('Connexion unique activée', 'Single sign-on turned on'),
+  sso_disabled: tr('Connexion unique désactivée', 'Single sign-on turned off'),
+  sso_updated: tr('Connexion unique modifiée', 'Single sign-on changed'),
+  account_created_sso: tr('Compte créé par la connexion unique', 'Account created through single sign-on'),
+  admin_granted_auto: tr('Rôle administrateur attribué automatiquement', 'Administrator role granted automatically'),
+  api_token_created: tr("Jeton d'API créé", 'API token created'),
+  api_token_revoked: tr("Jeton d'API révoqué", 'API token revoked'),
+  backup_downloaded: tr('Sauvegarde téléchargée', 'Backup downloaded'),
 }
 
 const FMT = new Intl.DateTimeFormat(LOCALE, { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
@@ -72,7 +80,7 @@ export default function AuditPage() {
                   <td className="whitespace-nowrap px-4 py-2.5 text-xs tabular-nums text-ink-3">{FMT.format(new Date(e.at))}</td>
                   <td className="px-4 py-2.5 text-ink">
                     {ACTIONS[e.action] ?? e.action}
-                    {e.detail && e.action === 'settings_updated' ? <span className="ml-1.5 font-mono text-2xs text-ink-3">{e.detail}</span> : null}
+                    {e.detail && ['settings_updated', 'api_token_created', 'api_token_revoked'].includes(e.action) ? <span className="ml-1.5 font-mono text-2xs text-ink-3">{e.detail}</span> : null}
                   </td>
                   <td className="px-4 py-2.5 text-ink-2">{e.target}</td>
                   <td className="px-4 py-2.5 text-ink-2">{e.actor || tr('Système', 'System')}</td>
