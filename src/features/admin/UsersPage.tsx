@@ -223,10 +223,18 @@ export default function UsersPage() {
 
       <p className="text-xs leading-relaxed text-ink-3">
         {tr(
-          "Les comptes de l'annuaire et de la connexion unique sont créés à leur première connexion, en utilisateur ordinaire. Un compte « Sans mot de passe » vient d'une version de développement : attribuez-lui un mot de passe provisoire ou supprimez-le. Les invités ne figurent pas ici : leurs données disparaissent à la déconnexion.",
-          'Directory and single sign-on accounts are created at their first sign-in, as ordinary users. An account marked "No password" comes from a development version: give it a temporary password or delete it. Guests are not listed: their data disappears on sign-out.',
+          "Les comptes de l'annuaire et de la connexion unique sont créés à leur première connexion, en utilisateur ordinaire. Les invités ne figurent pas ici : leurs données disparaissent à la déconnexion.",
+          'Directory and single sign-on accounts are created at their first sign-in, as ordinary users. Guests are not listed: their data disappears on sign-out.',
         )}
       </p>
+      {users.some((u) => u.auth_source === 'local' && !u.has_password) ? (
+        <p className="rounded-lg bg-caution-wash px-4 py-2.5 text-xs leading-relaxed text-ink-2">
+          {tr(
+            "Un compte « Sans mot de passe » vient d'une version de développement et ne peut pas se connecter : attribuez-lui un mot de passe provisoire ou supprimez-le.",
+            'An account marked "No password" comes from a development version and cannot sign in: give it a temporary password or delete it.',
+          )}
+        </p>
+      ) : null}
 
       {pending?.kind === 'create' ? (
         <CreateDialog

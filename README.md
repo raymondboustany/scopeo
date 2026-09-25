@@ -19,7 +19,7 @@ Open source regulatory scoping and gap assessment platform for the **GDPR**, **N
 
 <br>
 
-<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, assessment, ISO 27001, corpus, notification, reports, dark theme" width="100%">
+<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, assessment, ISO 27001, prioritisation, incident notification, reports, administration, dark theme" width="100%">
 
 </div>
 
@@ -321,7 +321,7 @@ Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD
 
 <br>
 
-<img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, évaluation, ISO 27001, corpus, signalement, rapports, thème sombre" width="100%">
+<img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, évaluation, ISO 27001, priorisation, signalement, rapports, administration, thème sombre" width="100%">
 
 </div>
 
