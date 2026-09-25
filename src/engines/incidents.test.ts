@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatRemaining, incidentSteps, nextDeadline, suggestedRegimes } from './incidents'
+import { formatRemaining, incidentSteps, nextDeadline, readiness, suggestedRegimes } from './incidents'
 import type { IncidentRecord } from '@/types/domain'
 
 /**
@@ -139,5 +139,21 @@ describe('régimes proposés', () => {
   it('ne propose les horloges du CRA qu’à un fabricant', () => {
     expect(suggestedRegimes(['CRA'], { cra_roles: ['distributeur'] })).toEqual([])
     expect(suggestedRegimes(['CRA'], { cra_roles: ['fabricant'] })).toEqual(['CRA-VULN', 'CRA-INC'])
+  })
+})
+
+describe('préparation au signalement', () => {
+  const contact = (role: 'rssi' | 'reponse' | 'dpo' | 'direction') => ({ id: role, role, name: 'Personne', title: '', email: '', phone: '' })
+
+  it("demande un appui technique à la réponse, distinct de l'autorité à notifier", () => {
+    const before = readiness(['NIS2'], {}, [contact('rssi'), contact('direction')])
+    expect(before.find((i) => i.id === 'reponse')!.ok).toBe(false)
+    const after = readiness(['NIS2'], {}, [contact('rssi'), contact('reponse'), contact('direction')])
+    expect(after.every((i) => i.ok)).toBe(true)
+  })
+
+  it('place le DPO après la sécurité et l’appui technique lorsque le RGPD s’applique', () => {
+    const ids = readiness(['RGPD'], {}, []).map((i) => i.id)
+    expect(ids).toEqual(['autorites', 'securite', 'reponse', 'dpo', 'direction'])
   })
 })

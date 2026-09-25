@@ -74,6 +74,7 @@ const OWNERS: Record<string, string> = {
 
 const contacts: InternalContact[] = [
   { id: 'c-rssi', role: 'rssi', name: 'Karim Benali', title: 'Responsable de la sécurité des systèmes d’information', email: 'rssi@finexa.example', phone: '+33 1 84 00 00 11' },
+  { id: 'c-ir', role: 'reponse', name: 'Astreinte 24/7', title: 'Prestataire de réponse aux incidents qualifié PRIS, contrat d’intervention', email: 'astreinte@prestataire.example', phone: '+33 1 84 00 00 20' },
   { id: 'c-dpo', role: 'dpo', name: 'Claire Morel', title: 'Déléguée à la protection des données', email: 'dpo@finexa.example', phone: '+33 1 84 00 00 12' },
   { id: 'c-dir', role: 'direction', name: 'Thomas Lefèvre', title: 'Directeur général délégué', email: 'direction@finexa.example', phone: '+33 1 84 00 00 10' },
   { id: 'c-jur', role: 'juridique', name: 'Inès Garnier', title: 'Responsable conformité', email: 'conformite@finexa.example', phone: '+33 1 84 00 00 13' },

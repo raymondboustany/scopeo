@@ -26,73 +26,166 @@ interface Step {
   route?: string
 }
 
-const STEPS: Step[] = [
+/** Parcours de l'application : l'essentiel pour mener un cadrage ou un diagnostic. */
+const APP_STEPS: Step[] = [
   {
     id: 'bienvenue',
     title: tr('Une plateforme de cadrage, en amont', 'A scoping platform, upstream'),
-    body: tr("Scopeo établit ce qui s'applique à une organisation au titre du RGPD, de NIS2 (détaillée par le ReCyF), de DORA, du CRA et de l'AI Act, où une action unique satisfait plusieurs textes, et dans quel ordre traiter le reste. Elle intervient avant une plateforme de suivi de conformité au long cours, pas à sa place. Et ce n'est pas un avis juridique : elle structure une décision, elle ne la prend pas.", 'Scopeo establishes what applies to an organisation under the GDPR, NIS2 (detailed by the French ReCyF), DORA, the CRA and the AI Act, where a single action satisfies several texts, and in which order to handle the rest. It comes before a long-term compliance tracking platform, not in its place. And it is not legal advice: it structures a decision, it does not take it.'),
+    body: tr(
+      "Scopeo établit ce qui s'applique à une organisation (RGPD, NIS2 détaillée par le ReCyF, DORA, CRA, AI Act), où une action couvre plusieurs textes, et dans quel ordre traiter le reste. Elle structure une décision ; ce n'est pas un avis juridique.",
+      'Scopeo establishes what applies to an organisation (GDPR, NIS2 detailed by the French ReCyF, DORA, CRA, AI Act), where one action covers several texts, and in which order to handle the rest. It structures a decision; it is not legal advice.',
+    ),
   },
   {
-    id: 'navigation',
-    title: tr("La navigation suit l'exercice", 'Navigation follows the exercise'),
-    body: tr('Cadrer, consulter le référentiel, piloter, préparer, restituer. Le bouton en bas replie le panneau pour ne garder que les icônes.', 'Scope, browse the reference, steer, prepare, report. The button at the bottom collapses the panel to icons only.'),
+    id: 'methode',
+    title: tr('Le déroulé d’une mission', 'How an engagement runs'),
+    body: tr(
+      "La navigation suit l'exercice. En entretien : fiche entité, qualification, puis évaluation de l'existant. Ensuite : priorisation, préparation au signalement et rapports. Le bouton en bas replie le panneau.",
+      'Navigation follows the exercise. During interviews: entity profile, scoping, then assessment of the current state. Afterwards: prioritisation, incident readiness and reports. The button at the bottom collapses the panel.',
+    ),
     target: 'sidebar',
   },
   {
     id: 'entites',
     title: tr('Une entité par organisation cadrée', 'One entity per organisation scoped'),
-    body: tr('Un profil peut suivre plusieurs entités : plusieurs clients, ou plusieurs filiales. Chacune est enregistrée séparément ; en créer une nouvelle ne touche jamais aux autres.', 'A profile can follow several entities: several clients, or several subsidiaries. Each is stored separately; creating a new one never affects the others.'),
+    body: tr(
+      "Un client, une filiale, ou votre propre organisation : chaque entité est enregistrée séparément et se choisit ici. L'exemple Finexa permet de s'entraîner sans rien casser.",
+      'A client, a subsidiary, or your own organisation: each entity is stored separately and selected here. The Finexa example lets you practise without breaking anything.',
+    ),
     target: 'entity-switcher',
-  },
-  {
-    id: 'fiche',
-    title: tr('La fiche entité', 'The entity profile'),
-    body: tr('Client ou organisation interne : société, mission, interlocuteurs. Ces informations ouvrent les rapports et ne sont jamais publiées.', 'Client or internal organisation: company, engagement, contacts. This information opens the reports and is never published.'),
-    target: 'nav-fiche',
   },
   {
     id: 'qualification',
     title: tr('Tout part de la qualification', 'Everything starts with scoping'),
-    body: tr("Une trentaine de questions, chacune rattachée à l'article qu'elle sert à établir, puis une question facultative sur votre démarche ISO 27001. Si une réponse change, la plateforme montre ce qui apparaît et ce qui disparaît dans le périmètre.", 'About thirty questions, each tied to the article it helps establish, then an optional question on your ISO 27001 status. If an answer changes, the platform shows what enters and leaves the scope.'),
+    body: tr(
+      "Chaque question est rattachée à l'article qu'elle sert à établir ; la dernière, facultative, porte sur ISO 27001. Si une réponse change, la plateforme montre ce qui entre dans le périmètre et ce qui en sort.",
+      'Each question is tied to the article it helps establish; the last one, optional, covers ISO 27001. If an answer changes, the platform shows what enters and leaves the scope.',
+    ),
     target: 'nav-qualification',
+  },
+  {
+    id: 'evaluation',
+    title: tr("Évaluer l'existant", 'Assess the current state'),
+    body: tr(
+      'Pour chaque exigence : en place, partiel ou absent. Une entité certifiée ou conforme ISO 27001 peut pré-remplir les exigences correspondantes, à vérifier une par une.',
+      'For each requirement: in place, partial or missing. An ISO 27001 certified or compliant entity can pre-fill the matching requirements, to be checked one by one.',
+    ),
+    target: 'nav-evaluation',
   },
   {
     id: 'score',
     title: tr('Le score se lit avec son dénominateur', 'Read the score with its denominator'),
-    body: tr("L'anneau donne la part des exigences unifiées déclarées en place, et chaque référentiel a son sous-score. Une exigence partielle compte pour moitié.", 'The ring shows the share of unified requirements reported in place, and each framework has its own sub-score. A partial requirement counts for half.'),
+    body: tr(
+      "L'anneau donne la part des exigences déclarées en place, avec un sous-score par texte. Une exigence partielle compte pour moitié.",
+      'The ring shows the share of requirements reported in place, with a sub-score per text. A partial requirement counts for half.',
+    ),
     target: 'score-ring',
     route: '/app',
   },
   {
+    id: 'priorisation',
+    title: tr('Prioriser en quatre phases', 'Prioritise in four phases'),
+    body: tr(
+      "Les écarts sont ordonnés selon leur urgence et leur poids, puis répartis de 0 à 3 mois jusqu'à plus de 12 mois. Les pondérations restent ajustables.",
+      'Gaps are ordered by urgency and weight, then spread from 0 to 3 months to beyond 12 months. Weights remain adjustable.',
+    ),
+    target: 'nav-priorities',
+  },
+  {
     id: 'incidents',
     title: tr('Qui prévenir, et dans quels délais', 'Who to notify, and how fast'),
-    body: tr("Selon les textes applicables, la plateforme désigne les autorités à notifier, leurs délais et la chaîne d'escalade interne. Une information utile dès aujourd'hui, même avant la mise en conformité.", 'Depending on the applicable texts, the platform names the authorities to notify, their deadlines and the internal escalation chain. Useful from day one, even before compliance work.'),
+    body: tr(
+      "Autorités à notifier, délais, chaîne d'escalade interne et appui technique à solliciter : une information utile dès aujourd'hui, avant même la mise en conformité.",
+      'Authorities to notify, deadlines, internal escalation chain and technical support to call on: useful from day one, even before compliance work.',
+    ),
     target: 'incident-section',
     route: '/app',
   },
   {
-    id: 'echeancier',
-    title: tr('Le calendrier réglementaire', 'The regulatory calendar'),
-    body: tr("Une frise que l'on zoome et filtre. Le prochain jalon qui concerne l'entité clignote jusqu'à ce qu'il soit consulté.", 'A timeline you can zoom and filter. The next milestone that concerns the entity blinks until it has been viewed.'),
-    target: 'nav-timeline',
-  },
-  {
     id: 'restitution',
-    title: tr('Restituer à la direction', 'Report to management'),
-    body: tr('Trois PDF : une note COMEX de deux pages pour décider, le rapport de cadrage complet pour instruire, et une fiche réflexe incident à diffuser en interne.', 'Three PDFs: a two-page executive note to decide, the full scoping report to investigate, and an incident quick-reference sheet for internal use.'),
+    title: tr('Restituer', 'Report'),
+    body: tr(
+      'Trois PDF : une note de direction de deux pages pour décider, le rapport de cadrage complet, et une fiche réflexe incident à diffuser en interne.',
+      'Three PDFs: a two-page executive note to decide, the full scoping report, and an incident quick-reference sheet for internal use.',
+    ),
     target: 'nav-report',
   },
   {
     id: 'notes',
     title: tr('Des notes attachées à leur contexte', 'Notes attached to their context'),
-    body: tr("L'icône de bulle, à côté d'une question, d'une exigence ou d'un article, ajoute une note étiquetée : à vérifier, hypothèse, décision, preuve demandée. Le journal d'entretien les rassemble (Alt + N) et le rapport complet reprend les points ouverts.", 'The speech bubble next to a question, a requirement or an article adds a tagged note: to check, assumption, decision, evidence requested. The interview log gathers them (Alt + N) and the full report lists open points.'),
+    body: tr(
+      "La bulle, à côté d'une question ou d'une exigence, ajoute une note étiquetée (à vérifier, hypothèse, décision, preuve demandée). Le journal d'entretien les rassemble (Alt + N) et le rapport reprend les points ouverts.",
+      'The speech bubble next to a question or requirement adds a tagged note (to check, assumption, decision, evidence requested). The interview log gathers them (Alt + N) and the report lists open points.',
+    ),
     target: 'notes',
   },
   {
     id: 'recherche',
-    title: tr('Tout le corpus à portée de clavier', 'The whole corpus at your fingertips'),
-    body: tr("Ctrl K (ou ⌘ K) cherche dans les articles, les exigences, les croisements, le ReCyF et les contrôles ISO 27001. Le point d'interrogation relance ce parcours ; le sélecteur de langue passe l'interface en anglais.", 'Ctrl K (or ⌘ K) searches articles, requirements, crosswalk themes, the ReCyF and ISO 27001 controls. The question mark restarts this tour; the language switch changes the interface language.'),
+    title: tr('Chercher, revoir ce guide', 'Search, replay this guide'),
+    body: tr(
+      'Ctrl K cherche dans les articles, les exigences, le ReCyF et les contrôles ISO 27001. Le point d’interrogation relance ce guide ; la double authentification se règle dans Profil et données.',
+      'Ctrl K searches articles, requirements, the ReCyF and ISO 27001 controls. The question mark replays this guide; two-factor authentication is set in Profile and data.',
+    ),
     target: 'search',
+  },
+]
+
+/** Parcours de l'espace d'administration, montré à la première visite. */
+const ADMIN_STEPS: Step[] = [
+  {
+    id: 'admin-bienvenue',
+    title: tr("L'espace d'administration", 'The administration space'),
+    body: tr(
+      "Ici, vous gérez les accès à Scopeo : comptes, annuaire LDAP, réglages et journal. Vous n'y voyez jamais le contenu des cadrages : les entités de chacun restent privées.",
+      'Here you manage access to Scopeo: accounts, LDAP directory, settings and log. You never see scoping content here: everyone’s entities stay private.',
+    ),
+    route: '/admin',
+  },
+  {
+    id: 'admin-comptes',
+    title: tr('Les comptes', 'Accounts'),
+    body: tr(
+      "Créez un compte avec un mot de passe provisoire, que la personne remplace à sa première connexion. Vous pouvez aussi suspendre un compte, nommer un autre administrateur, ou désactiver la double authentification d'un compte bloqué.",
+      'Create an account with a temporary password, which the person replaces at first sign-in. You can also suspend an account, appoint another administrator, or turn off two-factor authentication for a locked-out account.',
+    ),
+    target: 'admin-nav-users',
+    route: '/admin',
+  },
+  {
+    id: 'admin-ldap',
+    title: tr("L'annuaire de l'organisation", 'The organisation directory'),
+    body: tr(
+      "Reliez Scopeo à Active Directory ou OpenLDAP : un onglet de connexion apparaît alors sur la page d'accueil. Le bouton Tester vérifie chaque étape avant l'activation.",
+      'Connect Scopeo to Active Directory or OpenLDAP: a sign-in tab then appears on the home page. The Test button checks each step before you switch it on.',
+    ),
+    target: 'admin-nav-ldap',
+  },
+  {
+    id: 'admin-reglages',
+    title: tr('Les réglages', 'Settings'),
+    body: tr(
+      'Ouvrir ou fermer la création libre de profils, autoriser le mode invité, fixer la durée des sessions.',
+      'Open or close self-service profile creation, allow guest mode, set the session length.',
+    ),
+    target: 'admin-nav-settings',
+  },
+  {
+    id: 'admin-journal',
+    title: tr('Le journal', 'The log'),
+    body: tr(
+      'Chaque action d’administration et chaque changement de sécurité d’un compte y est daté, avec son auteur.',
+      'Every administration action and every account security change is dated there, with its author.',
+    ),
+    target: 'admin-nav-audit',
+  },
+  {
+    id: 'admin-retour',
+    title: tr('Revenir à Scopeo', 'Back to Scopeo'),
+    body: tr(
+      'Hors de cet espace, vous utilisez Scopeo comme tout autre profil. Le point d’interrogation relance ce guide.',
+      'Outside this space, you use Scopeo like any other profile. The question mark replays this guide.',
+    ),
+    target: 'admin-back',
   },
 ]
 
@@ -133,6 +226,8 @@ export function Tour() {
   const step = useSession((s) => s.tourStep)
   const setStep = useSession((s) => s.setTourStep)
   const close = useSession((s) => s.closeTour)
+  const kind = useSession((s) => s.tourKind)
+  const STEPS = kind === 'admin' ? ADMIN_STEPS : APP_STEPS
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { data: user } = useCurrentUser()
@@ -158,7 +253,9 @@ export function Tour() {
 
   function finish() {
     close()
-    if (user && !user.onboarded) updateUser.mutate({ id: user.id, patch: { onboarded: true } })
+    if (!user) return
+    if (kind === 'admin' && !user.admin_onboarded) updateUser.mutate({ id: user.id, patch: { admin_onboarded: true } })
+    if (kind === 'app' && !user.onboarded) updateUser.mutate({ id: user.id, patch: { onboarded: true } })
   }
 
   const last = step >= STEPS.length - 1

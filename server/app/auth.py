@@ -6,11 +6,12 @@ Portée volontairement limitée à un usage sur le poste :
 - session serveur, référencée par un cookie ``HttpOnly`` et ``SameSite=Strict`` ;
   seule l'empreinte SHA-256 du jeton est gardée en mémoire, de sorte qu'une
   copie de la mémoire ne permet pas de rejouer une session ;
-- les sessions vivent tant que le serveur tourne, ou jusqu'à la déconnexion ;
+- une session expire après la durée fixée par l'administrateur (12 heures par
+  défaut), à la déconnexion, ou à l'arrêt du serveur ;
 - limitation des tentatives de connexion, pour ralentir un essai exhaustif.
 
-Le futur déploiement en ligne s'appuiera sur ce socle (hachage bcrypt, table
-des utilisateurs) pour ajouter jetons, rafraîchissement et second facteur.
+Le second facteur (TOTP) est traité dans ``security``, l'annuaire LDAP dans
+``directory``.
 """
 
 from __future__ import annotations
@@ -81,6 +82,8 @@ class SessionStore:
     def __init__(self) -> None:
         self._sessions: dict[str, Session] = {}
         self._lock = threading.Lock()
+        # Durée de vie d'une session, en secondes ; 0 pour aucune limite.
+        self.max_age = 12 * 3600
 
     @staticmethod
     def _digest(token: str) -> str:
@@ -95,8 +98,13 @@ class SessionStore:
     def get(self, token: str | None) -> Session | None:
         if not token:
             return None
+        key = self._digest(token)
         with self._lock:
-            return self._sessions.get(self._digest(token))
+            session = self._sessions.get(key)
+            if session is not None and self.max_age and time.time() - session.created_at > self.max_age:
+                del self._sessions[key]
+                return None
+            return session
 
     def revoke(self, token: str | None) -> Session | None:
         if not token:

@@ -14,6 +14,7 @@ import {
   CloudUpload,
   LogOut,
   Menu,
+  ShieldCheck,
   Plus,
   Search,
   TriangleAlert,
@@ -244,29 +245,35 @@ function UserMenu() {
   const logout = useLogout()
   const openTour = useSession((s) => s.openTour)
   const navigate = useNavigate()
+  // Le profil invité porte un nom technique en français : on l'affiche dans la langue de l'interface.
+  const displayName = user?.is_guest ? tr('Invité', 'Guest') : (user?.name ?? '')
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button className="inline-flex h-8 items-center gap-2 rounded-md px-1.5 text-[13px] text-ink-2 transition-colors hover:bg-tint hover:text-ink">
           <span className="flex size-6 items-center justify-center rounded-full bg-accent bg-gradient-to-br from-[#8b74ff] to-[#5a3fe0] text-[11px] font-semibold text-white shadow-xs">
-            {(user?.name ?? '?').slice(0, 1).toUpperCase()}
+            {(displayName || '?').slice(0, 1).toUpperCase()}
           </span>
-          <span className="hidden max-w-[8rem] truncate md:inline">{user?.name ?? ''}</span>
+          <span className="hidden max-w-[8rem] truncate md:inline">{displayName}</span>
           <ChevronDown size={13} className="text-ink-3" />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content align="end" sideOffset={6} className="z-50 w-60 rounded-xl border border-rule bg-surface p-1.5 shadow-pop">
           <div className="px-2 py-2">
-            <div className="truncate text-sm font-medium text-ink">{user?.name}</div>
+            <div className="truncate text-sm font-medium text-ink">{displayName}</div>
             <div className="text-2xs text-ink-3">
               {user?.is_guest ? tr('Mode invité', 'Guest mode') : ROLE_LABEL[user?.role ?? 'autre']}
+              {user?.is_admin ? ` · ${tr('administrateur', 'administrator')}` : ''}
               {user?.organisation ? ` · ${user.organisation}` : ''}
             </div>
           </div>
           <DropdownMenu.Separator className="my-1 h-px bg-rule-2" />
           {[
+            ...(user?.is_admin
+              ? [{ icon: <ShieldCheck size={14} />, label: tr('Administration', 'Administration'), onSelect: () => navigate('/admin') }]
+              : []),
             { icon: <UserRound size={14} />, label: tr('Profil et données', 'Profile and data'), onSelect: () => navigate('/app/parametres') },
             { icon: <CircleHelp size={14} />, label: tr('Relancer le parcours guidé', 'Restart the guided tour'), onSelect: () => openTour(0) },
             {

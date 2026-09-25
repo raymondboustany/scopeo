@@ -599,6 +599,15 @@ export function readiness(applicable: RegulationId[], answers: Answers, contacts
       ok: has('rssi'),
     },
     {
+      id: 'reponse',
+      label: tr('Appui technique à la réponse identifié', 'Technical response support identified'),
+      detail: tr(
+        'Équipe interne ou prestataire sous contrat (de préférence qualifié PRIS) pour contenir l’incident et préserver les preuves.',
+        'Internal team or contracted provider (preferably PRIS-qualified) to contain the incident and preserve evidence.',
+      ),
+      ok: has('reponse'),
+    },
+    {
       id: 'direction',
       label: tr('Décideur de direction désigné', 'Executive decision-maker designated'),
       detail: tr(
@@ -609,7 +618,7 @@ export function readiness(applicable: RegulationId[], answers: Answers, contacts
     },
   ]
   if (applicable.includes('RGPD')) {
-    items.splice(2, 0, {
+    items.splice(3, 0, {
       id: 'dpo',
       label: tr('Délégué à la protection des données joignable', 'Data protection officer reachable'),
       detail: tr(

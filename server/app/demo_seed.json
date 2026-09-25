@@ -51,132 +51,132 @@
       "REP-03": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "DON-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "GOV-01": {
         "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "DON-01": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "RSK-02": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "REP-02": {
         "level": "absent",
         "owner": "RSSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "GOV-02": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "GOV-04": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "GOV-03": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "DOC-01": {
         "level": "absent",
         "owner": "Conformité",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "RSK-01": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "REP-01": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "TIE-02": {
         "level": "absent",
         "owner": "Achats",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "TIE-03": {
         "level": "partiel",
         "owner": "Achats",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "HIE-01": {
         "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "IA-01": {
         "level": "absent",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "IA-02": {
         "level": "partiel",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "IA-03": {
         "level": "absent",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "RES-01": {
         "level": "partiel",
         "owner": "DSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "RES-04": {
         "level": "absent",
         "owner": "DSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "TIE-01": {
         "level": "partiel",
         "owner": "Achats",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "IA-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "DON-02": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "IA-05": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "DON-03": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       },
       "RES-03": {
         "level": "absent",
         "owner": "DSI",
-        "updatedAt": "2026-09-24T11:50:38.419Z"
+        "updatedAt": "2026-09-25T10:10:08.039Z"
       }
     },
     "measures": {},
@@ -189,6 +189,14 @@
         "title": "Responsable de la sécurité des systèmes d’information",
         "email": "rssi@finexa.example",
         "phone": "+33 1 84 00 00 11"
+      },
+      {
+        "id": "c-ir",
+        "role": "reponse",
+        "name": "Astreinte 24/7",
+        "title": "Prestataire de réponse aux incidents qualifié PRIS, contrat d’intervention",
+        "email": "astreinte@prestataire.example",
+        "phone": "+33 1 84 00 00 20"
       },
       {
         "id": "c-dpo",
@@ -340,7 +348,7 @@
       ]
     },
     "public_snapshot": {
-      "generatedAt": "2026-09-24T11:50:38.420Z",
+      "generatedAt": "2026-09-25T10:10:08.040Z",
       "sectorLabel": "Infrastructure numérique",
       "score": 46,
       "scores": {

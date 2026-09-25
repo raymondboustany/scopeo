@@ -26,7 +26,15 @@ if not exist "%VENV_PY%" (
   )
   echo Installation du serveur local...
   call %PY% -m venv server\.venv || goto :error
+)
+
+rem Composants du serveur : installes au premier lancement, puis a chaque
+rem changement de server\requirements.txt (nouvelle version de l'archive).
+fc /b server\requirements.txt server\.venv\requirements.txt >nul 2>nul
+if errorlevel 1 (
+  echo Installation des composants du serveur...
   "%VENV_PY%" -m pip install --disable-pip-version-check -q -r server\requirements.txt || goto :error
+  copy /y server\requirements.txt server\.venv\requirements.txt >nul
 )
 
 rem --- Interface (deja compilee dans les versions publiees) -----------------

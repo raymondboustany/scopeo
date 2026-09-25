@@ -14,7 +14,7 @@ document.title = tr('Scopeo : cadrage réglementaire RGPD, NIS2, DORA, CRA, AI A
 // Le thème suit la préférence enregistrée ; clair par défaut.
 const applyTheme = (theme: 'light' | 'dark') => {
   document.documentElement.dataset.theme = theme
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0b0d11' : '#f5f6f8')
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#08090b' : '#eef0f3')
 }
 applyTheme(useSession.getState().theme)
 useSession.subscribe((s) => applyTheme(s.theme))

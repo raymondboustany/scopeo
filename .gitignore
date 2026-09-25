@@ -36,9 +36,6 @@ __pycache__/
 .env
 .env.*
 
-# Référentiel ANSSI : document de travail, référencé par lien (voir texts/README.md)
-texts/ReCyF_*.pdf
-
 # Artefacts de publication
 release/
 *.zip

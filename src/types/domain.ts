@@ -434,14 +434,108 @@ export interface UserProfile {
   email: string
   is_guest: boolean
   onboarded: boolean
+  is_admin: boolean
+  admin_onboarded: boolean
+  auth_source: 'local' | 'ldap'
+  mfa_enabled: boolean
+  must_change_password: boolean
+  recovery_codes_left: number
   created_at: string
   updated_at: string
   entity_count: number
 }
 
+/** Mot de passe accepté, code de second facteur attendu. */
+export interface MfaChallenge {
+  mfa_required: true
+  challenge: string
+}
+
+export type LoginResult = UserProfile | MfaChallenge
+
+export function needsMfa(r: LoginResult): r is MfaChallenge {
+  return 'mfa_required' in r && r.mfa_required === true
+}
+
+/** Ce que l'écran de connexion propose, selon l'état de la base et les réglages. */
+export interface AuthStatus {
+  has_accounts: boolean
+  registration_open: boolean
+  guest_enabled: boolean
+  ldap_enabled: boolean
+  ldap_label: string
+}
+
+export interface MfaSetup {
+  secret: string
+  uri: string
+  qr_svg: string
+}
+
+export interface AdminUser {
+  id: string
+  name: string
+  role: UserRole
+  organisation: string
+  email: string
+  is_admin: boolean
+  disabled: boolean
+  auth_source: 'local' | 'ldap'
+  ldap_username: string | null
+  mfa_enabled: boolean
+  must_change_password: boolean
+  entity_count: number
+  last_login_at: string | null
+  created_at: string
+}
+
+export interface GlobalSettings {
+  registration_open: boolean
+  guest_enabled: boolean
+  session_hours: number
+}
+
+export interface LdapConfig {
+  enabled: boolean
+  label: string
+  url: string
+  start_tls: boolean
+  verify_certificate: boolean
+  bind_dn: string
+  base_dn: string
+  user_filter: string
+  name_attribute: string
+  email_attribute: string
+  group_dn: string
+}
+
+export interface LdapConfigRead extends LdapConfig {
+  has_bind_password: boolean
+}
+
+export interface LdapConfigUpdate extends LdapConfig {
+  bind_password: string | null
+  clear_bind_password: boolean
+}
+
+export interface LdapTestReport {
+  ok: boolean
+  steps: { id: string; ok: boolean; detail: string }[]
+}
+
+export interface AuditEvent {
+  id: string
+  at: string
+  actor: string
+  action: string
+  target: string
+  detail: string
+}
+
 export interface InternalContact {
   id: string
-  role: 'dpo' | 'rssi' | 'direction' | 'juridique' | 'communication' | 'autre'
+  /** `reponse` : équipe interne ou prestataire qui intervient techniquement sur l'incident. */
+  role: 'dpo' | 'rssi' | 'reponse' | 'direction' | 'juridique' | 'communication' | 'autre'
   name: string
   title: string
   email: string

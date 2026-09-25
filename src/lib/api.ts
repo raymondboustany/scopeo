@@ -1,5 +1,14 @@
 import type {
+  AdminUser,
   Answers,
+  AuditEvent,
+  AuthStatus,
+  GlobalSettings,
+  LdapConfigRead,
+  LdapConfigUpdate,
+  LdapTestReport,
+  LoginResult,
+  MfaSetup,
   EntityProfile,
   EntityRecord,
   EntitySummary,
@@ -23,11 +32,39 @@ import { englishDemoFields, localizeDemo, localizeDemoSummary } from '@/i18n/dem
 /** Codes d'erreur du serveur, traduits pour l'interface. */
 const ERROR_MESSAGES: Record<string, () => string> = {
   unauthenticated: () => tr('Session expirée : reconnectez-vous.', 'Session expired: please sign in again.'),
-  invalid_credentials: () => tr('Nom de profil ou mot de passe incorrect.', 'Incorrect profile name or password.'),
+  invalid_credentials: () => tr('Identifiant ou mot de passe incorrect.', 'Incorrect username or password.'),
   too_many_attempts: () =>
     tr('Trop de tentatives. Réessayez dans quelques minutes.', 'Too many attempts. Please try again in a few minutes.'),
-  password_setup_required: () =>
-    tr('Ce profil doit définir un mot de passe.', 'This profile needs to set a password.'),
+  password_unchanged: () =>
+    tr("Le nouveau mot de passe doit être différent de l'actuel.", 'The new password must differ from the current one.'),
+  password_change_required: () =>
+    tr('Choisissez un nouveau mot de passe pour continuer.', 'Choose a new password to continue.'),
+  registration_closed: () =>
+    tr("La création de profil est fermée. Demandez un compte à l'administrateur.", 'Profile creation is closed. Ask the administrator for an account.'),
+  guest_disabled: () => tr("Le mode invité a été désactivé par l'administrateur.", 'Guest mode has been disabled by the administrator.'),
+  setup_required: () => tr("Créez d'abord le profil administrateur.", 'Create the administrator profile first.'),
+  account_disabled: () =>
+    tr("Ce compte est suspendu. Contactez l'administrateur.", 'This account is suspended. Contact the administrator.'),
+  ldap_disabled: () => tr("La connexion par annuaire n'est pas activée.", 'Directory sign-in is not enabled.'),
+  ldap_unavailable: () =>
+    tr("L'annuaire ne répond pas. Réessayez ou contactez l'administrateur.", 'The directory is not responding. Try again or contact the administrator.'),
+  mfa_challenge_expired: () =>
+    tr('La vérification a expiré. Reconnectez-vous.', 'Verification has expired. Please sign in again.'),
+  mfa_invalid_code: () => tr('Code incorrect.', 'Incorrect code.'),
+  mfa_already_enabled: () => tr('La double authentification est déjà active.', 'Two-factor authentication is already on.'),
+  mfa_setup_required: () => tr('Recommencez la configuration.', 'Start the setup again.'),
+  mfa_not_enabled: () => tr("La double authentification n'est pas active.", 'Two-factor authentication is not on.'),
+  managed_by_directory: () =>
+    tr("Ce mot de passe est géré par l'annuaire de votre organisation.", "This password is managed by your organisation's directory."),
+  admin_required: () => tr('Réservé aux administrateurs.', 'Administrators only.'),
+  last_admin: () =>
+    tr('Il doit rester au moins un administrateur actif.', 'At least one active administrator must remain.'),
+  cannot_change_self: () =>
+    tr('Un autre administrateur doit effectuer cette action sur votre compte.', 'Another administrator must do this on your account.'),
+  ldap_url_invalid: () => tr('Adresse invalide : ldap:// ou ldaps:// suivi du serveur.', 'Invalid address: ldap:// or ldaps:// followed by the server.'),
+  ldap_base_dn_required: () => tr('La base de recherche est requise.', 'The search base is required.'),
+  ldap_filter_invalid: () =>
+    tr('Le filtre doit être entre parenthèses et contenir {username}.', 'The filter must be in parentheses and contain {username}.'),
   password_mismatch: () => tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.'),
   password_too_short: () =>
     tr('Le mot de passe doit comporter au moins 10 caractères.', 'The password must be at least 10 characters long.'),
@@ -144,11 +181,20 @@ export const api = {
   health: () => request<{ status: string }>('/health'),
 
   // Authentification
+  status: () => request<AuthStatus>('/auth/status'),
   me: () => request<UserProfile>('/auth/me'),
   register: (input: RegisterInput) => request<UserProfile>('/auth/register', { method: 'POST', body: json(input) }),
-  login: (name: string, password: string) => request<UserProfile>('/auth/login', { method: 'POST', body: json({ name, password }) }),
-  setupPassword: (name: string, password: string, password_confirm: string) =>
-    request<UserProfile>('/auth/setup-password', { method: 'POST', body: json({ name, password, password_confirm }) }),
+  login: (name: string, password: string) => request<LoginResult>('/auth/login', { method: 'POST', body: json({ name, password }) }),
+  ldapLogin: (username: string, password: string) =>
+    request<LoginResult>('/auth/ldap', { method: 'POST', body: json({ username, password }) }),
+  mfaVerify: (challenge: string, code: string) =>
+    request<UserProfile>('/auth/mfa/verify', { method: 'POST', body: json({ challenge, code }) }),
+  mfaSetup: (password: string) => request<MfaSetup>('/auth/mfa/setup', { method: 'POST', body: json({ password }) }),
+  mfaEnable: (code: string) => request<{ codes: string[] }>('/auth/mfa/enable', { method: 'POST', body: json({ code }) }),
+  mfaRecoveryCodes: (code: string) =>
+    request<{ codes: string[] }>('/auth/mfa/recovery-codes', { method: 'POST', body: json({ code }) }),
+  mfaDisable: (password: string, code: string) =>
+    request<void>('/auth/mfa/disable', { method: 'POST', body: json({ password, code }) }),
   guest: () => request<UserProfile>('/auth/guest', { method: 'POST' }),
   logout: () => request<void>('/auth/logout', { method: 'POST' }),
   changePassword: (current: string, password: string, password_confirm: string) =>
@@ -156,7 +202,10 @@ export const api = {
 
   // Profil
   user: (id: string) => request<UserProfile>(`/users/${id}`),
-  updateUser: (id: string, patch: Partial<{ name: string; role: UserRole; organisation: string; email: string; onboarded: boolean }>) =>
+  updateUser: (
+    id: string,
+    patch: Partial<{ name: string; role: UserRole; organisation: string; email: string; onboarded: boolean; admin_onboarded: boolean }>,
+  ) =>
     request<UserProfile>(`/users/${id}`, { method: 'PATCH', body: json(patch) }),
   deleteUser: (id: string, password?: string) => request<void>(`/users/${id}`, { method: 'DELETE', body: json({ password: password ?? null }) }),
 
@@ -185,6 +234,26 @@ export const api = {
     }),
   downloadSoa: (id: string) => request<Blob>(`/entities/${id}/soa`, { raw: true }),
   deleteSoa: (id: string) => request<void>(`/entities/${id}/soa`, { method: 'DELETE' }),
+
+  // Administration
+  admin: {
+    users: () => request<AdminUser[]>('/admin/users'),
+    createUser: (input: { name: string; role: UserRole; organisation?: string; email?: string; password: string; is_admin: boolean }) =>
+      request<AdminUser>('/admin/users', { method: 'POST', body: json(input) }),
+    updateUser: (id: string, patch: { is_admin?: boolean; disabled?: boolean }) =>
+      request<AdminUser>(`/admin/users/${id}`, { method: 'PATCH', body: json(patch) }),
+    resetPassword: (id: string, password: string) =>
+      request<void>(`/admin/users/${id}/password`, { method: 'POST', body: json({ password }) }),
+    resetMfa: (id: string) => request<void>(`/admin/users/${id}/mfa/reset`, { method: 'POST' }),
+    deleteUser: (id: string) => request<void>(`/admin/users/${id}`, { method: 'DELETE' }),
+    settings: () => request<GlobalSettings>('/admin/settings'),
+    saveSettings: (s: GlobalSettings) => request<GlobalSettings>('/admin/settings', { method: 'PUT', body: json(s) }),
+    ldap: () => request<LdapConfigRead>('/admin/ldap'),
+    saveLdap: (c: LdapConfigUpdate) => request<LdapConfigRead>('/admin/ldap', { method: 'PUT', body: json(c) }),
+    testLdap: (config: LdapConfigUpdate, username: string) =>
+      request<LdapTestReport>('/admin/ldap/test', { method: 'POST', body: json({ config, username }) }),
+    audit: () => request<AuditEvent[]>('/admin/audit'),
+  },
 
   publicView: (token: string) => request<PublicView>(`/public/${encodeURIComponent(token)}`),
 }

@@ -12,7 +12,7 @@ Les messages d'erreur sont des codes stables (``invalid_credentials``,
 from __future__ import annotations
 
 import json
-import os
+import threading
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -22,27 +22,66 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-from sqlmodel import Session, col, func, select
+from sqlmodel import Session, col, select
 
-from .auth import SESSION_COOKIE, password_problem, hash_password, sessions, throttle, verify_password
+from . import directory
+from .admin import router as admin_router
+from .auth import SESSION_COOKIE, hash_password, password_problem, sessions, throttle, verify_password
 from .db import engine, get_session, init_db
+from .deps import (
+    admin_count,
+    apply_session_lifetime,
+    audit,
+    clear_cookie,
+    current_user,
+    delete_entity_tree,
+    delete_user_tree,
+    ensure_admin,
+    global_settings,
+    has_accounts,
+    ldap_config,
+    open_session,
+    real_users,
+    user_read,
+    verify_identity,
+)
 from .models import Entity, EntityFile, EntityRevision, User, new_token, now
 from .schemas import (
+    AuthStatus,
     DeleteProfilePayload,
     EntityCreate,
     EntityRead,
     EntitySummary,
     EntityUpdate,
     FileRead,
+    LdapLoginPayload,
     LoginPayload,
+    MfaChallengeRead,
+    MfaCodePayload,
+    MfaDisablePayload,
+    MfaSetupPayload,
+    MfaSetupRead,
+    MfaVerifyPayload,
     PasswordChangePayload,
-    PasswordSetupPayload,
     PublicView,
+    RecoveryCodesRead,
     RegisterPayload,
     RevisionRead,
     ShareUpdate,
     UserRead,
     UserUpdate,
+)
+from .security import (
+    challenges,
+    consume_recovery_code,
+    decrypt,
+    encrypt,
+    new_recovery_codes,
+    new_totp_secret,
+    provisioning_uri,
+    qr_svg,
+    recovery_digest,
+    verify_totp,
 )
 
 DEMO_ENTITY_ID = "demo-finexa"
@@ -67,8 +106,6 @@ SOA_TYPES = {
     "application/vnd.oasis.opendocument.spreadsheet",
     "application/octet-stream",
 }
-
-COOKIE_SECURE = os.environ.get("SCOPEO_COOKIE_SECURE", "").lower() in {"1", "true", "yes"}
 
 # En-tête exigé sur toute requête d'écriture : un formulaire tiers ne peut pas
 # le poser sans déclencher une vérification CORS, que le serveur refuse.
@@ -144,10 +181,13 @@ async def lifespan(_app: FastAPI):
     init_db()
     seed_demo()
     purge_empty_guests()
+    with Session(engine) as session:
+        ensure_admin(session)
+        apply_session_lifetime(session)
     yield
 
 
-app = FastAPI(title="Scopeo", version="2.0.0", lifespan=lifespan)
+app = FastAPI(title="Scopeo", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -185,29 +225,6 @@ async def security_middleware(request: Request, call_next):
 # ---------------------------------------------------------------------------
 
 
-def current_user(request: Request, session: Session = Depends(get_session)) -> User:
-    active = sessions.get(request.cookies.get(SESSION_COOKIE))
-    if active is None:
-        raise _error(status.HTTP_401_UNAUTHORIZED, "unauthenticated")
-    user = session.get(User, active.user_id)
-    if user is None or user.is_demo:
-        sessions.revoke(request.cookies.get(SESSION_COOKIE))
-        raise _error(status.HTTP_401_UNAUTHORIZED, "unauthenticated")
-    return user
-
-
-def _open_session(response: Response, user: User) -> None:
-    token = sessions.create(user.id)
-    response.set_cookie(
-        SESSION_COOKIE,
-        token,
-        httponly=True,
-        samesite="strict",
-        secure=COOKIE_SECURE,
-        path="/",
-    )
-
-
 def _self_or_403(user: User, user_id: str) -> None:
     # Un identifiant qui n'est pas le sien répond comme un identifiant inconnu.
     if user.id != user_id:
@@ -228,18 +245,27 @@ def _writable_entity(session: Session, entity_id: str, user: User) -> Entity:
     return entity
 
 
-def _find_by_name(session: Session, name: str) -> list[User]:
+def _find_by_name(session: Session, name: str, local_only: bool = False) -> list[User]:
     wanted = name.strip().casefold()
-    users = session.exec(select(User).where(col(User.is_guest).is_(False), col(User.is_demo).is_(False))).all()
-    return [u for u in users if u.name.strip().casefold() == wanted]
+    found = [u for u in real_users(session) if u.name.strip().casefold() == wanted]
+    # Un compte d'annuaire ne s'ouvre jamais par un mot de passe local.
+    return [u for u in found if u.auth_source == "local"] if local_only else found
+
+
+def _reset_mfa(user: User) -> None:
+    user.mfa_enabled = False
+    user.mfa_secret = None
+    user.mfa_pending_secret = None
+    user.mfa_last_step = None
+    user.mfa_recovery = []
 
 
 def _check_new_password(password: str, confirm: str) -> None:
     if password != confirm:
-        raise _error(status.HTTP_422_UNPROCESSABLE_ENTITY, "password_mismatch")
+        raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, "password_mismatch")
     problem = password_problem(password)
     if problem:
-        raise _error(status.HTTP_422_UNPROCESSABLE_ENTITY, f"password_{problem}")
+        raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, f"password_{problem}")
 
 
 def _throttle_key(request: Request, name: str) -> str:
@@ -268,25 +294,6 @@ def _summary(entity: Entity) -> EntitySummary:
     )
 
 
-def _user_read(session: Session, user: User) -> UserRead:
-    count = session.exec(select(func.count()).select_from(Entity).where(Entity.user_id == user.id)).one()
-    return UserRead.model_validate(user).model_copy(update={"entity_count": count})
-
-
-def _delete_entity_tree(session: Session, entity: Entity) -> None:
-    for row in session.exec(select(EntityRevision).where(EntityRevision.entity_id == entity.id)).all():
-        session.delete(row)
-    for row in session.exec(select(EntityFile).where(EntityFile.entity_id == entity.id)).all():
-        session.delete(row)
-    session.delete(entity)
-
-
-def _delete_user_tree(session: Session, user: User) -> None:
-    for entity in session.exec(select(Entity).where(Entity.user_id == user.id)).all():
-        _delete_entity_tree(session, entity)
-    session.delete(user)
-
-
 # ---------------------------------------------------------------------------
 # Santé
 # ---------------------------------------------------------------------------
@@ -301,82 +308,177 @@ def health() -> dict[str, str]:
 # Authentification
 # ---------------------------------------------------------------------------
 
+# La création du premier compte, qui devient administrateur, est sérialisée.
+_register_lock = threading.Lock()
+
+
+@app.get("/api/auth/status", response_model=AuthStatus)
+def auth_status(session: Session = Depends(get_session)) -> AuthStatus:
+    settings = global_settings(session)
+    ldap = ldap_config(session)
+    first_run = not has_accounts(session)
+    return AuthStatus(
+        has_accounts=not first_run,
+        registration_open=first_run or settings.registration_open,
+        guest_enabled=not first_run and settings.guest_enabled,
+        ldap_enabled=not first_run and bool(ldap.get("enabled")),
+        ldap_label=ldap.get("label") or "",
+    )
+
 
 @app.post("/api/auth/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 def register(payload: RegisterPayload, response: Response, session: Session = Depends(get_session)) -> UserRead:
     name = payload.name.strip()
     if not name:
-        raise _error(status.HTTP_422_UNPROCESSABLE_ENTITY, "name_required")
+        raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, "name_required")
     _check_new_password(payload.password.get_secret_value(), payload.password_confirm.get_secret_value())
-    if _find_by_name(session, name):
-        raise _error(status.HTTP_409_CONFLICT, "name_taken")
-    user = User(
-        name=name,
-        role=payload.role,
-        organisation=payload.organisation,
-        email=payload.email,
-        password_hash=hash_password(payload.password.get_secret_value()),
-    )
+    with _register_lock:
+        first = not has_accounts(session)
+        if not first and not global_settings(session).registration_open:
+            raise _error(status.HTTP_403_FORBIDDEN, "registration_closed")
+        if _find_by_name(session, name):
+            raise _error(status.HTTP_409_CONFLICT, "name_taken")
+        user = User(
+            name=name,
+            role=payload.role,
+            organisation=payload.organisation,
+            email=payload.email,
+            password_hash=hash_password(payload.password.get_secret_value()),
+            is_admin=first,
+            last_login_at=now(),
+        )
+        session.add(user)
+        audit(session, user, "account_created_admin" if first else "account_created", user.name)
+        session.commit()
+    session.refresh(user)
+    open_session(response, user)
+    return user_read(session, user)
+
+
+def _complete_login(session: Session, response: Response, user: User) -> UserRead | MfaChallengeRead:
+    """Mot de passe vérifié : second facteur si activé, sinon ouverture de session."""
+    if user.mfa_enabled:
+        return MfaChallengeRead(challenge=challenges.create(user.id))
+    user.last_login_at = now()
     session.add(user)
     session.commit()
     session.refresh(user)
-    _open_session(response, user)
-    return _user_read(session, user)
+    open_session(response, user)
+    return user_read(session, user)
 
 
-@app.post("/api/auth/login", response_model=UserRead)
-def login(payload: LoginPayload, request: Request, response: Response, session: Session = Depends(get_session)) -> UserRead:
-    key = _throttle_key(request, payload.name)
+def _throttled(key: str) -> None:
     wait = throttle.retry_after(key)
     if wait:
         raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "too_many_attempts", headers={"Retry-After": str(wait)})
 
-    candidates = _find_by_name(session, payload.name)
+
+@app.post("/api/auth/login", response_model=UserRead | MfaChallengeRead)
+def login(payload: LoginPayload, request: Request, response: Response, session: Session = Depends(get_session)):
+    key = _throttle_key(request, payload.name)
+    _throttled(key)
+
+    candidates = _find_by_name(session, payload.name, local_only=True)
     password = payload.password.get_secret_value()
     user = next((u for u in candidates if u.password_hash and verify_password(password, u.password_hash)), None)
     if user is None:
-        if not candidates:
+        if not any(u.password_hash for u in candidates):
             verify_password(password, None)
-        elif all(u.password_hash is None for u in candidates):
-            # Profil créé avant l'authentification : il doit d'abord définir un mot de passe.
-            raise _error(status.HTTP_409_CONFLICT, "password_setup_required")
         throttle.fail(key)
         raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
+    if user.disabled:
+        raise _error(status.HTTP_403_FORBIDDEN, "account_disabled")
 
     throttle.success(key)
-    user.updated_at = now()
+    return _complete_login(session, response, user)
+
+
+def _ldap_account(session: Session, found: directory.DirectoryUser) -> User:
+    """Compte local rattaché à l'utilisateur de l'annuaire, créé à la première connexion."""
+    user = session.exec(select(User).where(User.auth_source == "ldap", User.ldap_dn == found.dn)).first()
+    if user is not None:
+        user.ldap_username = found.username
+        if found.email and not user.email:
+            user.email = found.email
+        return user
+    name = found.name.strip() or found.username
+    if _find_by_name(session, name):
+        name = f"{name} ({found.username})"
+    user = User(name=name, email=found.email, auth_source="ldap", ldap_dn=found.dn, ldap_username=found.username)
+    session.add(user)
+    audit(session, None, "account_created_ldap", name, found.dn)
+    session.flush()
+    return user
+
+
+@app.post("/api/auth/ldap", response_model=UserRead | MfaChallengeRead)
+def ldap_login(payload: LdapLoginPayload, request: Request, response: Response, session: Session = Depends(get_session)):
+    key = _throttle_key(request, f"ldap|{payload.username}")
+    _throttled(key)
+    try:
+        found = directory.authenticate(ldap_config(session), payload.username, payload.password.get_secret_value())
+    except directory.DirectoryError as exc:
+        if exc.code in {"invalid_credentials", "ldap_not_in_group"}:
+            throttle.fail(key)
+        if exc.code == "ldap_disabled":
+            raise _error(status.HTTP_404_NOT_FOUND, "ldap_disabled")
+        if exc.code in {"ldap_unreachable", "ldap_tls_failed", "ldap_service_bind_failed"}:
+            raise _error(status.HTTP_502_BAD_GATEWAY, "ldap_unavailable")
+        raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
+    user = _ldap_account(session, found)
+    if user.disabled:
+        session.commit()
+        raise _error(status.HTTP_403_FORBIDDEN, "account_disabled")
+    throttle.success(key)
+    return _complete_login(session, response, user)
+
+
+@app.post("/api/auth/mfa/verify", response_model=UserRead)
+def mfa_verify(payload: MfaVerifyPayload, response: Response, session: Session = Depends(get_session)) -> UserRead:
+    pending = challenges.get(payload.challenge)
+    if pending is None:
+        raise _error(status.HTTP_401_UNAUTHORIZED, "mfa_challenge_expired")
+    user = session.get(User, pending.user_id)
+    if user is None or user.disabled or not user.mfa_enabled:
+        challenges.consume(payload.challenge)
+        raise _error(status.HTTP_401_UNAUTHORIZED, "mfa_challenge_expired")
+    key = f"mfa|{user.id}"
+    _throttled(key)
+    secret = decrypt(user.mfa_secret)
+    step = verify_totp(secret, payload.code, user.mfa_last_step) if secret else None
+    if step is not None:
+        user.mfa_last_step = step
+    else:
+        remaining = consume_recovery_code(list(user.mfa_recovery or []), payload.code)
+        if remaining is None:
+            challenges.fail(payload.challenge)
+            throttle.fail(key)
+            raise _error(status.HTTP_401_UNAUTHORIZED, "mfa_invalid_code")
+        user.mfa_recovery = remaining
+        audit(session, user, "mfa_recovery_code_used", user.name, f"{len(remaining)}")
+    challenges.consume(payload.challenge)
+    throttle.success(key)
+    user.last_login_at = now()
     session.add(user)
     session.commit()
     session.refresh(user)
-    _open_session(response, user)
-    return _user_read(session, user)
-
-
-@app.post("/api/auth/setup-password", response_model=UserRead)
-def setup_password(payload: PasswordSetupPayload, response: Response, session: Session = Depends(get_session)) -> UserRead:
-    candidates = [u for u in _find_by_name(session, payload.name) if u.password_hash is None]
-    if len(candidates) != 1:
-        raise _error(status.HTTP_404_NOT_FOUND, "not_found")
-    _check_new_password(payload.password.get_secret_value(), payload.password_confirm.get_secret_value())
-    user = candidates[0]
-    user.password_hash = hash_password(payload.password.get_secret_value())
-    user.updated_at = now()
-    session.add(user)
-    session.commit()
-    session.refresh(user)
-    _open_session(response, user)
-    return _user_read(session, user)
+    open_session(response, user)
+    return user_read(session, user)
 
 
 @app.post("/api/auth/guest", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 def guest(response: Response, session: Session = Depends(get_session)) -> UserRead:
     """Session d'essai sans mot de passe : ses données sont effacées à la déconnexion."""
+    if not has_accounts(session):
+        raise _error(status.HTTP_403_FORBIDDEN, "setup_required")
+    if not global_settings(session).guest_enabled:
+        raise _error(status.HTTP_403_FORBIDDEN, "guest_disabled")
     user = User(name="Invité", role="autre", is_guest=True)
     session.add(user)
     session.commit()
     session.refresh(user)
-    _open_session(response, user)
-    return _user_read(session, user)
+    open_session(response, user)
+    return user_read(session, user)
 
 
 @app.post("/api/auth/logout", status_code=status.HTTP_204_NO_CONTENT)
@@ -385,16 +487,16 @@ def logout(request: Request, session: Session = Depends(get_session)) -> Respons
     if closed is not None:
         user = session.get(User, closed.user_id)
         if user is not None and user.is_guest:
-            _delete_user_tree(session, user)
+            delete_user_tree(session, user)
             session.commit()
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
-    response.delete_cookie(SESSION_COOKIE, path="/", samesite="strict", httponly=True, secure=COOKIE_SECURE)
+    clear_cookie(response)
     return response
 
 
 @app.get("/api/auth/me", response_model=UserRead)
 def me(user: User = Depends(current_user), session: Session = Depends(get_session)) -> UserRead:
-    return _user_read(session, user)
+    return user_read(session, user)
 
 
 @app.post("/api/auth/password", status_code=status.HTTP_204_NO_CONTENT)
@@ -406,15 +508,108 @@ def change_password(
 ) -> Response:
     if user.is_guest:
         raise _error(status.HTTP_403_FORBIDDEN, "guest_forbidden")
+    if user.auth_source != "local":
+        raise _error(status.HTTP_403_FORBIDDEN, "managed_by_directory")
     if not verify_password(payload.current.get_secret_value(), user.password_hash):
         raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
     _check_new_password(payload.password.get_secret_value(), payload.password_confirm.get_secret_value())
+    if payload.password.get_secret_value() == payload.current.get_secret_value():
+        raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, "password_unchanged")
     user.password_hash = hash_password(payload.password.get_secret_value())
+    user.must_change_password = False
     user.updated_at = now()
     session.add(user)
+    audit(session, user, "password_changed", user.name)
     session.commit()
     # Les autres sessions de ce profil sont fermées ; la courante reste ouverte.
     sessions.revoke_user(user.id, keep=request.cookies.get(SESSION_COOKIE))
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+# ---------------------------------------------------------------------------
+# Second facteur
+# ---------------------------------------------------------------------------
+
+
+def _no_guest(user: User) -> None:
+    if user.is_guest:
+        raise _error(status.HTTP_403_FORBIDDEN, "guest_forbidden")
+
+
+def _check_identity(session: Session, user: User, password: str) -> None:
+    if not verify_identity(session, user, password):
+        raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
+
+
+def _check_current_code(user: User, code: str) -> None:
+    secret = decrypt(user.mfa_secret)
+    step = verify_totp(secret, code, user.mfa_last_step) if secret else None
+    if step is None:
+        raise _error(status.HTTP_401_UNAUTHORIZED, "mfa_invalid_code")
+    user.mfa_last_step = step
+
+
+@app.post("/api/auth/mfa/setup", response_model=MfaSetupRead)
+def mfa_setup(payload: MfaSetupPayload, user: User = Depends(current_user), session: Session = Depends(get_session)) -> MfaSetupRead:
+    """Prépare une graine ; le second facteur n'est actif qu'après confirmation d'un premier code."""
+    _no_guest(user)
+    if user.mfa_enabled:
+        raise _error(status.HTTP_409_CONFLICT, "mfa_already_enabled")
+    _check_identity(session, user, payload.password.get_secret_value())
+    secret = new_totp_secret()
+    user.mfa_pending_secret = encrypt(secret)
+    session.add(user)
+    session.commit()
+    uri = provisioning_uri(secret, user.name)
+    return MfaSetupRead(secret=secret, uri=uri, qr_svg=qr_svg(uri))
+
+
+@app.post("/api/auth/mfa/enable", response_model=RecoveryCodesRead)
+def mfa_enable(payload: MfaCodePayload, user: User = Depends(current_user), session: Session = Depends(get_session)) -> RecoveryCodesRead:
+    _no_guest(user)
+    secret = decrypt(user.mfa_pending_secret)
+    if secret is None:
+        raise _error(status.HTTP_409_CONFLICT, "mfa_setup_required")
+    step = verify_totp(secret, payload.code, None)
+    if step is None:
+        raise _error(status.HTTP_401_UNAUTHORIZED, "mfa_invalid_code")
+    codes = new_recovery_codes()
+    user.mfa_secret = user.mfa_pending_secret
+    user.mfa_pending_secret = None
+    user.mfa_enabled = True
+    user.mfa_last_step = step
+    user.mfa_recovery = [recovery_digest(c) for c in codes]
+    session.add(user)
+    audit(session, user, "mfa_enabled", user.name)
+    session.commit()
+    return RecoveryCodesRead(codes=codes)
+
+
+@app.post("/api/auth/mfa/recovery-codes", response_model=RecoveryCodesRead)
+def mfa_new_codes(payload: MfaCodePayload, user: User = Depends(current_user), session: Session = Depends(get_session)) -> RecoveryCodesRead:
+    _no_guest(user)
+    if not user.mfa_enabled:
+        raise _error(status.HTTP_409_CONFLICT, "mfa_not_enabled")
+    _check_current_code(user, payload.code)
+    codes = new_recovery_codes()
+    user.mfa_recovery = [recovery_digest(c) for c in codes]
+    session.add(user)
+    audit(session, user, "mfa_codes_renewed", user.name)
+    session.commit()
+    return RecoveryCodesRead(codes=codes)
+
+
+@app.post("/api/auth/mfa/disable", status_code=status.HTTP_204_NO_CONTENT)
+def mfa_disable(payload: MfaDisablePayload, user: User = Depends(current_user), session: Session = Depends(get_session)) -> Response:
+    _no_guest(user)
+    if not user.mfa_enabled:
+        raise _error(status.HTTP_409_CONFLICT, "mfa_not_enabled")
+    _check_identity(session, user, payload.password.get_secret_value())
+    _check_current_code(user, payload.code)
+    _reset_mfa(user)
+    session.add(user)
+    audit(session, user, "mfa_disabled", user.name)
+    session.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -426,7 +621,7 @@ def change_password(
 @app.get("/api/users/{user_id}", response_model=UserRead)
 def read_user(user_id: str, user: User = Depends(current_user), session: Session = Depends(get_session)) -> UserRead:
     _self_or_403(user, user_id)
-    return _user_read(session, user)
+    return user_read(session, user)
 
 
 @app.patch("/api/users/{user_id}", response_model=UserRead)
@@ -449,7 +644,7 @@ def update_user(
     session.add(user)
     session.commit()
     session.refresh(user)
-    return _user_read(session, user)
+    return user_read(session, user)
 
 
 @app.delete("/api/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -463,13 +658,16 @@ def delete_user(
     _self_or_403(user, user_id)
     if not user.is_guest:
         supplied = payload.password.get_secret_value() if payload.password else ""
-        if not verify_password(supplied, user.password_hash):
-            raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
-    _delete_user_tree(session, user)
+        _check_identity(session, user, supplied)
+        # Le dernier administrateur ne part pas en laissant d'autres comptes sans gestion.
+        if user.is_admin and admin_count(session) <= 1 and len(real_users(session)) > 1:
+            raise _error(status.HTTP_409_CONFLICT, "last_admin")
+        audit(session, None, "account_deleted_self", user.name)
+    delete_user_tree(session, user)
     session.commit()
     sessions.revoke_user(user.id)
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
-    response.delete_cookie(SESSION_COOKIE, path="/", samesite="strict", httponly=True, secure=COOKIE_SECURE)
+    clear_cookie(response)
     return response
 
 
@@ -580,7 +778,7 @@ def _record_revision(session: Session, entity: Entity) -> None:
 @app.delete("/api/entities/{entity_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_entity(entity_id: str, user: User = Depends(current_user), session: Session = Depends(get_session)) -> Response:
     entity = _writable_entity(session, entity_id, user)
-    _delete_entity_tree(session, entity)
+    delete_entity_tree(session, entity)
     session.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
@@ -639,7 +837,7 @@ async def upload_soa(
         raise _error(status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, "unsupported_file")
     body = await request.body()
     if not body:
-        raise _error(status.HTTP_422_UNPROCESSABLE_ENTITY, "empty_file")
+        raise _error(status.HTTP_422_UNPROCESSABLE_CONTENT, "empty_file")
     if len(body) > SOA_MAX_BYTES:
         raise _error(status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, "file_too_large")
     for row in session.exec(select(EntityFile).where(EntityFile.entity_id == entity.id, EntityFile.kind == "soa")).all():
@@ -696,6 +894,8 @@ def public_view(token: str, session: Session = Depends(get_session)) -> PublicVi
 # ---------------------------------------------------------------------------
 # Application compilée
 # ---------------------------------------------------------------------------
+
+app.include_router(admin_router)
 
 # Monté en dernier : les routes /api gardent la priorité. L'application utilise
 # un routage par fragment (#/…), aucune réécriture d'URL n'est donc nécessaire.

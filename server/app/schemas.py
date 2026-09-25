@@ -40,12 +40,54 @@ class LoginPayload(BaseModel):
     password: SecretStr
 
 
-class PasswordSetupPayload(BaseModel):
-    """Premier mot de passe d'un profil créé avant l'authentification."""
-
-    name: str = Field(min_length=1, max_length=120)
+class LdapLoginPayload(BaseModel):
+    username: str = Field(min_length=1, max_length=200)
     password: SecretStr
-    password_confirm: SecretStr
+
+
+class MfaChallengeRead(BaseModel):
+    """Mot de passe accepté : un code de second facteur est attendu."""
+
+    mfa_required: Literal[True] = True
+    challenge: str
+
+
+class MfaVerifyPayload(BaseModel):
+    challenge: str = Field(min_length=10, max_length=200)
+    code: str = Field(min_length=6, max_length=20)
+
+
+class MfaSetupPayload(BaseModel):
+    password: SecretStr
+
+
+class MfaSetupRead(BaseModel):
+    secret: str
+    uri: str
+    qr_svg: str
+
+
+class MfaCodePayload(BaseModel):
+    code: str = Field(min_length=6, max_length=20)
+
+
+class MfaDisablePayload(BaseModel):
+    password: SecretStr
+    code: str = Field(min_length=6, max_length=20)
+
+
+class RecoveryCodesRead(BaseModel):
+    codes: list[str]
+
+
+class AuthStatus(BaseModel):
+    """Ce que l'écran de connexion doit proposer, avant toute session."""
+
+    has_accounts: bool
+    registration_open: bool
+    guest_enabled: bool
+    ldap_enabled: bool
+    ldap_label: str
 
 
 class PasswordChangePayload(BaseModel):
@@ -64,6 +106,7 @@ class UserUpdate(BaseModel):
     organisation: str | None = Field(default=None, max_length=160)
     email: str | None = Field(default=None, max_length=200)
     onboarded: bool | None = None
+    admin_onboarded: bool | None = None
 
 
 class UserRead(BaseModel):
@@ -76,6 +119,12 @@ class UserRead(BaseModel):
     email: str
     is_guest: bool
     onboarded: bool
+    is_admin: bool = False
+    admin_onboarded: bool = False
+    auth_source: str = "local"
+    mfa_enabled: bool = False
+    must_change_password: bool = False
+    recovery_codes_left: int = 0
     created_at: UTCDateTime
     updated_at: UTCDateTime
     entity_count: int = 0
@@ -172,3 +221,102 @@ class FileRead(BaseModel):
     content_type: str
     size: int
     created_at: UTCDateTime
+
+
+# ---------------------------------------------------------------------------
+# Administration
+# ---------------------------------------------------------------------------
+
+
+class AdminUserRead(BaseModel):
+    """Compte vu par un administrateur : identité et sécurité, jamais le contenu des entités."""
+
+    id: str
+    name: str
+    role: str
+    organisation: str
+    email: str
+    is_admin: bool
+    disabled: bool
+    auth_source: str
+    ldap_username: str | None
+    mfa_enabled: bool
+    must_change_password: bool
+    entity_count: int
+    last_login_at: UTCDateTime | None
+    created_at: UTCDateTime
+
+
+class AdminUserCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    role: Role = "consultant"
+    organisation: str = Field(default="", max_length=160)
+    email: str = Field(default="", max_length=200)
+    password: SecretStr
+    is_admin: bool = False
+
+
+class AdminUserUpdate(BaseModel):
+    is_admin: bool | None = None
+    disabled: bool | None = None
+
+
+class AdminPasswordPayload(BaseModel):
+    password: SecretStr
+
+
+class GlobalSettings(BaseModel):
+    registration_open: bool = True
+    guest_enabled: bool = True
+    session_hours: int = Field(default=12, ge=1, le=720)
+
+
+class LdapConfigBase(BaseModel):
+    enabled: bool = False
+    label: str = Field(default="", max_length=80)
+    url: str = Field(default="", max_length=300)
+    start_tls: bool = False
+    verify_certificate: bool = True
+    bind_dn: str = Field(default="", max_length=400)
+    base_dn: str = Field(default="", max_length=400)
+    user_filter: str = Field(default="(sAMAccountName={username})", max_length=400)
+    name_attribute: str = Field(default="displayName", max_length=80)
+    email_attribute: str = Field(default="mail", max_length=80)
+    group_dn: str = Field(default="", max_length=400)
+
+
+class LdapConfigRead(LdapConfigBase):
+    has_bind_password: bool = False
+
+
+class LdapConfigUpdate(LdapConfigBase):
+    # Laissé vide, le mot de passe enregistré est conservé.
+    bind_password: SecretStr | None = None
+    clear_bind_password: bool = False
+
+
+class LdapTestPayload(BaseModel):
+    config: LdapConfigUpdate
+    username: str = Field(default="", max_length=200)
+
+
+class LdapTestStep(BaseModel):
+    id: str
+    ok: bool
+    detail: str = ""
+
+
+class LdapTestRead(BaseModel):
+    ok: bool
+    steps: list[LdapTestStep]
+
+
+class AuditRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    at: UTCDateTime
+    actor: str
+    action: str
+    target: str
+    detail: str

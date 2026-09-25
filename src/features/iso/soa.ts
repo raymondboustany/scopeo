@@ -198,7 +198,7 @@ function odsRows(files: Map<string, string>): string[][] {
 
 export async function parseSoa(file: File): Promise<SoaParseResult> {
   const name = file.name.toLowerCase()
-  let rows: string[][] = []
+  let rows: string[][]
   if (name.endsWith('.pdf')) return { entries: {}, recognized: 0, unreadable: true }
   try {
     if (name.endsWith('.xlsx') || name.endsWith('.ods')) {

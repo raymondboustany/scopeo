@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowLeft, ArrowRight, Eye, EyeOff, KeyRound, LockKeyhole, Scale, UserPlus, UserRound } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Building2, LockKeyhole, Scale, ShieldCheck, Sparkles, UserPlus, UserRound } from 'lucide-react'
 import { Mark } from '@/components/layout/Brand'
-import { Button, Input, Select } from '@/components/ui/controls'
+import { Button, Input, SegmentedControl, Select } from '@/components/ui/controls'
 import { RegChip } from '@/components/ui/primitives'
-import { useGuest, useLogin, useRegister, useSetupPassword } from '@/lib/queries'
+import { CodeInput, Field, ForcedPasswordChange, MIN_PASSWORD, PasswordInput, PasswordRules } from '@/components/auth/fields'
+import { useAuthStatus, useGuest, useLdapLogin, useLogin, useMfaVerify, useRegister, useUpdateUser } from '@/lib/queries'
 import { api, ApiError } from '@/lib/api'
 import { useSession } from '@/lib/store'
 import { cn } from '@/lib/utils'
-import type { UserProfile, UserRole } from '@/types/domain'
+import { needsMfa, type AuthStatus, type UserProfile, type UserRole } from '@/types/domain'
 import { REGULATION_ORDER } from '@/data/regulations'
 import { TIMELINE } from '@/data/timeline'
 import { LanguageToggle, ThemeToggle } from '@/components/layout/ThemeToggle'
 import { tr } from '@/i18n'
-
-type Mode = 'connexion' | 'creer' | 'initial'
 
 const ROLES: { value: UserRole; label: string }[] = [
   { value: 'consultant', label: tr('Consultant, plusieurs clients', 'Consultant, several clients') },
@@ -27,7 +26,6 @@ const ROLES: { value: UserRole; label: string }[] = [
   { value: 'autre', label: tr('Autre', 'Other') },
 ]
 
-const MIN_PASSWORD = 10
 
 /** Veille : ce qui vient d'entrer en vigueur et ce qui arrive, daté par rapport à aujourd'hui. */
 function useWatchItems() {
@@ -87,8 +85,6 @@ function Constellation() {
 }
 
 export default function LandingPage() {
-  const [mode, setMode] = useState<Mode>('connexion')
-  const [pendingName, setPendingName] = useState('')
   const watch = useWatchItems()
 
   return (
@@ -154,22 +150,7 @@ export default function LandingPage() {
               className="relative mx-auto max-w-md rounded-lg border border-rule-2 bg-surface p-6 sm:p-7"
             >
               <FrameCorners />
-              <AnimatePresence mode="wait">
-                {mode === 'connexion' ? (
-                  <SignIn
-                    key="connexion"
-                    onCreate={() => setMode('creer')}
-                    onSetupRequired={(name) => {
-                      setPendingName(name)
-                      setMode('initial')
-                    }}
-                  />
-                ) : mode === 'creer' ? (
-                  <CreateProfile key="creer" onBack={() => setMode('connexion')} />
-                ) : (
-                  <FirstPassword key="initial" name={pendingName} onBack={() => setMode('connexion')} />
-                )}
-              </AnimatePresence>
+              <AuthPanel />
             </motion.section>
           </div>
         </div>
@@ -208,89 +189,139 @@ const fade = {
   transition: { duration: 0.2 },
 }
 
-/** Après authentification : première entité ouverte, parcours guidé à la première visite. */
+type Step =
+  | { kind: 'signin' }
+  | { kind: 'create' }
+  | { kind: 'mfa'; challenge: string }
+  | { kind: 'change'; user: UserProfile }
+
+/** Après authentification : première entité ouverte, parcours guidé à la première connexion. */
 function useEnter() {
   const navigate = useNavigate()
   const selectEntity = useSession((s) => s.selectEntity)
   const openTour = useSession((s) => s.openTour)
+  const updateUser = useUpdateUser()
   return async (user: UserProfile) => {
     const entities = await api.entities(user.id)
     selectEntity(entities[0]?.id ?? null)
     navigate('/app')
-    // L'onboarding se déclenche une fois l'application affichée.
-    if (!user.onboarded) setTimeout(() => openTour(0), 450)
+    if (!user.onboarded) {
+      // Marqué dès l'ouverture : le parcours ne revient pas à la connexion suivante,
+      // même s'il est fermé en cours de route. Il reste accessible par le « ? ».
+      updateUser.mutate({ id: user.id, patch: { onboarded: true } })
+      setTimeout(() => openTour(0), 450)
+    }
   }
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+/** Panneau d'entrée : ce qu'il propose dépend de l'état de la base et des réglages. */
+function AuthPanel() {
+  const { data: status, isLoading, error, refetch } = useAuthStatus()
+  const [step, setStep] = useState<Step>({ kind: 'signin' })
+  const enter = useEnter()
+  const signIn = useSession((s) => s.signIn)
+
+  const afterAuth = (user: UserProfile) => {
+    if (user.must_change_password) setStep({ kind: 'change', user })
+    else void enter(user)
+  }
+
+  if (isLoading) {
+    return <div className="flex h-72 items-center justify-center text-sm text-ink-3">{tr('Chargement…', 'Loading…')}</div>
+  }
+  if (error || !status) {
+    return (
+      <div className="py-6 text-center">
+        <p className="text-sm font-medium text-ink">{tr('Le serveur local ne répond pas', 'The local server is not responding')}</p>
+        <p className="mt-1 text-xs text-ink-3">{tr('Vérifiez qu’il est démarré, puis réessayez.', 'Check that it is running, then try again.')}</p>
+        <Button className="mt-4" onClick={() => void refetch()}>
+          {tr('Réessayer', 'Retry')}
+        </Button>
+      </div>
+    )
+  }
+
+  // Premier lancement : seule la création du profil administrateur est proposée.
+  if (!status.has_accounts) {
+    return (
+      <AnimatePresence mode="wait">
+        {step.kind === 'change' ? (
+          <motion.div key="change" {...fade}>
+            <ForcedPasswordChange user={step.user} onDone={(u) => void enter(u)} />
+          </motion.div>
+        ) : (
+          <CreateProfile key="first" firstRun onCreated={afterAuth} />
+        )}
+      </AnimatePresence>
+    )
+  }
+
   return (
-    <label className="block">
-      <span className="mb-1.5 block text-xs font-medium text-ink-2">
-        {label}
-        {hint ? <span className="font-normal text-ink-4"> ({hint})</span> : null}
-      </span>
-      {children}
-    </label>
+    <AnimatePresence mode="wait">
+      {step.kind === 'signin' ? (
+        <SignIn
+          key="signin"
+          status={status}
+          onCreate={() => setStep({ kind: 'create' })}
+          onMfa={(challenge) => setStep({ kind: 'mfa', challenge })}
+          onUser={afterAuth}
+        />
+      ) : step.kind === 'create' ? (
+        <CreateProfile key="create" onBack={() => setStep({ kind: 'signin' })} onCreated={afterAuth} />
+      ) : step.kind === 'mfa' ? (
+        <MfaStep key="mfa" challenge={step.challenge} onBack={() => setStep({ kind: 'signin' })} onUser={afterAuth} />
+      ) : (
+        <motion.div key="change" {...fade}>
+          <ForcedPasswordChange
+            user={step.user}
+            onDone={(u) => {
+              signIn(u.id)
+              void enter(u)
+            }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 
-function PasswordInput({
-  value,
-  onChange,
-  autoComplete,
-  autoFocus,
-  ariaInvalid,
+function SignIn({
+  status,
+  onCreate,
+  onMfa,
+  onUser,
 }: {
-  value: string
-  onChange: (v: string) => void
-  autoComplete: 'current-password' | 'new-password'
-  autoFocus?: boolean
-  ariaInvalid?: boolean
+  status: AuthStatus
+  onCreate: () => void
+  onMfa: (challenge: string) => void
+  onUser: (user: UserProfile) => void
 }) {
-  const [visible, setVisible] = useState(false)
-  return (
-    <span className="relative block">
-      <Input
-        type={visible ? 'text' : 'password'}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        autoComplete={autoComplete}
-        autoFocus={autoFocus}
-        aria-invalid={ariaInvalid}
-        className="pr-9"
-        required
-      />
-      <button
-        type="button"
-        onClick={() => setVisible((v) => !v)}
-        className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-ink-4 hover:text-ink"
-        aria-label={visible ? tr('Masquer le mot de passe', 'Hide password') : tr('Afficher le mot de passe', 'Show password')}
-      >
-        {visible ? <EyeOff size={14} /> : <Eye size={14} />}
-      </button>
-    </span>
-  )
-}
-
-function SignIn({ onCreate, onSetupRequired }: { onCreate: () => void; onSetupRequired: (name: string) => void }) {
   const enter = useEnter()
   const lastName = useSession((s) => s.lastName)
   const login = useLogin()
+  const ldapLogin = useLdapLogin()
   const guest = useGuest()
+  const [method, setMethod] = useState<'local' | 'ldap'>('local')
   const [name, setName] = useState(lastName)
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [guestError, setGuestError] = useState<string | null>(null)
   const [guestBusy, setGuestBusy] = useState(false)
+  const useDirectory = status.ldap_enabled && method === 'ldap'
+  const mutation = useDirectory ? ldapLogin : login
+  const directoryLabel = status.ldap_label || tr("Annuaire de l'organisation", 'Organisation directory')
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     try {
-      const user = await login.mutateAsync({ name: name.trim(), password })
+      const result = useDirectory
+        ? await ldapLogin.mutateAsync({ username: username.trim(), password })
+        : await login.mutateAsync({ name: name.trim(), password })
       setPassword('')
-      await enter(user)
-    } catch (err) {
+      if (needsMfa(result)) onMfa(result.challenge)
+      else onUser(result)
+    } catch {
       setPassword('')
-      if (err instanceof ApiError && err.code === 'password_setup_required') onSetupRequired(name.trim())
     }
   }
 
@@ -308,7 +339,9 @@ function SignIn({ onCreate, onSetupRequired }: { onCreate: () => void; onSetupRe
     }
   }
 
-  const error = login.error instanceof ApiError && login.error.code !== 'password_setup_required' ? login.error.message : null
+  const error = mutation.error instanceof Error ? mutation.error.message : null
+  const identifier = useDirectory ? username : name
+  const alternatives = [status.registration_open, status.guest_enabled].filter(Boolean).length
 
   return (
     <motion.div {...fade}>
@@ -318,68 +351,175 @@ function SignIn({ onCreate, onSetupRequired }: { onCreate: () => void; onSetupRe
       </h2>
       <p className="mt-1 text-sm text-ink-3">{tr('Ouvrez votre profil pour retrouver vos entités.', 'Open your profile to get back to your entities.')}</p>
 
-      <form onSubmit={submit} className="mt-6 space-y-4">
-        <Field label={tr('Nom du profil', 'Profile name')}>
-          <Input autoFocus={!lastName} value={name} onChange={(e) => setName(e.target.value)} autoComplete="username" required />
-        </Field>
+      {status.ldap_enabled ? (
+        <SegmentedControl
+          className="mt-5 w-full sm:flex sm:w-full [&>button]:flex-1 [&>button]:justify-center"
+          value={method}
+          onChange={(v) => {
+            setMethod(v)
+            setPassword('')
+            login.reset()
+            ldapLogin.reset()
+          }}
+          ariaLabel={tr('Mode de connexion', 'Sign-in method')}
+          options={[
+            { value: 'local', label: tr('Compte Scopeo', 'Scopeo account') },
+            {
+              value: 'ldap',
+              label: (
+                <span className="inline-flex items-center gap-1.5">
+                  <Building2 size={13} />
+                  <span className="max-w-[11rem] truncate">{directoryLabel}</span>
+                </span>
+              ),
+            },
+          ]}
+        />
+      ) : null}
+
+      <form onSubmit={submit} className="mt-5 space-y-4">
+        {useDirectory ? (
+          <Field label={tr('Identifiant', 'Username')} hint={tr('celui de votre session de travail', 'the one you use at work')}>
+            <Input autoFocus value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" required />
+          </Field>
+        ) : (
+          <Field label={tr('Nom du profil', 'Profile name')}>
+            <Input autoFocus={!lastName} value={name} onChange={(e) => setName(e.target.value)} autoComplete="username" required />
+          </Field>
+        )}
         <Field label={tr('Mot de passe', 'Password')}>
-          <PasswordInput value={password} onChange={setPassword} autoComplete="current-password" autoFocus={Boolean(lastName)} ariaInvalid={Boolean(error)} />
+          <PasswordInput
+            value={password}
+            onChange={setPassword}
+            autoComplete="current-password"
+            autoFocus={!useDirectory && Boolean(lastName)}
+            ariaInvalid={Boolean(error)}
+          />
         </Field>
         {error ? (
           <p role="alert" className="text-xs text-critical">
             {error}
           </p>
         ) : null}
-        <Button type="submit" variant="primary" className="w-full" disabled={!name.trim() || !password || login.isPending}>
-          {login.isPending ? tr('Vérification…', 'Checking…') : tr('Se connecter', 'Sign in')}
+        <Button type="submit" variant="primary" className="w-full" disabled={!identifier.trim() || !password || mutation.isPending}>
+          {mutation.isPending ? tr('Vérification…', 'Checking…') : tr('Se connecter', 'Sign in')}
           <ArrowRight size={14} />
         </Button>
+        {useDirectory ? (
+          <p className="text-2xs leading-relaxed text-ink-4">
+            {tr(
+              "Le mot de passe est vérifié par l'annuaire de votre organisation ; Scopeo ne le conserve pas.",
+              "Your password is checked by your organisation's directory; Scopeo does not store it.",
+            )}
+          </p>
+        ) : null}
       </form>
 
-      <div className="mt-6 grid gap-2 border-t border-rule pt-5 sm:grid-cols-2">
-        <button
-          type="button"
-          onClick={onCreate}
-          className="group flex items-start gap-3 rounded-md border border-rule-2 bg-raised p-3 text-left transition-colors hover:border-rule-3 hover:bg-overlay"
-        >
-          <UserPlus size={16} className="mt-0.5 shrink-0 text-ink-3 group-hover:text-accent" />
-          <span>
-            <span className="block text-sm font-medium text-ink">{tr('Créer un profil', 'Create a profile')}</span>
-            <span className="block text-2xs text-ink-3">{tr('Protégé par un mot de passe', 'Password protected')}</span>
-          </span>
-        </button>
-        <button
-          type="button"
-          onClick={startGuest}
-          disabled={guestBusy}
-          className="group flex items-start gap-3 rounded-md border border-rule-2 bg-raised p-3 text-left transition-colors hover:border-rule-3 hover:bg-overlay disabled:opacity-60"
-        >
-          <UserRound size={16} className="mt-0.5 shrink-0 text-ink-3 group-hover:text-accent" />
-          <span>
-            <span className="block text-sm font-medium text-ink">{tr('Mode invité', 'Guest mode')}</span>
-            <span className="block text-2xs text-ink-3">{tr('Démonstration Finexa, effacée à la déconnexion', 'Finexa demo, erased on sign-out')}</span>
-          </span>
-        </button>
-      </div>
+      {alternatives > 0 ? (
+        <div className={cn('mt-6 grid gap-2 border-t border-rule pt-5', alternatives > 1 && 'sm:grid-cols-2')}>
+          {status.registration_open ? (
+            <button
+              type="button"
+              onClick={onCreate}
+              className="group flex items-start gap-3 rounded-md border border-rule-2 bg-raised p-3 text-left transition-colors hover:border-rule-3 hover:bg-overlay"
+            >
+              <UserPlus size={16} className="mt-0.5 shrink-0 text-ink-3 group-hover:text-accent" />
+              <span>
+                <span className="block text-sm font-medium text-ink">{tr('Créer un profil', 'Create a profile')}</span>
+                <span className="block text-2xs text-ink-3">{tr('Protégé par un mot de passe', 'Password protected')}</span>
+              </span>
+            </button>
+          ) : null}
+          {status.guest_enabled ? (
+            <button
+              type="button"
+              onClick={startGuest}
+              disabled={guestBusy}
+              className="group flex items-start gap-3 rounded-md border border-rule-2 bg-raised p-3 text-left transition-colors hover:border-rule-3 hover:bg-overlay disabled:opacity-60"
+            >
+              <UserRound size={16} className="mt-0.5 shrink-0 text-ink-3 group-hover:text-accent" />
+              <span>
+                <span className="block text-sm font-medium text-ink">{tr('Mode invité', 'Guest mode')}</span>
+                <span className="block text-2xs text-ink-3">{tr('Démonstration Finexa, effacée à la déconnexion', 'Finexa demo, erased on sign-out')}</span>
+              </span>
+            </button>
+          ) : null}
+        </div>
+      ) : (
+        <p className="mt-6 border-t border-rule pt-5 text-xs text-ink-3">
+          {tr("Pas encore de compte ? Demandez-en un à l'administrateur de Scopeo.", 'No account yet? Ask your Scopeo administrator for one.')}
+        </p>
+      )}
       {guestBusy ? <p className="mt-3 text-xs text-ink-3">{tr("Préparation de l'espace invité…", 'Preparing the guest space…')}</p> : null}
       {guestError ? <p className="mt-3 text-xs text-critical">{guestError}</p> : null}
     </motion.div>
   )
 }
 
-function PasswordRules() {
+function MfaStep({ challenge, onBack, onUser }: { challenge: string; onBack: () => void; onUser: (user: UserProfile) => void }) {
+  const verify = useMfaVerify()
+  const [code, setCode] = useState('')
+  const [recovery, setRecovery] = useState(false)
+  const ready = recovery ? code.replace(/[^a-z0-9]/gi, '').length === 10 : code.length === 6
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!ready) return
+    try {
+      onUser(await verify.mutateAsync({ challenge, code }))
+    } catch {
+      setCode('')
+    }
+  }
+
+  const expired = verify.error instanceof ApiError && verify.error.code === 'mfa_challenge_expired'
+
   return (
-    <p className="text-2xs leading-relaxed text-ink-4">
-      {tr(
-        `Au moins ${MIN_PASSWORD} caractères. Une phrase de passe est plus sûre et plus facile à retenir. Le mot de passe est haché (bcrypt) et n'est jamais conservé en clair.`,
-        `At least ${MIN_PASSWORD} characters. A passphrase is safer and easier to remember. The password is hashed (bcrypt) and never stored in plain text.`,
+    <motion.form {...fade} onSubmit={submit}>
+      <BackLink onClick={onBack} />
+      <h2 className="mt-4 flex items-center gap-2 text-xl font-semibold text-ink">
+        <ShieldCheck size={18} className="text-ink-3" />
+        {tr('Double authentification', 'Two-factor authentication')}
+      </h2>
+      <p className="mt-1 text-sm text-ink-3">
+        {recovery
+          ? tr('Saisissez l’un de vos codes de récupération. Chaque code ne sert qu’une fois.', 'Enter one of your recovery codes. Each code works only once.')
+          : tr('Saisissez le code à six chiffres affiché par votre application d’authentification.', 'Enter the six-digit code shown in your authenticator app.')}
+      </p>
+      <div className="mt-6">
+        <CodeInput key={String(recovery)} value={code} onChange={setCode} recovery={recovery} autoFocus />
+      </div>
+      {verify.error ? (
+        <p role="alert" className="mt-3 text-xs text-critical">
+          {verify.error.message}
+        </p>
+      ) : null}
+      {expired ? (
+        <Button className="mt-6 w-full" onClick={onBack}>
+          {tr('Revenir à la connexion', 'Back to sign-in')}
+        </Button>
+      ) : (
+        <Button type="submit" variant="primary" className="mt-6 w-full" disabled={!ready || verify.isPending}>
+          {verify.isPending ? tr('Vérification…', 'Checking…') : tr('Valider', 'Verify')}
+          <ArrowRight size={14} />
+        </Button>
       )}
-    </p>
+      <button
+        type="button"
+        onClick={() => {
+          setRecovery((v) => !v)
+          setCode('')
+          verify.reset()
+        }}
+        className="mt-4 text-xs text-ink-3 underline-offset-2 hover:text-ink hover:underline"
+      >
+        {recovery ? tr('Utiliser un code de l’application', 'Use an app code') : tr('Utiliser un code de récupération', 'Use a recovery code')}
+      </button>
+    </motion.form>
   )
 }
 
-function CreateProfile({ onBack }: { onBack: () => void }) {
-  const enter = useEnter()
+function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () => void; onCreated: (user: UserProfile) => void; firstRun?: boolean }) {
   const register = useRegister()
   const [name, setName] = useState('')
   const [role, setRole] = useState<UserRole>('consultant')
@@ -396,7 +536,7 @@ function CreateProfile({ onBack }: { onBack: () => void }) {
       const user = await register.mutateAsync({ name: name.trim(), role, organisation: organisation.trim(), password, password_confirm: confirm })
       setPassword('')
       setConfirm('')
-      await enter(user)
+      onCreated(user)
     } catch {
       /* message affiché ci-dessous */
     }
@@ -404,14 +544,33 @@ function CreateProfile({ onBack }: { onBack: () => void }) {
 
   return (
     <motion.form {...fade} onSubmit={submit}>
-      <BackLink onClick={onBack} />
-      <h2 className="mt-4 text-xl font-semibold text-ink">{tr('Créer un profil', 'Create a profile')}</h2>
+      {onBack ? <BackLink onClick={onBack} /> : null}
+      {firstRun ? (
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-accent-wash px-2 py-1 text-[11px] font-semibold text-accent-strong">
+          <Sparkles size={12} />
+          {tr('Premier lancement', 'First launch')}
+        </span>
+      ) : null}
+      <h2 className={cn('text-xl font-semibold text-ink', onBack || firstRun ? 'mt-4' : '')}>
+        {firstRun ? tr('Créer le profil administrateur', 'Create the administrator profile') : tr('Créer un profil', 'Create a profile')}
+      </h2>
       <p className="mt-1 text-sm text-ink-3">
         {tr(
           'Le profil vous identifie. Les organisations que vous cadrez seront des entités distinctes, créées ensuite.',
           'The profile identifies you. The organisations you scope will be separate entities, created afterwards.',
         )}
       </p>
+      {firstRun ? (
+        <div className="mt-4 flex gap-2.5 rounded-lg border border-rule bg-raised px-3.5 py-3 text-xs leading-relaxed text-ink-2">
+          <ShieldCheck size={15} className="mt-px shrink-0 text-accent" />
+          <span>
+            {tr(
+              "Ce premier profil devient automatiquement administrateur. Il gère les comptes, l'annuaire LDAP et les réglages dans un espace séparé, et utilise Scopeo comme les autres profils, sans accès à leurs entités.",
+              'This first profile automatically becomes the administrator. It manages accounts, the LDAP directory and settings in a separate space, and uses Scopeo like any other profile, without access to their entities.',
+            )}
+          </span>
+        </div>
+      ) : null}
       <div className="mt-6 space-y-4">
         <Field label={tr('Nom du profil', 'Profile name')}>
           <Input autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Claire Martin" autoComplete="username" required />
@@ -440,63 +599,9 @@ function CreateProfile({ onBack }: { onBack: () => void }) {
   )
 }
 
-/** Profil créé avant l'authentification : il définit son premier mot de passe. */
-function FirstPassword({ name, onBack }: { name: string; onBack: () => void }) {
-  const enter = useEnter()
-  const setup = useSetupPassword()
-  const [password, setPassword] = useState('')
-  const [confirm, setConfirm] = useState('')
-  const mismatch = confirm.length > 0 && confirm !== password
-  const valid = password.length >= MIN_PASSWORD && password === confirm
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!valid) return
-    try {
-      const user = await setup.mutateAsync({ name, password, confirm })
-      setPassword('')
-      setConfirm('')
-      await enter(user)
-    } catch {
-      /* message affiché ci-dessous */
-    }
-  }
-
-  return (
-    <motion.form {...fade} onSubmit={submit}>
-      <BackLink onClick={onBack} />
-      <h2 className="mt-4 flex items-center gap-2 text-xl font-semibold text-ink">
-        <KeyRound size={18} className="text-ink-3" />
-        {tr('Définir un mot de passe', 'Set a password')}
-      </h2>
-      <p className="mt-1 text-sm text-ink-3">
-        {tr(
-          `Le profil « ${name} » a été créé avant la protection par mot de passe. Choisissez-en un pour l'ouvrir ; il sera demandé à chaque connexion.`,
-          `The profile "${name}" was created before password protection. Choose one to open it; it will be required at every sign-in.`,
-        )}
-      </p>
-      <div className="mt-6 space-y-4">
-        <Field label={tr('Nouveau mot de passe', 'New password')}>
-          <PasswordInput value={password} onChange={setPassword} autoComplete="new-password" autoFocus />
-        </Field>
-        <Field label={tr('Confirmation', 'Confirmation')}>
-          <PasswordInput value={confirm} onChange={setConfirm} autoComplete="new-password" ariaInvalid={mismatch} />
-        </Field>
-        {mismatch ? <p className="text-xs text-critical">{tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.')}</p> : null}
-        <PasswordRules />
-      </div>
-      {setup.error ? <p role="alert" className="mt-4 text-xs text-critical">{setup.error.message}</p> : null}
-      <Button type="submit" variant="primary" className="mt-6 w-full" disabled={!valid || setup.isPending}>
-        {tr('Enregistrer et ouvrir', 'Save and open')}
-        <ArrowRight size={14} />
-      </Button>
-    </motion.form>
-  )
-}
-
 function BackLink({ onClick }: { onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} className={cn('inline-flex items-center gap-1.5 text-xs text-ink-3 transition-colors hover:text-ink')}>
+    <button type="button" onClick={onClick} className="inline-flex items-center gap-1.5 text-xs text-ink-3 transition-colors hover:text-ink">
       <ArrowLeft size={13} />
       {tr('Retour', 'Back')}
     </button>

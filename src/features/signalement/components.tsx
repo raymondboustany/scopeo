@@ -202,6 +202,7 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
 const CONTACT_ROLES: { value: InternalContact['role']; label: string }[] = [
   { value: 'direction', label: tr('Membre de la direction', 'Executive') },
   { value: 'rssi', label: tr('RSSI', 'CISO') },
+  { value: 'reponse', label: tr('Réponse à incident (équipe ou prestataire)', 'Incident response (team or provider)') },
   { value: 'dpo', label: 'DPO' },
   { value: 'juridique', label: tr('Juridique', 'Legal') },
   { value: 'communication', label: tr('Communication', 'Communications') },
@@ -210,8 +211,8 @@ const CONTACT_ROLES: { value: InternalContact['role']; label: string }[] = [
 
 const ROLE_LABEL = Object.fromEntries(CONTACT_ROLES.map((r) => [r.value, r.label])) as Record<string, string>
 
-/** Ordre d'escalade : sécurité, puis protection des données, puis direction. */
-const ESCALATION: InternalContact['role'][] = ['rssi', 'dpo', 'direction', 'juridique', 'communication', 'autre']
+/** Ordre d'escalade : sécurité et appui technique, puis protection des données, puis direction. */
+const ESCALATION: InternalContact['role'][] = ['rssi', 'reponse', 'dpo', 'direction', 'juridique', 'communication', 'autre']
 
 export function ContactCards({ contacts, readOnly }: { contacts: InternalContact[]; readOnly: boolean }) {
   const edit = useEntityEditor()

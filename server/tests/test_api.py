@@ -1,26 +1,30 @@
 from __future__ import annotations
 
-import os
-import tempfile
 import uuid
 
 import pytest
 
-# Base de test isolée et hachage allégé, posés avant l'import de l'application.
-_tmp = tempfile.mkdtemp()
-os.environ["SCOPEO_DATABASE_URL"] = f"sqlite:///{_tmp}/test.db"
-os.environ["SCOPEO_BCRYPT_ROUNDS"] = "4"
+from fastapi.testclient import TestClient
 
-from fastapi.testclient import TestClient  # noqa: E402
-
-from app.auth import sessions, throttle  # noqa: E402
-from app.db import engine  # noqa: E402
-from app.main import DEMO_ENTITY_ID, app  # noqa: E402
-from app.models import User  # noqa: E402
-from sqlmodel import Session, select  # noqa: E402
+from app.auth import sessions, throttle
+from app.db import engine
+from app.main import DEMO_ENTITY_ID, app
+from app.models import User
+from sqlmodel import Session, select
 
 PASSWORD = "correct horse battery"
 HEADERS = {"X-Scopeo": "1"}
+
+
+@pytest.fixture(scope="module", autouse=True)
+def _administrateur():
+    """Un administrateur existe d'emblée : les comptes créés par les tests sont ordinaires."""
+    from app.db import init_db
+
+    init_db()
+    with Session(engine) as session:
+        session.add(User(name=f"Administrateur {uuid.uuid4().hex[:6]}", is_admin=True))
+        session.commit()
 
 
 @pytest.fixture()
@@ -115,20 +119,15 @@ def test_une_ecriture_sans_en_tete_anti_csrf_est_refusee():
         assert r.status_code == 403 and r.json()["detail"] == "csrf"
 
 
-def test_un_profil_cree_avant_l_authentification_definit_son_mot_de_passe(client):
+def test_un_profil_sans_mot_de_passe_ne_peut_etre_ni_ouvert_ni_revendique(client):
     name = unique("Ancien profil")
     with Session(engine) as session:
         session.add(User(name=name, role="dpo"))
         session.commit()
     r = client.post("/api/auth/login", json={"name": name, "password": PASSWORD})
-    assert r.status_code == 409 and r.json()["detail"] == "password_setup_required"
-    r = client.post("/api/auth/setup-password", json={"name": name, "password": PASSWORD, "password_confirm": PASSWORD})
-    assert r.status_code == 200
-    client.post("/api/auth/logout")
-    # Une fois défini, le mot de passe ne peut plus être redéfini sans le connaître.
-    r = client.post("/api/auth/setup-password", json={"name": name, "password": "autre mot de passe", "password_confirm": "autre mot de passe"})
-    assert r.status_code == 404
-    assert client.post("/api/auth/login", json={"name": name, "password": PASSWORD}).status_code == 200
+    assert r.status_code == 401 and r.json()["detail"] == "invalid_credentials"
+    # Seul un administrateur peut lui attribuer un mot de passe provisoire.
+    assert client.post("/api/auth/setup-password", json={"name": name, "password": PASSWORD, "password_confirm": PASSWORD}).status_code in {404, 405}
 
 
 def test_le_changement_de_mot_de_passe_exige_l_ancien(client):

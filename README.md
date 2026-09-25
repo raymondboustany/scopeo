@@ -121,13 +121,17 @@ Under the NIS2 requirements, the **152 measures of ANSSI's ReCyF** (v2.5, March 
 <td width="50%" valign="top">
 
 ### Incident notification readiness
-Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, and produces a one-page **incident quick-reference sheet**.
+Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, points to technical support (PRIS-qualified provider, regional CSIRT, 17Cyber) and produces a one-page **incident quick-reference sheet**.
 
 </td>
 </tr>
 </table>
 
-**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in four phases, from 0 to 3 months to beyond 12 months · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes · password-protected profiles.
+**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in four phases, from 0 to 3 months to beyond 12 months · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes.
+
+### Accounts and administration
+
+Built to be shared within a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP), global settings and a log. Each user can turn on **two-factor authentication** (TOTP) with recovery codes. An administrator never sees other people's entities, and the role is checked by the server on every request.
 
 <details>
 <summary>Dark theme preview</summary>
@@ -204,12 +208,13 @@ npm run dev        # http://localhost:5173, with hot reload
 | `SCOPEO_HOST` | `127.0.0.1` | Listening address |
 | `SCOPEO_DATA_DIR` | `server/data` (`/data` under Docker) | SQLite database folder |
 | `SCOPEO_COOKIE_SECURE` | off | Mark the session cookie `Secure` when served over HTTPS |
+| `SCOPEO_SECRET_KEY` | `secret.key` file in the data folder | Key encrypting security secrets (two-factor seeds, LDAP service account) |
 
 </details>
 
 ### First steps
 
-On the home page, choose **Guest mode** to explore the *Finexa* demo, a 50-person payment institution already scoped and assessed; it is erased on sign-out. To scope your own organisation or a client, create a password-protected profile, then an entity.
+At first launch, the home page only offers to create the **administrator profile**. Afterwards, **Guest mode** opens the *Finexa* demo, a 50-person payment institution already scoped and assessed, erased on sign-out. To scope your own organisation or a client, create an entity from your profile; a short guided tour opens at first sign-in.
 
 ---
 
@@ -247,7 +252,7 @@ On the home page, choose **Guest mode** to explore the *Finexa* demo, a 50-perso
 
 </details>
 
-Official texts are kept as PDF in [texts/](texts/README.md), with their reuse conditions. Corpus changes are recorded in the [changelog](CHANGELOG.md).
+Official texts are kept as PDF, in French and in English, in [texts/](texts/README.md), with their reuse conditions. Corpus changes are recorded in the [changelog](CHANGELOG.md).
 
 ---
 
@@ -257,20 +262,21 @@ Official texts are kept as PDF in [texts/](texts/README.md), with their reuse co
 ┌──────────────────────────────┐        ┌───────────────────────────┐
 │ Interface: React, TypeScript │  /api  │ Server: FastAPI           │
 │ Regulatory engines           │ ─────► │ SQLite persistence        │
-│ PDF reports                  │        │ Profiles and sessions     │
+│ PDF reports                  │        │ Accounts, sessions, LDAP  │
 └──────────────────────────────┘        └───────────────────────────┘
 ```
 
 All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) runs in the interface from the stored answers, so a corpus update applies at once to every existing entity. The server stores data and handles authentication.
 
-**Stack:** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt · Vitest, pytest.
+**Stack:** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt, pyotp, ldap3, cryptography · Vitest, pytest.
 
 ---
 
 ## Privacy and security
 
 - Data stays on the machine: no telemetry, no call to a third-party service.
-- Each profile is protected by a password, hashed with bcrypt and never stored in clear. Sessions are server-side, carried by an `HttpOnly`, `SameSite=Strict` cookie, and revoked on sign-out.
+- Each profile is protected by a password, hashed with bcrypt and never stored in clear, or by the organisation's directory. Two-factor authentication (TOTP) is available to every user. Sessions are server-side, carried by an `HttpOnly`, `SameSite=Strict` cookie, and expire after a length set by the administrator.
+- Security secrets are encrypted in the database. Administrators manage access, never the content of scoping work.
 - The server listens on `127.0.0.1` by default. Read [SECURITY.md](SECURITY.md) before exposing it on a network.
 - The Trust Center is still a demo feature: it only works locally for now. Online sharing will come in a future update.
 
@@ -410,13 +416,17 @@ Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version 
 <td width="50%" valign="top">
 
 ### Préparation au signalement d'incident
-Les obligations de notification s'appliquent avant même la mise en conformité. La plateforme désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA, autorité de surveillance du marché pour l'IA), leurs délais et la chaîne d'escalade interne, et produit une **fiche réflexe** d'une page.
+Les obligations de notification s'appliquent avant même la mise en conformité. La plateforme désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA, autorité de surveillance du marché pour l'IA), leurs délais et la chaîne d'escalade interne, indique l'appui technique à solliciter (prestataire qualifié PRIS, CSIRT territorial, 17Cyber) et produit une **fiche réflexe** d'une page.
 
 </td>
 </tr>
 </table>
 
-**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable · feuille de route en quatre phases, de 0 à 3 mois à plus de 12 mois · échéancier réglementaire · fiche entité · notes d'entretien · Trust Center en lecture seule (local pour l'instant) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · interface en français et en anglais · thèmes clair et sombre · profils protégés par mot de passe.
+**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable · feuille de route en quatre phases, de 0 à 3 mois à plus de 12 mois · échéancier réglementaire · fiche entité · notes d'entretien · Trust Center en lecture seule (local pour l'instant) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · interface en français et en anglais · thèmes clair et sombre.
+
+### Comptes et administration
+
+Conçue pour être partagée au sein d'une équipe. Le premier profil créé est administrateur : dans un espace séparé, il gère les comptes (mots de passe provisoires, suspension, rôle administrateur), la connexion par l'**annuaire LDAP** de l'organisation (Active Directory, OpenLDAP), les réglages globaux et un journal. Chaque utilisateur peut activer la **double authentification** (TOTP) avec des codes de récupération. Un administrateur ne voit jamais les entités des autres, et le rôle est vérifié par le serveur à chaque requête.
 
 <details>
 <summary>Aperçu du thème sombre</summary>
@@ -493,12 +503,13 @@ npm run dev        # http://localhost:5173, avec rechargement automatique
 | `SCOPEO_HOST` | `127.0.0.1` | Adresse d'écoute |
 | `SCOPEO_DATA_DIR` | `server/data` (`/data` sous Docker) | Dossier de la base SQLite |
 | `SCOPEO_COOKIE_SECURE` | désactivé | Marque le cookie de session `Secure` derrière HTTPS |
+| `SCOPEO_SECRET_KEY` | fichier `secret.key` du dossier de données | Clé de chiffrement des secrets de sécurité (graines de double authentification, compte de service LDAP) |
 
 </details>
 
 ### Premiers pas
 
-À l'accueil, **Mode invité** ouvre la démonstration *Finexa*, un établissement de paiement de 50 salariés déjà qualifié et évalué ; elle est effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez un profil protégé par mot de passe, puis une entité.
+Au premier lancement, l'accueil ne propose que la création du **profil administrateur**. Ensuite, **Mode invité** ouvre la démonstration *Finexa*, un établissement de paiement de 50 salariés déjà qualifié et évalué, effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez une entité depuis votre profil ; un court parcours guidé s'ouvre à la première connexion.
 
 ---
 
@@ -536,7 +547,7 @@ npm run dev        # http://localhost:5173, avec rechargement automatique
 
 </details>
 
-Les textes officiels sont conservés en PDF dans [texts/](texts/README.md), avec leurs conditions de réutilisation. Les évolutions du corpus sont consignées dans le [journal des modifications](CHANGELOG.md).
+Les textes officiels sont conservés en PDF, en français et en anglais, dans [texts/](texts/README.md), avec leurs conditions de réutilisation. Les évolutions du corpus sont consignées dans le [journal des modifications](CHANGELOG.md).
 
 ---
 
@@ -546,20 +557,21 @@ Les textes officiels sont conservés en PDF dans [texts/](texts/README.md), avec
 ┌──────────────────────────────┐        ┌───────────────────────────┐
 │ Interface : React, TypeScript│  /api  │ Serveur : FastAPI         │
 │ Moteurs réglementaires       │ ─────► │ Persistance SQLite        │
-│ Rapports PDF                 │        │ Profils et sessions       │
+│ Rapports PDF                 │        │ Comptes, sessions, LDAP   │
 └──────────────────────────────┘        └───────────────────────────┘
 ```
 
 Toute la logique réglementaire (qualification, périmètre, priorisation, délais, correspondance ISO) s'exécute dans l'interface à partir des réponses enregistrées : une évolution du corpus s'applique donc immédiatement à toutes les entités existantes. Le serveur conserve les données et gère l'authentification.
 
-**Pile technique :** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt · Vitest, pytest.
+**Pile technique :** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt, pyotp, ldap3, cryptography · Vitest, pytest.
 
 ---
 
 ## Confidentialité et sécurité
 
 - Les données ne quittent pas le poste : aucune télémétrie, aucun appel à un service tiers.
-- Chaque profil est protégé par un mot de passe, haché avec bcrypt et jamais conservé en clair. La session est tenue côté serveur, portée par un cookie `HttpOnly` et `SameSite=Strict`, et révoquée à la déconnexion.
+- Chaque profil est protégé par un mot de passe, haché avec bcrypt et jamais conservé en clair, ou par l'annuaire de l'organisation. La double authentification (TOTP) est proposée à chaque utilisateur. La session est tenue côté serveur, portée par un cookie `HttpOnly` et `SameSite=Strict`, et expire après une durée fixée par l'administrateur.
+- Les secrets de sécurité sont chiffrés dans la base. Les administrateurs gèrent les accès, jamais le contenu des cadrages.
 - Le serveur écoute sur `127.0.0.1` par défaut. Lisez [SECURITY.md](SECURITY.md) avant de l'exposer sur un réseau.
 - Le Trust Center est encore une fonction de démonstration : il ne fonctionne qu'en local pour l'instant. Le partage en ligne arrivera dans une prochaine mise à jour.
 

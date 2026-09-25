@@ -91,15 +91,28 @@ On the first launch, a command window installs the necessary components (about a
 
 ## First steps
 
-1. On the home page, choose **Guest mode** to discover the platform on the demo company *Finexa*. A guided tour presents the screens; the guest session is erased on sign-out.
-2. For real scoping, choose **Create a profile**: name, role and password (10 characters minimum, typed twice). Then create an entity: a client, or your own organisation.
-3. Next time, sign in with the profile name and password. **Sign out** (profile menu) closes the session.
-4. The interface language (English or French) is switched from the top bar.
-5. Follow the steps shown on the dashboard: scope, assess, prioritise, prepare notification, report.
+1. At first launch, the home page only offers **Create the administrator profile**: name, role and password (10 characters minimum, typed twice). This first profile manages accounts and settings in the **Administration** space (profile menu), and uses the platform like everyone else.
+2. Create an entity: a client, or your own organisation. A short guided tour opens at first sign-in; the question mark in the top bar replays it.
+3. To discover the platform without an account, **Guest mode** opens the demo company *Finexa*; the guest session is erased on sign-out.
+4. Next time, sign in with the profile name and password. **Sign out** (profile menu) closes the session.
+5. Recommended: turn on **two-factor authentication** in **Profile and data**, with an app such as Microsoft Authenticator, Google Authenticator or FreeOTP.
+6. Follow the steps shown on the dashboard: scope, assess, prioritise, prepare notification, report.
+
+## Sharing Scopeo with a team
+
+In the **Administration** space:
+
+- **Accounts**: create an account with a temporary password (the person replaces it at first sign-in), suspend an account, appoint another administrator, or turn off two-factor authentication for someone who lost their phone.
+- **LDAP directory**: connect Scopeo to Active Directory or OpenLDAP (address, service account, search base, filter, optional group). The **Test** button checks each step; once switched on, a directory tab appears on the sign-in page.
+- **Settings**: close self-service profile creation, disable guest mode, set the session length.
+- **Log**: administration actions and account security changes.
+
+Serving Scopeo to several people requires a reverse proxy with HTTPS: see [SECURITY.md](../SECURITY.md).
 
 ## Backing up your data
 
-From the platform: **Profile and data**, then **Export** an entity. The resulting file can be re-imported on another computer.
+- One entity: **Profile and data**, then **Export**. The resulting file can be re-imported on another computer.
+- Everything: copy the data folder (`server/data`, or the `scopeo-data` Docker volume). It holds the database `scopeo.db` and the key `secret.key`, which encrypts two-factor authentication and the LDAP service account password: keep them together.
 
 ## Troubleshooting
 
@@ -205,15 +218,28 @@ Au premier lancement, une fenêtre de commande installe les composants nécessai
 
 ## Premiers pas
 
-1. À l'accueil, choisissez **Mode invité** pour découvrir la plateforme sur l'entreprise de démonstration *Finexa*. Un parcours guidé présente les écrans ; la session invitée est effacée à la déconnexion.
-2. Pour un vrai cadrage, choisissez **Créer un profil** : nom, fonction et mot de passe (10 caractères au moins, saisi deux fois). Créez ensuite une entité : un client, ou votre propre organisation.
-3. Les fois suivantes, connectez-vous avec le nom du profil et son mot de passe. **Se déconnecter** (menu du profil) ferme la session.
-4. La langue de l'interface (français ou anglais) se change dans la barre du haut.
-5. Suivez les étapes proposées sur le tableau de bord : qualifier, évaluer, prioriser, préparer le signalement, restituer.
+1. Au premier lancement, l'accueil ne propose que **Créer le profil administrateur** : nom, fonction et mot de passe (10 caractères au moins, saisi deux fois). Ce premier profil gère les comptes et les réglages dans l'espace **Administration** (menu du profil), et utilise la plateforme comme tout le monde.
+2. Créez une entité : un client, ou votre propre organisation. Un court parcours guidé s'ouvre à la première connexion ; le point d'interrogation de la barre du haut le relance.
+3. Pour découvrir la plateforme sans compte, **Mode invité** ouvre l'entreprise de démonstration *Finexa* ; la session invitée est effacée à la déconnexion.
+4. Les fois suivantes, connectez-vous avec le nom du profil et son mot de passe. **Se déconnecter** (menu du profil) ferme la session.
+5. Recommandé : activez la **double authentification** dans **Profil et données**, avec une application comme Microsoft Authenticator, Google Authenticator ou FreeOTP.
+6. Suivez les étapes proposées sur le tableau de bord : qualifier, évaluer, prioriser, préparer le signalement, restituer.
+
+## Partager Scopeo avec une équipe
+
+Dans l'espace **Administration** :
+
+- **Comptes** : créer un compte avec un mot de passe provisoire (la personne le remplace à sa première connexion), suspendre un compte, nommer un autre administrateur, ou désactiver la double authentification d'une personne qui a perdu son téléphone.
+- **Annuaire LDAP** : relier Scopeo à Active Directory ou OpenLDAP (adresse, compte de service, base de recherche, filtre, groupe facultatif). Le bouton **Tester** vérifie chaque étape ; une fois activé, un onglet annuaire apparaît sur la page de connexion.
+- **Réglages** : fermer la création libre de profils, désactiver le mode invité, fixer la durée des sessions.
+- **Journal** : les actions d'administration et les changements de sécurité des comptes.
+
+Servir Scopeo à plusieurs personnes suppose un mandataire inverse en HTTPS : voir [SECURITY.md](../SECURITY.md).
 
 ## Sauvegarder vos données
 
-Depuis la plateforme : **Profil et données**, puis **Exporter** une entité. Le fichier obtenu peut être réimporté sur un autre poste.
+- Une entité : **Profil et données**, puis **Exporter**. Le fichier obtenu peut être réimporté sur un autre poste.
+- Tout : copiez le dossier de données (`server/data`, ou le volume Docker `scopeo-data`). Il contient la base `scopeo.db` et la clé `secret.key`, qui chiffre la double authentification et le mot de passe du compte de service LDAP : gardez-les ensemble.
 
 ## En cas de problème
 

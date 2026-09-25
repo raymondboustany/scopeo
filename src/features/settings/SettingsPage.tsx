@@ -8,6 +8,7 @@ import { useSession } from '@/lib/store'
 import { api } from '@/lib/api'
 import { useScoping } from '@/lib/hooks'
 import { slugify } from '@/lib/utils'
+import { MfaCard } from './MfaCard'
 import { LANG, setLang, tr, type Lang } from '@/i18n'
 import type { EntityRecord, UserRole } from '@/types/domain'
 
@@ -176,7 +177,20 @@ export default function SettingsPage() {
         </Card>
       )}
 
-      {user.is_guest ? null : (
+      {user.auth_source === 'ldap' ? (
+        <Card>
+          <CardHeader
+            title={tr('Mot de passe', 'Password')}
+            subtitle={tr(
+              "Votre compte provient de l'annuaire de votre organisation : le mot de passe se change dans l'annuaire, pas dans Scopeo.",
+              "Your account comes from your organisation's directory: the password is changed in the directory, not in Scopeo.",
+            )}
+            icon={<KeyRound size={16} />}
+          />
+        </Card>
+      ) : null}
+
+      {user.is_guest || user.auth_source === 'ldap' ? null : (
         <Card>
           <CardHeader
             title={tr('Mot de passe', 'Password')}
@@ -216,6 +230,8 @@ export default function SettingsPage() {
           </form>
         </Card>
       )}
+
+      {user.is_guest ? null : <MfaCard user={user} />}
 
       <Card>
         <CardHeader title={tr('Langue de l’interface', 'Interface language')} icon={<Languages size={16} />} />
@@ -288,6 +304,14 @@ export default function SettingsPage() {
             <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">server/data/scopeo.db</code>{' '}
             {tr('(modifiable par la variable', '(configurable with the')} <code className="font-mono text-xs">SCOPEO_DATA_DIR</code>
             {tr(').', ' variable).')}
+          </p>
+          <p>
+            {tr(
+              'Les secrets de sécurité (double authentification, compte de service LDAP) y sont chiffrés avec la clé ',
+              'Security secrets (two-factor authentication, LDAP service account) are encrypted there with the key ',
+            )}
+            <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">secret.key</code>
+            {tr(', placée dans le même dossier : sauvegardez-la avec la base.', ', kept in the same folder: back it up with the database.')}
           </p>
           <p>
             {tr(

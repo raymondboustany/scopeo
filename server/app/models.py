@@ -53,8 +53,45 @@ class User(SQLModel, table=True):
     # Profil support de l'entité de démonstration : jamais listé comme profil.
     is_demo: bool = False
     onboarded: bool = False
+    # Administration : le premier profil créé l'est d'office. Un administrateur
+    # gère les comptes et les réglages, jamais les entités des autres.
+    is_admin: bool = False
+    admin_onboarded: bool = False
+    disabled: bool = False
+    # Mot de passe provisoire posé par un administrateur : à changer à la connexion.
+    must_change_password: bool = False
+    # Origine du compte : ``local`` (mot de passe haché ici) ou ``ldap``.
+    auth_source: str = "local"
+    ldap_dn: str | None = Field(default=None, index=True)
+    ldap_username: str | None = Field(default=None)
+    # Second facteur (TOTP) : graine chiffrée, codes de récupération en empreintes.
+    mfa_enabled: bool = False
+    mfa_secret: str | None = Field(default=None)
+    mfa_pending_secret: str | None = Field(default=None)
+    mfa_last_step: int | None = Field(default=None)
+    mfa_recovery: list[Any] = Field(default_factory=list, sa_column=Column(JSON, nullable=False, server_default="[]"))
+    last_login_at: datetime | None = Field(default=None)
     created_at: datetime = Field(default_factory=now)
     updated_at: datetime = Field(default_factory=now)
+
+
+class Setting(SQLModel, table=True):
+    """Réglage global, modifiable depuis l'espace d'administration."""
+
+    key: str = Field(primary_key=True)
+    value: Any = Field(default=None, sa_column=Column(JSON, nullable=True))
+    updated_at: datetime = Field(default_factory=now)
+
+
+class AuditEvent(SQLModel, table=True):
+    """Journal des actions d'administration et des événements de sécurité des comptes."""
+
+    id: str = Field(default_factory=new_id, primary_key=True)
+    at: datetime = Field(default_factory=now, index=True)
+    actor: str = ""
+    action: str
+    target: str = ""
+    detail: str = ""
 
 
 class Entity(SQLModel, table=True):

@@ -97,10 +97,11 @@ function distribution(items: PrioritisedItem[]): Distribution {
   return d
 }
 
-const ESCALATION = ['rssi', 'dpo', 'direction', 'juridique', 'communication', 'autre']
+const ESCALATION = ['rssi', 'reponse', 'dpo', 'direction', 'juridique', 'communication', 'autre']
 
 const ROLE_LABEL: Record<string, string> = {
   rssi: tr('RSSI', 'CISO'),
+  reponse: tr('Réponse', 'Response'),
   dpo: 'DPO',
   direction: tr('Direction', 'Management'),
   juridique: tr('Juridique', 'Legal'),

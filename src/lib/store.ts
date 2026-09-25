@@ -20,6 +20,8 @@ interface SessionState {
   notesOpen: boolean
   tourOpen: boolean
   tourStep: number
+  /** Parcours affiché : celui de l'application ou celui de l'espace d'administration. */
+  tourKind: 'app' | 'admin'
 
   signIn: (userId: string, entityId?: string | null) => void
   signOut: () => void
@@ -28,7 +30,7 @@ interface SessionState {
   toggleSidebar: () => void
   toggleTheme: () => void
   setNotesOpen: (open: boolean) => void
-  openTour: (step?: number) => void
+  openTour: (step?: number, kind?: 'app' | 'admin') => void
   closeTour: () => void
   setTourStep: (step: number) => void
 }
@@ -44,6 +46,7 @@ export const useSession = create<SessionState>()(
       notesOpen: false,
       tourOpen: false,
       tourStep: 0,
+      tourKind: 'app',
 
       signIn: (userId, entityId = null) => set({ userId, entityId }),
       signOut: () => set({ userId: null, entityId: null, tourOpen: false }),
@@ -52,7 +55,7 @@ export const useSession = create<SessionState>()(
       toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
       toggleTheme: () => set((s) => ({ theme: s.theme === 'light' ? 'dark' : 'light' })),
       setNotesOpen: (notesOpen) => set({ notesOpen }),
-      openTour: (step = 0) => set({ tourOpen: true, tourStep: step }),
+      openTour: (step = 0, kind = 'app') => set({ tourOpen: true, tourStep: step, tourKind: kind }),
       closeTour: () => set({ tourOpen: false }),
       setTourStep: (tourStep) => set({ tourStep }),
     }),

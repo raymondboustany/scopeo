@@ -3,7 +3,7 @@ import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/re
 import { create } from 'zustand'
 import { api, type EntityPatch, type RegisterInput } from './api'
 import { useSession } from './store'
-import type { EntityProfile, EntityRecord, UserProfile } from '@/types/domain'
+import { needsMfa, type EntityProfile, type EntityRecord, type LoginResult, type UserProfile } from '@/types/domain'
 import { tr } from '@/i18n'
 
 export const queryClient = new QueryClient({
@@ -48,10 +48,38 @@ function useOpenSession() {
   }
 }
 
-export function useLogin() {
+/** Une connexion peut s'arrêter au second facteur : la session ne s'ouvre qu'avec un profil. */
+function useOpenIfUser() {
   const open = useOpenSession()
+  return (r: LoginResult) => {
+    if (!needsMfa(r)) open(r)
+  }
+}
+
+export function useAuthStatus() {
+  return useQuery({ queryKey: ['auth-status'], queryFn: () => api.status(), staleTime: 0, retry: 1 })
+}
+
+export function useLogin() {
+  const openIfUser = useOpenIfUser()
   return useMutation({
     mutationFn: ({ name, password }: { name: string; password: string }) => api.login(name, password),
+    onSuccess: openIfUser,
+  })
+}
+
+export function useLdapLogin() {
+  const openIfUser = useOpenIfUser()
+  return useMutation({
+    mutationFn: ({ username, password }: { username: string; password: string }) => api.ldapLogin(username, password),
+    onSuccess: openIfUser,
+  })
+}
+
+export function useMfaVerify() {
+  const open = useOpenSession()
+  return useMutation({
+    mutationFn: ({ challenge, code }: { challenge: string; code: string }) => api.mfaVerify(challenge, code),
     onSuccess: open,
   })
 }
@@ -59,14 +87,6 @@ export function useLogin() {
 export function useRegister() {
   const open = useOpenSession()
   return useMutation({ mutationFn: (input: RegisterInput) => api.register(input), onSuccess: open })
-}
-
-export function useSetupPassword() {
-  const open = useOpenSession()
-  return useMutation({
-    mutationFn: ({ name, password, confirm }: { name: string; password: string; confirm: string }) => api.setupPassword(name, password, confirm),
-    onSuccess: open,
-  })
 }
 
 export function useGuest() {
@@ -98,9 +118,11 @@ export function useUpdateUser() {
 }
 
 export function useChangePassword() {
+  const qc = useQueryClient()
   return useMutation({
     mutationFn: ({ current, password, confirm }: { current: string; password: string; confirm: string }) =>
       api.changePassword(current, password, confirm),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.me }),
   })
 }
 

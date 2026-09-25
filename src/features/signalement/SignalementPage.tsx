@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronRight, Download, FlaskConical, Landmark, ListChecks, Users } from 'lucide-react'
+import { ChevronRight, Download, FlaskConical, Landmark, LifeBuoy, ListChecks, Users } from 'lucide-react'
 import { Button, LinkButton } from '@/components/ui/controls'
 import { Callout, Card, CardHeader, Disclaimer, EmptyState, PageHeader, Tag } from '@/components/ui/primitives'
 import { useScoping } from '@/lib/hooks'
@@ -8,6 +8,7 @@ import { buildReportData } from '@/features/report/reportData'
 import { readiness } from '@/engines/incidents'
 import { NextStep } from '@/components/layout/NextStep'
 import { AuthorityCards, ContactCards, ReadinessList, Simulator } from './components'
+import { ResponseSupport } from './ResponseSupport'
 import { tr } from '@/i18n'
 
 /**
@@ -87,9 +88,20 @@ export default function SignalementPage() {
       </div>
 
       <Card>
-        <CardHeader title={tr("Chaîne d'escalade interne", 'Internal escalation chain')} subtitle={tr("Numérotée dans l'ordre d'appel : sécurité, données, direction", 'Numbered in call order: security, data, management')} icon={<Users size={16} />} />
+        <CardHeader title={tr("Chaîne d'escalade interne", 'Internal escalation chain')} subtitle={tr("Numérotée dans l'ordre d'appel : sécurité, appui technique, données, direction", 'Numbered in call order: security, technical support, data, management')} icon={<Users size={16} />} />
         <div className="p-5">
           <ContactCards contacts={entity.contacts} readOnly={readOnly} />
+        </div>
+      </Card>
+
+      <Card>
+        <CardHeader
+          title={tr('Appui technique à la réponse', 'Technical response support')}
+          subtitle={tr("Notifier ne suffit pas : qui intervient sur les systèmes pour contenir l'attaque et préserver les preuves", 'Notifying is not enough: who works on the systems to contain the attack and preserve evidence')}
+          icon={<LifeBuoy size={16} />}
+        />
+        <div className="p-5">
+          <ResponseSupport answers={entity.answers} contacts={entity.contacts} />
         </div>
       </Card>
 

@@ -18,8 +18,16 @@ const REFLEXES = [
     'Qualify quickly: personal data affected? service disrupted? major incident under DORA? product vulnerability exploited? high-risk AI system involved?',
   ),
   tr('Préserver les traces (journaux, postes, sauvegardes) avant toute remise en état.', 'Preserve traces (logs, workstations, backups) before any restoration.'),
+  tr(
+    "Mobiliser l'appui technique prévu (équipe interne ou prestataire, de préférence qualifié PRIS) ; à défaut, le CSIRT territorial ou 17cyber.gouv.fr.",
+    'Call on the planned technical support (internal team or provider, preferably PRIS-qualified); failing that, the regional CSIRT or 17cyber.gouv.fr.',
+  ),
   tr("Notifier d'abord, compléter ensuite : chaque régime prévoit une notification initiale puis des rapports de suivi.", 'Notify first, complete later: each regime provides for an initial notification then follow-up reports.'),
   tr('Tenir une main courante horodatée de toutes les décisions et de tous les échanges.', 'Keep a timestamped log of all decisions and exchanges.'),
+  tr(
+    "Assurance cyber : porter plainte au plus tard 72 heures après la prise de connaissance, condition de l'indemnisation (code des assurances, art. L. 12-10-1).",
+    'Cyber insurance: file a complaint no later than 72 hours after becoming aware, a condition of compensation (French Insurance Code, Art. L. 12-10-1).',
+  ),
 ]
 
 export function ReflexeSheet({ d }: { d: ReportData }) {

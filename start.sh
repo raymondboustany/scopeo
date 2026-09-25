@@ -19,7 +19,14 @@ if [ ! -x "$VENV_PY" ]; then
   fi
   echo "Installation du serveur local…"
   "$PY" -m venv server/.venv
+fi
+
+# Composants du serveur : installés au premier lancement, puis à chaque
+# changement de server/requirements.txt (nouvelle version de l'archive).
+if ! cmp -s server/requirements.txt server/.venv/requirements.txt; then
+  echo "Installation des composants du serveur…"
   "$VENV_PY" -m pip install --disable-pip-version-check -q -r server/requirements.txt
+  cp server/requirements.txt server/.venv/requirements.txt
 fi
 
 # --- Interface (déjà compilée dans les versions publiées) -------------------

@@ -98,7 +98,7 @@ describe('moteur de priorisation', () => {
     }
   })
 
-  it('répartit toutes les exigences sur quatre vagues au plus', () => {
+  it('répartit toutes les exigences sur quatre phases au plus', () => {
     const items = run()
     for (const item of items) {
       expect([1, 2, 3, 4]).toContain(item.wave)

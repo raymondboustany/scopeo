@@ -9,6 +9,7 @@ import { queryClient, useCurrentEntity, useCurrentUser } from '@/lib/queries'
 import { useSession } from '@/lib/store'
 import { ApiError, setUnauthenticatedHandler } from '@/lib/api'
 import { useSnapshotSync } from '@/lib/hooks'
+import { ForcedPasswordChange } from '@/components/auth/fields'
 import { tr } from '@/i18n'
 
 const Landing = lazy(() => import('@/features/landing/LandingPage'))
@@ -28,6 +29,11 @@ const Signalement = lazy(() => import('@/features/signalement/SignalementPage'))
 const Report = lazy(() => import('@/features/report/ReportPage'))
 const TrustSettings = lazy(() => import('@/features/trust/TrustSettingsPage'))
 const Settings = lazy(() => import('@/features/settings/SettingsPage'))
+const AdminLayout = lazy(() => import('@/features/admin/AdminLayout'))
+const AdminUsers = lazy(() => import('@/features/admin/UsersPage'))
+const AdminLdap = lazy(() => import('@/features/admin/LdapPage'))
+const AdminSettings = lazy(() => import('@/features/admin/SettingsAdminPage'))
+const AdminAudit = lazy(() => import('@/features/admin/AuditPage'))
 
 // Une session expirée ou révoquée ramène à l'écran de connexion.
 setUnauthenticatedHandler(() => {
@@ -71,6 +77,16 @@ function AppLayout() {
 
   if (!userId) return <Navigate to="/" replace />
   if (error instanceof ApiError && error.status === 0) return <ServerDown />
+  // Mot de passe provisoire : rien d'autre n'est accessible avant de l'avoir remplacé.
+  if (user?.must_change_password) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-paper p-6">
+        <div className="w-full max-w-md rounded-xl border border-rule bg-surface p-7 shadow-panel">
+          <ForcedPasswordChange user={user} onDone={() => undefined} />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <AppShell>
@@ -182,6 +198,22 @@ const router = createHashRouter([
       { path: 'trust', element: <TrustSettings /> },
       { path: 'parametres', element: <Settings /> },
       { path: '*', element: <Navigate to="/app" replace /> },
+    ],
+  },
+  {
+    path: '/admin',
+    element: (
+      <Suspense fallback={<div className="min-h-screen bg-frame" />}>
+        <AdminLayout />
+      </Suspense>
+    ),
+    errorElement: <ErrorScreen />,
+    children: [
+      { index: true, element: <AdminUsers /> },
+      { path: 'annuaire', element: <AdminLdap /> },
+      { path: 'reglages', element: <AdminSettings /> },
+      { path: 'journal', element: <AdminAudit /> },
+      { path: '*', element: <Navigate to="/admin" replace /> },
     ],
   },
   { path: '*', element: <Navigate to="/" replace /> },
