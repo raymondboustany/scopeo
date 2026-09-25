@@ -30,18 +30,10 @@ import { useSession } from '@/lib/store'
 import { useCurrentEntity, useCurrentUser, useEntities, useLogout, useSaveStatus, flushAll } from '@/lib/queries'
 import { useScoping } from '@/lib/hooks'
 import { tr } from '@/i18n'
+import { ROLE_SHORT } from '@/components/auth/roles'
 import { Tour } from '@/components/tour/Tour'
 import { FeedbackButton } from '@/components/feedback/FeedbackDialog'
 
-const ROLE_LABEL: Record<string, string> = {
-  consultant: tr('Consultant', 'Consultant'),
-  dpo: tr('DPO', 'DPO'),
-  rssi: tr('RSSI', 'CISO'),
-  juriste: tr('Juriste', 'Legal counsel'),
-  dirigeant: tr('Direction', 'Executive'),
-  auditeur: tr('Auditeur', 'Auditor'),
-  autre: tr('Utilisateur', 'User'),
-}
 
 /* ========================================================================== */
 
@@ -264,7 +256,7 @@ function UserMenu() {
           <div className="px-2 py-2">
             <div className="truncate text-sm font-medium text-ink">{displayName}</div>
             <div className="text-2xs text-ink-3">
-              {user?.is_guest ? tr('Mode invité', 'Guest mode') : ROLE_LABEL[user?.role ?? 'autre']}
+              {user?.is_guest ? tr('Mode invité', 'Guest mode') : ROLE_SHORT[user?.role ?? 'autre']}
               {user?.is_admin ? ` · ${tr('administrateur', 'administrator')}` : ''}
               {user?.organisation ? ` · ${user.organisation}` : ''}
             </div>

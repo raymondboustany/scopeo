@@ -424,7 +424,7 @@ export interface TimelineEvent {
 // Persistance : miroir des objets du serveur
 // ---------------------------------------------------------------------------
 
-export type UserRole = 'consultant' | 'dpo' | 'rssi' | 'juriste' | 'dirigeant' | 'auditeur' | 'autre'
+export type UserRole = 'consultant' | 'rssi' | 'conformite' | 'risques' | 'dpo' | 'juriste' | 'dirigeant' | 'auditeur' | 'autre'
 
 export interface UserProfile {
   id: string

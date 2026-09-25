@@ -12,16 +12,8 @@ import { MfaCard } from './MfaCard'
 import { ApiTokensCard } from './ApiTokensCard'
 import { LANG, setLang, tr, type Lang } from '@/i18n'
 import type { EntityRecord, UserRole } from '@/types/domain'
+import { USER_ROLES as ROLES } from '@/components/auth/roles'
 
-const ROLES: { value: UserRole; label: string }[] = [
-  { value: 'consultant', label: tr('Consultant, plusieurs clients', 'Consultant, several clients') },
-  { value: 'dpo', label: tr('Délégué à la protection des données', 'Data protection officer') },
-  { value: 'rssi', label: tr('RSSI', 'CISO') },
-  { value: 'juriste', label: tr('Juriste, conformité', 'Legal, compliance') },
-  { value: 'dirigeant', label: tr('Direction', 'Executive') },
-  { value: 'auditeur', label: tr('Auditeur', 'Auditor') },
-  { value: 'autre', label: tr('Autre', 'Other') },
-]
 
 /** Format d'échange d'une entité : ce qu'il faut pour la recréer ailleurs, rien de plus. */
 interface EntityExport {

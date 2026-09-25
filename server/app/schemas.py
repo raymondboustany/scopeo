@@ -21,7 +21,7 @@ def _as_utc(value: datetime) -> str:
 
 UTCDateTime = Annotated[datetime, PlainSerializer(_as_utc, return_type=str)]
 
-Role = Literal["consultant", "dpo", "rssi", "juriste", "dirigeant", "auditeur", "autre"]
+Role = Literal["consultant", "rssi", "conformite", "risques", "dpo", "juriste", "dirigeant", "auditeur", "autre"]
 
 
 class RegisterPayload(BaseModel):

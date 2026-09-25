@@ -19,7 +19,7 @@ Open source regulatory scoping and gap assessment platform for the **GDPR**, **N
 
 <br>
 
-<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, assessment, ISO 27001, prioritisation, incident notification, reports, administration, dark theme" width="100%">
+<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, regulatory corpus, assessment, ISO 27001, prioritisation, incident notification, reports, administration, dark theme" width="100%">
 
 </div>
 
@@ -61,8 +61,8 @@ The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI A
 
 | Profile | What the platform brings |
 |---|---|
-| Consultants and advisory firms | Scope a client in a few interviews, with reasoning that holds up article by article, and deliver board-ready reports. |
-| CISO, DPO and compliance teams | See which texts apply, where one action covers several of them, and where to start. |
+| Consultants | Scope a client in a few interviews, with reasoning that holds up article by article, and deliver board-ready reports. |
+| GRC teams: CISO, risk, compliance, DPO | See which texts apply, where one action covers several of them, and where to start. |
 | Management | A two-page summary: exposure, priorities and decisions to take. |
 | Legal counsel | The legal basis of every verdict, official quotations and caveats. |
 
@@ -110,8 +110,8 @@ An optional question at the end of scoping records the entity's ISO 27001 status
 <tr>
 <td width="50%" valign="top">
 
-### NIS2 detailed by the ReCyF
-Under the NIS2 requirements, the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category. A valid ISO 27001 certificate over the whole scope is recognised for objectives 2 and 16, as the ReCyF provides.
+### The full regulatory corpus
+**95 obligations** from the five texts, broken down into **348 elementary requirements**, each with its official quotation and the evidence expected in an audit. The view can be filtered to the entity's scope. NIS2 is detailed by the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category.
 
 </td>
 <td width="50%"><img src="docs/assets/en/corpus.jpg" alt="Regulatory corpus"></td>
@@ -321,7 +321,7 @@ Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD
 
 <br>
 
-<img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, évaluation, ISO 27001, priorisation, signalement, rapports, administration, thème sombre" width="100%">
+<img src="docs/assets/tour-fr.webp" alt="Parcours : connexion, tableau de bord, qualification, croisements, mutualisation, corpus réglementaire, évaluation, ISO 27001, priorisation, signalement, rapports, administration, thème sombre" width="100%">
 
 </div>
 
@@ -363,8 +363,8 @@ La première étape établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, C
 
 | Profil | Ce que la plateforme apporte |
 |---|---|
-| Consultants et cabinets de conseil | Cadrer un client en quelques entretiens, avec un raisonnement qui tient article par article, et remettre des livrables prêts pour une direction. |
-| RSSI, DPO et équipes conformité | Savoir quels textes s'appliquent, où une action en couvre plusieurs, et par quoi commencer. |
+| Consultants | Cadrer un client en quelques entretiens, avec un raisonnement qui tient article par article, et remettre des livrables prêts pour une direction. |
+| Équipes GRC : RSSI, risques, conformité, DPO | Savoir quels textes s'appliquent, où une action en couvre plusieurs, et par quoi commencer. |
 | Direction | Une note de deux pages : exposition, priorités et décisions à prendre. |
 | Juristes | Le fondement de chaque verdict, les citations officielles et les réserves. |
 
@@ -412,8 +412,8 @@ Une question facultative, en fin de qualification, recueille la situation de l'e
 <tr>
 <td width="50%" valign="top">
 
-### NIS2 détaillé par le ReCyF
-Sous les exigences NIS2, les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité. Un certificat ISO 27001 valide sur tout le périmètre est reconnu pour les objectifs 2 et 16, comme le prévoit le ReCyF.
+### Tout le corpus réglementaire
+**95 obligations** issues des cinq textes, décomposées en **348 exigences élémentaires**, chacune avec sa citation officielle et les preuves attendues en contrôle. La vue se filtre sur le périmètre de l'entité. NIS2 est détaillée par les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité.
 
 </td>
 <td width="50%"><img src="docs/assets/fr/corpus.jpg" alt="Corpus réglementaire"></td>

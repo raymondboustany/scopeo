@@ -15,16 +15,8 @@ import { REGULATION_ORDER } from '@/data/regulations'
 import { TIMELINE } from '@/data/timeline'
 import { LanguageToggle, ThemeToggle } from '@/components/layout/ThemeToggle'
 import { tr } from '@/i18n'
+import { USER_ROLES as ROLES } from '@/components/auth/roles'
 
-const ROLES: { value: UserRole; label: string }[] = [
-  { value: 'consultant', label: tr('Consultant, plusieurs clients', 'Consultant, several clients') },
-  { value: 'dpo', label: tr('Délégué à la protection des données', 'Data protection officer') },
-  { value: 'rssi', label: tr('RSSI', 'CISO') },
-  { value: 'juriste', label: tr('Juriste, conformité', 'Legal, compliance') },
-  { value: 'dirigeant', label: tr('Direction', 'Executive') },
-  { value: 'auditeur', label: tr('Auditeur', 'Auditor') },
-  { value: 'autre', label: tr('Autre', 'Other') },
-]
 
 
 /** Veille : ce qui vient d'entrer en vigueur et ce qui arrive, daté par rapport à aujourd'hui. */

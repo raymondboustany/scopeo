@@ -25,17 +25,8 @@ import { useCurrentUser } from '@/lib/queries'
 import { cn, formatDateShort } from '@/lib/utils'
 import type { AdminUser, UserRole } from '@/types/domain'
 import { tr } from '@/i18n'
+import { ROLE_SHORT, USER_ROLES as ROLES } from '@/components/auth/roles'
 
-const ROLES: { value: UserRole; label: string }[] = [
-  { value: 'consultant', label: tr('Consultant', 'Consultant') },
-  { value: 'dpo', label: tr('Délégué à la protection des données', 'Data protection officer') },
-  { value: 'rssi', label: tr('RSSI', 'CISO') },
-  { value: 'juriste', label: tr('Juriste, conformité', 'Legal, compliance') },
-  { value: 'dirigeant', label: tr('Direction', 'Executive') },
-  { value: 'auditeur', label: tr('Auditeur', 'Auditor') },
-  { value: 'autre', label: tr('Autre', 'Other') },
-]
-const ROLE_LABEL = Object.fromEntries(ROLES.map((r) => [r.value, r.label])) as Record<string, string>
 
 /** Mot de passe provisoire lisible, sans caractères ambigus. */
 function temporaryPassword(): string {
@@ -154,7 +145,7 @@ export default function UsersPage() {
                           {u.id === me?.id ? <span className="text-2xs text-ink-4">{tr('(vous)', '(you)')}</span> : null}
                         </span>
                         <span className="block truncate text-2xs text-ink-3">
-                          {[ROLE_LABEL[u.role] ?? u.role, u.organisation, u.email].filter(Boolean).join(' · ')}
+                          {[ROLE_SHORT[u.role] ?? u.role, u.organisation, u.email].filter(Boolean).join(' · ')}
                         </span>
                       </span>
                     </div>
