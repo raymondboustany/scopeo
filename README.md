@@ -62,7 +62,8 @@ The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI A
 | Profile | What the platform brings |
 |---|---|
 | Consultants | Scope a client in a few interviews, with reasoning that holds up article by article, and deliver board-ready reports. |
-| GRC teams: CISO, risk, compliance, DPO | See which texts apply, where one action covers several of them, and where to start. |
+| CISOs | See which obligations apply to the organisation, prioritise measures and justify the roadmap to management. |
+| GRC teams | See which texts apply, where one action covers several of them, and where to start. |
 | Management | A two-page summary: exposure, priorities and decisions to take. |
 | Legal counsel | The legal basis of every verdict, official quotations and caveats. |
 
@@ -364,7 +365,8 @@ La première étape établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, C
 | Profil | Ce que la plateforme apporte |
 |---|---|
 | Consultants | Cadrer un client en quelques entretiens, avec un raisonnement qui tient article par article, et remettre des livrables prêts pour une direction. |
-| Équipes GRC : RSSI, risques, conformité, DPO | Savoir quels textes s'appliquent, où une action en couvre plusieurs, et par quoi commencer. |
+| RSSI | Savoir quelles obligations pèsent sur l'organisation, prioriser les mesures et justifier la feuille de route auprès de la direction. |
+| Équipes GRC | Savoir quels textes s'appliquent, où une action en couvre plusieurs, et par quoi commencer. |
 | Direction | Une note de deux pages : exposition, priorités et décisions à prendre. |
 | Juristes | Le fondement de chaque verdict, les citations officielles et les réserves. |
 
