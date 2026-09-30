@@ -381,7 +381,7 @@ export function prioritise({
  * chacune) selon ses moyens et son calendrier.
  */
 export const DEFAULT_PLAN: RoadmapPlan = { months: [3, 3, 6, 12] }
-export const PLAN_LIMITS = { minPhases: 2, maxPhases: 6, minMonths: 1, maxMonths: 36 } as const
+export const PLAN_LIMITS = { minPhases: 1, maxPhases: 12, minMonths: 1, maxMonths: 120 } as const
 
 /** Plan valide : bornes respectées, proposition par défaut si rien n'est réglé. */
 export function normalisePlan(plan?: Partial<RoadmapPlan> | null): RoadmapPlan {
@@ -429,7 +429,7 @@ export function wavesFor(plan: RoadmapPlan = DEFAULT_PLAN): Wave[] {
     const wave: Wave = {
       n: i + 1,
       label: tr(`Phase ${i + 1}`, `Phase ${i + 1}`),
-      horizon: tr(`${start} à ${end} mois`, `${start} to ${end} months`),
+      horizon: m === 1 ? tr(`Mois ${end}`, `Month ${end}`) : tr(`Mois ${start + 1} à ${end}`, `Months ${start + 1} to ${end}`),
       intent: i === 0 ? INTENT.first : i === count - 1 ? INTENT.last : i === 1 ? INTENT.second : INTENT.middle,
       start,
       end,

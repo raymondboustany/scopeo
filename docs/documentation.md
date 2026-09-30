@@ -35,7 +35,7 @@ It is **self-hosted**: on one computer, or on your organisation's server. No sco
 | Entity | The organisation being scoped (client, subsidiary, own company). Each entity belongs to one profile and is private to it. |
 | Guest | Password-less trial session on a copy of the Finexa demo, erased on sign-out. |
 | Unified requirement | One requirement grouping what several texts ask on the same topic (40 in total), used for the score and the crosswalk. |
-| Phase | Treatment horizon of a gap. The platform proposes four phases (0 to 3 months, 3 to 6, 6 to 12, 12 to 24); their number and length are adjustable in the roadmap. |
+| Phase | Treatment horizon of a gap. The platform proposes four phases (months 1 to 3, 4 to 6, 7 to 12, 13 to 24); their number and length are freely adjustable in the roadmap. |
 
 ## 3. Running a scoping engagement
 
@@ -249,7 +249,7 @@ Elle est **auto-hébergée** : sur un poste, ou sur le serveur de votre organisa
 | Entité | L'organisation cadrée (client, filiale, sa propre société). Chaque entité appartient à un profil et lui reste privée. |
 | Invité | Session d'essai sans mot de passe, sur une copie de la démonstration Finexa, effacée à la déconnexion. |
 | Exigence unifiée | Une exigence qui regroupe ce que plusieurs textes demandent sur un même sujet (40 au total), base du score et du croisement. |
-| Phase | Horizon de traitement d'un écart. La plateforme propose quatre phases (0 à 3 mois, 3 à 6, 6 à 12, 12 à 24) ; leur nombre et leur durée se règlent dans la feuille de route. |
+| Phase | Horizon de traitement d'un écart. La plateforme propose quatre phases (mois 1 à 3, 4 à 6, 7 à 12, 13 à 24) ; leur nombre et leur durée se règlent dans la feuille de route. |
 
 ## 3. Mener un cadrage
 

@@ -115,13 +115,14 @@ describe('moteur de priorisation', () => {
     const first = items.filter((i) => i.wave === 1 && i.blockedBy.length === 0).length
     expect(first).toBeGreaterThan(0)
     expect(first).toBeLessThanOrEqual(Math.ceil(items.length / 3))
-    expect(wavesFor(plan).map((w) => w.horizon)).toEqual(['0 à 2 mois', '2 à 6 mois'])
+    expect(wavesFor(plan).map((w) => w.horizon)).toEqual(['Mois 1 à 2', 'Mois 3 à 6'])
   })
 
   it('ramène un découpage invalide à la proposition de la plateforme', () => {
-    expect(normalisePlan({ months: [5] })).toEqual(DEFAULT_PLAN)
+    expect(normalisePlan({ months: [] })).toEqual(DEFAULT_PLAN)
     expect(normalisePlan(null)).toEqual(DEFAULT_PLAN)
-    expect(normalisePlan({ months: [0, 99, 3] }).months).toEqual([1, 36, 3])
+    expect(normalisePlan({ months: [18] }).months).toEqual([18])
+    expect(normalisePlan({ months: [0, 99, 500] }).months).toEqual([1, 99, 120])
   })
 })
 

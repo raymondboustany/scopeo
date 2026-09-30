@@ -33,7 +33,7 @@ const KINDS: {
     audience: tr('Pour décider : dirigeants, comité de direction', 'For decision-makers: executives, management committee'),
     length: tr('2 pages', '2 pages'),
     contents: [
-      tr('Message clé, badge ISO 27001 et quatre indicateurs', 'Key message, ISO 27001 badge and four indicators'),
+      tr('Message clé et quatre indicateurs', 'Key message and four indicators'),
       tr('Couverture par texte, répartition des niveaux', 'Coverage by text, breakdown of levels'),
       tr('Exposition et sanctions plafonds', 'Exposure and penalty caps'),
       tr('Trois priorités, décisions attendues', 'Three priorities, decisions required'),
