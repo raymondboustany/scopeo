@@ -42,7 +42,7 @@ export default function EntitiesPage() {
       <PageHeader
         eyebrow={tr('Cadrage', 'Scoping')}
         title={tr('Entités', 'Entities')}
-        lead={tr("Une entité par organisation cadrée. Chacune est enregistrée séparément : ouvrir, renommer ou supprimer l'une ne touche jamais aux autres.", 'One entity per organisation scoped. Each is stored separately: opening, renaming or deleting one never affects the others.')}
+        lead={tr("Une entité par organisation cadrée, chacune enregistrée séparément : modifier ou supprimer l'une n'affecte jamais les autres.", 'One entity per organisation scoped, each stored separately: changing or deleting one never affects the others.')}
         actions={
           <>
             <Button
@@ -231,7 +231,7 @@ function CreateDialog({
       open={open}
       onOpenChange={onOpenChange}
       title={tr('Nouvelle entité', 'New entity')}
-      description={tr("L'organisation que vous allez cadrer. Sa fiche s'ouvre ensuite, puis la qualification.", 'The organisation you are going to scope. Its profile opens next, then the scoping.')}
+      description={tr("L'organisation à cadrer. Vous compléterez ensuite sa fiche, puis la qualification.", 'The organisation to scope. You will then complete its profile, followed by the scoping.')}
       footer={
         <>
           <Button onClick={() => onOpenChange(false)}>{tr('Annuler', 'Cancel')}</Button>
@@ -251,7 +251,7 @@ function CreateDialog({
         <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label={tr('Type de cadrage', 'Type of scoping')}>
           {([
             ['client', tr('Un client', 'A client'), tr('Vous accompagnez une organisation tierce.', 'You are advising a third-party organisation.')],
-            ['interne', tr('Mon organisation', 'My organisation'), tr('Vous cadrez votre propre entreprise.', 'You are scoping your own company.')],
+            ['interne', tr('Mon organisation', 'My organisation'), tr('Vous cadrez votre propre organisation.', 'You are scoping your own organisation.')],
           ] as const).map(([v, label, hint]) => (
             <button
               key={v}

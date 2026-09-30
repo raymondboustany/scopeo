@@ -17,7 +17,7 @@ const STEP_LABEL: Record<string, string> = {
   config: tr('Configuration complète', 'Configuration complete'),
   connect: tr('Connexion au serveur', 'Connection to the server'),
   bind: tr('Authentification du compte de service', 'Service account authentication'),
-  search: tr('Recherche dans la base', 'Search in the base'),
+  search: tr('Recherche dans l’annuaire', 'Directory search'),
   group: tr('Appartenance au groupe autorisé', 'Membership of the allowed group'),
 }
 
@@ -86,8 +86,8 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
         eyebrow={tr('Administration', 'Administration')}
         title={tr('Annuaire LDAP', 'LDAP directory')}
         lead={tr(
-          "Permettre aux personnes de l'organisation de se connecter avec leur compte habituel (Active Directory, OpenLDAP). Une fois activé, un onglet dédié apparaît sur la page de connexion.",
-          'Let people in the organisation sign in with their usual account (Active Directory, OpenLDAP). Once on, a dedicated tab appears on the sign-in page.',
+          "Permettre aux personnes de l'organisation de se connecter avec leur compte habituel (Active Directory, OpenLDAP). Une fois l'annuaire activé, un onglet dédié apparaît sur la page de connexion.",
+          'Let people in the organisation sign in with their usual account (Active Directory, OpenLDAP). Once enabled, a dedicated tab appears on the sign-in page.',
         )}
         actions={
           <>
@@ -208,7 +208,7 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
       <Card>
         <CardHeader
           title={tr('Tester avant d’activer', 'Test before switching on')}
-          subtitle={tr('Essaie la configuration saisie, même non enregistrée. Aucun mot de passe utilisateur n’est demandé.', 'Tries the configuration as entered, even unsaved. No user password is asked.')}
+          subtitle={tr('Teste la configuration saisie, même si elle n’est pas enregistrée. Aucun mot de passe utilisateur n’est demandé.', 'Tests the configuration as entered, even if unsaved. No user password is required.')}
           icon={<FlaskConical size={16} />}
         />
         <div className="space-y-4 p-5">

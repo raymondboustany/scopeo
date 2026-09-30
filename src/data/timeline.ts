@@ -349,7 +349,7 @@ const DUTIES_FR = [
     regulation: 'NIS2' as const,
     title: "Revue de la politique de sécurité et de la liste des systèmes",
     cadence: 'Annuelle',
-    detail: "Le ReCyF impose une revue annuelle de la politique de sécurité (2.B.4) et une validation annuelle du recensement des activités et systèmes (1.3).",
+    detail: "Le ReCyF prévoit une revue annuelle de la politique de sécurité (2.B.4) et une validation annuelle du recensement des activités et systèmes (1.3).",
     basis: 'ReCyF 1.3-EI/EE et 2.B.4-EI/EE',
   },
   {
@@ -357,7 +357,7 @@ const DUTIES_FR = [
     regulation: 'NIS2' as const,
     title: "Revue des comptes, des droits d'accès et des règles de filtrage",
     cadence: 'Annuelle',
-    detail: "Le ReCyF impose une revue annuelle des comptes (10.A.6), des droits d'accès (10.C.4), des règles de filtrage (7.B.5) et, pour les entités essentielles, de la configuration des annuaires et des ressources (11.B.6, 18.4).",
+    detail: "Le ReCyF prévoit une revue annuelle des comptes (10.A.6), des droits d'accès (10.C.4), des règles de filtrage (7.B.5) et, pour les entités essentielles, de la configuration des annuaires et des ressources (11.B.6, 18.4).",
     basis: 'ReCyF, objectifs 7, 10, 11 et 18',
   },
   {

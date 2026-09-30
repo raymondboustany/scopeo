@@ -160,10 +160,10 @@ export function buildReportData(s: Scoping): ReportData {
   ).map((t) => ({
     code: t.code,
     title: t.title,
-    relation: t.relation === 'divergence' ? tr('Divergence', 'Divergence') : tr('Hiérarchie', 'Precedence'),
+    relation: t.relation === 'divergence' ? tr('Divergence', 'Divergence') : tr('Primauté', 'Precedence'),
     summary: t.summary,
     rule: t.strictest
-      ? `${REGULATIONS[t.strictest.regulation].shortName} ${tr('commande', 'prevails')}${COLON}${t.strictest.rule}`
+      ? `${REGULATIONS[t.strictest.regulation].shortName} ${tr('prévaut', 'prevails')}${COLON}${t.strictest.rule}`
       : t.precedence
         ? t.precedence.basis
         : null,

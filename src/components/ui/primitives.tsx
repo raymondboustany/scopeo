@@ -316,7 +316,7 @@ export function Disclaimer({ className, compact = false }: { className?: string;
     >
       <Scale size={compact ? 12 : 14} className="mt-0.5 shrink-0 text-ink-3" aria-hidden />
       <p>
-        <strong className="font-medium text-ink-2">{tr("Plateforme d'aide au cadrage, pas un avis juridique.", 'A scoping aid, not legal advice.')}</strong>{' '}
+        <strong className="font-medium text-ink-2">{tr('Aide au cadrage, pas un avis juridique.', 'A scoping aid, not legal advice.')}</strong>{' '}
         {compact
           ? tr('Les conclusions reposent sur les éléments déclarés.', 'Conclusions rely on the information provided.')
           : tr(

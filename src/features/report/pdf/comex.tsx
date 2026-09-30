@@ -47,7 +47,7 @@ export function ComexReport({ d }: { d: ReportData }) {
 
         {/* Couverture */}
         <Keep>
-        <H2>{tr('Où en est-on', 'Where we stand')}</H2>
+        <H2>{tr('État des lieux', 'Current position')}</H2>
         <View style={[S.row, { gap: 16 }]}>
           <Ring value={cov.score} size={78} label={tr('partiel compté pour moitié', 'partial counts for half')} />
           <View style={{ flex: 1 }}>
@@ -64,7 +64,7 @@ export function ComexReport({ d }: { d: ReportData }) {
 
         {/* Exposition */}
         <Table
-          lead={<H2>{tr('Ce qui nous expose', 'What exposes us')}</H2>}
+          lead={<H2>{tr('Exposition réglementaire', 'Regulatory exposure')}</H2>}
           cols={[
             { title: tr('Texte', 'Text'), width: '18%' },
             { title: tr('Qualification retenue', 'Scoping outcome'), width: '42%' },
@@ -130,7 +130,7 @@ export function ComexReport({ d }: { d: ReportData }) {
 
         {/* Domaines */}
         <Keep>
-        <H2>{tr('Où sont les faiblesses', 'Where the weaknesses are')}</H2>
+        <H2>{tr('Points faibles par domaine', 'Weak points by domain')}</H2>
         <View style={[S.row, { gap: 22 }]}>
           {[cov.byDomain.slice(0, Math.ceil(cov.byDomain.length / 2)), cov.byDomain.slice(Math.ceil(cov.byDomain.length / 2))].map((col, ci) => (
             <View key={ci} style={{ flex: 1 }}>
@@ -167,7 +167,7 @@ export function ComexReport({ d }: { d: ReportData }) {
             ))}
           </View>
           <View style={{ flex: 1 }}>
-            <H3>{tr('Si un incident survenait', 'Should an incident occur')}</H3>
+            <H3>{tr('En cas d’incident', 'In case of an incident')}</H3>
             {d.notification.map((n) => (
               <View key={n.regulation} wrap={false} style={[S.row, { gap: 6, marginBottom: 4 }]}>
                 <Text style={{ width: 60, fontSize: 7.8, fontFamily: 'Helvetica-Bold', color: REG_HEX[n.regulation] }}>{REG_NAME[n.regulation]}</Text>

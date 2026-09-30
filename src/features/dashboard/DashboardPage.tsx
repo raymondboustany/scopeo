@@ -110,7 +110,7 @@ function NoEntity() {
           </>
         }
       >
-        {tr("Une entité, c'est l'organisation que vous cadrez : un client, une filiale, votre propre société. Créez-en une, ou partez d'une copie de Finexa, un établissement de paiement de 50 salariés déjà qualifié et évalué, pour explorer la plateforme.", 'An entity is the organisation you are scoping: a client, a subsidiary, your own company. Create one, or start from a copy of Finexa, a 50-person payment institution already scoped and assessed, to explore the platform.')}
+        {tr("Une entité correspond à l'organisation que vous cadrez : un client, une filiale ou votre propre société. Créez-en une, ou explorez la plateforme avec une copie de Finexa, un établissement de paiement de 50 salariés déjà qualifié et évalué.", 'An entity is the organisation you are scoping: a client, a subsidiary or your own company. Create one, or explore the platform with a copy of Finexa, a 50-person payment institution already scoped and assessed.')}
       </EmptyState>
     </div>
   )
@@ -133,8 +133,8 @@ function NotQualified({ answered }: { answered: number }) {
                     `${answered} answer${answered > 1 ? 's' : ''} already saved. Finish the questionnaire to establish the applicable texts, the score and the authorities to notify in case of an incident.`,
                   )
                 : tr(
-                    `${QUESTIONS.length} questions, chacune rattachée à l'article qu'elle établit. Le score, les priorités et la section incident en découlent.`,
-                    `${QUESTIONS.length} questions, each tied to the article it establishes. The score, priorities and incident section follow from them.`,
+                    `${QUESTIONS.length} questions au plus, chacune adossée à l'article dont elle relève. Le score, les priorités et la préparation au signalement en découlent.`,
+                    `Up to ${QUESTIONS.length} questions, each tied to the article it relies on. The score, priorities and incident readiness follow from them.`,
                   )}
             </p>
           </div>
@@ -193,7 +193,7 @@ function Qualified() {
                 </span>
               </div>
               <div className="min-w-0 flex-1 space-y-4">
-                <div className="label-caps">{tr('Par référentiel', 'By framework')}</div>
+                <div className="label-caps">{tr('Par texte', 'By text')}</div>
                 {REGULATION_ORDER.filter((r) => scores.byRegulation[r]).map((r, i) => {
                   const line = scores.byRegulation[r]!
                   return (
@@ -226,7 +226,7 @@ function Qualified() {
 
         <Reveal index={1}>
           <Card className="h-full">
-            <CardHeader title={tr('Textes applicables', 'Applicable texts')} subtitle={tr('Issus de la qualification', 'From the scoping')} icon={<ShieldHalf size={16} />} />
+            <CardHeader title={tr('Textes applicables', 'Applicable texts')} subtitle={tr('Selon la qualification', 'Based on the scoping')} icon={<ShieldHalf size={16} />} />
             <ul className="divide-y divide-rule">
               {REGULATION_ORDER.map((r) => {
                 const v = qualification!.verdicts[r]
@@ -236,7 +236,7 @@ function Qualified() {
                     <div className="flex min-w-0 items-center gap-3">
                       <RegChip id={r} size="sm" muted={v.status === 'hors_champ'} />
                       <span className={cn('truncate text-sm', v.status === 'hors_champ' ? 'text-ink-3' : 'text-ink')}>
-                        {v.qualification ?? (v.status === 'probable' ? tr('À confirmer', 'To be confirmed') : tr('Non concerné', 'Not concerned'))}
+                        {v.qualification ?? (v.status === 'probable' ? tr('À confirmer', 'To be confirmed') : tr('Non applicable', 'Not applicable'))}
                       </span>
                     </div>
                     <span className={cn('inline-flex shrink-0 items-center gap-1.5 text-2xs font-medium', st.text)}>
@@ -267,7 +267,7 @@ function Qualified() {
             }
           />
           {alerts.length === 0 ? (
-            <p className="px-5 py-6 text-sm text-ink-3">{tr('Rien qui appelle une action dans les six prochaines semaines.', 'Nothing calls for action in the next six weeks.')}</p>
+            <p className="px-5 py-6 text-sm text-ink-3">{tr('Aucune échéance à traiter dans les six prochaines semaines.', 'No deadline to address in the next six weeks.')}</p>
           ) : (
             <ul className="divide-y divide-rule">
               {alerts.map((a) => (
@@ -311,7 +311,7 @@ function Qualified() {
       <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-2">
         <Reveal index={4}>
           <Card className="h-full">
-            <CardHeader title={tr('Couverture par domaine', 'Coverage by domain')} subtitle={tr('Part des exigences en place, partiel compté pour moitié', 'Share of requirements in place, partial counts for half')} icon={<ShieldHalf size={16} />} />
+            <CardHeader title={tr('Couverture par domaine', 'Coverage by domain')} subtitle={tr('Part des exigences en place ; une exigence partielle compte pour moitié', 'Share of requirements in place; partial ones count for half')} icon={<ShieldHalf size={16} />} />
             <div className="space-y-3 px-5 py-4">
               {(Object.keys(scores.byDomain) as Domain[]).map((d) => {
                 const l = scores.byDomain[d]!
@@ -439,12 +439,12 @@ function Journey() {
     },
     {
       n: 4,
-      label: tr('Préparer le signalement', 'Prepare reporting'),
+      label: tr('Préparer le signalement', 'Prepare incident reporting'),
       detail: tr(`${readyDone} / ${ready.length} points établis`, `${readyDone} / ${ready.length} points established`),
       to: '/app/signalement',
       state: readyDone === ready.length ? 'fait' : readyDone > 0 ? 'en_cours' : 'a_faire',
     },
-    { n: 5, label: tr('Restituer', 'Report'), detail: tr('Note au comité de direction, rapport complet', 'Executive summary, full report'), to: '/app/rapport', state: 'a_faire' },
+    { n: 5, label: tr('Restituer', 'Report'), detail: tr('Note de direction et rapport complet', 'Executive summary and full report'), to: '/app/rapport', state: 'a_faire' },
   ]
   const currentIndex = steps.findIndex((s) => s.state !== 'fait')
 
@@ -501,7 +501,7 @@ function PreparationSummary() {
       <Card>
         <CardHeader
           title={tr('Préparation au signalement', 'Reporting readiness')}
-          subtitle={tr('Qui notifier et dans quel délai, si un incident survenait', 'Who to notify and how fast, should an incident occur')}
+          subtitle={tr('Qui notifier, et dans quel délai, en cas d’incident', 'Who to notify, and how fast, in case of an incident')}
           icon={<RadioTower size={16} />}
           aside={
             <Link to="/app/signalement" className="text-xs text-accent hover:underline">

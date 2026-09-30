@@ -114,7 +114,7 @@ export default function AssessmentPage() {
       <>
         <PageHeader eyebrow={entity.name} title={tr('Évaluation', 'Assessment')} />
         <EmptyState title={tr('Qualification requise', 'Scoping required')} action={<LinkButton to="/app/qualification" variant="primary">{tr("Qualifier l'entité", 'Scope the entity')}</LinkButton>}>
-          {tr("L'évaluation porte sur les exigences effectivement applicables. Elle suppose donc de savoir lesquelles le sont.", 'The assessment covers the requirements that actually apply. It therefore requires knowing which ones do.')}
+          {tr("L'évaluation porte sur les exigences applicables : terminez d'abord la qualification pour les établir.", 'The assessment covers the applicable requirements: complete the scoping first to establish them.')}
         </EmptyState>
       </>
     )
@@ -150,7 +150,7 @@ export default function AssessmentPage() {
       <PageHeader
         eyebrow={entity.name}
         title={tr('Évaluation', 'Assessment')}
-        lead={tr("Une seule réponse par exigence unifiée vaut pour tous les textes qu'elle couvre. Répondez du point de vue de ce que vous pourriez démontrer lors d'un contrôle.", 'A single answer per unified requirement applies to all the texts it covers. Answer from the standpoint of what you could prove during an inspection.')}
+        lead={tr("Une seule réponse par exigence unifiée vaut pour tous les textes qu'elle couvre. Répondez en fonction de ce que vous pourriez démontrer lors d'un contrôle.", 'A single answer per unified requirement applies to all the texts it covers. Answer based on what you could prove during an inspection.')}
         actions={
           readOnly ? (
             <Tag>
@@ -281,8 +281,8 @@ export default function AssessmentPage() {
                                     <span className="mt-1.5 flex items-start gap-1.5 text-2xs text-caution">
                                       <TriangleAlert size={11} className="mt-0.5 shrink-0" />
                                       {tr(
-                                        'Démarche ISO 27001 limitée à une partie du périmètre : pré-remplissage désactivé, à évaluer à la main.',
-                                        'ISO 27001 initiative limited to part of the scope: pre-filling turned off, assess by hand.',
+                                        'Démarche ISO 27001 limitée à une partie du périmètre : pré-remplissage désactivé, à évaluer manuellement.',
+                                        'ISO 27001 initiative limited to part of the scope: pre-filling turned off, assess manually.',
                                       )}
                                     </span>
                                   ) : null}

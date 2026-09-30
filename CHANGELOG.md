@@ -4,42 +4,6 @@
 
 **Français.** Les évolutions notables du projet sont consignées ici, en anglais puis en français pour chaque version. Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/). Les mises à jour du corpus réglementaire figurent dans une rubrique dédiée.
 
-## [Unreleased] / [Non publié]
-
-### English
-
-#### Security
-
-- Stronger password requirements when creating a profile or changing a password: 12 characters minimum, mixing lowercase, uppercase, digits and special characters.
-
-#### Fixed
-
-- Stable sign-in and profile pages when an error message appears.
-- The questionnaire returns to the top of the page when changing section.
-- Wording, typography and translation refinements across the interface and reports.
-- Consistency of the regulatory data, exports and sample documents.
-
-#### Maintenance
-
-- Documentation, launch scripts, screenshots, animated tours and sample documents updated.
-
-### Français
-
-#### Sécurité
-
-- Exigences renforcées sur les mots de passe à la création d'un profil et lors d'un changement : 12 caractères au moins, mêlant minuscules, majuscules, chiffres et caractères spéciaux.
-
-#### Corrections
-
-- Pages de connexion et de création de profil stables à l'affichage d'un message d'erreur.
-- Le questionnaire revient en haut de la page au changement de section.
-- Améliorations de rédaction, de typographie et de traduction dans l'interface et les rapports.
-- Cohérence des données réglementaires, des exports et des documents d'exemple.
-
-#### Maintenance
-
-- Documentation, scripts de lancement, captures, visites animées et documents d'exemple actualisés.
-
 ## [1.1.0] - 2026-09-25
 
 ### English

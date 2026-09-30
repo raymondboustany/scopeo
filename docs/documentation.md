@@ -22,7 +22,7 @@ Everything about Scopeo in one place: what it does, how to use it, how it is sec
 
 Scopeo is a **regulatory scoping and diagnosis platform**. For an organisation, it establishes which texts apply (GDPR, NIS2 detailed by the French ReCyF, DORA, Cyber Resilience Act, AI Act), on what legal basis, where one action covers several texts, and in which order to handle the gaps. It produces three PDF deliverables and prepares incident notification.
 
-It works **upstream** of a compliance tracking (GRC) platform: it frames the decision, it does not track evidence over time. It is not legal advice.
+It establishes the diagnosis and the action plan; it does not audit evidence or monitor compliance over time. It is not legal advice.
 
 It is **self-hosted**: on one computer, or on your organisation's server. No scoping data is sent to an outside service.
 
@@ -236,7 +236,7 @@ Tout Scopeo au même endroit : ce qu'il fait, comment l'utiliser, comment il est
 
 Scopeo est une **plateforme de cadrage et de diagnostic réglementaire**. Pour une organisation, elle établit quels textes s'appliquent (RGPD, NIS2 détaillée par le ReCyF, DORA, Cyber Resilience Act, AI Act), sur quel fondement, où une action couvre plusieurs textes, et dans quel ordre traiter les écarts. Elle produit trois livrables PDF et prépare le signalement d'incident.
 
-Elle intervient **en amont** d'une plateforme de suivi de conformité (GRC) : elle structure la décision, elle ne suit pas des preuves dans le temps. Ce n'est pas un avis juridique.
+Elle établit le diagnostic et le plan d'action ; elle ne contrôle pas de preuves et ne suit pas la conformité dans la durée. Ce n'est pas un avis juridique.
 
 Elle est **auto-hébergée** : sur un poste, ou sur le serveur de votre organisation. Aucune donnée de cadrage n'est envoyée à un service extérieur.
 

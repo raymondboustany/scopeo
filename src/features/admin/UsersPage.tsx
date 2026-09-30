@@ -95,8 +95,8 @@ export default function UsersPage() {
         eyebrow={tr('Administration', 'Administration')}
         title={tr('Comptes', 'Accounts')}
         lead={tr(
-          "Qui peut ouvrir Scopeo, avec quels droits et quelle protection. Le contenu des entités de chacun n'est jamais visible ici.",
-          'Who can open Scopeo, with which rights and which protection. The content of each person’s entities is never visible here.',
+          "Les personnes qui accèdent à Scopeo, leurs droits et leur protection. Le contenu des entités de chacun n'est jamais visible ici.",
+          'Who can access Scopeo, with which rights and protection. The content of each person’s entities is never visible here.',
         )}
         actions={
           <Button variant="primary" icon={<Plus size={14} />} onClick={() => setPending({ kind: 'create' })}>

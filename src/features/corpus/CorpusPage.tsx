@@ -122,15 +122,15 @@ export default function CorpusPage() {
         eyebrow={tr('Référentiel', 'Reference')}
         title={tr('Corpus réglementaire', 'Regulatory corpus')}
         lead={tr(
-          `${CORPUS_STATS.obligations} obligations reprises des cinq textes, décomposées en ${CORPUS_STATS.textRequirements} exigences élémentaires et complétées, pour NIS2, par les ${CORPUS_STATS.recyfMeasures} mesures du ReCyF. Avec les preuves attendues en contrôle.`,
-          `${CORPUS_STATS.obligations} obligations drawn from the five texts, broken down into ${CORPUS_STATS.textRequirements} elementary requirements and supplemented, for NIS2, by the ${CORPUS_STATS.recyfMeasures} ReCyF measures. With the evidence expected at inspection.`,
+          `${CORPUS_STATS.obligations} obligations reprises des cinq textes, décomposées en ${CORPUS_STATS.textRequirements} exigences élémentaires et complétées, pour NIS2, par les ${CORPUS_STATS.recyfMeasures} mesures du ReCyF, avec pour chacune les preuves attendues en cas de contrôle.`,
+          `${CORPUS_STATS.obligations} obligations drawn from the five texts, broken down into ${CORPUS_STATS.textRequirements} elementary requirements and supplemented, for NIS2, by the ${CORPUS_STATS.recyfMeasures} ReCyF measures, each with the evidence expected at inspection.`,
         )}
       />
 
       {/* Barre de filtres : une seule ligne, au-dessus du contenu. */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <SegmentedControl<RegFilter>
-          ariaLabel={tr('Filtrer par règlement', 'Filter by regulation')}
+          ariaLabel={tr('Filtrer par texte', 'Filter by text')}
           value={reg}
           onChange={setReg}
           options={[

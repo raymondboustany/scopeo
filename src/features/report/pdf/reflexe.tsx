@@ -117,7 +117,7 @@ export function ReflexeSheet({ d }: { d: ReportData }) {
         ) : null}
         {d.applicable.includes('AIACT') ? (
           <Text style={[S.small, S.muted, { fontSize: 7.2, marginBottom: 4 }]}>
-            {clean(tr("AI Act : signalement des incidents graves exigible à l'application du régime des systèmes à haut risque (2 décembre 2027 pour l'annexe III) ; autorité française en cours de désignation.", 'AI Act: serious-incident reporting applies once the high-risk regime applies (2 December 2027 for Annex III); French authority being designated.'))}
+            {clean(tr("AI Act : signalement des incidents graves exigible à l'application du régime des systèmes à haut risque (2 décembre 2027 pour l'annexe III) ; autorité française en cours de désignation.", 'AI Act: serious-incident reporting becomes mandatory once the high-risk regime applies (2 December 2027 for Annex III); French authority being designated.'))}
           </Text>
         ) : null}
 

@@ -72,7 +72,7 @@ export default function CrosswalkPage() {
       <PageHeader
         eyebrow={tr('Référentiel', 'Reference')}
         title={tr('Carte de croisement', 'Crosswalk map')}
-        lead={tr("Où une seule action satisfait plusieurs textes, où ils divergent et laquelle des règles commande, et où l'un prime explicitement sur l'autre.", 'Where a single action satisfies several texts, where they diverge and which rule prevails, and where one explicitly overrides the other.')}
+        lead={tr("Les exigences qu'une même action satisfait dans plusieurs textes, celles où les textes divergent, et les cas où l'un prime expressément sur l'autre.", 'Requirements that a single action satisfies across several texts, those where the texts diverge, and cases where one expressly overrides the other.')}
       />
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -104,7 +104,7 @@ export default function CrosswalkPage() {
 
         <TabPanel value="matrice">
           {themes.length === 0 ? (
-            <EmptyState title={tr('Aucun croisement ne correspond aux filtres', 'No theme matches the filters')} />
+            <EmptyState title={tr('Aucune exigence ne correspond aux filtres', 'No requirement matches the filters')} />
           ) : (
             <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_23rem]">
               <Matrix themes={themes} regs={activeRegs} selectedId={selectedId} onSelect={select} iso={scoping.qualified ? scoping.iso.context : undefined} />
@@ -114,9 +114,9 @@ export default function CrosswalkPage() {
                 ) : (
                   <Card className="p-5">
                     <div className="hatch mb-3 h-6 rounded-xs opacity-30" aria-hidden />
-                    <h3 className="text-sm font-semibold text-ink">{tr('Sélectionnez un thème', 'Select a theme')}</h3>
+                    <h3 className="text-sm font-semibold text-ink">{tr('Sélectionnez une exigence', 'Select a requirement')}</h3>
                     <p className="mt-1.5 text-sm text-ink-3">
-                      {tr("La fiche détaille l'exigence unifiée, ce que chaque texte demande précisément et, en cas de divergence, la règle qui commande en pratique.", 'The card details the unified requirement, what each text asks for precisely and, in case of divergence, the rule that prevails in practice.')}
+                      {tr("La fiche détaille l'exigence unifiée, ce que chaque texte demande précisément et, en cas de divergence, la règle qui s'impose en pratique.", 'The card details the unified requirement, what each text asks for precisely and, in case of divergence, the rule that prevails in practice.')}
                     </p>
                   </Card>
                 )}
@@ -358,7 +358,7 @@ function ThemeDetail({
           {/* Divergence : la règle qui commande */}
           {t.strictest ? (
             <section className="rounded-sm border border-critical-line bg-critical-wash px-3.5 py-3">
-              <div className="label-caps mb-1.5 text-critical">{tr('La règle qui commande', 'The prevailing rule')}</div>
+              <div className="label-caps mb-1.5 text-critical">{tr('La règle qui s’impose', 'The prevailing rule')}</div>
               <div className="flex items-center gap-2">
                 <RegChip id={t.strictest.regulation} />
                 <span className="text-sm font-medium text-ink">{t.strictest.rule}</span>
@@ -453,7 +453,7 @@ function ReadingGuide() {
         const s = RELATION_STYLE[r]
         const body = {
           recouvrement: tr("Les textes demandent la même chose, à des degrés de précision différents. Une action unique, calibrée sur l'exigence la plus détaillée, les satisfait tous. C'est le cas le plus fréquent, et la source principale d'économie dans un plan de conformité.", 'The texts ask for the same thing, at different levels of detail. A single action, calibrated on the most detailed requirement, satisfies them all. This is the most common case, and the main source of savings in a compliance plan.'),
-          divergence: tr("Les textes traitent du même sujet mais posent des exigences d'intensité inégale : un délai plus court, une mesure nommée, un format imposé. Il faut alors identifier la règle la plus stricte et dimensionner sur elle : satisfaire la plus exigeante satisfait les autres, l'inverse est faux.", 'The texts address the same subject but set requirements of unequal intensity: a shorter deadline, a named measure, a mandated format. You then identify the strictest rule and size for it: meeting the most demanding one meets the others, not the reverse.'),
+          divergence: tr("Les textes traitent du même sujet mais posent des exigences d'intensité inégale : un délai plus court, une mesure nommée, un format imposé. Il faut alors identifier la règle la plus stricte et s'y aligner : satisfaire la plus exigeante satisfait les autres, mais l'inverse n'est pas vrai.", 'The texts address the same subject but set requirements of unequal intensity: a shorter deadline, a named measure, a mandated format. You then identify the strictest rule and align on it: meeting the most demanding one meets the others, but not the reverse.'),
           hierarchie: tr("Un texte écarte expressément l'autre sur un champ donné. Ce n'est pas un arbitrage à faire mais une règle de droit à constater : appliquer les deux en parallèle est une erreur, pas une précaution.", 'One text expressly sets the other aside in a given area. It is not a judgment call but a rule of law to acknowledge: applying both in parallel is a mistake, not a precaution.'),
         }[r]
         return (

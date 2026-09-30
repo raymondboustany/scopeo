@@ -224,7 +224,7 @@ function SaveIndicator() {
       </span>
     )
   return (
-    <Tooltip content={error ?? tr('Chaque modification est enregistrée sur le serveur local.', 'Every change is saved to the local server.')}>
+    <Tooltip content={error ?? tr('Chaque modification est enregistrée sur le serveur.', 'Every change is saved to the server.')}>
       <span className="hidden text-xs sm:inline-flex" role="status">
         {content}
       </span>

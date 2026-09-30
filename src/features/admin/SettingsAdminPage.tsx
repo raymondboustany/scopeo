@@ -57,7 +57,7 @@ function SettingsForm({ initial }: { initial: GlobalSettings }) {
       <PageHeader
         eyebrow={tr('Administration', 'Administration')}
         title={tr('Réglages', 'Settings')}
-        lead={tr('Ce que la page de connexion propose, la durée des sessions, les intégrations et la sauvegarde.', 'What the sign-in page offers, session length, integrations and backup.')}
+        lead={tr('Options de la page de connexion, durée des sessions, intégrations et sauvegarde.', 'Sign-in page options, session length, integrations and backup.')}
       />
       <Card>
         <CardHeader title={tr('Accès', 'Access')} />
@@ -66,8 +66,8 @@ function SettingsForm({ initial }: { initial: GlobalSettings }) {
             icon={<DoorOpen size={16} />}
             title={tr('Création libre de profils', 'Self-service profile creation')}
             body={tr(
-              "Fermée, seul un administrateur crée les comptes (ou l'annuaire, s'il est activé). Recommandé dès que Scopeo est partagé.",
-              'When closed, only an administrator creates accounts (or the directory, if on). Recommended as soon as Scopeo is shared.',
+              "Désactivez-la dès que Scopeo est partagé : seuls un administrateur, ou l'annuaire s'il est activé, créent alors les comptes.",
+              'Turn it off as soon as Scopeo is shared: only an administrator, or the directory if enabled, then creates accounts.',
             )}
             control={<Switch checked={form.registration_open} onCheckedChange={(v) => set('registration_open', v)} label={tr('Création libre de profils', 'Self-service profile creation')} />}
           />
@@ -104,8 +104,8 @@ function SettingsForm({ initial }: { initial: GlobalSettings }) {
             icon={<PlugZap size={16} />}
             title={tr("Jetons d'API personnels", 'Personal API tokens')}
             body={tr(
-              "Permet à chacun de créer des jetons pour relier ses entités à d'autres outils (scripts, plateforme GRC). Un jeton n'ouvre ni l'administration, ni les réglages de sécurité du compte.",
-              'Lets each person create tokens to connect their entities to other tools (scripts, GRC platform). A token opens neither administration nor account security settings.',
+              "Permet à chacun de créer des jetons pour relier ses entités à d'autres applications (scripts, plateforme GRC). Un jeton n'ouvre ni l'administration, ni les réglages de sécurité du compte.",
+              'Lets each person create tokens to connect their entities to other applications (scripts, GRC platform). A token opens neither administration nor account security settings.',
             )}
             control={<Switch checked={form.api_tokens_enabled} onCheckedChange={(v) => set('api_tokens_enabled', v)} label={tr("Jetons d'API personnels", 'Personal API tokens')} />}
           />

@@ -101,7 +101,7 @@ export default function RoadmapPage() {
       <PageHeader
         eyebrow={profile.name}
         title={tr('Feuille de route', 'Roadmap')}
-        lead={tr("L'ordre de traitement découpé en quatre phases, en respectant les antériorités techniques. Chaque phase est un engagement de séquence, pas une promesse de date : les horizons sont indicatifs.", 'The treatment order split into four phases, respecting technical prerequisites. Each phase is a sequencing commitment, not a date promise: horizons are indicative.')}
+        lead={tr("L'ordre de traitement réparti en quatre phases, dans le respect des prérequis techniques. Les phases fixent une séquence, pas des dates : les horizons restent indicatifs.", 'The treatment order split into four phases, respecting technical prerequisites. Phases set a sequence, not dates: horizons remain indicative.')}
         actions={
           <Button icon={<Download size={13} />} onClick={exportCsv}>
             {tr('Exporter en CSV', 'Export as CSV')}
@@ -164,7 +164,7 @@ export default function RoadmapPage() {
       <section className="mt-10">
         <SectionRule>{tr('Charges récurrentes une fois le plan achevé', 'Recurring duties once the plan is complete')}</SectionRule>
         <Callout tone="neutral" className="mt-3">
-          {tr("La conformité n'a pas de point d'arrivée : ces obligations reviennent à échéance fixe, indépendamment de l'avancement du plan. Les inscrire au calendrier dès maintenant évite de les découvrir en situation de contrôle.", 'Compliance has no finish line: these obligations come back at fixed intervals, regardless of plan progress. Putting them in the calendar now avoids discovering them during an inspection.')}
+          {tr("La conformité n'a pas de point d'arrivée : ces obligations reviennent à échéance fixe, indépendamment de l'avancement du plan. Les inscrire au calendrier dès maintenant évite de les découvrir lors d'un contrôle.", 'Compliance has no finish line: these obligations come back at fixed intervals, regardless of plan progress. Putting them in the calendar now avoids discovering them during an inspection.')}
         </Callout>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {RECURRING_DUTIES.filter((d) => scoping.applicable.includes(d.regulation)).map((d) => (
@@ -183,7 +183,7 @@ export default function RoadmapPage() {
         </ul>
       </section>
       <div className="mt-6">
-        <NextStep to="/app/signalement" label={tr('Préparer le signalement', 'Prepare reporting')} hint={tr("Autorités, délais et chaîne d'escalade", 'Authorities, deadlines and escalation chain')} />
+        <NextStep to="/app/signalement" label={tr('Préparer le signalement', 'Prepare incident reporting')} hint={tr("Autorités, délais et chaîne d'escalade", 'Authorities, deadlines and escalation chain')} />
       </div>
     </>
   )
@@ -241,7 +241,7 @@ function WaveCard({
 
         <div className="mt-2">
           <Link to={`/app/evaluation`} className="ref text-accent hover:underline">
-            {tr('Renseigner responsable et échéance →', 'Set owner and due date →')}
+            {tr('Renseigner le responsable et l’échéance →', 'Set owner and due date →')}
           </Link>
         </div>
       </Card>

@@ -36,8 +36,6 @@ Five European texts now govern the security, data and AI systems of organisation
 
 Scopeo answers them in a few hours of interviews, with reasoning that can be checked article by article, and produces the deliverables a management team expects.
 
-> **Positioning.** The platform works **upstream**: scoping and diagnosis. It does not verify evidence or run compliance over time; those roles belong to an audit and a tracking platform, which can take over.
->
 > **A scoping aid, not legal advice.** Conclusions rest on the information declared and on the state of the law at the corpus date.
 >
 > **Applied to France.** NIS2 is read through ANSSI's Référentiel Cyber France (ReCyF), and the authorities named are the French ones (CNIL, ANSSI, ACPR, AMF).
@@ -339,8 +337,6 @@ Cinq textes européens encadrent désormais la sécurité, les données et les s
 
 Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiable article par article, et produit les livrables attendus par une direction.
 
-> **Positionnement.** La plateforme intervient **en amont** : cadrage et diagnostic. Elle ne vérifie pas de preuves et ne pilote pas la conformité dans la durée ; ces rôles reviennent à un audit et à une plateforme de suivi, qui peuvent prendre le relais.
->
 > **Aide au cadrage, pas un avis juridique.** Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus.
 >
 > **Appliquée à la France.** NIS2 est lue à travers le Référentiel Cyber France (ReCyF) de l'ANSSI, et les autorités désignées sont les autorités françaises (CNIL, ANSSI, ACPR, AMF).

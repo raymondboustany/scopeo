@@ -5,7 +5,7 @@ import { tr } from '@/i18n'
 export const USER_ROLES: { value: UserRole; label: string }[] = [
   { value: 'consultant', label: tr('Consultant', 'Consultant') },
   { value: 'rssi', label: tr('RSSI', 'CISO') },
-  { value: 'conformite', label: tr('Responsable GRC, conformité', 'GRC, compliance manager') },
+  { value: 'conformite', label: tr('Responsable GRC et conformité', 'GRC and compliance manager') },
   { value: 'risques', label: tr('Gestionnaire des risques', 'Risk manager') },
   { value: 'dpo', label: tr('Délégué à la protection des données', 'Data protection officer') },
   { value: 'juriste', label: tr('Juriste', 'Legal counsel') },
@@ -18,7 +18,7 @@ export const USER_ROLES: { value: UserRole; label: string }[] = [
 export const ROLE_SHORT: Record<UserRole, string> = {
   consultant: tr('Consultant', 'Consultant'),
   rssi: tr('RSSI', 'CISO'),
-  conformite: tr('GRC, conformité', 'GRC, compliance'),
+  conformite: tr('GRC et conformité', 'GRC and compliance'),
   risques: tr('Risques', 'Risk'),
   dpo: 'DPO',
   juriste: tr('Juriste', 'Legal counsel'),

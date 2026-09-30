@@ -287,8 +287,8 @@ export function incidentSteps(incident: IncidentRecord, answers: Answers, now = 
         regime: 'RGPD',
         label: tr('Communication aux personnes concernées', 'Communication to data subjects'),
         detail: tr(
-          "Dans les meilleurs délais, si la violation est susceptible d'engendrer un risque élevé. Aucun délai chiffré : c'est la gravité qui commande.",
-          'Without undue delay, if the breach is likely to result in a high risk. No fixed deadline: severity decides.',
+          "Dans les meilleurs délais, si la violation est susceptible d'engendrer un risque élevé. Aucun délai chiffré : tout dépend de la gravité.",
+          'Without undue delay, if the breach is likely to result in a high risk. No fixed deadline: it depends on severity.',
         ),
         basis: tr('RGPD, article 34', 'GDPR, Article 34'),
         authority: tr('Personnes concernées', 'Data subjects'),

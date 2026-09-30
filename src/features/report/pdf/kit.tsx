@@ -140,7 +140,7 @@ export function ReportPage({ title, entity, children }: { title: string; entity:
       {children}
       <View fixed style={{ position: 'absolute', top: PAGE_H - 34, left: 44, right: 44, flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 0.6, borderTopColor: C.rule, paddingTop: 5 }}>
         <Text style={[S.small, S.muted, { fontSize: 6.8 }]}>
-          {clean(tr("Scopeo · Plateforme d'aide au cadrage, pas un avis juridique.", 'Scopeo · A scoping aid, not legal advice.'))}
+          {clean(tr('Scopeo · Aide au cadrage, pas un avis juridique.', 'Scopeo · A scoping aid, not legal advice.'))}
         </Text>
         <Text style={[S.small, S.muted, { fontSize: 6.8 }]} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
       </View>

@@ -59,7 +59,7 @@ export default function SignalementPage() {
       <PageHeader
         eyebrow={entity.name}
         title={tr("Qui notifier en cas d'incident", 'Who to notify in case of an incident')}
-        lead={tr("Les obligations de notification déjà en vigueur s'appliquent dès aujourd'hui, même si la mise en conformité n'est pas terminée. Cette page dit, pour cette entité, quelle autorité prévenir, dans quel délai et qui appeler en interne : une information à diffuser tout de suite.", 'Notification duties already in force apply today, even if compliance work is not finished. This page tells you, for this entity, which authority to notify, how fast and whom to call internally: information to share right away.')}
+        lead={tr("Les obligations de notification en vigueur s'appliquent dès aujourd'hui, même si la mise en conformité n'est pas terminée. Cette page indique, pour cette entité, quelle autorité prévenir, dans quel délai et qui appeler en interne : des informations à diffuser sans attendre.", 'Notification duties in force apply today, even if compliance work is not finished. This page shows, for this entity, which authority to notify, how fast and whom to call internally: information to share right away.')}
         actions={
           <Button variant="primary" icon={<Download size={14} />} onClick={downloadSheet} disabled={busy}>
             {busy ? tr('Génération…', 'Generating…') : tr('Fiche réflexe (PDF)', 'Quick-reference sheet (PDF)')}
@@ -136,7 +136,7 @@ export default function SignalementPage() {
       ) : null}
 
       <Disclaimer compact />
-      <NextStep to="/app/rapport" label={tr('Restituer : rapports PDF', 'Report: PDF deliverables')} hint={tr('Note COMEX et rapport de cadrage complet', 'Executive note and full scoping report')} />
+      <NextStep to="/app/rapport" label={tr('Restituer : rapports PDF', 'Report: PDF deliverables')} hint={tr('Note de direction et rapport de cadrage complet', 'Executive summary and full scoping report')} />
     </div>
   )
 }

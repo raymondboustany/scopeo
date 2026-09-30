@@ -12,7 +12,7 @@ import { copyText } from '@/lib/utils'
 const PUBLISHED = [
   tr('Nom de l’entité et secteur', 'Entity name and sector'),
   tr('Textes applicables et qualification retenue', 'Applicable texts and scoping outcome'),
-  tr('Score global, par référentiel et par domaine', 'Overall score, by framework and by domain'),
+  tr('Score global, par texte et par domaine', 'Overall score, by text and by domain'),
   tr('Certification ISO 27001 et sa date de validité, si l’entité est certifiée', 'ISO 27001 certification and its expiry date, if the entity is certified'),
   tr('Date de mise à jour', 'Last update date'),
 ]
@@ -49,12 +49,12 @@ export default function TrustSettingsPage() {
       <PageHeader
         eyebrow={tr('Restitution', 'Reporting')}
         title="Trust Center"
-        lead={tr("Préparez une vue en lecture seule de la posture réglementaire de l'entité, à destination d'un client, d'un partenaire ou d'un auditeur. Rien de sensible ne sort.", "Prepare a read-only view of the entity's regulatory posture, for a client, a partner or an auditor. Nothing sensitive leaves.")}
+        lead={tr("Préparez une vue en lecture seule de la posture réglementaire de l'entité, à destination d'un client, d'un partenaire ou d'un auditeur. Aucune donnée sensible n'est publiée.", "Prepare a read-only view of the entity's regulatory posture, for a client, a partner or an auditor. No sensitive data is published.")}
         actions={<Tag tone="caution">{tr('Démonstration', 'Demo')}</Tag>}
       />
 
       <Callout tone="caution" icon={<Construction size={14} />} title={tr('Fonctionnalité en démonstration, locale uniquement', 'Demo feature, local only')}>
-        {tr("Le Trust Center est une fonction de démonstration : le lien public s'ouvre sans compte, mais seulement pour qui peut joindre le serveur Scopeo (ce poste, ou le réseau de votre organisation). Un partage prévu pour des tiers sur internet arrivera dans une prochaine mise à jour.", 'The Trust Center is a demo feature: the public link opens without an account, but only for people who can reach the Scopeo server (this machine, or your organisation network). Sharing designed for third parties over the internet will come in a future update.')}
+        {tr("Le lien public s'ouvre sans compte, mais seulement pour les personnes qui peuvent joindre le serveur Scopeo (ce poste, ou le réseau de votre organisation). Le partage avec des tiers sur internet n'est pas encore disponible.", "The public link opens without an account, but only for people who can reach the Scopeo server (this machine, or your organisation's network). Sharing with third parties over the internet is not yet available.")}
       </Callout>
 
       <Card>

@@ -30,18 +30,18 @@ interface Step {
 const APP_STEPS: Step[] = [
   {
     id: 'bienvenue',
-    title: tr('Une plateforme de cadrage, en amont', 'A scoping platform, upstream'),
+    title: tr('Bienvenue dans Scopeo', 'Welcome to Scopeo'),
     body: tr(
-      "Scopeo établit ce qui s'applique à une organisation (RGPD, NIS2 détaillée par le ReCyF, DORA, CRA, AI Act), où une action couvre plusieurs textes, et dans quel ordre traiter le reste. Elle structure une décision ; ce n'est pas un avis juridique.",
-      'Scopeo establishes what applies to an organisation (GDPR, NIS2 detailed by the French ReCyF, DORA, CRA, AI Act), where one action covers several texts, and in which order to handle the rest. It structures a decision; it is not legal advice.',
+      "Scopeo établit les textes qui s'appliquent à une organisation (RGPD, NIS2 détaillée par le ReCyF, DORA, CRA, AI Act), les actions qui en couvrent plusieurs et l'ordre dans lequel traiter les écarts. C'est une aide à la décision, pas un avis juridique.",
+      'Scopeo establishes which texts apply to an organisation (GDPR, NIS2 detailed by the French ReCyF, DORA, CRA, AI Act), which actions cover several of them and in which order to close the gaps. It supports decisions; it is not legal advice.',
     ),
   },
   {
     id: 'methode',
     title: tr('Le déroulé d’une mission', 'How an engagement runs'),
     body: tr(
-      "La navigation suit l'exercice. En entretien : fiche entité, qualification, puis évaluation de l'existant. Ensuite : priorisation, préparation au signalement et rapports. Le bouton en bas replie le panneau.",
-      'Navigation follows the exercise. During interviews: entity profile, scoping, then assessment of the current state. Afterwards: prioritisation, incident readiness and reports. The button at the bottom collapses the panel.',
+      "Le menu suit le déroulé d'une mission. Pendant les entretiens : fiche entité, qualification, puis évaluation de l'existant. Ensuite : priorisation, préparation au signalement et rapports. Le bouton en bas replie le menu.",
+      'The menu follows the course of an engagement. During interviews: entity profile, scoping, then assessment of the current state. Afterwards: prioritisation, incident readiness and reports. The button at the bottom collapses the menu.',
     ),
     target: 'sidebar',
   },
@@ -49,8 +49,8 @@ const APP_STEPS: Step[] = [
     id: 'entites',
     title: tr('Une entité par organisation cadrée', 'One entity per organisation scoped'),
     body: tr(
-      "Un client, une filiale, ou votre propre organisation : chaque entité est enregistrée séparément et se choisit ici. L'exemple Finexa permet de s'entraîner sans rien casser.",
-      'A client, a subsidiary, or your own organisation: each entity is stored separately and selected here. The Finexa example lets you practise without breaking anything.',
+      "Un client, une filiale, ou votre propre organisation : chaque entité est enregistrée séparément et se choisit ici. L'exemple Finexa permet de s'exercer sans risque.",
+      'A client, a subsidiary, or your own organisation: each entity is stored separately and selected here. The Finexa example lets you practise safely.',
     ),
     target: 'entity-switcher',
   },
@@ -58,8 +58,8 @@ const APP_STEPS: Step[] = [
     id: 'qualification',
     title: tr('Tout part de la qualification', 'Everything starts with scoping'),
     body: tr(
-      "Chaque question est rattachée à l'article qu'elle sert à établir ; la dernière, facultative, porte sur ISO 27001. Si une réponse change, la plateforme montre ce qui entre dans le périmètre et ce qui en sort.",
-      'Each question is tied to the article it helps establish; the last one, optional, covers ISO 27001. If an answer changes, the platform shows what enters and leaves the scope.',
+      "Chaque question indique l'article sur lequel elle repose ; la dernière, facultative, porte sur ISO 27001. Quand une réponse change, la plateforme montre ce qui entre dans le périmètre et ce qui en sort.",
+      'Each question shows the article it relies on; the last one, optional, covers ISO 27001. When an answer changes, the platform shows what enters and leaves the scope.',
     ),
     target: 'nav-qualification',
   },
@@ -74,7 +74,7 @@ const APP_STEPS: Step[] = [
   },
   {
     id: 'score',
-    title: tr('Le score se lit avec son dénominateur', 'Read the score with its denominator'),
+    title: tr('Lire le score', 'Reading the score'),
     body: tr(
       "L'anneau donne la part des exigences déclarées en place, avec un sous-score par texte. Une exigence partielle compte pour moitié.",
       'The ring shows the share of requirements reported in place, with a sub-score per text. A partial requirement counts for half.',
@@ -86,8 +86,8 @@ const APP_STEPS: Step[] = [
     id: 'priorisation',
     title: tr('Prioriser en quatre phases', 'Prioritise in four phases'),
     body: tr(
-      "Les écarts sont ordonnés selon leur urgence et leur poids, puis répartis de 0 à 3 mois jusqu'à plus de 12 mois. Les pondérations restent ajustables.",
-      'Gaps are ordered by urgency and weight, then spread from 0 to 3 months to beyond 12 months. Weights remain adjustable.',
+      "Les écarts sont classés selon leur urgence et leur poids, puis répartis dans ces phases, des trois premiers mois à plus de douze mois. Les pondérations restent ajustables.",
+      'Gaps are ranked by urgency and weight, then spread across these phases, from the first three months to beyond twelve months. Weights remain adjustable.',
     ),
     target: 'nav-priorities',
   },
@@ -96,7 +96,7 @@ const APP_STEPS: Step[] = [
     title: tr('Qui prévenir, et dans quels délais', 'Who to notify, and how fast'),
     body: tr(
       "Autorités à notifier, délais, chaîne d'escalade interne et appui technique à solliciter : une information utile dès aujourd'hui, avant même la mise en conformité.",
-      'Authorities to notify, deadlines, internal escalation chain and technical support to call on: useful from day one, even before compliance work.',
+      'Authorities to notify, deadlines, internal escalation chain and technical support to call on: useful from day one, even before compliance work is complete.',
     ),
     target: 'incident-section',
     route: '/app',
@@ -105,8 +105,8 @@ const APP_STEPS: Step[] = [
     id: 'restitution',
     title: tr('Restituer', 'Report'),
     body: tr(
-      'Trois PDF : une note de direction de deux pages pour décider, le rapport de cadrage complet, et une fiche réflexe incident à diffuser en interne.',
-      'Three PDFs: a two-page executive note to decide, the full scoping report, and an incident quick-reference sheet for internal use.',
+      'Trois PDF : une note de deux pages pour la direction, le rapport de cadrage complet et une fiche réflexe incident à diffuser en interne.',
+      'Three PDFs: a two-page note for management, the full scoping report and an incident quick-reference sheet for internal distribution.',
     ),
     target: 'nav-report',
   },
@@ -121,9 +121,9 @@ const APP_STEPS: Step[] = [
   },
   {
     id: 'recherche',
-    title: tr('Chercher, revoir ce guide', 'Search, replay this guide'),
+    title: tr('Rechercher et revoir ce guide', 'Search and replay this guide'),
     body: tr(
-      'Ctrl K cherche dans les articles, les exigences, le ReCyF et les contrôles ISO 27001. Le point d’interrogation relance ce guide ; la double authentification se règle dans Profil et données.',
+      'Ctrl K lance une recherche dans les articles, les exigences, le ReCyF et les contrôles ISO 27001. Le point d’interrogation relance ce guide ; la double authentification se règle dans Profil et données.',
       'Ctrl K searches articles, requirements, the ReCyF and ISO 27001 controls. The question mark replays this guide; two-factor authentication is set in Profile and data.',
     ),
     target: 'search',
@@ -164,8 +164,8 @@ const ADMIN_STEPS: Step[] = [
     id: 'admin-sso',
     title: tr('La connexion unique', 'Single sign-on'),
     body: tr(
-      "Pour une organisation sous Microsoft Entra ID, Google Workspace, Okta ou Keycloak : un bouton « Se connecter avec… » apparaît sur l'accueil, et le fournisseur gère mot de passe et double authentification.",
-      'For an organisation using Microsoft Entra ID, Google Workspace, Okta or Keycloak: a "Sign in with…" button appears on the home page, and the provider handles password and two-factor authentication.',
+      "Pour une organisation sous Microsoft Entra ID, Google Workspace, Okta ou Keycloak : un bouton « Se connecter avec… » apparaît sur l'accueil, et le fournisseur gère le mot de passe et la double authentification.",
+      'For an organisation using Microsoft Entra ID, Google Workspace, Okta or Keycloak: a "Sign in with…" button appears on the home page, and the provider handles the password and two-factor authentication.',
     ),
     target: 'admin-nav-sso',
   },
@@ -182,8 +182,8 @@ const ADMIN_STEPS: Step[] = [
     id: 'admin-journal',
     title: tr('Le journal', 'The log'),
     body: tr(
-      'Chaque action d’administration et chaque changement de sécurité d’un compte y est daté, avec son auteur.',
-      'Every administration action and every account security change is dated there, with its author.',
+      'Chaque action d’administration et chaque changement de sécurité d’un compte y sont consignés, avec leur date et leur auteur.',
+      'Every administration action and every account security change is recorded there, with its date and author.',
     ),
     target: 'admin-nav-audit',
   },

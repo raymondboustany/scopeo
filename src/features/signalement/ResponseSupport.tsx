@@ -33,8 +33,8 @@ export function ResponseSupport({ answers, contacts }: { answers: Answers; conta
       icon: <ShieldHalf size={16} />,
       title: tr('Prestataire de réponse aux incidents', 'Incident response provider'),
       body: tr(
-        "Sans équipe de réponse interne, contractualisez à l'avance avec un prestataire : délai d'intervention, astreinte, périmètre. La qualification PRIS de l'ANSSI garantit un niveau d'exigence éprouvé ; elle n'est pas imposée par les textes, mais c'est le premier critère de choix.",
-        'Without an internal response team, contract a provider in advance: response time, on-call, scope. ANSSI’s PRIS qualification guarantees a proven standard; it is not required by law, but it is the first selection criterion.',
+        "Sans équipe de réponse interne, contractualisez à l'avance avec un prestataire : délai d'intervention, astreinte, périmètre. La qualification PRIS de l'ANSSI garantit un niveau d'exigence éprouvé ; elle n'est pas imposée par les textes, mais constitue un critère de choix de premier ordre.",
+        'Without an internal response team, contract a provider in advance: response time, on-call, scope. ANSSI’s PRIS qualification guarantees a proven standard; it is not required by law, but it is a key selection criterion.',
       ),
       link: { label: tr('Liste des PRIS qualifiés', 'List of qualified PRIS'), url: 'https://cyber.gouv.fr/prestataires-de-reponse-aux-incidents-de-securite-pris' },
     },

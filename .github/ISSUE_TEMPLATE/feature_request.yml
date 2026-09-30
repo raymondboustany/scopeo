@@ -5,11 +5,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        Scopeo is an **upstream scoping and diagnosis platform**. Audit functions (evidence verification,
-        certifying maturity levels) and continuous tracking belong to other platforms.
+        Scopeo is a **scoping and diagnosis platform**. Evidence verification, certified maturity
+        levels and continuous compliance tracking are out of scope.
 
-        Scopeo est une plateforme de **cadrage et de diagnostic en amont**. Les fonctions d'audit
-        (vérification de preuves, maturité certifiante) et de suivi continu relèvent d'autres plateformes.
+        Scopeo est une plateforme de **cadrage et de diagnostic**. La vérification de preuves, les niveaux
+        de maturité certifiants et le suivi continu de la conformité sortent de son périmètre.
   - type: textarea
     id: problem
     attributes:

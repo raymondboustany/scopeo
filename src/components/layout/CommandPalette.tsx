@@ -85,7 +85,7 @@ export function CommandPalette({
                 value={query}
                 onValueChange={setQuery}
                 autoFocus
-                placeholder={tr('Article, exigence, thème de croisement, objectif ReCyF, contrôle ISO…', 'Article, requirement, crosswalk theme, ReCyF objective, ISO control…')}
+                placeholder={tr('Article, exigence, croisement, objectif ReCyF, contrôle ISO…', 'Article, requirement, crosswalk, ReCyF objective, ISO control…')}
                 className="h-12 w-full bg-transparent text-[14px] text-ink outline-none placeholder:text-ink-4"
               />
               <kbd className="shrink-0 rounded-[5px] border border-rule-2 bg-raised px-1.5 py-px text-[10px] font-medium text-ink-3">

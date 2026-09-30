@@ -166,8 +166,8 @@ function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | n
     return {
       raw: 1,
       why: tr(
-        "Le thème relève d'un texte directement applicable et déjà en vigueur : la dette est immédiate et opposable.",
-        'The theme falls under a directly applicable text already in force: the gap is immediate and enforceable.',
+        "Cette exigence relève d'un texte directement applicable et déjà en vigueur : l'écart est immédiatement opposable.",
+        'This requirement falls under a directly applicable text already in force: the gap is immediately enforceable.',
       ),
     }
   }
@@ -231,7 +231,7 @@ function expositionOf(
   regs: RegulationId[],
   qualification: QualificationResult | null,
 ): { raw: number; why: string } {
-  if (regs.length === 0) return { raw: 0, why: tr('Aucun texte applicable ne porte ce thème.', 'No applicable text carries this theme.') }
+  if (regs.length === 0) return { raw: 0, why: tr('Aucun texte applicable ne porte cette exigence.', 'No applicable text carries this requirement.') }
 
   const base = Math.max(...regs.map((r) => REGULATION_EXPOSURE[r]))
   const isGovernance = theme.domain === 'gouvernance'
@@ -243,10 +243,10 @@ function expositionOf(
 
   const why = directorLiability
     ? tr(
-        "Thème de gouvernance sous NIS2 pour une entité essentielle : l'autorité peut interdire temporairement l'exercice de fonctions dirigeantes, ce qui place l'exposition au niveau maximal.",
-        'Governance theme under NIS2 for an essential entity: the authority may temporarily ban individuals from management functions, which puts exposure at its maximum.',
+        "Exigence de gouvernance sous NIS2 pour une entité essentielle : l'autorité peut interdire temporairement l'exercice de fonctions dirigeantes, ce qui place l'exposition au niveau maximal.",
+        'Governance requirement under NIS2 for an essential entity: the authority may temporarily ban individuals from management functions, which puts exposure at its maximum.',
       )
-    : tr(`Sanction la plus élevée parmi les textes qui portent ce thème : ${regs.map(regName).join(', ')}.`, `Highest penalty among the texts carrying this theme: ${regs.map(regName).join(', ')}.`)
+    : tr(`Sanction la plus élevée parmi les textes qui portent cette exigence : ${regs.map(regName).join(', ')}.`, `Highest penalty among the texts carrying this requirement: ${regs.map(regName).join(', ')}.`)
 
   return { raw, why }
 }
@@ -296,8 +296,8 @@ export function prioritise({
           rationale:
             level === 'non_evalue'
               ? tr(
-                  "Thème non évalué : traité comme un écart probable tant que l'état n'est pas établi.",
-                  'Theme not assessed: treated as a likely gap until its state is established.',
+                  "Exigence non évaluée : traitée comme un écart probable tant que son état n'est pas établi.",
+                  'Requirement not assessed: treated as a likely gap until its state is established.',
                 )
               : tr(`État déclaré : ${COVERAGE_LABEL[level].toLowerCase()}.`, `Reported state: ${COVERAGE_LABEL[level].toLowerCase()}.`),
         },
@@ -313,8 +313,8 @@ export function prioritise({
                   `A single action satisfies ${regs.length} applicable texts: ${regs.map(regName).join(', ')}.`,
                 )
               : regs.length === 1
-                ? tr(`Le thème ne concerne qu'un seul texte applicable : ${regName(regs[0])}.`, `The theme concerns a single applicable text: ${regName(regs[0])}.`)
-                : tr('Aucun texte applicable ne porte ce thème.', 'No applicable text carries this theme.'),
+                ? tr(`Cette exigence ne concerne qu'un seul texte applicable : ${regName(regs[0])}.`, `This requirement concerns a single applicable text: ${regName(regs[0])}.`)
+                : tr('Aucun texte applicable ne porte cette exigence.', 'No applicable text carries this requirement.'),
         },
         {
           key: 'echeance',
@@ -375,8 +375,8 @@ export const WAVES = [
     label: tr('Phase 1', 'Phase 1'),
     horizon: tr('0 à 3 mois', '0 to 3 months'),
     intent: tr(
-      "Éteindre l'exposition la plus grave et poser les prérequis dont tout le reste dépend.",
-      'Remove the most serious exposure and lay the groundwork everything else depends on.',
+      "Réduire l'exposition la plus grave et poser les prérequis dont tout le reste dépend.",
+      'Reduce the most serious exposure and lay the groundwork everything else depends on.',
     ),
   },
   {

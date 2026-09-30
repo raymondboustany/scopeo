@@ -112,8 +112,8 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
               </p>
               <p className="mt-1 text-2xs text-ink-3">
                 {tr(
-                  'Périmètre de certification, systèmes, sites et activités inclus. Une couverture partielle désactive le pré-remplissage automatique : chaque exigence est alors à évaluer à la main.',
-                  'Certification scope, systems, sites and activities included. Partial coverage turns off automatic pre-filling: each requirement must then be assessed by hand.',
+                  'Périmètre de certification, systèmes, sites et activités inclus. Une couverture partielle désactive le pré-remplissage automatique : chaque exigence est alors à évaluer manuellement.',
+                  'Certification scope, systems, sites and activities included. Partial coverage turns off automatic pre-filling: each requirement must then be assessed manually.',
                 )}
               </p>
               <div className="mt-3">
@@ -143,8 +143,8 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
             blocked ? (
               <Callout tone="caution" icon={<TriangleAlert size={14} />} title={tr('Pré-remplissage désactivé', 'Pre-filling turned off')}>
                 {tr(
-                  "La démarche ne couvre qu'une partie du périmètre : rien n'est pré-rempli, car on ne peut pas savoir quelles exigences elle recouvre. Évaluez chaque exigence à la main, ou renseignez la liste de contrôle ISO pour aller plus loin.",
-                  'The initiative only covers part of the scope: nothing is pre-filled, because there is no way to know which requirements it covers. Assess each requirement by hand, or fill in the ISO checklist to go further.',
+                  "La démarche ne couvre qu'une partie du périmètre : rien n'est pré-rempli, car on ne peut pas savoir quelles exigences elle recouvre. Évaluez chaque exigence manuellement, ou renseignez la liste de contrôle ISO pour aller plus loin.",
+                  'The initiative only covers part of the scope: nothing is pre-filled, because there is no way to know which requirements it covers. Assess each requirement manually, or fill in the ISO checklist to go further.',
                 )}
               </Callout>
             ) : progress.assessed === 0 ? (
@@ -166,7 +166,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
                     {tr('Oui, pré-remplir', 'Yes, pre-fill')}
                   </Button>
                   <LinkButton to="/app/evaluation" size="md" icon={<ArrowRight size={13} />}>
-                    {tr('Non, j’évalue à la main', 'No, I will assess by hand')}
+                    {tr('Non, j’évalue manuellement', 'No, I will assess manually')}
                   </LinkButton>
                 </div>
               </div>
@@ -195,7 +195,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
                       'You can fill in the ISO 27001 checklist, even for a few points only: the matching requirements will be pre-filled as you go. You can also tick the requirements of the texts directly, in the assessment.',
                     )
                   : tr(
-                      "Sans démarche ISO 27001, rien n'est pré-rempli. Vous cochez directement les exigences des textes dans l'évaluation. La checklist reste disponible si vous voulez faire le point sur les contrôles.",
+                      "Sans démarche ISO 27001, rien n'est pré-rempli. Vous cochez directement les exigences des textes dans l'évaluation. La liste de contrôle reste disponible si vous souhaitez faire le point sur les contrôles.",
                       'With no ISO 27001 initiative, nothing is pre-filled. You tick the requirements of the texts directly in the assessment. The checklist stays available if you want to take stock of the controls.',
                     )}
               </p>
@@ -242,8 +242,8 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
           </p>
           <p>
             {tr(
-              'Vérifiez ce résultat : chaque niveau reste modifiable à la main, et la liste de contrôle ISO permet de déclarer les contrôles exclus de votre déclaration d’applicabilité ou seulement partiellement en place.',
-              'Please check the result: each level can still be changed by hand, and the ISO checklist lets you declare controls excluded from your Statement of Applicability or only partly in place.',
+              'Vérifiez ce résultat : chaque niveau reste modifiable manuellement, et la liste de contrôle ISO permet de déclarer les contrôles exclus de votre déclaration d’applicabilité ou seulement partiellement en place.',
+              'Please check the result: each level can still be changed manually, and the ISO checklist lets you declare controls excluded from your Statement of Applicability or only partly in place.',
             )}
           </p>
           <p className="text-2xs text-ink-3">

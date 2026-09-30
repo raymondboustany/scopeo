@@ -124,7 +124,7 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow={tr('Restitution', 'Reporting')}
+        eyebrow={tr('Compte', 'Account')}
         title={tr('Profil et données', 'Profile and data')}
         lead={tr("Votre profil, votre mot de passe, vos entités et l'emplacement de vos données.", 'Your profile, your password, your entities and where your data lives.')}
       />
@@ -319,8 +319,8 @@ export default function SettingsPage() {
           </p>
           <p>
             {tr(
-              "Aucune donnée de cadrage n'est envoyée à un service extérieur : pas de télémétrie, pas de nuage imposé. L'annuaire et la connexion unique n'échangent que l'identité.",
-              'No scoping data is sent to an outside service: no telemetry, no mandatory cloud. Directory or single sign-on only exchanges identity.',
+              "Aucune donnée de cadrage n'est envoyée à un service extérieur : pas de télémétrie, pas de nuage imposé. L'annuaire et la connexion unique n'échangent que des données d'identité.",
+              'No scoping data is sent to an outside service: no telemetry, no mandatory cloud. The directory and single sign-on only exchange identity data.',
             )}
           </p>
           <p className="text-ink-3">

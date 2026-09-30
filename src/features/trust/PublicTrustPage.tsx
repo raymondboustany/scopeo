@@ -32,7 +32,7 @@ export default function PublicTrustPage() {
         {isLoading ? (
           <div className="h-64" />
         ) : error || !data ? (
-          <EmptyState icon={<Link2Off size={20} />} title={tr("Ce lien n'est pas ou plus actif", 'This link is not or no longer active')}>
+          <EmptyState icon={<Link2Off size={20} />} title={tr("Ce lien n'est pas actif", 'This link is not active')}>
             {error instanceof ApiError && error.status === 0
               ? tr('Le serveur qui héberge cette page ne répond pas.', 'The server hosting this page is not responding.')
               : tr('Le partage a pu être désactivé ou le lien renouvelé par son propriétaire. Demandez-lui un lien à jour.', 'Sharing may have been turned off or the link renewed by its owner. Ask them for an up-to-date link.')}

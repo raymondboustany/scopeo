@@ -258,8 +258,8 @@ export function FullReport({ d }: { d: ReportData }) {
                     <H2 n={sec('frict')}>{tr('Points de friction entre textes', 'Friction points between texts')}</H2>
                     <P>
                       {tr(
-                        "Sur ces sujets, les textes applicables ne se recouvrent pas : ils divergent, ou l'un prime sur l'autre. Une lecture texte par texte y conduit à une erreur de dimensionnement.",
-                        'On these subjects, the applicable texts do not overlap: they diverge, or one prevails over the other. Reading them text by text leads to mis-sizing.',
+                        "Sur ces sujets, les textes applicables ne se recouvrent pas : ils divergent, ou l'un prime sur l'autre. Les lire texte par texte conduirait à mal calibrer les mesures.",
+                        'On these subjects, the applicable texts do not overlap: they diverge, or one prevails over the other. Reading them one by one would lead to poorly calibrated measures.',
                       )}
                     </P>
                   </>
@@ -282,8 +282,8 @@ export function FullReport({ d }: { d: ReportData }) {
         <H2 n={sec('plan')}>{tr('Plan de traitement', 'Treatment plan')}</H2>
         <P>
           {tr(
-            `L'ordre résulte d'une pondération explicite (${d.weights.map((w) => `${w.label.toLowerCase()} ${w.value}`).join(', ')}), corrigée des antériorités techniques. Les horizons sont indicatifs ; c'est la séquence qui engage.`,
-            `The order results from an explicit weighting (${d.weights.map((w) => `${w.label.toLowerCase()} ${w.value}`).join(', ')}), adjusted for technical prerequisites. Horizons are indicative; the sequence is what commits.`,
+            `L'ordre résulte d'une pondération explicite (${d.weights.map((w) => `${w.label.toLowerCase()} ${w.value}`).join(', ')}), corrigée des antériorités techniques. Les horizons sont indicatifs ; seule la séquence engage.`,
+            `The order results from an explicit weighting (${d.weights.map((w) => `${w.label.toLowerCase()} ${w.value}`).join(', ')}), adjusted for technical prerequisites. Horizons are indicative; only the sequence is binding.`,
           )}
         </P>
         <H3>{tr('Priorité et charge de chaque exigence', 'Priority and effort of each requirement')}</H3>
@@ -439,8 +439,8 @@ export function FullReport({ d }: { d: ReportData }) {
           </P>
           <P>
             {tr(
-              "Qualifications relevant d'un tiers : la désignation comme entité critique (article 3 § 1 f de NIS2), l'identification pour les tests de pénétration fondés sur la menace (DORA) et l'inscription sur la liste nationale des entités essentielles et importantes relèvent des autorités compétentes.",
-              'Qualifications for a third party to decide: designation as a critical entity (Article 3(1)(f) NIS2), identification for threat-led penetration testing (DORA) and listing as an essential or important entity are for the competent authorities.',
+              "Décisions réservées aux autorités compétentes : la désignation comme entité critique (article 3 § 1 f de NIS2), l'identification pour les tests de pénétration fondés sur la menace (DORA) et l'inscription sur la liste nationale des entités essentielles et importantes.",
+              'Decisions reserved to the competent authorities: designation as a critical entity (Article 3(1)(f) NIS2), identification for threat-led penetration testing (DORA) and listing as an essential or important entity.',
             )}
           </P>
           <P>

@@ -87,8 +87,8 @@ export default function IsoPage() {
         eyebrow={entity.name}
         title={tr('Démarche ISO/IEC 27001', 'ISO/IEC 27001 initiative')}
         lead={tr(
-          "Détail des 93 contrôles de l'annexe A (édition 2022). Module facultatif : il pré-remplit l'évaluation des exigences NIS2, DORA et CRA qui ont un contrôle correspondant, sans jamais la remplacer.",
-          'Detail of the 93 Annex A controls (2022 edition). Optional module: it pre-fills the assessment of NIS2, DORA and CRA requirements that have a matching control, without ever replacing it.',
+          "Module facultatif consacré aux 93 contrôles de l'annexe A (édition 2022). Il pré-remplit l'évaluation des exigences NIS2, DORA et CRA dotées d'un contrôle correspondant, sans jamais la remplacer.",
+          'Optional module covering the 93 Annex A controls (2022 edition). It pre-fills the assessment of NIS2, DORA and CRA requirements that have a matching control, without ever replacing it.',
         )}
         actions={
           <>
@@ -122,18 +122,18 @@ export default function IsoPage() {
         </div>
       </Card>
 
-      <Callout tone="neutral" icon={<Info size={14} />} title={tr('Un module toujours contournable', 'A module you can always skip')}>
+      <Callout tone="neutral" icon={<Info size={14} />} title={tr('Rien ne dépend de ce module', 'Nothing depends on this module')}>
         {tr(
-          "Rempli, partiellement rempli ou jamais ouvert : la qualification et l'évaluation des exigences NIS2, DORA et CRA restent accessibles directement. Les niveaux proposés par ISO 27001 sont signalés comme tels dans l'évaluation, et chacun reste modifiable à la main.",
-          'Filled in, partly filled in or never opened: scoping and the assessment of NIS2, DORA and CRA requirements remain directly available. Levels suggested by ISO 27001 are flagged as such in the assessment, and each one can be changed by hand.',
+          "Rempli, partiellement rempli ou jamais ouvert : la qualification et l'évaluation des exigences NIS2, DORA et CRA restent accessibles directement. Les niveaux proposés par ISO 27001 sont signalés comme tels dans l'évaluation, et chacun reste modifiable manuellement.",
+          'Filled in, partly filled in or never opened: scoping and the assessment of NIS2, DORA and CRA requirements remain directly available. Levels suggested by ISO 27001 are flagged as such in the assessment, and each one can be changed manually.',
         )}
       </Callout>
 
       {perimeterIsPartial(iso) ? (
         <Callout tone="caution" icon={<TriangleAlert size={14} />} title={tr('Pré-remplissage désactivé', 'Pre-filling turned off')}>
           {tr(
-            "La démarche ISO 27001 ne couvre qu'une partie du périmètre réglementaire. Ses contrôles ne peuvent donc pas être tenus pour acquis sur l'ensemble des exigences : chacune est à évaluer à la main.",
-            'The ISO 27001 initiative only covers part of the regulatory scope. Its controls cannot therefore be taken for granted across all requirements: each one must be assessed by hand.',
+            "La démarche ISO 27001 ne couvre qu'une partie du périmètre réglementaire. Ses contrôles ne peuvent donc pas être tenus pour acquis sur l'ensemble des exigences : chacune est à évaluer manuellement.",
+            'The ISO 27001 initiative only covers part of the regulatory scope. Its controls cannot therefore be taken for granted across all requirements: each one must be assessed manually.',
           )}
         </Callout>
       ) : null}
@@ -627,8 +627,8 @@ const CATEGORY_META: Record<Exclude<IsoOverlapCategory, 'sans_correspondance'>, 
   structurel: {
     label: tr('Hors du champ d’ISO 27001', 'Outside the scope of ISO 27001'),
     hint: tr(
-      'Délais de notification, responsabilité personnelle des dirigeants, tests avancés de DORA : sans équivalent par nature.',
-      'Notification deadlines, personal liability of management, DORA advanced testing: no equivalent by nature.',
+      'Délais de notification, responsabilité personnelle des dirigeants, tests avancés de DORA : par nature sans équivalent dans la norme.',
+      'Notification deadlines, personal liability of management, DORA advanced testing: by nature without an equivalent in the standard.',
     ),
     bar: 'bg-ink-4',
     dot: 'bg-ink-4',
@@ -651,7 +651,7 @@ function Overlap() {
 
   return (
     <section className="space-y-3">
-      <SectionRule>{tr('Recoupement avec les référentiels applicables', 'Overlap with the applicable frameworks')}</SectionRule>
+      <SectionRule>{tr('Recoupement avec les textes applicables', 'Overlap with the applicable texts')}</SectionRule>
       <Card>
         <div className="flex flex-wrap gap-x-5 gap-y-2 border-b border-rule px-5 py-3" aria-label={tr('Légende', 'Legend')}>
           {ORDER.map((c) => (
@@ -765,8 +765,8 @@ function Overlap() {
         </ul>
         <p className="border-t border-rule px-5 py-3 text-[10px] leading-snug text-ink-4">
           {tr(
-            `Table de correspondance : ${ISO_MAPPING.filter((m) => m.confidence === 'etablie').length} exigences unifiées reliées à des contrôles ISO de façon établie, ${ISO_MAPPING.filter((m) => m.confidence === 'a_valider').length} pistes à valider, non utilisées pour le pré-remplissage.`,
-            `Mapping table: ${ISO_MAPPING.filter((m) => m.confidence === 'etablie').length} unified requirements linked to ISO controls with an established match, ${ISO_MAPPING.filter((m) => m.confidence === 'a_valider').length} leads to be validated, not used for pre-filling.`,
+            `Table de correspondance : ${ISO_MAPPING.filter((m) => m.confidence === 'etablie').length} correspondances établies entre exigences unifiées et contrôles ISO ; ${ISO_MAPPING.filter((m) => m.confidence === 'a_valider').length} pistes à valider, non utilisées pour le pré-remplissage.`,
+            `Mapping table: ${ISO_MAPPING.filter((m) => m.confidence === 'etablie').length} established matches between unified requirements and ISO controls; ${ISO_MAPPING.filter((m) => m.confidence === 'a_valider').length} leads to be validated, not used for pre-filling.`,
           )}
         </p>
       </Card>

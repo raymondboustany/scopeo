@@ -30,7 +30,7 @@ const KINDS: {
     id: 'comex',
     icon: <Presentation size={18} />,
     title: tr('Note au comité de direction', 'Executive summary'),
-    audience: tr('Pour décider : dirigeants, COMEX', 'To decide: executives, management committee'),
+    audience: tr('Pour décider : dirigeants, comité de direction', 'For decision-makers: executives, management committee'),
     length: tr('2 pages', '2 pages'),
     contents: [
       tr('Message clé, badge ISO 27001 et quatre indicateurs', 'Key message, ISO 27001 badge and four indicators'),
@@ -44,7 +44,7 @@ const KINDS: {
     id: 'complet',
     icon: <FileText size={18} />,
     title: tr('Rapport de cadrage complet', 'Full scoping report'),
-    audience: tr('Pour instruire : conseil, RSSI, DPO, équipe projet', 'To investigate: counsel, CISO, DPO, project team'),
+    audience: tr('Pour approfondir : conseil, RSSI, DPO, équipe projet', 'For in-depth analysis: counsel, CISO, DPO, project team'),
     length: tr('6 à 12 pages', '6 to 12 pages'),
     contents: [
       tr('Synthèse chiffrée et graphiques', 'Figures and charts'),
@@ -134,7 +134,7 @@ export default function ReportPage() {
       <PageHeader
         eyebrow={entity.name}
         title={tr('Rapports', 'Reports')}
-        lead={tr('Trois documents PDF construits à partir du cadrage en cours : une note courte pour décider, un rapport complet pour instruire, une fiche réflexe à diffuser en interne.', 'Three PDF documents built from the current scoping: a short note to decide, a full report to investigate, a quick-reference sheet to share internally.')}
+        lead={tr('Trois documents PDF établis à partir du cadrage en cours : une note courte pour décider, un rapport complet pour approfondir et une fiche réflexe à diffuser en interne.', 'Three PDF documents built from the current scoping: a short note to support decisions, a full report for in-depth analysis and a quick-reference sheet to share internally.')}
       />
 
       {evaluatedShare < 1 ? (

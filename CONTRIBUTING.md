@@ -10,7 +10,7 @@ The `main` branch is protected. Nobody but the maintainer pushes to it directly:
 
 ## Project scope
 
-The platform is for **upstream scoping and diagnosis**: establishing what applies to an organisation, where the texts overlap, and where to start. Before proposing a feature, ask yourself: *does it require verifying evidence or tracking over time?* If so, it belongs to an audit or compliance tracking platform and is out of scope.
+The platform is for **scoping and diagnosis**: establishing what applies to an organisation, where the texts overlap, and where to start. Before proposing a feature, ask yourself: *does it require verifying evidence or tracking compliance over time?* If so, it is out of scope.
 
 ## Reporting a regulatory change
 
@@ -79,7 +79,7 @@ La branche `main` est protégée. Seul le mainteneur y pousse directement : tout
 
 ## Périmètre du projet
 
-La plateforme sert au **cadrage et au diagnostic en amont** : établir ce qui s'applique à une organisation, où les textes se recoupent, et par quoi commencer. Avant de proposer une fonctionnalité, posez-vous une question : *demande-t-elle de vérifier des preuves ou de suivre dans le temps ?* Si oui, elle relève d'une plateforme d'audit ou de suivi de conformité, et sort du périmètre.
+La plateforme sert au **cadrage et au diagnostic** : établir ce qui s'applique à une organisation, où les textes se recoupent, et par quoi commencer. Avant de proposer une fonctionnalité, posez-vous une question : *demande-t-elle de vérifier des preuves ou de suivre la conformité dans le temps ?* Si oui, elle sort du périmètre.
 
 ## Signaler une évolution réglementaire
 

@@ -210,7 +210,7 @@ export function MfaCard({ user }: { user: UserProfile }) {
         open={flow === 'disable'}
         onOpenChange={(v) => (v ? null : reset())}
         title={tr('Désactiver la double authentification ?', 'Turn off two-factor authentication?')}
-        description={tr('Seul le mot de passe sera demandé à la connexion.', 'Only the password will be asked at sign-in.')}
+        description={tr('Seul le mot de passe sera demandé à la connexion.', 'Only the password will be required at sign-in.')}
         footer={
           <>
             <Button onClick={reset}>{tr('Annuler', 'Cancel')}</Button>

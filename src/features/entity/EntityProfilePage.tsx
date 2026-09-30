@@ -63,8 +63,8 @@ export default function EntityProfilePage() {
         eyebrow={tr('Cadrage', 'Scoping')}
         title={tr('Fiche entité', 'Entity profile')}
         lead={tr(
-          'Qui est cadré, dans quel cadre, avec qui. Ces informations figurent en ouverture des rapports ; elles ne sont jamais publiées par le Trust Center.',
-          'Who is being scoped, in what context, with whom. This information opens the reports; it is never published by the Trust Center.',
+          "L'organisation concernée, le contexte de la mission et vos interlocuteurs. Ces informations ouvrent les rapports et ne sont jamais publiées par le Trust Center.",
+          'The organisation concerned, the context of the engagement and your contacts. This information opens the reports and is never published by the Trust Center.',
         )}
         actions={
           readOnly ? (
@@ -140,7 +140,7 @@ export default function EntityProfilePage() {
               tr('Nom et fonction', 'Name and role'),
             )}
             <div />
-            {field('startDate', tr('Lancement', 'Start'), '', 'date')}
+            {field('startDate', tr('Date de lancement', 'Start date'), '', 'date')}
             {field('reportDate', tr('Restitution prévue', 'Planned report date'), '', 'date')}
             <label className="block sm:col-span-2">
               <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Objectif', 'Objective')}</span>
@@ -229,8 +229,8 @@ export default function EntityProfilePage() {
           )}
           <Callout tone="neutral" className="mt-4 text-xs">
             {tr(
-              "La chaîne d'escalade en cas d'incident (RSSI, DPO, direction) se renseigne à part, dans ",
-              'The incident escalation chain (CISO, DPO, management) is entered separately, in ',
+              "La chaîne d'escalade en cas d'incident (RSSI, DPO, direction) se renseigne séparément, dans la page ",
+              'The incident escalation chain (CISO, DPO, management) is entered separately, on the page ',
             )}
             <Link to="/app/signalement" className="font-medium text-accent-strong underline underline-offset-2">
               {tr('Qui notifier', 'Who to notify')}
@@ -243,7 +243,7 @@ export default function EntityProfilePage() {
       <NextStep
         to="/app/qualification"
         label={tr("Qualifier l'entité", 'Scope the entity')}
-        hint={tr(`${QUESTIONS.length} questions, chacune rattachée à l'article qu'elle établit`, `${QUESTIONS.length} questions, each tied to the article it establishes`)}
+        hint={tr(`${QUESTIONS.length} questions au plus, chacune adossée à l'article dont elle relève`, `Up to ${QUESTIONS.length} questions, each tied to the article it relies on`)}
       />
     </div>
   )

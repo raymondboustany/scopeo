@@ -152,8 +152,8 @@ function qualifyRgpd(a: Answers): RegulationVerdict {
             )
           : traite === 'incertain'
             ? tr(
-                "Le traitement est incertain. En pratique, toute organisation employant du personnel traite des données personnelles ; la réponse mérite d'être confirmée.",
-                'Processing is uncertain. In practice, any organisation with staff processes personal data; the answer should be confirmed.',
+                "La présence de traitements reste à confirmer. En pratique, toute organisation qui emploie du personnel traite des données personnelles.",
+                'Whether personal data is processed remains to be confirmed. In practice, any organisation with staff processes personal data.',
               )
             : tr(
                 'Aucun traitement déclaré. Cette situation est exceptionnelle et doit être vérifiée, notamment au regard des données de salariés et des journaux techniques.',
@@ -170,8 +170,8 @@ function qualifyRgpd(a: Answers): RegulationVerdict {
             'The entity is established in the Union: the territorial criterion is met, wherever processing takes place.',
           )
         : tr(
-            "L'entité n'est pas établie dans l'Union ; le critère de l'établissement ne s'applique pas.",
-            'The entity is not established in the Union; the establishment criterion does not apply.',
+            "L'entité n'est pas établie dans l'Union : le critère de l'établissement n'est pas rempli.",
+            'The entity is not established in the Union: the establishment criterion is not met.',
           ),
     },
   ]
@@ -292,8 +292,8 @@ function qualifyNis2(a: Answers, recIdentified: boolean): Nis2Outcome {
               'The entity reaches the medium-sized threshold: 50 staff, or turnover and balance sheet above €10M.',
             )
         : tr(
-            "L'entité n'atteint pas le seuil de moyenne entreprise. Elle n'est soumise à la directive que par un autre fondement.",
-            'The entity does not reach the medium-sized threshold. It is only subject to the directive on another basis.',
+            "L'entité n'atteint pas le seuil de moyenne entreprise : elle ne peut relever de la directive que sur un autre fondement.",
+            'The entity does not reach the medium-sized threshold: it can only fall under the directive on another basis.',
           ),
     },
   ]
@@ -375,8 +375,8 @@ function qualifyNis2(a: Answers, recIdentified: boolean): Nis2Outcome {
   if (status === 'probable') {
     caveats.push(
       tr(
-        "L'assujettissement dépend ici d'une identification discrétionnaire par l'État membre. Se rapprocher de l'ANSSI, ou surveiller la publication de la liste nationale des entités essentielles et importantes.",
-        'Coverage here depends on discretionary identification by the Member State. Contact ANSSI, or watch for the national list of essential and important entities.',
+        "L'assujettissement dépend ici d'une identification discrétionnaire par l'État membre. Il est conseillé de se rapprocher de l'ANSSI ou de suivre la publication de la liste nationale des entités essentielles et importantes.",
+        'Coverage here depends on discretionary identification by the Member State. It is advisable to contact ANSSI or follow the publication of the national list of essential and important entities.',
       ),
     )
   }
@@ -513,8 +513,8 @@ function qualifyDora(a: Answers): RegulationVerdict {
   if (status === 'indirect') {
     caveats.push(
       tr(
-        "L'entité n'est pas assujettie mais subit DORA par voie contractuelle. L'enjeu de négociation porte sur le droit d'audit sans restriction et les objectifs de performance quantitatifs, que les autorités contrôlent en priorité.",
-        'The entity is not subject but feels DORA through contracts. Negotiation focuses on unrestricted audit rights and quantitative performance targets, which supervisors check first.',
+        "L'entité n'est pas assujettie, mais elle en subit les effets par voie contractuelle. La négociation porte surtout sur le droit d'audit sans restriction et les objectifs de performance quantitatifs, que les autorités contrôlent en priorité.",
+        'The entity is not subject to DORA, but is affected through its contracts. Negotiation focuses on unrestricted audit rights and quantitative performance targets, which supervisors check first.',
       ),
     )
   }

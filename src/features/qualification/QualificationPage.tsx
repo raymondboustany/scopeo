@@ -80,7 +80,7 @@ export default function QualificationPage() {
       <PageHeader
         eyebrow={entity.name}
         title={tr('Qualification réglementaire', 'Regulatory scoping')}
-        lead={tr("Chaque question sert à établir une condition d'application précise, dont l'article est indiqué. Le verdict se recalcule à mesure que les réponses arrivent, et le comparateur montre ce qui entre et sort du périmètre.", 'Each question establishes a specific condition of application, with its article shown. The verdict updates as answers come in, and the comparator shows what enters and leaves the scope.')}
+        lead={tr("Chaque question vérifie une condition d'application précise, avec l'article correspondant. Le verdict se met à jour à chaque réponse et le comparateur montre ce qui entre dans le périmètre ou en sort.", 'Each question checks a specific condition of application, with the corresponding article. The verdict updates with each answer, and the comparator shows what enters or leaves the scope.')}
         actions={
           readOnly ? (
             simulated ? (
@@ -184,13 +184,13 @@ export default function QualificationPage() {
 
           {complete ? (
             <Callout tone="positive" className="mt-4" title={tr('Questionnaire complet', 'Questionnaire complete')}>
-              {tr("La qualification s'applique à toute la plateforme : corpus restreint au périmètre, exigences NIS2 (ReCyF) filtrées selon la catégorie de l'entité, score et ordre de traitement calculés. Le module ISO 27001 devient disponible.", "Scoping now applies across the platform: corpus restricted to the scope, NIS2 (ReCyF) requirements filtered by the entity's category, score and treatment order computed. The ISO 27001 module becomes available.")}
+              {tr("La qualification alimente maintenant toute la plateforme : corpus limité au périmètre, exigences NIS2 (ReCyF) adaptées à la catégorie de l'entité, score et ordre de traitement. Le module ISO 27001 est également disponible.", "Scoping now feeds the whole platform: corpus limited to the scope, NIS2 (ReCyF) requirements matched to the entity's category, score and treatment order. The ISO 27001 module is also available.")}
             </Callout>
           ) : (
             <Callout tone="neutral" className="mt-4">
               {tr(
-                `${missing} réponse${missing > 1 ? 's' : ''} manquante${missing > 1 ? 's' : ''} avant que la qualification puisse être établie. Certaines questions n'apparaissent qu'en fonction des réponses précédentes.`,
-                `${missing} answer${missing > 1 ? 's' : ''} missing before scoping can be established. Some questions only appear depending on previous answers.`,
+                `Encore ${missing} réponse${missing > 1 ? 's' : ''} pour établir la qualification. Certaines questions n'apparaissent qu'en fonction des réponses précédentes.`,
+                `${missing} more answer${missing > 1 ? 's' : ''} needed to establish the scoping. Some questions only appear depending on previous answers.`,
               )}
             </Callout>
           )}
@@ -260,7 +260,7 @@ function Comparator({
       <div className="flex items-center gap-2 border-b border-rule px-4 py-3">
         <GitCompareArrows size={15} className="text-accent" />
         <span className="text-sm font-semibold text-ink">{tr('Avant / après', 'Before / after')}</span>
-        {moved > 0 ? <Tag tone="accent">{tr(`${moved} mouvement${moved > 1 ? 's' : ''}`, `${moved} change${moved > 1 ? 's' : ''}`)}</Tag> : null}
+        {moved > 0 ? <Tag tone="accent">{tr(`${moved} changement${moved > 1 ? 's' : ''}`, `${moved} change${moved > 1 ? 's' : ''}`)}</Tag> : null}
       </div>
       <div className="space-y-3 px-4 py-3">
         <label className="block">
@@ -340,9 +340,9 @@ function Comparator({
                           )}
                         >
                           {kind === 'add' ? (
-                            <Plus size={11} className="mt-0.5 shrink-0 text-caution" aria-label={tr('Apparaît', 'Enters')} />
+                            <Plus size={11} className="mt-0.5 shrink-0 text-caution" aria-label={tr('Entre dans le périmètre', 'Enters the scope')} />
                           ) : (
-                            <Minus size={11} className="mt-0.5 shrink-0 text-positive" aria-label={tr('Disparaît', 'Leaves')} />
+                            <Minus size={11} className="mt-0.5 shrink-0 text-positive" aria-label={tr('Sort du périmètre', 'Leaves the scope')} />
                           )}
                           <span className="min-w-0">
                             <span className="font-mono text-ink-3">

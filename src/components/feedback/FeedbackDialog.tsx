@@ -117,7 +117,7 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
                 : tr('Ce qui est inexact, et ce qu’il faudrait écrire', 'What is inaccurate, and what it should say')}
           </span>
           <Textarea rows={5} value={draft.message} onChange={(e) => set({ message: e.target.value })} />
-          <span className="mt-1 block text-2xs text-ink-4">{tr('Dix caractères au moins.', 'At least ten characters.')}</span>
+          <span className="mt-1 block text-2xs text-ink-4">{tr('10 caractères au moins.', 'At least 10 characters.')}</span>
         </label>
 
         {draft.kind === 'corpus' ? (
@@ -147,8 +147,8 @@ export function FeedbackDialog({ open, onOpenChange }: { open: boolean; onOpenCh
 
         <p className="text-2xs text-ink-4">
           {tr(
-            'Le bouton GitHub nécessite un compte GitHub. Sans compte, copiez le message et envoyez-le à la personne qui vous a fourni la plateforme, ou consultez ',
-            'The GitHub button needs a GitHub account. Without one, copy the message and send it to the person who gave you the platform, or see ',
+            'Le bouton GitHub nécessite un compte GitHub. Sans compte, copiez le message et envoyez-le à l’administrateur de la plateforme, ou consultez ',
+            'The GitHub button needs a GitHub account. Without one, copy the message and send it to your platform administrator, or see ',
           )}
           <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
             {tr('les signalements existants', 'existing reports')}

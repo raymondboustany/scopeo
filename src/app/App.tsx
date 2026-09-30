@@ -157,8 +157,8 @@ function ErrorScreen() {
         <p>{message}</p>
         <p className="mt-2">
           {tr(
-            'Vos données sont enregistrées sur le serveur local et ne sont pas affectées.',
-            'Your data is stored on the local server and is not affected.',
+            'Vos données restent enregistrées sur le serveur et ne sont pas affectées.',
+            'Your data remains stored on the server and is not affected.',
           )}
         </p>
       </EmptyState>

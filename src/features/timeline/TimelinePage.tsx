@@ -90,7 +90,7 @@ export default function TimelinePage() {
       <PageHeader
         eyebrow={tr('Pilotage', 'Steering')}
         title={tr('Échéancier réglementaire', 'Regulatory timeline')}
-        lead={tr('Les dates qui structurent le dispositif, y compris celles qui pèsent sur les États membres. Faites défiler pour zoomer, glissez pour vous déplacer, cliquez sur un jalon pour son détail.', 'The dates that shape the framework, including those binding on Member States. Scroll to zoom, drag to move, click a milestone for details.')}
+        lead={tr('Les dates clés des cinq textes, y compris les échéances qui s’imposent aux États membres. Faites défiler pour zoomer, faites glisser pour vous déplacer et cliquez sur un jalon pour en voir le détail.', 'Key dates of the five texts, including deadlines binding on Member States. Scroll to zoom, drag to move and click a milestone for details.')}
       />
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -195,8 +195,8 @@ export default function TimelinePage() {
           </ul>
           <Callout tone="caution" className="mt-4" title={tr('NIS2 toujours pas transposée', 'NIS2 still not transposed')}>
             {tr(
-              `La directive devait être transposée au 17 octobre 2024. Au ${CORPUS_DATE_LONG}, le projet de loi résilience n'est pas promulgué ; l'examen en séance publique est prévu à partir du 7 octobre. Le ReCyF publié en mars 2026 fixe déjà le contenu attendu : le délai de mise en conformité se réduira d'autant.`,
-              `The directive was due to be transposed by 17 October 2024. As of ${CORPUS_DATE_LONG}, the French resilience bill has not been enacted; the plenary debate is scheduled from 7 October. The ReCyF published in March 2026 already sets out what is expected: the time left to comply will shrink accordingly.`,
+              `La directive devait être transposée au 17 octobre 2024. Au ${CORPUS_DATE_LONG}, le projet de loi résilience n'est pas promulgué ; l'examen en séance publique est prévu à partir du 7 octobre. Le ReCyF, publié en mars 2026, fixe déjà le contenu attendu : il n'y a pas lieu d'attendre la loi pour s'y préparer.`,
+              `The directive was due to be transposed by 17 October 2024. As of ${CORPUS_DATE_LONG}, the French resilience bill has not been enacted; the plenary debate is scheduled from 7 October. The ReCyF, published in March 2026, already sets out what is expected: there is no need to wait for the law to prepare.`,
             )}
           </Callout>
         </aside>

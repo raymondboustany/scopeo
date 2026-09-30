@@ -61,7 +61,7 @@ export default function CrosswalkOverlap({
               {formatPct(total ? shared / total : 0)}
             </div>
             <p className="text-xs text-ink-3">
-              {tr('des exigences satisfont au moins deux textes à la fois : une action, plusieurs conformités.', 'of requirements satisfy at least two texts at once: one action, compliance with several texts.')}
+              {tr('des exigences sont communes à au moins deux textes : une seule action répond à plusieurs obligations.', 'of requirements are shared by at least two texts: a single action meets several obligations.')}
             </p>
           </div>
           <ul className="space-y-2.5">

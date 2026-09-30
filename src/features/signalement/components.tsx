@@ -87,8 +87,8 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
             {r === 'AIACT' ? (
               <p className="mt-2 text-[10px] leading-snug text-ink-4">
                 {tr(
-                  "Incidents graves des systèmes à haut risque, exigible à l'application du régime haut risque (2 décembre 2027 pour l'annexe III).",
-                  'Serious incidents involving high-risk systems, enforceable once the high-risk regime applies (2 December 2027 for Annex III).',
+                  "Incidents graves liés aux systèmes à haut risque : obligation exigible à l'entrée en application de ce régime (2 décembre 2027 pour l'annexe III).",
+                  'Serious incidents involving high-risk systems: mandatory once that regime applies (2 December 2027 for Annex III).',
                 )}
               </p>
             ) : null}

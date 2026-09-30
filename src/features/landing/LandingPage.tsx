@@ -42,9 +42,9 @@ function useWatchItems() {
 }
 
 const PILLARS = [
-  { n: '01', title: tr('Qualifier', 'Scope'), body: tr('Quels textes s’appliquent, à quel titre, sur quel fondement.', 'Which texts apply, in what capacity, on what legal basis.') },
-  { n: '02', title: tr('Croiser', 'Cross-map'), body: tr('Où une action unique satisfait plusieurs textes, où ils divergent.', 'Where one action satisfies several texts, and where they diverge.') },
-  { n: '03', title: tr('Prioriser', 'Prioritise'), body: tr('Dans quel ordre traiter les écarts, et avec quel argumentaire.', 'In which order to close the gaps, and with what rationale.') },
+  { n: '01', title: tr('Qualifier', 'Scope'), body: tr('Les textes applicables et le titre auquel ils s’appliquent.', 'The applicable texts and the capacity in which they apply.') },
+  { n: '02', title: tr('Croiser', 'Cross-map'), body: tr('Les exigences communes à plusieurs textes et leurs divergences.', 'Requirements shared by several texts, and where they diverge.') },
+  { n: '03', title: tr('Prioriser', 'Prioritise'), body: tr('Un plan d’action ordonné et des livrables pour la direction.', 'An ordered action plan and deliverables for management.') },
 ]
 
 /** Coins de cadrage : le motif du logo, repris à l'échelle de la page. */
@@ -109,8 +109,8 @@ export default function LandingPage() {
             </h1>
             <p className="mt-6 max-w-lg text-md leading-relaxed text-ink-2">
               {tr(
-                "Identifiez les textes européens qui s'appliquent à une organisation, les obligations qui en découlent et l'ordre dans lequel les traiter.",
-                'Identify which European texts apply to an organisation, the obligations that follow and the order in which to address them.',
+                'Conçue pour les consultants et les équipes GRC : un cadrage mené en quelques entretiens, justifié article par article.',
+                'Built for consultants and GRC teams: scoping completed in a few interviews, justified article by article.',
               )}
             </p>
 
@@ -127,8 +127,8 @@ export default function LandingPage() {
             <p className="mt-6 flex max-w-lg items-start gap-2 text-xs leading-relaxed text-ink-3">
               <Scale size={13} className="mt-0.5 shrink-0" aria-hidden />
               <span>
-                <strong className="font-medium text-ink-2">{tr("Plateforme d'aide au cadrage, pas un avis juridique.", 'A scoping aid, not legal advice.')}</strong>{' '}
-                {tr('Données hébergées chez vous : sur ce poste ou sur le serveur de votre organisation.', 'Data hosted by you: on this machine or on your organisation’s server.')}
+                <strong className="font-medium text-ink-2">{tr('Aide au cadrage, pas un avis juridique.', 'A scoping aid, not legal advice.')}</strong>{' '}
+                {tr('Vos données restent hébergées chez vous.', 'Your data stays on your own infrastructure.')}
               </span>
             </p>
           </motion.section>
@@ -357,7 +357,7 @@ function SignIn({
         <LockKeyhole size={18} className="text-ink-3" />
         {tr('Connexion', 'Sign in')}
       </h2>
-      <p className="mt-1 text-sm text-ink-3">{tr('Ouvrez votre profil pour retrouver vos entités.', 'Open your profile to get back to your entities.')}</p>
+      <p className="mt-1 text-sm text-ink-3">{tr('Retrouvez vos entités et vos cadrages en cours.', 'Get back to your entities and ongoing scoping work.')}</p>
 
       {status.sso_enabled ? (
         <>
@@ -414,7 +414,7 @@ function SignIn({
 
       <form onSubmit={submit} className="mt-5 space-y-4">
         {useDirectory ? (
-          <Field label={tr('Identifiant', 'Username')} hint={tr('celui de votre session de travail', 'the one you use at work')}>
+          <Field label={tr('Identifiant', 'Username')} hint={tr('celui de votre poste de travail', 'your work login')}>
             <Input autoFocus value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" required />
           </Field>
         ) : (
@@ -431,7 +431,7 @@ function SignIn({
             ariaInvalid={Boolean(error)}
           />
         </Field>
-        <p role="alert" className="min-h-4 text-xs text-critical">
+        <p role="alert" className="min-h-5 text-xs leading-5 text-critical">
           {error}
         </p>
         <Button type="submit" variant="primary" className="w-full" disabled={!identifier.trim() || !password || mutation.isPending}>
@@ -590,7 +590,7 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
       <p className="mt-1 text-sm text-ink-3">
         {tr(
           'Votre profil vous identifie sur la plateforme. Vous créerez ensuite une entité pour chaque organisation à cadrer.',
-          'Your profile identifies you on the platform. You then create one entity for each organisation you scope.',
+          'Your profile identifies you on the platform. You will then create one entity for each organisation you scope.',
         )}
       </p>
       {firstRun ? (
@@ -598,8 +598,8 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
           <ShieldCheck size={15} className="mt-px shrink-0 text-accent" />
           <span>
             {tr(
-              "Ce premier profil devient automatiquement administrateur. Il gère les comptes, l'annuaire LDAP, la connexion unique et les réglages dans un espace séparé, et utilise Scopeo comme les autres profils, sans accès à leurs entités.",
-              'This first profile automatically becomes the administrator. It manages accounts, the LDAP directory, single sign-on and settings in a separate space, and uses Scopeo like any other profile, without access to their entities.',
+              "Ce premier profil devient administrateur : depuis un espace dédié, il gère les comptes, l'annuaire LDAP, la connexion unique et les réglages. Il utilise aussi Scopeo comme les autres profils, sans accéder à leurs entités.",
+              "This first profile becomes the administrator: from a dedicated space, it manages accounts, the LDAP directory, single sign-on and settings. It also uses Scopeo like any other profile, without access to other profiles' entities.",
             )}
           </span>
         </div>

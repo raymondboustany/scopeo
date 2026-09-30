@@ -81,7 +81,7 @@ export default function PrioritiesPage() {
       <PageHeader
         eyebrow={profile.name}
         title={tr('Ordre de traitement', 'Treatment order')}
-        lead={tr("Le score est une décision explicite, pas un verdict. Chaque facteur est exposé avec son poids et sa justification ; si l'arbitrage ne correspond pas à votre contexte, déplacez les curseurs.", 'The score is an explicit decision, not a verdict. Each factor is shown with its weight and rationale; if the trade-off does not fit your context, move the sliders.')}
+        lead={tr("Le classement repose sur des choix explicites : chaque facteur est affiché avec son poids et sa justification. Si l'arbitrage ne convient pas à votre contexte, ajustez les curseurs.", 'The ranking rests on explicit choices: each factor is shown with its weight and rationale. If the trade-off does not suit your context, adjust the sliders.')}
       />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_21rem] xl:grid-cols-[1fr_24rem]">
@@ -164,7 +164,7 @@ export default function PrioritiesPage() {
           </Card>
 
           <Callout tone="neutral" className="mt-4" title={tr('Ce que la pondération ne change pas', 'What weighting does not change')}>
-            {tr("Les dépendances techniques sont prises en compte quelle que soit la pondération : une exigence dont un prérequis est mieux classé attend son tour et passe d'une phase. On ne sécurise pas un système qu'on n'a pas recensé.", 'Technical dependencies are taken into account whatever the weighting: a requirement whose prerequisite is ranked higher waits its turn and moves back one phase. You cannot secure a system you have not inventoried.')}
+            {tr("Les dépendances techniques s'appliquent quelle que soit la pondération : une exigence dont le prérequis est mieux classé est reportée d'une phase, le temps de traiter ce prérequis. On ne sécurise pas un système qu'on n'a pas recensé.", 'Technical dependencies apply whatever the weighting: a requirement whose prerequisite ranks higher is pushed back one phase, leaving time to handle the prerequisite. You cannot secure a system you have not inventoried.')}
           </Callout>
 
           <Card className="mt-4 p-4">
@@ -317,8 +317,8 @@ function ScoreBreakdown({ item }: { item: PrioritisedItem }) {
               </span>
             ))}
             {tr(
-              `, classée avant elle. L'ordonnancement la déplace donc en phase ${item.wave}, malgré son score.`,
-              `, ranked ahead of it. Sequencing therefore moves it to phase ${item.wave}, despite its score.`,
+              `, classée avant elle : elle est donc reportée en phase ${item.wave}, quel que soit son score.`,
+              `, ranked ahead of it: it is therefore pushed back to phase ${item.wave}, whatever its score.`,
             )}
           </Callout>
         ) : null}

@@ -133,8 +133,8 @@ export function ForcedPasswordChange({ user, onDone }: { user: UserProfile; onDo
       </h2>
       <p className="mt-1 text-sm text-ink-3">
         {tr(
-          `Bienvenue ${user.name}. Le mot de passe transmis par l'administrateur est provisoire : remplacez-le par un mot de passe que vous seul connaissez.`,
-          `Welcome ${user.name}. The password given by the administrator is temporary: replace it with one only you know.`,
+          `Bienvenue ${user.name}. Le mot de passe transmis par l'administrateur est provisoire : remplacez-le par un mot de passe personnel.`,
+          `Welcome ${user.name}. The password given by the administrator is temporary: replace it with a password of your own.`,
         )}
       </p>
       <div className="mt-6 space-y-4">
@@ -144,11 +144,13 @@ export function ForcedPasswordChange({ user, onDone }: { user: UserProfile; onDo
         <Field label={tr('Nouveau mot de passe', 'New password')}>
           <PasswordInput value={password} onChange={setPassword} autoComplete="new-password" />
         </Field>
-        <Field label={tr('Confirmation', 'Confirmation')}>
+        <Field label={tr('Confirmation du mot de passe', 'Confirm password')}>
           <PasswordInput value={confirm} onChange={setConfirm} autoComplete="new-password" ariaInvalid={mismatch} />
         </Field>
-        {mismatch ? <p className="text-xs text-critical">{tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.')}</p> : null}
-        <PasswordRules />
+        <PasswordRules value={password} />
+        <p className="min-h-5 text-xs leading-5 text-critical" role="alert">
+          {mismatch ? tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.') : null}
+        </p>
       </div>
       {change.error ? (
         <p role="alert" className="mt-4 text-xs text-critical">

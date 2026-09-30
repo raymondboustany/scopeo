@@ -101,7 +101,7 @@ const ERROR_MESSAGES: Record<string, () => string> = {
     tr("L'adresse publique doit commencer par https://.", 'The public address must start with https://.'),
   api_tokens_disabled: () =>
     tr("Les jetons d'API sont désactivés par l'administrateur.", 'API tokens are disabled by the administrator.'),
-  too_many_tokens: () => tr('Vingt jetons au plus par compte.', 'At most twenty tokens per account.'),
+  too_many_tokens: () => tr('Un compte ne peut pas détenir plus de vingt jetons.', 'An account can hold at most twenty tokens.'),
   token_forbidden: () => tr('Action impossible avec un jeton d’API.', 'Not allowed with an API token.'),
   backup_unsupported: () =>
     tr('Sauvegarde intégrée disponible avec la base SQLite uniquement.', 'Built-in backup is only available with the SQLite database.'),
@@ -125,7 +125,7 @@ const ERROR_MESSAGES: Record<string, () => string> = {
   demo_read_only: () =>
     tr("L'entité de démonstration est en lecture seule.", 'The demo entity is read-only.'),
   guest_forbidden: () => tr('Action indisponible en mode invité.', 'Not available in guest mode.'),
-  link_inactive: () => tr("Ce lien n'est pas ou plus actif.", 'This link is not or no longer active.'),
+  link_inactive: () => tr("Ce lien n'est pas actif.", 'This link is not active.'),
   csrf: () => tr('Requête refusée par le serveur.', 'Request refused by the server.'),
   validation_error: () => tr("Une valeur saisie n'est pas valide : vérifiez la longueur et le format des champs.", 'A value is not valid: check the length and format of the fields.'),
   unsupported_file: () =>

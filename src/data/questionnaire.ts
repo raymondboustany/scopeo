@@ -125,7 +125,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: "Identité de l'entité",
     basis: 'NIS2, annexes I et II',
     question: "Dans quel secteur l'entité exerce-t-elle son activité principale ?",
-    help: "Retenez le secteur le plus réglementé si l'entité en couvre plusieurs : la qualification s'apprécie activité par activité, et la plus contraignante commande.",
+    help: "Si l'entité exerce dans plusieurs secteurs, retenez le plus réglementé : la qualification s'apprécie activité par activité et la plus contraignante l'emporte.",
     type: 'select',
     options: SECTORS.map((s) => ({ value: s.value, label: s.label })),
     required: true,
@@ -152,7 +152,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: "Identité de l'entité",
     basis: 'Recommandation 2003/361/CE ; NIS2, article 2, paragraphe 1',
     question: "Quel est le chiffre d'affaires annuel mondial de l'entité ?",
-    help: "Ce montant sert deux usages distincts : établir le franchissement du seuil de taille, et valoriser l'exposition maximale aux sanctions, qui s'exprime en pourcentage du chiffre d'affaires mondial.",
+    help: "Ce montant sert à vérifier le seuil de taille et à chiffrer l'exposition maximale aux sanctions, exprimée en pourcentage du chiffre d'affaires mondial.",
     type: 'radio',
     options: [
       { value: 'lt2', label: "Moins de 2 M€" },
@@ -326,7 +326,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: 'Activité numérique et criticité',
     basis: 'NIS2, article 2, paragraphe 2, et article 3',
     question: "L'entité relève-t-elle de l'un de ces types, soumis à NIS2 quelle que soit sa taille ?",
-    help: "Ces catégories échappent au seuil de taille. Une entité de trois personnes fournissant des services DNS est une entité essentielle.",
+    help: "Ces catégories sont soumises à NIS2 sans condition de taille. Une entité de trois personnes fournissant des services DNS est une entité essentielle.",
     type: 'multi',
     options: [
       ...SIZE_INDEPENDENT_TYPES.map((t) => ({ value: t.value, label: t.label })),
@@ -569,7 +569,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: 'Intelligence artificielle',
     basis: 'AI Act, article 6 et annexes I et III',
     question: "Les systèmes d'IA sont-ils utilisés ou fournis dans l'un de ces domaines ?",
-    help: "Ces domaines font présumer un système à haut risque. Les obligations correspondantes s'appliquent au 2 décembre 2027 pour l'annexe III et au 2 août 2028 pour l'annexe I, depuis l'Omnibus IA.",
+    help: "Un système utilisé dans ces domaines est présumé à haut risque. Depuis l'Omnibus IA, les obligations correspondantes s'appliquent à compter du 2 décembre 2027 pour l'annexe III et du 2 août 2028 pour l'annexe I.",
     type: 'multi',
     options: [
       { value: 'biometrie', label: 'Biométrie', hint: 'Identification à distance, catégorisation biométrique, reconnaissance des émotions' },
@@ -645,7 +645,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: 'État des lieux',
     basis: "Élément de contexte, sans effet sur la qualification",
     question: "L'entité a-t-elle subi un incident de sécurité significatif au cours des deux dernières années ?",
-    help: "Sans effet sur la qualification juridique, mais pertinent pour la priorisation : un antécédent récent accroît la probabilité d'un contrôle et la sévérité de son appréciation.",
+    help: "Un antécédent récent accroît la probabilité d'un contrôle et la sévérité de son appréciation : il pèse donc sur la priorisation.",
     type: 'radio',
     options: [
       { value: 'recent', label: 'Oui, au cours des deux dernières années' },

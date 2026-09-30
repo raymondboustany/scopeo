@@ -76,7 +76,7 @@
     "secteur": {
       "basis": "NIS2, Annexes I and II",
       "question": "In which sector does the entity carry out its main activity?",
-      "help": "Pick the most regulated sector if the entity covers several: scoping is assessed activity by activity, and the strictest one prevails."
+      "help": "If the entity operates in several sectors, pick the most regulated one: scoping is assessed activity by activity, and the strictest prevails."
     },
     "effectif": {
       "basis": "Recommendation 2003/361/EC, Annex, Article 2",
@@ -87,19 +87,19 @@
     "chiffre_affaires": {
       "basis": "Recommendation 2003/361/EC; NIS2, Article 2(1)",
       "question": "What is the entity's annual worldwide turnover?",
-      "help": "This amount has two separate uses: establishing whether the size threshold is met, and quantifying the maximum exposure to penalties, expressed as a percentage of worldwide turnover.",
+      "help": "This amount is used to check the size threshold and to quantify the maximum exposure to penalties, expressed as a percentage of worldwide turnover.",
       "options": { "lt2": ["Under €2M"], "2a10": ["€2M to €10M"], "10a50": ["€10M to €50M"], "50a250": ["€50M to €250M"], "250a1000": ["€250M to €1bn"], "gt1000": ["Over €1bn"] }
     },
     "bilan": {
       "basis": "Recommendation 2003/361/EC, Annex, Article 2",
       "question": "What is the annual balance sheet total?",
-      "help": "The medium-sized threshold is reached as soon as headcount reaches 50, or turnover and balance sheet total both exceed €10M.",
+      "help": "The medium-sized threshold is crossed as soon as headcount reaches 50, or both turnover and balance sheet total exceed €10M.",
       "options": { "lte10": ["€10M or less"], "10a43": ["€10M to €43M"], "gt43": ["Over €43M"] }
     },
     "etablissement_ue": {
       "basis": "GDPR, Article 3; NIS2, Article 26",
       "question": "Is the entity established in the European Union?",
-      "help": "An entity not established in the Union may still be subject: to the GDPR if it targets individuals in the Union or monitors their behaviour, to NIS2 if it provides services covered by the directive there."
+      "help": "An entity not established in the Union may still be subject to the GDPR if it targets individuals in the Union or monitors their behaviour, and to NIS2 if it provides services covered by the directive there."
     },
     "cible_ue": {
       "basis": "GDPR, Article 3(2)",
@@ -153,7 +153,7 @@
     "type_taille_independante": {
       "basis": "NIS2, Article 2(2) and Article 3",
       "question": "Is the entity one of these types, covered by NIS2 regardless of size?",
-      "help": "These categories escape the size threshold. A three-person entity providing DNS services is an essential entity.",
+      "help": "These categories are covered by NIS2 regardless of size. A three-person entity providing DNS services is an essential entity.",
       "options": { "aucun": ["None of these types"] }
     },
     "services_ict": {
@@ -196,7 +196,7 @@
     "dora_tlpt": {
       "basis": "DORA, Article 26(8)",
       "question": "Has the competent authority identified the entity to carry out threat-led penetration testing?",
-      "help": "Identification is for the authority, based on criticality and risk profile. It entails a test at least every three years on live production systems.",
+      "help": "The authority makes this identification based on criticality and risk profile. It entails a test at least every three years on live production systems.",
       "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Not yet notified"] }
     },
     "tiers_ict_critiques": {
@@ -207,7 +207,7 @@
     "clients_financiers": {
       "basis": "DORA, Articles 30 and 31",
       "question": "Does the entity count financial entities among its clients?",
-      "help": "An ICT provider to financial entities is not directly subject to DORA, but feels its effects through contracts: its clients must impose the Article 30 clauses, including unrestricted audit rights.",
+      "help": "An ICT provider to financial entities is not directly subject to DORA, but is affected through its contracts: its clients must impose the Article 30 clauses, including unrestricted audit rights.",
       "options": { "oui": ["Yes"], "non": ["No"], "incertain": ["Unsure"] }
     },
     "cra_roles": {
@@ -258,7 +258,7 @@
     "ia_haut_risque": {
       "basis": "AI Act, Article 6 and Annexes I and III",
       "question": "Are AI systems used or provided in any of these areas?",
-      "help": "These areas presume a high-risk system. Since the AI Omnibus, the corresponding obligations apply from 2 December 2027 for Annex III and 2 August 2028 for Annex I.",
+      "help": "A system used in these areas is presumed high-risk. Since the AI Omnibus, the corresponding obligations apply from 2 December 2027 for Annex III and from 2 August 2028 for Annex I.",
       "options": {
         "biometrie": ["Biometrics", "Remote identification, biometric categorisation, emotion recognition"],
         "infrastructures": ["Critical infrastructure", "Safety component in the management of traffic, water, gas, heating, electricity or critical digital infrastructure"],
@@ -297,7 +297,7 @@
     "incidents_recents": {
       "basis": "Context only, no effect on scoping",
       "question": "Has the entity suffered a significant security incident in the last two years?",
-      "help": "No effect on the legal scoping, but relevant for prioritisation: a recent history increases the likelihood of an inspection and the severity of its assessment.",
+      "help": "A recent incident increases the likelihood of an inspection and how strictly it is assessed, so it weighs on prioritisation.",
       "options": { "recent": ["Yes, in the last two years"], "ancien": ["Yes, more than two years ago"], "aucun": ["No known significant incident"] }
     }
   },

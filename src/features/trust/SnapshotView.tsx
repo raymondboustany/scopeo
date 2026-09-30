@@ -54,7 +54,7 @@ export function SnapshotView({ name, snapshot }: { name: string; snapshot: Publi
       </div>
 
       <Card>
-        <CardHeader title={tr('Avancement par domaine', 'Progress by domain')} subtitle={tr('Part des exigences unifiées en place, partiel compté pour moitié', 'Share of unified requirements in place, partial counts for half')} />
+        <CardHeader title={tr('Avancement par domaine', 'Progress by domain')} subtitle={tr('Part des exigences unifiées en place ; une exigence partielle compte pour moitié', 'Share of unified requirements in place; partial ones count for half')} />
         <div className="grid gap-x-8 gap-y-3 p-5 md:grid-cols-2">
           {snapshot.domains.map((d) => (
             <div key={d.domain} className="grid grid-cols-[8rem_1fr_3rem] items-center gap-3">
