@@ -8,6 +8,7 @@ import { useSession } from '@/lib/store'
 import { api } from '@/lib/api'
 import { useScoping } from '@/lib/hooks'
 import { slugify } from '@/lib/utils'
+import { isStrongPassword } from '@/components/auth/password'
 import { MfaCard } from './MfaCard'
 import { ApiTokensCard } from './ApiTokensCard'
 import { LANG, setLang, tr, type Lang } from '@/i18n'
@@ -221,10 +222,10 @@ export default function SettingsPage() {
                 ) : pwDone ? (
                   <span className="text-positive">{tr('Mot de passe modifié.', 'Password changed.')}</span>
                 ) : (
-                  tr('Au moins 10 caractères.', 'At least 10 characters.')
+                  tr('12 caractères au moins, avec minuscules, majuscules, chiffres et caractères spéciaux.', 'At least 12 characters, with lowercase and uppercase letters, digits and special characters.')
                 )}
               </span>
-              <Button type="submit" disabled={!pw.current || pw.password.length < 10 || pw.password !== pw.confirm || changePassword.isPending}>
+              <Button type="submit" disabled={!pw.current || !isStrongPassword(pw.password) || pw.password !== pw.confirm || changePassword.isPending}>
                 {tr('Changer le mot de passe', 'Change password')}
               </Button>
             </div>

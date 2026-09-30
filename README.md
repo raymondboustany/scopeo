@@ -152,7 +152,7 @@ Three PDF deliverables, generated from the fictitious demo entity *Finexa*:
 |---|---|---|
 | [Executive summary](docs/samples/executive-summary-finexa.pdf) | Management, executive committee | 2 pages |
 | [Full scoping report](docs/samples/scoping-report-finexa.pdf) | Counsel, CISO, DPO, project team | 6 to 12 pages |
-| [Incident quick-reference sheet](docs/samples/incident-quick-reference-finexa.pdf) | Internal distribution | 1 page |
+| [Incident quick-reference sheet](docs/samples/incident-quick-reference-finexa.pdf) | Internal distribution | 1 to 2 pages |
 
 ---
 

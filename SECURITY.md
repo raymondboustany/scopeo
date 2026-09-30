@@ -8,7 +8,7 @@ Scopeo runs **on the user's machine**, or on a server of the organisation behind
 
 ### Accounts
 
-- Each local profile is protected by a password (10 characters minimum), hashed with **bcrypt** and never stored in clear.
+- Each local profile is protected by a password (12 characters minimum, with lowercase, uppercase, digits and special characters), hashed with **bcrypt** and never stored in clear.
 - **Two-factor authentication (TOTP)** can be turned on by each user: QR code, six-digit code at every sign-in, ten single-use recovery codes. A code already accepted cannot be replayed; attempts are limited.
 - **LDAP directory** (optional): the directory checks the password, Scopeo never stores it. Lookup uses an escaped filter, an empty password is refused, and access can be restricted to one group. Use `ldaps://` or StartTLS. An account follows the directory's immutable identifier (`objectGUID`, `entryUUID`): a person moved in the directory keeps their account, and a newcomer who reuses the name of someone who left does not inherit it.
 - **Single sign-on** (optional, OpenID Connect): authorization code flow with PKCE, state bound to the browser by a short-lived cookie, nonce, and full ID token validation (signature against the provider's keys, issuer, audience, expiry). Access can be restricted to email domains and a group. Accounts are never matched to an existing account by email alone.
@@ -58,7 +58,7 @@ Scopeo fonctionne **sur le poste de l'utilisateur**, ou sur un serveur de l'orga
 
 ### Comptes
 
-- Chaque profil local est protégé par un mot de passe (10 caractères au moins), haché avec **bcrypt** et jamais conservé en clair.
+- Chaque profil local est protégé par un mot de passe (12 caractères au moins, avec minuscules, majuscules, chiffres et caractères spéciaux), haché avec **bcrypt** et jamais conservé en clair.
 - La **double authentification (TOTP)** peut être activée par chaque utilisateur : QR code, code à six chiffres à chaque connexion, dix codes de récupération à usage unique. Un code déjà accepté ne peut pas être rejoué ; les essais sont limités.
 - **Annuaire LDAP** (facultatif) : l'annuaire vérifie le mot de passe, Scopeo ne le conserve jamais. La recherche utilise un filtre échappé, un mot de passe vide est refusé, et l'accès peut être réservé à un groupe. Utilisez `ldaps://` ou StartTLS. Un compte suit l'identifiant immuable de l'annuaire (`objectGUID`, `entryUUID`) : une personne déplacée dans l'annuaire garde son compte, et un nouvel arrivant qui reprend le nom d'une personne partie n'en hérite pas.
 - **Connexion unique** (facultative, OpenID Connect) : flux « code d'autorisation » avec PKCE, `state` lié au navigateur par un cookie éphémère, nonce, et validation complète du jeton d'identité (signature par les clés du fournisseur, émetteur, audience, échéance). L'accès peut être réservé à des domaines de courriel et à un groupe. Un compte n'est jamais rapproché d'un compte existant par le seul courriel.

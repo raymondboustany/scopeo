@@ -91,7 +91,7 @@ On the first launch, a command window installs the necessary components (about a
 
 ## First steps
 
-1. At first launch, the home page only offers **Create the administrator profile**: name, role and password (10 characters minimum, typed twice). This first profile manages accounts and settings in the **Administration** space (profile menu), and uses the platform like everyone else.
+1. At first launch, the home page only offers **Create the administrator profile**: name, role and password (12 characters minimum with lowercase, uppercase, digits and special characters, typed twice). This first profile manages accounts and settings in the **Administration** space (profile menu), and uses the platform like everyone else.
 2. Create an entity: a client, or your own organisation. A short guided tour opens at first sign-in; the question mark in the top bar replays it.
 3. To discover the platform without an account, **Guest mode** opens the demo company *Finexa*; the guest session is erased on sign-out.
 4. Next time, sign in with the profile name and password. **Sign out** (profile menu) closes the session.
@@ -222,7 +222,7 @@ Au premier lancement, une fenêtre de commande installe les composants nécessai
 
 ## Premiers pas
 
-1. Au premier lancement, l'accueil ne propose que **Créer le profil administrateur** : nom, fonction et mot de passe (10 caractères au moins, saisi deux fois). Ce premier profil gère les comptes et les réglages dans l'espace **Administration** (menu du profil), et utilise la plateforme comme tout le monde.
+1. Au premier lancement, l'accueil ne propose que **Créer le profil administrateur** : nom, fonction et mot de passe (12 caractères au moins, avec minuscules, majuscules, chiffres et caractères spéciaux, saisi deux fois). Ce premier profil gère les comptes et les réglages dans l'espace **Administration** (menu du profil), et utilise la plateforme comme tout le monde.
 2. Créez une entité : un client, ou votre propre organisation. Un court parcours guidé s'ouvre à la première connexion ; le point d'interrogation de la barre du haut le relance.
 3. Pour découvrir la plateforme sans compte, **Mode invité** ouvre l'entreprise de démonstration *Finexa* ; la session invitée est effacée à la déconnexion.
 4. Les fois suivantes, connectez-vous avec le nom du profil et son mot de passe. **Se déconnecter** (menu du profil) ferme la session.

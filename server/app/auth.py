@@ -37,7 +37,7 @@ _ROUNDS = int(os.environ.get("SCOPEO_BCRYPT_ROUNDS", "12"))
 
 # bcrypt ne tient compte que des 72 premiers octets : au-delà, on refuse
 # plutôt que de tronquer silencieusement.
-PASSWORD_MIN_LENGTH = 10
+PASSWORD_MIN_LENGTH = 12
 PASSWORD_MAX_BYTES = 72
 
 # Empreinte de référence, pour que la vérification d'un profil inexistant
@@ -51,6 +51,15 @@ def password_problem(password: str) -> str | None:
         return "too_short"
     if len(password.encode("utf-8")) > PASSWORD_MAX_BYTES:
         return "too_long"
+    # Recommandations courantes (ANSSI, CNIL) : 12 caractères et quatre familles de caractères.
+    families = (
+        any(c.islower() for c in password),
+        any(c.isupper() for c in password),
+        any(c.isdigit() for c in password),
+        any(not c.isalnum() for c in password),
+    )
+    if not all(families):
+        return "too_weak"
     return None
 
 

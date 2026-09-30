@@ -1,11 +1,11 @@
 import { useState, type ReactNode } from 'react'
-import { ArrowRight, Eye, EyeOff, KeyRound } from 'lucide-react'
+import { ArrowRight, Check, Eye, EyeOff, KeyRound } from 'lucide-react'
 import { Button, Input } from '@/components/ui/controls'
 import { useChangePassword } from '@/lib/queries'
 import type { UserProfile } from '@/types/domain'
+import { cn } from '@/lib/utils'
+import { MIN_PASSWORD, isStrongPassword, passwordChecks } from './password'
 import { tr } from '@/i18n'
-
-export const MIN_PASSWORD = 10
 
 export function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (
@@ -57,14 +57,32 @@ export function PasswordInput({
   )
 }
 
-export function PasswordRules() {
+export function PasswordRules({ value = '' }: { value?: string }) {
+  const checks = passwordChecks(value)
+  const rules: [boolean, string][] = [
+    [checks.length, tr(`${MIN_PASSWORD} caractères au moins`, `At least ${MIN_PASSWORD} characters`)],
+    [checks.lower, tr('Une minuscule', 'A lowercase letter')],
+    [checks.upper, tr('Une majuscule', 'An uppercase letter')],
+    [checks.digit, tr('Un chiffre', 'A digit')],
+    [checks.special, tr('Un caractère spécial', 'A special character')],
+  ]
   return (
-    <p className="text-2xs leading-relaxed text-ink-4">
-      {tr(
-        `Au moins ${MIN_PASSWORD} caractères. Une phrase de passe est plus sûre et plus facile à retenir. Le mot de passe est haché (bcrypt) et n'est jamais conservé en clair.`,
-        `At least ${MIN_PASSWORD} characters. A passphrase is safer and easier to remember. The password is hashed (bcrypt) and never stored in plain text.`,
-      )}
-    </p>
+    <div className="text-2xs leading-relaxed text-ink-4">
+      <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5" aria-label={tr('Critères du mot de passe', 'Password requirements')}>
+        {rules.map(([ok, label]) => (
+          <li key={label} className={cn('flex items-center gap-1.5', ok ? 'text-positive' : '')}>
+            <Check size={11} className={ok ? '' : 'opacity-30'} aria-hidden />
+            {label}
+          </li>
+        ))}
+      </ul>
+      <p className="mt-2">
+        {tr(
+          "Le mot de passe est haché (bcrypt) et n'est jamais conservé en clair.",
+          'The password is hashed (bcrypt) and never stored in plain text.',
+        )}
+      </p>
+    </div>
   )
 }
 
@@ -94,7 +112,7 @@ export function ForcedPasswordChange({ user, onDone }: { user: UserProfile; onDo
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const mismatch = confirm.length > 0 && confirm !== password
-  const valid = current && password.length >= MIN_PASSWORD && password === confirm
+  const valid = current && isStrongPassword(password) && password === confirm
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()

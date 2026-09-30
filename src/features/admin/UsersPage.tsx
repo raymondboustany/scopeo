@@ -21,6 +21,7 @@ import {
 import { Button, Dialog, Input, Select, Switch } from '@/components/ui/controls'
 import { Card, PageHeader, Tag } from '@/components/ui/primitives'
 import { Field } from '@/components/auth/fields'
+import { isStrongPassword } from '@/components/auth/password'
 import { api } from '@/lib/api'
 import { useCurrentUser } from '@/lib/queries'
 import { cn, copyText, formatDateShort } from '@/lib/utils'
@@ -29,11 +30,20 @@ import { tr } from '@/i18n'
 import { ROLE_SHORT, USER_ROLES as ROLES } from '@/components/auth/roles'
 
 
-/** Mot de passe provisoire lisible, sans caractères ambigus. */
+/** Mot de passe provisoire lisible, sans caractères ambigus, conforme à la politique (majuscule, minuscule, chiffre, tirets). */
 function temporaryPassword(): string {
-  const alphabet = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-  const bytes = crypto.getRandomValues(new Uint8Array(16))
-  const raw = Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('')
+  const lower = 'abcdefghjkmnpqrstuvwxyz'
+  const upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+  const digits = '23456789'
+  const pool = lower + upper + digits
+  const bytes = crypto.getRandomValues(new Uint8Array(32))
+  const pick = (set: string, i: number) => set[bytes[i] % set.length]
+  const chars = [pick(lower, 0), pick(upper, 1), pick(digits, 2), ...Array.from({ length: 13 }, (_, i) => pick(pool, i + 3))]
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = bytes[16 + (i % 16)] % (i + 1)
+    ;[chars[i], chars[j]] = [chars[j], chars[i]]
+  }
+  const raw = chars.join('')
   return `${raw.slice(0, 4)}-${raw.slice(4, 8)}-${raw.slice(8, 12)}-${raw.slice(12, 16)}`
 }
 
@@ -337,7 +347,7 @@ function CreateDialog({ onClose, onCreated }: { onClose: () => void; onCreated: 
       footer={
         <>
           <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>
-          <Button variant="primary" disabled={!name.trim() || password.length < 10 || create.isPending} onClick={() => create.mutate()}>
+          <Button variant="primary" disabled={!name.trim() || !isStrongPassword(password) || create.isPending} onClick={() => create.mutate()}>
             {tr('Créer le compte', 'Create account')}
           </Button>
         </>
@@ -389,7 +399,7 @@ function PasswordDialog({ user, onClose, onDone }: { user: AdminUser; onClose: (
       footer={
         <>
           <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>
-          <Button variant="primary" disabled={password.length < 10 || reset.isPending} onClick={() => reset.mutate()}>
+          <Button variant="primary" disabled={!isStrongPassword(password) || reset.isPending} onClick={() => reset.mutate()}>
             {tr('Appliquer', 'Apply')}
           </Button>
         </>

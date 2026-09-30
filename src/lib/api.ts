@@ -111,7 +111,12 @@ const ERROR_MESSAGES: Record<string, () => string> = {
     tr('Le filtre doit être entre parenthèses et contenir {username}.', 'The filter must be in parentheses and contain {username}.'),
   password_mismatch: () => tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.'),
   password_too_short: () =>
-    tr('Le mot de passe doit comporter au moins 10 caractères.', 'The password must be at least 10 characters long.'),
+    tr('Le mot de passe doit comporter au moins 12 caractères.', 'The password must be at least 12 characters long.'),
+  password_too_weak: () =>
+    tr(
+      'Le mot de passe doit combiner minuscules, majuscules, chiffres et caractères spéciaux.',
+      'The password must combine lowercase and uppercase letters, digits and special characters.',
+    ),
   password_too_long: () =>
     tr('Le mot de passe dépasse la longueur autorisée (72 octets).', 'The password exceeds the maximum length (72 bytes).'),
   name_taken: () => tr('Un profil porte déjà ce nom.', 'A profile with this name already exists.'),

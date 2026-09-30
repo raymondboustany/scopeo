@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowRight, Check, ChevronLeft, ChevronRight, GitCompareArrows, Minus, Plus, RotateCcw } from 'lucide-react'
 import {
@@ -31,6 +31,12 @@ export default function QualificationPage() {
   const edit = useEntityEditor()
   const { data: revisions = [] } = useRevisions(entity?.id ?? null)
   const [sectionIndex, setSectionIndex] = useState(0)
+  const sectionsNav = useRef<HTMLElement>(null)
+  // Changer de section ramène au début du questionnaire.
+  const goToSection = (index: number) => {
+    setSectionIndex(index)
+    sectionsNav.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }
   // Sur la démonstration, les réponses se modifient en simulation, sans être enregistrées.
   const [simulated, setSimulated] = useState<Answers | null>(null)
   // État à l'ouverture de la page : point de comparaison par défaut.
@@ -105,14 +111,14 @@ export default function QualificationPage() {
       <div className="grid gap-6 lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_26rem]">
         {/* Questionnaire --------------------------------------------- */}
         <div className="min-w-0">
-          <nav className="mb-5 flex flex-wrap gap-1.5" aria-label={tr('Sections du questionnaire', 'Questionnaire sections')}>
+          <nav ref={sectionsNav} className="mb-5 flex scroll-mt-4 flex-wrap gap-1.5" aria-label={tr('Sections du questionnaire', 'Questionnaire sections')}>
             {sections.map((s, i) => {
               const isCurrent = i === sectionIndex
               const isDone = s.done === s.total
               return (
                 <button
                   key={s.id}
-                  onClick={() => setSectionIndex(i)}
+                  onClick={() => goToSection(i)}
                   className={cn(
                     'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition-colors',
                     isCurrent
@@ -152,7 +158,7 @@ export default function QualificationPage() {
               </div>
 
               <div className="flex items-center justify-between gap-3 rounded-b-xl border-t border-rule bg-raised px-5 py-3">
-                <Button icon={<ChevronLeft size={13} />} disabled={sectionIndex === 0} onClick={() => setSectionIndex((i) => Math.max(0, i - 1))}>
+                <Button icon={<ChevronLeft size={13} />} disabled={sectionIndex === 0} onClick={() => goToSection(Math.max(0, sectionIndex - 1))}>
                   {tr('Précédent', 'Previous')}
                 </Button>
                 <span className="text-2xs text-ink-3">
@@ -161,7 +167,7 @@ export default function QualificationPage() {
                 <Button
                   variant="primary"
                   disabled={sectionIndex >= sections.length - 1}
-                  onClick={() => setSectionIndex((i) => Math.min(sections.length - 1, i + 1))}
+                  onClick={() => goToSection(Math.min(sections.length - 1, sectionIndex + 1))}
                 >
                   {tr('Suivant', 'Next')}
                   <ChevronRight size={13} />

@@ -8,27 +8,37 @@
 
 ### English
 
+#### Security
+
+- Stronger password requirements when creating a profile or changing a password: 12 characters minimum, mixing lowercase, uppercase, digits and special characters.
+
 #### Fixed
 
+- Stable sign-in and profile pages when an error message appears.
+- The questionnaire returns to the top of the page when changing section.
 - Wording, typography and translation refinements across the interface and reports.
 - Consistency of the regulatory data, exports and sample documents.
-- Documentation, launch scripts and deployment files updated.
 
 #### Maintenance
 
-- Refreshed screenshots, animated tours and sample documents.
+- Documentation, launch scripts, screenshots, animated tours and sample documents updated.
 
 ### Français
 
+#### Sécurité
+
+- Exigences renforcées sur les mots de passe à la création d'un profil et lors d'un changement : 12 caractères au moins, mêlant minuscules, majuscules, chiffres et caractères spéciaux.
+
 #### Corrections
 
+- Pages de connexion et de création de profil stables à l'affichage d'un message d'erreur.
+- Le questionnaire revient en haut de la page au changement de section.
 - Améliorations de rédaction, de typographie et de traduction dans l'interface et les rapports.
 - Cohérence des données réglementaires, des exports et des documents d'exemple.
-- Documentation, scripts de lancement et fichiers de déploiement mis à jour.
 
 #### Maintenance
 
-- Captures, visites animées et documents d'exemple actualisés.
+- Documentation, scripts de lancement, captures, visites animées et documents d'exemple actualisés.
 
 ## [1.1.0] - 2026-09-25
 

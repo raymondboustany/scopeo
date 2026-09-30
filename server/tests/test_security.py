@@ -20,7 +20,7 @@ from app.main import DEMO_USER_ID, app
 from app.models import ApiToken, AuditEvent, Entity, EntityFile, EntityRevision, Setting, User, UserSession
 from app.security import challenges
 
-PASSWORD = "correct horse battery"
+PASSWORD = "Correct-Horse-Battery-7"
 HEADERS = {"X-Scopeo": "1"}
 
 
@@ -171,7 +171,7 @@ def test_mot_de_passe_provisoire_a_changer_avant_tout_usage(client):
         assert c2.get(f"/api/users/{recrue['id']}/entities").json()["detail"] == "password_change_required"
         r = c2.post("/api/auth/password", json={"current": PASSWORD, "password": PASSWORD, "password_confirm": PASSWORD})
         assert r.json()["detail"] == "password_unchanged"
-        new = "une autre phrase de passe"
+        new = "Une-Autre-Phrase-8"
         assert c2.post("/api/auth/password", json={"current": PASSWORD, "password": new, "password_confirm": new}).status_code == 204
         assert c2.get(f"/api/users/{recrue['id']}/entities").status_code == 200
 

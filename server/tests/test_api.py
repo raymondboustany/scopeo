@@ -12,7 +12,7 @@ from app.main import DEMO_ENTITY_ID, app
 from app.models import User
 from sqlmodel import Session, select
 
-PASSWORD = "correct horse battery"
+PASSWORD = "Correct-Horse-Battery-7"
 HEADERS = {"X-Scopeo": "1"}
 
 
@@ -67,6 +67,8 @@ def test_la_creation_exige_une_confirmation_identique_et_un_mot_de_passe_suffisa
     assert r.status_code == 422 and r.json()["detail"] == "password_mismatch"
     r = client.post("/api/auth/register", json={"name": unique("B"), "password": "court", "password_confirm": "court"})
     assert r.json()["detail"] == "password_too_short"
+    r = client.post("/api/auth/register", json={"name": unique("W"), "password": "toutenminuscules", "password_confirm": "toutenminuscules"})
+    assert r.json()["detail"] == "password_too_weak"
     long = "é" * 40
     r = client.post("/api/auth/register", json={"name": unique("C"), "password": long, "password_confirm": long})
     assert r.json()["detail"] == "password_too_long"
@@ -132,9 +134,9 @@ def test_un_profil_sans_mot_de_passe_ne_peut_etre_ni_ouvert_ni_revendique(client
 
 def test_le_changement_de_mot_de_passe_exige_l_ancien(client):
     register(client)
-    r = client.post("/api/auth/password", json={"current": "faux", "password": "nouveau mot de passe", "password_confirm": "nouveau mot de passe"})
+    r = client.post("/api/auth/password", json={"current": "faux", "password": "Nouveau-Mot-de-Passe-9", "password_confirm": "Nouveau-Mot-de-Passe-9"})
     assert r.status_code == 401
-    r = client.post("/api/auth/password", json={"current": PASSWORD, "password": "nouveau mot de passe", "password_confirm": "nouveau mot de passe"})
+    r = client.post("/api/auth/password", json={"current": PASSWORD, "password": "Nouveau-Mot-de-Passe-9", "password_confirm": "Nouveau-Mot-de-Passe-9"})
     assert r.status_code == 204
 
 

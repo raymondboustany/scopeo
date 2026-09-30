@@ -5,7 +5,8 @@ import { ArrowLeft, ArrowRight, Building2, KeySquare, LockKeyhole, Scale, Shield
 import { Mark } from '@/components/layout/Brand'
 import { Button, Input, SegmentedControl, Select } from '@/components/ui/controls'
 import { RegChip } from '@/components/ui/primitives'
-import { CodeInput, Field, ForcedPasswordChange, MIN_PASSWORD, PasswordInput, PasswordRules } from '@/components/auth/fields'
+import { isStrongPassword } from '@/components/auth/password'
+import { CodeInput, Field, ForcedPasswordChange, PasswordInput, PasswordRules } from '@/components/auth/fields'
 import { useAuthStatus, useGuest, useLdapLogin, useLogin, useMfaVerify, useRegister, useSsoResume, useUpdateUser } from '@/lib/queries'
 import { api, ApiError, messageFor } from '@/lib/api'
 import { useSession } from '@/lib/store'
@@ -108,8 +109,8 @@ export default function LandingPage() {
             </h1>
             <p className="mt-6 max-w-lg text-md leading-relaxed text-ink-2">
               {tr(
-                "Une plateforme de cadrage réglementaire, en amont d'une plateforme de suivi de conformité. Elle établit le périmètre d'une organisation au regard de cinq textes européens et l'ordre dans lequel le traiter.",
-                'A regulatory scoping platform, upstream of a compliance tracking platform. It establishes the scope of an organisation against five European texts and the order in which to handle it.',
+                "Identifiez les textes européens qui s'appliquent à une organisation, les obligations qui en découlent et l'ordre dans lequel les traiter.",
+                'Identify which European texts apply to an organisation, the obligations that follow and the order in which to address them.',
               )}
             </p>
 
@@ -430,11 +431,9 @@ function SignIn({
             ariaInvalid={Boolean(error)}
           />
         </Field>
-        {error ? (
-          <p role="alert" className="text-xs text-critical">
-            {error}
-          </p>
-        ) : null}
+        <p role="alert" className="min-h-4 text-xs text-critical">
+          {error}
+        </p>
         <Button type="submit" variant="primary" className="w-full" disabled={!identifier.trim() || !password || mutation.isPending}>
           {mutation.isPending ? tr('Vérification…', 'Checking…') : tr('Se connecter', 'Sign in')}
           <ArrowRight size={14} />
@@ -561,7 +560,7 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const mismatch = confirm.length > 0 && confirm !== password
-  const valid = name.trim() && password.length >= MIN_PASSWORD && password === confirm
+  const valid = name.trim() && isStrongPassword(password) && password === confirm
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -590,8 +589,8 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
       </h2>
       <p className="mt-1 text-sm text-ink-3">
         {tr(
-          'Le profil vous identifie. Les organisations que vous cadrez seront des entités distinctes, créées ensuite.',
-          'The profile identifies you. The organisations you scope will be separate entities, created afterwards.',
+          'Votre profil vous identifie sur la plateforme. Vous créerez ensuite une entité pour chaque organisation à cadrer.',
+          'Your profile identifies you on the platform. You then create one entity for each organisation you scope.',
         )}
       </p>
       {firstRun ? (
@@ -621,10 +620,12 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
         <Field label={tr('Confirmation du mot de passe', 'Confirm password')}>
           <PasswordInput value={confirm} onChange={setConfirm} autoComplete="new-password" ariaInvalid={mismatch} />
         </Field>
-        {mismatch ? <p className="text-xs text-critical">{tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.')}</p> : null}
-        <PasswordRules />
+        <PasswordRules value={password} />
       </div>
-      {register.error ? <p role="alert" className="mt-4 text-xs text-critical">{register.error.message}</p> : null}
+      {/* Zone réservée : un message d'erreur ne doit pas déplacer la page. */}
+      <div className="mt-4 min-h-9 text-xs text-critical" role="alert">
+        {mismatch ? tr('Les deux mots de passe ne correspondent pas.', 'The two passwords do not match.') : register.error?.message}
+      </div>
       <Button type="submit" variant="primary" className="mt-6 w-full" disabled={!valid || register.isPending}>
         {register.isPending ? tr('Création…', 'Creating…') : tr('Créer et commencer', 'Create and start')}
         <ArrowRight size={14} />
