@@ -26,9 +26,9 @@ import { COLON, tr } from '@/i18n'
 type RegFilter = 'tous' | RegulationId
 
 const BINDING_LABEL: Record<Obligation['binding'], { label: string; tone: 'critical' | 'caution' | 'neutral' }> = {
-  obligatoire: { label: tr('Obligation', 'Obligation'), tone: 'critical' },
+  obligatoire: { label: tr('Obligatoire', 'Mandatory'), tone: 'critical' },
   conditionnelle: { label: tr('Conditionnelle', 'Conditional'), tone: 'caution' },
-  recommandee: { label: tr('Recommandation', 'Recommendation'), tone: 'neutral' },
+  recommandee: { label: tr('Recommandée', 'Recommended'), tone: 'neutral' },
 }
 
 const REQ_TYPE_LABEL: Record<RequirementType, string> = {
@@ -296,8 +296,8 @@ function ObligationDetail({
             <Tag>{o.article}</Tag>
             <Tag tone={binding.tone}>{binding.label}</Tag>
             <span className="inline-flex items-center gap-1.5 text-2xs text-ink-3">
-              {tr('Effort', 'Effort')}
-              <span className="flex gap-0.5" role="img" aria-label={tr(`Effort ${o.effort} sur 5`, `Effort ${o.effort} out of 5`)}>
+              {tr('Charge', 'Effort')}
+              <span className="flex gap-0.5" role="img" aria-label={tr(`Charge ${o.effort} sur 5`, `Effort ${o.effort} out of 5`)}>
                 {[1, 2, 3, 4, 5].map((n) => (
                   <span key={n} className={cn('h-1.5 w-3 rounded-full', n <= o.effort ? 'bg-accent' : 'bg-overlay')} />
                 ))}

@@ -1,5 +1,5 @@
 import type { TimelineEvent } from '@/types/domain'
-import { LANG } from '@/i18n'
+import { LANG, typoDeep } from '@/i18n'
 import EN from '@/i18n/en/timeline.json'
 
 /**
@@ -54,7 +54,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     regulation: 'NIS2',
     title: "Échéance de transposition de NIS2",
     detail:
-      "Date limite pour l'adoption des dispositions nationales. La France ne l'a pas respectée : au 22 septembre 2026, le projet de loi résilience n'est toujours pas promulgué.",
+      "Date limite pour l'adoption des dispositions nationales. La France ne l'a pas respectée : au 24 septembre 2026, le projet de loi résilience n'est toujours pas promulgué.",
     kind: 'transposition',
   },
   {
@@ -63,7 +63,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     regulation: 'NIS2',
     title: "Entrée en vigueur du règlement d'exécution (UE) 2024/2690",
     detail:
-      "Exigences techniques chiffrées et critères d'incident important pour les fournisseurs numériques : DNS, registres de noms de domaine, informatique en nuage, centres de données, réseaux de diffusion de contenu, services gérés et de sécurité gérés, places de marché, moteurs de recherche, réseaux sociaux, services de confiance. Pour ces acteurs, l'appréciation au cas par cas cède devant des seuils.",
+      "Exigences techniques détaillées et critères chiffrés d'incident important pour les fournisseurs numériques : DNS, registres de noms de domaine, informatique en nuage, centres de données, réseaux de diffusion de contenu, services gérés et de sécurité gérés, places de marché, moteurs de recherche, réseaux sociaux, services de confiance. Pour ces acteurs, l'appréciation au cas par cas cède devant des seuils.",
     kind: 'acte',
     appliesWhen: [{ key: 'services_ict', op: 'eq', value: 'oui', label: 'Fournisseur de services numériques' }],
   },
@@ -71,7 +71,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     id: 'TL-DORA-ITS-REG',
     date: '2024-11-29',
     regulation: 'DORA',
-    title: "Modèles du registre d'information, règlement d'exécution (UE) 2024/2956",
+    title: "Modèles du registre d'informations, règlement d'exécution (UE) 2024/2956",
     detail: "Quinze modèles de tableaux liés par des identifiants, fixant la structure exacte du registre à remettre annuellement.",
     kind: 'acte',
   },
@@ -151,7 +151,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     id: 'TL-EDPB-AVIS',
     date: '2026-02-11',
     regulation: 'RGPD',
-    title: "Avis conjoint 2/2026 du CEPD et du contrôleur européen",
+    title: "Avis conjoint 2/2026 du Comité européen et du Contrôleur européen de la protection des données",
     detail:
       "Position officielle des autorités européennes de protection des données sur le Digital Omnibus. Marqueur du débat en cours sur la définition de la donnée personnelle et le régime du consentement.",
     kind: 'projet',
@@ -229,7 +229,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     regulation: 'TRANSVERSE',
     title: "Promulgation attendue de la loi résilience",
     detail:
-      "Le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité transpose NIS2 et la directive d'accompagnement de DORA. Après l'examen en séance publique ouvert le 7 octobre, suivront la navette, les décrets d'application et le ReCyF définitif. Date indicative.",
+      "Le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité transpose NIS2, la directive sur la résilience des entités critiques (CER) et la directive d'accompagnement de DORA. Après l'examen en séance publique prévu à partir du 7 octobre, suivront la navette, les décrets d'application et le ReCyF définitif. Date indicative.",
     kind: 'projet',
   },
   {
@@ -279,7 +279,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     title: "Application générale de l'AI Act",
     detail: "Le règlement devient applicable, notamment les obligations de transparence de l'article 50 : information sur l'interaction avec une IA, marquage des contenus générés, signalement des hypertrucages.",
     kind: 'application',
-    appliesWhen: [{ key: 'ia_roles', op: 'has', value: ['fournisseur', 'deployeur', 'importateur'], label: "Fournisseur ou déployeur de systèmes d'IA" }],
+    appliesWhen: [{ key: 'ia_roles', op: 'has', value: ['fournisseur', 'deployeur', 'importateur'], label: "Fournisseur, déployeur ou importateur de systèmes d'IA" }],
   },
   {
     id: 'TL-AI-OMNI-DEC',
@@ -288,7 +288,7 @@ const TIMELINE_FR: TimelineEvent[] = [
     title: 'Nouvelle interdiction et fin du délai de marquage',
     detail: "Interdiction des systèmes générant des contenus pédopornographiques ou intimes non consentis, et fin du délai accordé aux systèmes déjà sur le marché pour marquer les contenus qu'ils génèrent.",
     kind: 'echeance',
-    appliesWhen: [{ key: 'ia_roles', op: 'has', value: ['fournisseur', 'deployeur', 'importateur'], label: "Fournisseur ou déployeur de systèmes d'IA" }],
+    appliesWhen: [{ key: 'ia_roles', op: 'has', value: ['fournisseur', 'deployeur', 'importateur'], label: "Fournisseur, déployeur ou importateur de systèmes d'IA" }],
   },
   {
     id: 'TL-AI-HR3',
@@ -315,7 +315,7 @@ const DUTIES_FR = [
   {
     id: 'DUTY-DORA-REGISTRE',
     regulation: 'DORA' as const,
-    title: "Remise du registre d'information",
+    title: "Remise du registre d'informations",
     cadence: 'Annuelle',
     detail: "Le registre de tous les accords contractuels TIC est remis à l'autorité compétente au moins une fois par an, aux modèles du règlement d'exécution 2024/2956.",
     basis: 'Article 28, paragraphe 3',
@@ -421,7 +421,7 @@ const DUTIES_FR = [
 const EVENTS_EN = EN.events as Record<string, string[]>
 const DUTIES_EN = EN.duties as Record<string, string[]>
 
-export const TIMELINE: TimelineEvent[] =
+export const TIMELINE: TimelineEvent[] = typoDeep(
   LANG === 'en'
     ? TIMELINE_FR.map((e) => {
         const x = EVENTS_EN[e.id]
@@ -433,12 +433,14 @@ export const TIMELINE: TimelineEvent[] =
           appliesWhen: e.appliesWhen?.map((c) => ({ ...c, label: x[2] ?? c.label })),
         }
       })
-    : TIMELINE_FR
+    : TIMELINE_FR,
+)
 
-export const RECURRING_DUTIES =
+export const RECURRING_DUTIES = typoDeep(
   LANG === 'en'
     ? DUTIES_FR.map((d) => {
         const x = DUTIES_EN[d.id]
         return x ? { ...d, title: x[0], cadence: x[1], detail: x[2], basis: x[3] } : d
       })
-    : DUTIES_FR
+    : DUTIES_FR,
+)

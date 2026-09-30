@@ -1,5 +1,5 @@
 import type { Regulation, RegulationId } from '@/types/domain'
-import { LANG, LOCALE, tr } from '@/i18n'
+import { LANG, LOCALE, tr, typoDeep } from '@/i18n'
 import EN_REGULATIONS from '@/i18n/en/regulations.json'
 
 /**
@@ -81,7 +81,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
         date: '2025-11-19',
         status: 'projet',
         url: 'https://www.europarl.europa.eu/legislative-train/theme-a-new-plan-for-europe-s-sustainable-prosperity-and-competitiveness/file-digital-package',
-        note: "Volet « données » toujours en négociation au 22 septembre 2026. Le CEPD et le CEPD-EDPS ont rendu l'avis conjoint 2/2026 le 11 février 2026. À surveiller : définition de la donnée personnelle, régime des cookies, base juridique de l'intérêt légitime.",
+        note: "Volet « données » toujours en négociation au 24 septembre 2026. Le Comité européen et le Contrôleur européen de la protection des données ont rendu l'avis conjoint 2/2026 le 11 février 2026. À surveiller : définition de la donnée personnelle, régime des cookies, base juridique de l'intérêt légitime.",
       },
     ],
     articleCount: 99,
@@ -142,7 +142,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       {
         id: 'NIS2-DIR',
         label: 'Responsabilité des organes de direction',
-        basis: 'Articles 20 et 32, paragraphe 6',
+        basis: 'Articles 20 et 32, paragraphe 5',
         note: "Au-delà de l'amende, l'autorité peut suspendre temporairement une certification ou interdire à une personne physique exerçant des responsabilités dirigeantes d'exercer ces fonctions. Cette sanction ne vise que les entités essentielles.",
       },
     ],
@@ -189,7 +189,7 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
     purpose:
       "Garantir que le secteur financier européen puisse résister, réagir et se rétablir face aux perturbations et menaces liées aux technologies de l'information et de la communication.",
     scopeSummary:
-      "Vingt et un types d'entités financières énumérés à l'article 2 : établissements de crédit, de paiement et de monnaie électronique, entreprises d'investissement, prestataires de services sur crypto-actifs, dépositaires centraux, contreparties centrales, plateformes de négociation, référentiels centraux, gestionnaires de fonds, entreprises d'assurance et de réassurance, intermédiaires, institutions de retraite professionnelle, agences de notation, administrateurs d'indices de référence, prestataires de services de financement participatif, ainsi que les prestataires tiers de services TIC. Un régime allégé s'applique aux microentreprises.",
+      "Vingt types d'entités financières énumérés à l'article 2 : établissements de crédit, de paiement et de monnaie électronique, entreprises d'investissement, prestataires de services sur crypto-actifs, dépositaires centraux, contreparties centrales, plateformes de négociation, référentiels centraux, gestionnaires de fonds, entreprises d'assurance et de réassurance, intermédiaires, institutions de retraite professionnelle, agences de notation, administrateurs d'indices de référence, prestataires de services de financement participatif. L'article 2 vise aussi les prestataires tiers de services TIC. Un régime allégé s'applique aux microentreprises.",
     adopted: '2022-12-14',
     entryIntoForce: '2023-01-16',
     application: '2025-01-17',
@@ -239,12 +239,12 @@ export const REGULATIONS: Record<RegulationId, Regulation> = {
       },
       {
         reference: "Règlement d'exécution (UE) 2024/2956",
-        title: "Modèles harmonisés du registre d'information sur les accords contractuels TIC",
+        title: "Modèles harmonisés du registre d'informations sur les accords contractuels TIC",
         kind: 'its',
         date: '2024-11-29',
         status: 'en_vigueur',
         url: 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R2956',
-        note: "Fixe la structure exacte du registre d'information à remettre annuellement à l'autorité compétente. Quinze modèles de tableaux liés entre eux par des identifiants.",
+        note: "Fixe la structure exacte du registre d'informations à remettre annuellement à l'autorité compétente. Quinze modèles de tableaux liés entre eux par des identifiants.",
       },
       {
         reference: 'Règlement délégué (UE) 2025/301',
@@ -499,6 +499,9 @@ if (LANG === 'en') {
   }
 }
 
+// Typographie d'affichage (apostrophes, espaces insécables) appliquée à tout le texte du référentiel.
+for (const id of Object.keys(REGULATIONS) as RegulationId[]) Object.assign(REGULATIONS[id], typoDeep(REGULATIONS[id]))
+
 export const REGULATION_ORDER: RegulationId[] = ['RGPD', 'NIS2', 'DORA', 'CRA', 'AIACT']
 
 export const REGULATION_LIST = REGULATION_ORDER.map((id) => REGULATIONS[id])
@@ -508,5 +511,5 @@ export function frameworkNote(): string {
   const f = REGULATIONS.NIS2.framework
   if (!f) return ''
   const month = new Date(f.date).toLocaleDateString(LOCALE, { month: 'long', year: 'numeric', timeZone: 'UTC' })
-  return tr(`basé sur ${f.name} v${f.version}, ${month}`, `based on ${f.name} v${f.version}, ${month}`)
+  return tr(`d'après ${f.name} v${f.version}, ${month}`, `based on ${f.name} v${f.version}, ${month}`)
 }

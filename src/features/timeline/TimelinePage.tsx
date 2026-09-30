@@ -18,7 +18,7 @@ import { useEntityEditor } from '@/lib/queries'
 import { cn, formatDate, parseDate } from '@/lib/utils'
 import type { RegulationId, TimelineEvent } from '@/types/domain'
 import { REG_LABEL } from '@/components/ui/tokens'
-import { COLON, LOCALE, tr } from '@/i18n'
+import { COLON, LOCALE, plural, tr } from '@/i18n'
 
 type Lane = RegulationId | 'TRANSVERSE'
 const LANES: Lane[] = [...REGULATION_ORDER, 'TRANSVERSE']
@@ -31,7 +31,7 @@ const KIND_LABEL: Record<TimelineEvent['kind'], { label: string; tone: 'neutral'
   acte: { label: tr("Texte d'application", 'Implementing act'), tone: 'accent' },
   echeance: { label: tr('Échéance', 'Deadline'), tone: 'brass' },
   surveillance: { label: tr('Surveillance', 'Supervision'), tone: 'neutral' },
-  projet: { label: tr('En cours', 'In progress'), tone: 'neutral' },
+  projet: { label: tr('Projet ou débat', 'Proposal or debate'), tone: 'neutral' },
 }
 
 const DAY = 86_400_000
@@ -83,6 +83,7 @@ export default function TimelinePage() {
   }
 
   const selected = TIMELINE.find((e) => e.id === selectedId) ?? null
+  const nearestDays = nearest ? Math.max(0, Math.round((parseDate(nearest.date).getTime() - now.getTime()) / DAY)) : 0
 
   return (
     <>
@@ -136,7 +137,7 @@ export default function TimelinePage() {
           <span className="text-ink-2">{tr(`Prochain jalon pour ${entity?.name ?? 'vous'} :`, `Next milestone for ${entity?.name ?? 'you'}:`)}</span>
           <span className="font-medium text-ink">{nearest.title}</span>
           <span className="ml-auto font-mono text-2xs text-accent">
-            {formatDate(nearest.date)} · {tr(`dans ${Math.max(0, Math.round((parseDate(nearest.date).getTime() - now.getTime()) / DAY))} j`, `in ${Math.max(0, Math.round((parseDate(nearest.date).getTime() - now.getTime()) / DAY))} d`)}
+            {formatDate(nearest.date)} · {tr(`dans ${nearestDays} ${plural(nearestDays, 'jour', 'jours')}`, `in ${nearestDays} ${plural(nearestDays, 'day', 'days')}`)}
           </span>
         </button>
       ) : null}
@@ -194,8 +195,8 @@ export default function TimelinePage() {
           </ul>
           <Callout tone="caution" className="mt-4" title={tr('NIS2 toujours pas transposée', 'NIS2 still not transposed')}>
             {tr(
-              `La directive devait être transposée au 17 octobre 2024. Au ${CORPUS_DATE_LONG}, le projet de loi résilience n'est pas promulgué ; l'examen en séance publique s'ouvre le 7 octobre. Le ReCyF publié en mars 2026 fixe déjà le contenu attendu : le délai de mise en conformité se réduira d'autant.`,
-              `The directive was due to be transposed by 17 October 2024. As of ${CORPUS_DATE_LONG}, the French resilience bill has not been enacted; the plenary debate opens on 7 October. The ReCyF published in March 2026 already sets out what is expected: the time left to comply will shrink accordingly.`,
+              `La directive devait être transposée au 17 octobre 2024. Au ${CORPUS_DATE_LONG}, le projet de loi résilience n'est pas promulgué ; l'examen en séance publique est prévu à partir du 7 octobre. Le ReCyF publié en mars 2026 fixe déjà le contenu attendu : le délai de mise en conformité se réduira d'autant.`,
+              `The directive was due to be transposed by 17 October 2024. As of ${CORPUS_DATE_LONG}, the French resilience bill has not been enacted; the plenary debate is scheduled from 7 October. The ReCyF published in March 2026 already sets out what is expected: the time left to comply will shrink accordingly.`,
             )}
           </Callout>
         </aside>

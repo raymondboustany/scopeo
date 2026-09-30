@@ -121,7 +121,7 @@ function ServerDown() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-paper p-6">
       <EmptyState
-        title={tr('Le serveur local ne répond pas', 'The local server is not responding')}
+        title={tr('Le serveur Scopeo ne répond pas', 'The Scopeo server is not responding')}
         action={
           <Button variant="primary" onClick={() => window.location.reload()}>
             {tr('Réessayer', 'Retry')}
@@ -129,11 +129,13 @@ function ServerDown() {
         }
       >
         {tr(
-          "La plateforme ne joint pas son serveur. Sur un serveur d'équipe, prévenez l'administrateur ; sur ce poste, lancez-le avec ",
-          'The platform cannot reach its server. On a team server, contact the administrator; on this machine, start it with ',
+          "La plateforme ne joint pas son serveur. Sur un serveur d'équipe, prévenez l'administrateur ; sur ce poste, relancez ",
+          'The platform cannot reach its server. On a team server, contact the administrator; on this machine, run ',
         )}
-        <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">npm run dev</code>
-        {tr(' puis rechargez.', ' then reload.')}
+        <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">start.bat</code>
+        {tr(' (ou ', ' (or ')}
+        <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">./start.sh</code>
+        {tr('), puis rechargez.', ') again, then reload.')}
       </EmptyState>
     </div>
   )

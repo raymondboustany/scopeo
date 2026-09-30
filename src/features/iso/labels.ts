@@ -17,4 +17,4 @@ export function namedList(ids: RegulationId[]): string {
 }
 
 /** « 8.15 » → « A.8.15 » ; « C6.1 » → « Clause 6.1 ». */
-export const controlLabel = (id: string) => (id.startsWith('C') ? id.replace('C', 'Clause ') : `A.${id}`)
+export const controlLabel = (id: string) => (id.startsWith('C') ? id.replace('C', tr('Article ', 'Clause ')) : `A.${id}`)

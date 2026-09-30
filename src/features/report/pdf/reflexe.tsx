@@ -19,7 +19,7 @@ const REFLEXES = [
   ),
   tr('Préserver les traces (journaux, postes, sauvegardes) avant toute remise en état.', 'Preserve traces (logs, workstations, backups) before any restoration.'),
   tr(
-    "Mobiliser l'appui technique prévu (équipe interne ou prestataire, de préférence qualifié PRIS) ; à défaut, le CSIRT territorial ou 17cyber.gouv.fr.",
+    "Mobiliser l'appui technique prévu (équipe interne ou prestataire, de préférence un prestataire qualifié PRIS) ; à défaut, le CSIRT territorial ou 17cyber.gouv.fr.",
     'Call on the planned technical support (internal team or provider, preferably PRIS-qualified); failing that, the regional CSIRT or 17cyber.gouv.fr.',
   ),
   tr("Notifier d'abord, compléter ensuite : chaque régime prévoit une notification initiale puis des rapports de suivi.", 'Notify first, complete later: each regime provides for an initial notification then follow-up reports.'),
@@ -39,8 +39,8 @@ export function ReflexeSheet({ d }: { d: ReportData }) {
 
         <Note>
           {tr(
-            "Les obligations de notification s'appliquent dès aujourd'hui, même si la mise en conformité est encore en cours. Au moindre doute sur un incident, déclencher la chaîne d'escalade : le délai le plus court se compte en heures.",
-            'Notification duties apply today, even while compliance work is still under way. At the slightest doubt about an incident, trigger the escalation chain: the shortest deadline is counted in hours.',
+            "Les obligations de notification déjà en vigueur s'appliquent dès aujourd'hui, même si la mise en conformité est encore en cours. Au moindre doute sur un incident, déclencher la chaîne d'escalade : le délai le plus court se compte en heures.",
+            'Notification duties already in force apply today, even while compliance work is still under way. At the slightest doubt about an incident, trigger the escalation chain: the shortest deadline is counted in hours.',
           )}
         </Note>
 
@@ -107,7 +107,7 @@ export function ReflexeSheet({ d }: { d: ReportData }) {
         />
         {d.notification.some((n) => n.regulation === 'DORA') ? (
           <Text style={[S.small, S.muted, { fontSize: 7.2, marginBottom: 4 }]}>
-            {clean(tr('* DORA : 4 h après la classification comme incident majeur, et au plus tard 24 h après la détection.', '* DORA: 4 h after classification as a major incident, and no later than 24 h after detection.'))}
+            {clean(tr('* DORA : 4 h après la classification comme incident majeur, et au plus tard 24 h après la prise de connaissance.', '* DORA: 4 h after classification as a major incident, and no later than 24 h after becoming aware.'))}
           </Text>
         ) : null}
         {d.applicable.includes('NIS2') && !d.doraPrevails ? (

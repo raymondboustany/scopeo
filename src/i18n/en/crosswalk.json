@@ -1,7 +1,7 @@
 {
  "GOV-01": {
   "title": "Accountability of the management body",
-  "summary": "The three main texts raise compliance to management-body level, but with very uneven legal consequences. The GDPR requires compliance to be demonstrated without targeting managers personally; NIS2 makes managers accountable for breaches of Article 21 and allows them to be banned from office; DORA gives them ultimate responsibility for the ICT risk management framework.",
+  "summary": "The main texts raise compliance to management-body level, but with very uneven legal consequences. The GDPR requires compliance to be demonstrated without targeting managers personally; NIS2 makes managers accountable for breaches of Article 21 and allows them to be banned from office; DORA gives them ultimate responsibility for the ICT risk management framework.",
   "unifiedAction": "Set up a single governance body (a security and compliance committee) that formally approves policies, monitors indicators and records its decisions. A single, properly drafted resolution counts as approval under each of these texts.",
   "mappings": {
    "RGPD": [
@@ -10,7 +10,7 @@
    ],
    "NIS2": [
     "Have the management body approve the measures, oversee their implementation and train its members.",
-    "Managers can be held liable for breaches of Article 21 and temporarily banned from management functions (Art. 32(6))."
+    "Managers can be held liable for breaches of Article 21 and temporarily banned from management functions (Art. 32(5)(b))."
    ],
    "DORA": [
     "The management body defines, approves, oversees and is accountable for the ICT risk management framework.",
@@ -145,7 +145,7 @@
  },
  "RSK-02": {
   "title": "Prior impact assessment",
-  "summary": "Only the GDPR requires a formal prior impact assessment, with consultation of the authority in case of high residual risk. No other text has an equivalent: NIS2 and DORA reason in terms of continuous assessment, not prior authorisation.",
+  "summary": "The GDPR and the AI Act (Article 27) require a formal prior impact assessment; only the GDPR pairs it with consultation of the authority in case of high residual risk. NIS2 and DORA reason in terms of continuous assessment, not prior authorisation.",
   "unifiedAction": "Build the trigger for an impact assessment into the project design milestone, reusing the outputs of the general risk analysis for threats and measures. Only the part on harm to rights and freedoms is GDPR-specific.",
   "mappings": {
    "RGPD": [
@@ -177,7 +177,7 @@
    ],
    "NIS2": [
     "Ten categories of measures listed by name in Article 21(2), applicable as a minimum.",
-    "Implementing Regulation 2024/2690 makes these measures quantified and enforceable for digital providers."
+    "Implementing Regulation 2024/2690 makes these measures detailed and enforceable for digital providers."
    ],
    "DORA": [
     "ICT policies, procedures and tools ensuring resilience, continuity, availability and data security.",
@@ -228,7 +228,7 @@
  },
  "PRO-03": {
   "title": "Identity and access management",
-  "summary": "Three texts converge on access control, but NIS2 is the only one to explicitly name multi-factor authentication, and the ReCyF devotes two whole objectives to it, with a clear distinction between user access and administrative access.",
+  "summary": "Four texts converge on access control, but NIS2 is the only one to explicitly name multi-factor authentication, and the ReCyF devotes two whole objectives to it, with a clear distinction between user access and administrative access.",
   "unifiedAction": "Deploy a single identity management set-up: least privilege, periodic access reviews, multi-factor authentication on remote access and privileged accounts, and strict separation of administration accounts.",
   "mappings": {
    "RGPD": [
@@ -256,7 +256,7 @@
  },
  "PRO-04": {
   "title": "Security by design, development and change",
-  "summary": "The GDPR requires data protection by design and by default; NIS2 targets security in acquisition, development and maintenance; DORA governs ICT change management. Three wordings of the same engineering discipline.",
+  "summary": "The GDPR requires data protection by design and by default; NIS2 targets security in acquisition, development and maintenance; DORA governs ICT change management. Several wordings of the same engineering discipline.",
   "unifiedAction": "Insert a single security and data protection milestone into the project life cycle, covering security requirements, minimisation, default settings, code review and a change procedure with rollback.",
   "mappings": {
    "RGPD": [
@@ -317,7 +317,7 @@
   "mappings": {
    "RGPD": [
     "Any background check is processing, subject to a legal basis, minimisation and information.",
-    "Criminal offence data falls under Article 10 and can only be processed under the control of official authority."
+    "Criminal offence data falls under Article 10: it can only be processed under the control of official authority, or where Union or Member State law authorises it with appropriate safeguards."
    ],
    "NIS2": [
     "Human resources security and cyber hygiene practices.",
@@ -648,7 +648,7 @@
   "unifiedAction": "Build a single body of clauses organised in three blocks (data protection under GDPR Article 28, resilience and service under DORA Article 30, supply chain security under NIS2 Article 21(2)(d)) and tailor it to the type of provider.",
   "mappings": {
    "RGPD": [
-    "Eight mandatory terms: subject matter, duration, nature, purpose, data types, categories of data subjects, the controller's obligations and rights, plus documented instructions, confidentiality, security, assistance, fate of data, audit and sub-processing.",
+    "Contract content (Article 28(3)): subject matter, duration, nature and purpose of processing, type of data, categories of data subjects, the controller's obligations and rights, with eight mandatory terms: documented instructions, confidentiality, security, sub-processing, assistance, fate of data, audit.",
     null
    ],
    "NIS2": [
@@ -676,7 +676,7 @@
  },
  "TIE-02": {
   "title": "Third-party register and mapping",
-  "summary": "The GDPR requires recipients to be listed in the record of processing; DORA imposes a register of information whose structure is set by fifteen linked templates; NIS2 asks for a map of the ecosystem. All three cover the same providers, with different attributes.",
+  "summary": "The GDPR requires recipients to be listed in the record of processing; DORA imposes a register of information whose structure is set by fifteen linked templates; the ReCyF asks, for NIS2, for a map of the ecosystem. All three cover the same providers, with different attributes.",
   "unifiedAction": "Keep a single supplier repository whose attributes are the superset of the three requirements, and generate by extraction the DORA register of information, the recipients section of the GDPR record and the NIS2 map.",
   "mappings": {
    "RGPD": [
@@ -720,8 +720,8 @@
     "The CRA looks at the chain upstream of the product (integrated components), where NIS2 and DORA look at service providers."
    ],
    "AIACT": [
-    "A deployer, importer or distributor becomes the provider if it rebrands, substantially modifies or changes the purpose of a high-risk system.",
-    "Together with CRA Article 21, it is the only automatic role requalification rule across the five texts."
+    "A deployer, importer or distributor becomes the provider if it puts its name or trademark on a high-risk system, substantially modifies it or changes its intended purpose.",
+    "CRA Article 21 and GDPR Article 28(10) provide for a comparable requalification."
    ]
   },
   "evidence": [
@@ -902,7 +902,7 @@
  },
  "DOC-03": {
   "title": "System mapping and asset inventory",
-  "summary": "This is the silent prerequisite for almost everything: NIS2 makes it its first security objective, DORA its Article 8, and the GDPR assumes it to keep an accurate record. Without an inventory, none of the other requirements can be demonstrated.",
+  "summary": "This is the silent prerequisite for almost everything: the ReCyF makes it its first security objective, DORA its Article 8, and the GDPR assumes it to keep an accurate record. Without an inventory, none of the other requirements can be demonstrated.",
   "unifiedAction": "Build and maintain a single map (activities and services, systems supporting them, hardware and software assets, internal and external dependencies, an owner per entry) and review it annually.",
   "mappings": {
    "NIS2": [
@@ -970,7 +970,7 @@
  },
  "IA-02": {
   "title": "Prohibited AI practices",
-  "summary": "Article 5 prohibits uses, not technologies. Several of these bans overlap with processing the GDPR already strictly governed, such as biometric categorisation based on sensitive data. The AI Act turns them into outright bans, with the highest penalty cap in EU digital law.",
+  "summary": "Article 5 prohibits uses, not technologies. Several of these bans overlap with processing the GDPR already strictly governed, such as biometric categorisation based on sensitive data. The AI Act turns them into outright bans, with the highest penalty cap of the five texts covered.",
   "unifiedAction": "Submit every AI project to a prior review against Article 5 and the Commission guidelines, recorded in the inventory. Treat any doubt as a blocker until a reasoned decision is made.",
   "mappings": {
    "AIACT": [
@@ -984,7 +984,7 @@
   },
   "strictest": [
    "Absolute ban on the Article 5 practices, punishable by up to €35M or 7% of worldwide turnover.",
-   "Where the GDPR frames sensitive data processing through lawfulness conditions, the AI Act bans the use itself. Processing that complies with the GDPR can therefore still be prohibited under the AI Act, never the reverse."
+   "Where the GDPR frames sensitive data processing through lawfulness conditions, the AI Act bans the use itself. Processing that complies with the GDPR can therefore still be prohibited under the AI Act, and compliance with the AI Act does not exempt from the GDPR."
   ],
   "evidence": [
    "Review of use cases against Article 5",

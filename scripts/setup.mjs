@@ -11,13 +11,15 @@ function run(cmd, args) {
 
 if (!existsSync(venvPython)) {
   const candidates = process.platform === 'win32' ? ['py', 'python'] : ['python3', 'python']
-  const python = candidates.find((c) => spawnSync(c, ['--version'], { stdio: 'ignore' }).status === 0)
+  const isRecent = (c) =>
+    spawnSync(c, ['-c', 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)'], { stdio: 'ignore' }).status === 0
+  const python = candidates.find(isRecent)
   if (!python) {
-    console.error('Python 3.11 ou plus récent est requis : https://www.python.org/downloads/')
+    console.error('Python 3.11 or later is required / Python 3.11 ou plus récent est requis : https://www.python.org/downloads/')
     process.exit(1)
   }
-  console.log(`Création de l'environnement Python dans ${path.relative(process.cwd(), venvDir)}…`)
+  console.log(`Creating the Python environment / Création de l'environnement Python : ${path.relative(process.cwd(), venvDir)}…`)
   run(python, ['-m', 'venv', '.venv'])
 }
 run(venvPython, ['-m', 'pip', 'install', '--disable-pip-version-check', '-q', '-r', 'requirements-dev.txt'])
-console.log('Serveur local prêt.')
+console.log('Local server ready / Serveur local prêt.')

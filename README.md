@@ -132,7 +132,7 @@ Notification duties apply before compliance work is done. The platform names the
 
 ### Accounts, administration and integration
 
-Works on one computer or shared by a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP) or **single sign-on** (OpenID Connect: Microsoft Entra ID, Google, Okta, Keycloak), settings, backups and a log. Each user can turn on **two-factor authentication** (TOTP). An administrator never sees other people's entities, and the role is checked by the server on every request. For integrations: REST API described in OpenAPI, personal API tokens, JSON export.
+It works on a single computer or can be shared by a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP) or **single sign-on** (OpenID Connect: Microsoft Entra ID, Google Workspace, Okta, Keycloak), settings, backups and a log. Each user can turn on **two-factor authentication** (TOTP). An administrator never sees other people's entities, and the role is checked by the server on every request. For integrations: REST API described in OpenAPI, personal API tokens, JSON export.
 
 <details>
 <summary>Dark theme preview</summary>
@@ -181,7 +181,7 @@ Prerequisite: [Python 3.11+](https://www.python.org/downloads/).
 
 ### From source
 
-Prerequisites: Node.js 20+, Python 3.11+, Git.
+Prerequisites: Node.js 20.19+ (22 recommended), Python 3.11+, Git.
 
 ```bash
 git clone https://github.com/raymondboustany/scopeo.git
@@ -218,7 +218,7 @@ Full reference: [documentation](docs/documentation.md#6-configuration-reference)
 
 ### First steps
 
-At first launch, the home page only offers to create the **administrator profile**. Afterwards, **Guest mode** opens the *Finexa* demo, a 50-person payment institution already scoped and assessed, erased on sign-out. To scope your own organisation or a client, create an entity from your profile; a short guided tour opens at first sign-in.
+At first launch, the home page only offers to create the **administrator profile**. Afterwards, **Guest mode** opens the *Finexa* demo (a 50-person payment institution, already scoped and assessed); it is erased on sign-out. To scope your own organisation or a client, create an entity from your profile; a short guided tour opens at first sign-in.
 
 ---
 
@@ -343,7 +343,7 @@ Scopeo y répond en quelques heures d'entretien, avec un raisonnement vérifiabl
 >
 > **Aide au cadrage, pas un avis juridique.** Les conclusions reposent sur les éléments déclarés et sur l'état du droit à la date du corpus.
 >
-> **Appliquée à la France.** NIS2 est lu à travers le Référentiel Cyber France (ReCyF) de l'ANSSI, et les autorités désignées sont les autorités françaises (CNIL, ANSSI, ACPR, AMF).
+> **Appliquée à la France.** NIS2 est lue à travers le Référentiel Cyber France (ReCyF) de l'ANSSI, et les autorités désignées sont les autorités françaises (CNIL, ANSSI, ACPR, AMF).
 
 ---
 
@@ -397,7 +397,7 @@ Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes su
 <td width="50%" valign="top">
 
 ### Exigences mutualisées
-40 exigences unifiées relient les obligations des cinq textes. La vue **Mutualisation** montre les combinaisons de textes qu'une action unique permet de couvrir ; les divergences et hiérarchies sont nommées, avec la règle qui commande.
+40 exigences unifiées relient les obligations des cinq textes. La vue **Mutualisation** montre les combinaisons de textes qu'une action unique permet de couvrir ; les divergences et les règles de primauté sont nommées, avec la règle qui prévaut.
 
 </td>
 <td width="50%"><img src="docs/assets/fr/mutualisation.jpg" alt="Vue Mutualisation des croisements"></td>
@@ -435,7 +435,7 @@ Les obligations de notification s'appliquent avant même la mise en conformité.
 
 ### Comptes, administration et intégration
 
-Fonctionne sur un poste ou partagée par une équipe. Le premier profil créé est administrateur : dans un espace séparé, il gère les comptes (mots de passe provisoires, suspension, rôle administrateur), la connexion par l'**annuaire LDAP** de l'organisation (Active Directory, OpenLDAP) ou par **connexion unique** (OpenID Connect : Microsoft Entra ID, Google, Okta, Keycloak), les réglages, les sauvegardes et un journal. Chaque utilisateur peut activer la **double authentification** (TOTP). Un administrateur ne voit jamais les entités des autres, et le rôle est vérifié par le serveur à chaque requête. Pour les intégrations : API REST décrite en OpenAPI, jetons d'API personnels, export JSON.
+Elle fonctionne sur un seul poste ou se partage au sein d'une équipe. Le premier profil créé est administrateur : dans un espace séparé, il gère les comptes (mots de passe provisoires, suspension, rôle administrateur), la connexion par l'**annuaire LDAP** de l'organisation (Active Directory, OpenLDAP) ou par **connexion unique** (OpenID Connect : Microsoft Entra ID, Google Workspace, Okta, Keycloak), les réglages, les sauvegardes et un journal. Chaque utilisateur peut activer la **double authentification** (TOTP). Un administrateur ne voit jamais les entités des autres, et le rôle est vérifié par le serveur à chaque requête. Pour les intégrations : API REST décrite en OpenAPI, jetons d'API personnels, export JSON.
 
 <details>
 <summary>Aperçu du thème sombre</summary>
@@ -455,7 +455,7 @@ Trois livrables PDF, générés à partir de l'entité de démonstration fictive
 |---|---|---|
 | [Note au comité de direction](docs/samples/note-comex-finexa.pdf) | Direction, COMEX | 2 pages |
 | [Rapport de cadrage complet](docs/samples/rapport-cadrage-finexa.pdf) | Conseil, RSSI, DPO, équipe projet | 6 à 12 pages |
-| [Fiche réflexe incident](docs/samples/fiche-reflexe-finexa.pdf) | Diffusion interne | 1 page |
+| [Fiche réflexe incident](docs/samples/fiche-reflexe-finexa.pdf) | Diffusion interne | 1 à 2 pages |
 
 ---
 
@@ -484,7 +484,7 @@ Prérequis : [Python 3.11+](https://www.python.org/downloads/).
 
 ### Depuis les sources
 
-Prérequis : Node.js 20+, Python 3.11+, Git.
+Prérequis : Node.js 20.19+ (22 recommandé), Python 3.11+, Git.
 
 ```bash
 git clone https://github.com/raymondboustany/scopeo.git
@@ -521,7 +521,7 @@ Référence complète : [documentation](docs/documentation.md#6-référence-de-c
 
 ### Premiers pas
 
-Au premier lancement, l'accueil ne propose que la création du **profil administrateur**. Ensuite, **Mode invité** ouvre la démonstration *Finexa*, un établissement de paiement de 50 salariés déjà qualifié et évalué, effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez une entité depuis votre profil ; un court parcours guidé s'ouvre à la première connexion.
+Au premier lancement, l'accueil ne propose que la création du **profil administrateur**. Ensuite, **Mode invité** ouvre la démonstration *Finexa* (un établissement de paiement de 50 salariés, déjà qualifié et évalué) ; elle est effacée à la déconnexion. Pour cadrer votre organisation ou un client, créez une entité depuis votre profil ; un court parcours guidé s'ouvre à la première connexion.
 
 ---
 
@@ -532,7 +532,7 @@ Au premier lancement, l'accueil ne propose que la création du **profil administ
 | Textes | RGPD, NIS2 (ReCyF), DORA, CRA, AI Act |
 | Obligations | 95 (RGPD 21, NIS2 22, DORA 22, CRA 12, AI Act 18) |
 | Exigences élémentaires | 348, avec preuves attendues, échéances et palier de sanction |
-| Exigences unifiées | 40, dont 7 divergences et 1 hiérarchie |
+| Exigences unifiées | 40, dont 7 divergences et 1 règle de primauté |
 | Détail NIS2 (ReCyF v2.5) | 20 objectifs, 152 mesures |
 | ISO/IEC 27001:2022 | 93 contrôles de l'annexe A (intitulés publics uniquement), reliés par thème |
 | Questions de qualification | 35, chacune rattachée à l'article qu'elle établit |

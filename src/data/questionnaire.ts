@@ -1,5 +1,5 @@
 import type { Answers, Question } from '@/types/domain'
-import { LANG } from '@/i18n'
+import { LANG, typoDeep } from '@/i18n'
 import EN_QUESTIONNAIRE from '@/i18n/en/questionnaire.json'
 
 /**
@@ -625,7 +625,7 @@ export const QUESTIONS: Question[] = [
     sectionLabel: 'Intelligence artificielle',
     basis: 'AI Act, articles 51 à 55',
     question: "L'entité met-elle sur le marché de l'Union un modèle d'IA à usage général ?",
-    help: "Un modèle entraîné sur un grand volume de données, capable d'exécuter un large éventail de tâches et intégrable dans des systèmes en aval. Le seuil de risque systémique est présumé atteint au-delà de 10^25 opérations en virgule flottante de calcul d'entraînement. Intégrer le modèle d'un tiers dans son produit ne fait pas de l'entité un fournisseur de modèle.",
+    help: "Un modèle entraîné sur un grand volume de données, capable d'exécuter un large éventail de tâches et intégrable dans des systèmes en aval. Le seuil de risque systémique est présumé atteint au-delà de 10²⁵ opérations en virgule flottante de calcul d'entraînement. Intégrer le modèle d'un tiers dans son produit ne fait pas de l'entité un fournisseur de modèle.",
     type: 'radio',
     options: [
       { value: 'non', label: 'Non' },
@@ -728,3 +728,9 @@ function applyEnglish() {
 }
 
 if (LANG === 'en') applyEnglish()
+
+/** Typographie d'affichage : apostrophes droites, espaces insécables en français. */
+for (const list of [SECTORS, SIZE_INDEPENDENT_TYPES, DIGITAL_PROVIDER_TYPES, FINANCIAL_TYPES, QUESTION_SECTIONS] as object[][]) {
+  list.forEach((item) => Object.assign(item, typoDeep(item)))
+}
+QUESTIONS.forEach((q) => Object.assign(q, typoDeep(q)))

@@ -197,7 +197,7 @@ function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | n
     return {
       raw: 0.55,
       why: tr(
-        "Exigence du CRA applicable au 11 décembre 2027 : l'échéance est fixée, et la mise en conformité d'un produit demande plusieurs cycles de développement.",
+        "Exigence du CRA applicable à compter du 11 décembre 2027 : l'échéance est fixée, et la mise en conformité d'un produit demande plusieurs cycles de développement.",
         'CRA requirement applicable from 11 December 2027: the date is fixed, and bringing a product into compliance takes several development cycles.',
       ),
     }
@@ -217,8 +217,8 @@ function urgencyOf(theme: CrosswalkTheme, qualification: QualificationResult | n
     return {
       raw: 0.55,
       why: tr(
-        "Exigence de l'AI Act applicable au 2 décembre 2027 pour les systèmes à haut risque de l'annexe III, depuis l'Omnibus IA.",
-        'AI Act requirement applicable from 2 December 2027 for Annex III high-risk systems, following the AI Omnibus.',
+        "Exigence de l'AI Act : applicable depuis le 2 août 2025 pour les modèles à usage général, à compter du 2 décembre 2027 pour les systèmes à haut risque de l'annexe III et du 2 août 2028 pour ceux de l'annexe I (Omnibus IA).",
+        'AI Act requirement: applicable since 2 August 2025 for general-purpose models, from 2 December 2027 for Annex III high-risk systems and from 2 August 2028 for Annex I systems (AI Omnibus).',
       ),
     }
   }
@@ -246,7 +246,7 @@ function expositionOf(
         "Thème de gouvernance sous NIS2 pour une entité essentielle : l'autorité peut interdire temporairement l'exercice de fonctions dirigeantes, ce qui place l'exposition au niveau maximal.",
         'Governance theme under NIS2 for an essential entity: the authority may temporarily ban individuals from management functions, which puts exposure at its maximum.',
       )
-    : tr(`Sanction la plus élevée portée par ${regs.map(regName).join(', ')} sur ce thème.`, `Highest penalty carried by ${regs.map(regName).join(', ')} on this theme.`)
+    : tr(`Sanction la plus élevée parmi les textes qui portent ce thème : ${regs.map(regName).join(', ')}.`, `Highest penalty among the texts carrying this theme: ${regs.map(regName).join(', ')}.`)
 
   return { raw, why }
 }
@@ -312,10 +312,9 @@ export function prioritise({
                   `Une action unique satisfait ${regs.length} textes applicables : ${regs.map(regName).join(', ')}.`,
                   `A single action satisfies ${regs.length} applicable texts: ${regs.map(regName).join(', ')}.`,
                 )
-              : tr(
-                  `Le thème ne concerne qu'un seul texte applicable : ${regs[0] ? regName(regs[0]) : 'aucun'}.`,
-                  `The theme concerns a single applicable text: ${regs[0] ? regName(regs[0]) : 'none'}.`,
-                ),
+              : regs.length === 1
+                ? tr(`Le thème ne concerne qu'un seul texte applicable : ${regName(regs[0])}.`, `The theme concerns a single applicable text: ${regName(regs[0])}.`)
+                : tr('Aucun texte applicable ne porte ce thème.', 'No applicable text carries this theme.'),
         },
         {
           key: 'echeance',

@@ -236,7 +236,10 @@ class BodyLimit:
 app = FastAPI(
     title="Scopeo",
     version="1.1.0",
-    description="API de la plateforme Scopeo. Authentification par cookie de session (interface) ou par jeton personnel `Authorization: Bearer scp_…` (intégrations).",
+    description=(
+        "Scopeo platform API. Authentication by session cookie (interface) or personal token `Authorization: Bearer scp_…` (integrations). "
+        "API de la plateforme Scopeo. Authentification par cookie de session (interface) ou par jeton personnel `Authorization: Bearer scp_…` (intégrations)."
+    ),
     lifespan=lifespan,
     # Description OpenAPI publiée pour les intégrations ; pas d'interface Swagger,
     # qui chargerait des ressources externes interdites par la politique de sécurité.

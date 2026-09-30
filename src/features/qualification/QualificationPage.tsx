@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowRight, Check, ChevronLeft, ChevronRight, GitCompareArrows, Info, Minus, Plus, RotateCcw } from 'lucide-react'
+import { ArrowRight, Check, ChevronLeft, ChevronRight, GitCompareArrows, Minus, Plus, RotateCcw } from 'lucide-react'
 import {
   Callout,
   Card,
@@ -11,7 +11,7 @@ import {
   Tag,
 } from '@/components/ui/primitives'
 import { STATUS_STYLE } from '@/components/ui/tokens'
-import { Button, OptionList, Select, Tooltip } from '@/components/ui/controls'
+import { Button, OptionList, Select } from '@/components/ui/controls'
 import { useScoping } from '@/lib/hooks'
 import { NoteButton } from '@/components/notes/NoteButton'
 import { NextStep } from '@/components/layout/NextStep'
@@ -416,16 +416,6 @@ function QuestionField({
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-2">
             <span className="ref text-ink-4">{question.basis}</span>
-            {question.help ? (
-              <Tooltip content={question.help}>
-                <button
-                  className="inline-flex items-center text-ink-4 hover:text-accent"
-                  aria-label={tr('Précisions sur cette question', 'More about this question')}
-                >
-                  <Info size={12} />
-                </button>
-              </Tooltip>
-            ) : null}
           </div>
         </div>
       </div>
@@ -496,7 +486,7 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
           </span>
           {id === 'NIS2' ? <FrameworkNote className="mt-1 block" /> : null}
           <span className="mt-1.5 block text-sm font-medium text-ink">
-            {verdict.qualification ?? tr('Non applicable', 'Not applicable')}
+            {verdict.qualification ?? (verdict.status === 'probable' ? tr('À confirmer', 'To be confirmed') : tr('Non applicable', 'Not applicable'))}
           </span>
         </span>
         <ChevronRight
@@ -534,7 +524,7 @@ function VerdictPanel({ id, verdict }: { id: RegulationId; verdict: import('@/ty
               <div className="label-caps">{tr('Exposition', 'Exposure')}</div>
               <div className="mt-1 flex items-baseline gap-2">
                 <span className="font-mono text-base font-medium tabular text-ink">
-                  {verdict.exposure.maxEur !== null ? formatEur(verdict.exposure.maxEur) : tr('Régime national', 'National regime')}
+                  {verdict.exposure.maxEur !== null ? formatEur(verdict.exposure.maxEur) : tr('Non chiffré', 'Not quantified')}
                 </span>
               </div>
               <p className="mt-1 text-2xs leading-relaxed text-ink-3">{verdict.exposure.formula}</p>

@@ -1,5 +1,5 @@
 import type { RecyfObjective } from '@/types/domain'
-import { LANG, tr } from '@/i18n'
+import { LANG, tr, typoDeep } from '@/i18n'
 import EN from '@/i18n/en/recyf.json'
 
 /**
@@ -481,7 +481,7 @@ function localize(o: RecyfObjective): RecyfObjective {
   }
 }
 
-export const RECYF_OBJECTIVES: RecyfObjective[] = LANG === 'en' ? RECYF_FR.map(localize) : RECYF_FR
+export const RECYF_OBJECTIVES: RecyfObjective[] = typoDeep(LANG === 'en' ? RECYF_FR.map(localize) : RECYF_FR)
 
 export const RECYF_BY_N = new Map(RECYF_OBJECTIVES.map((o) => [o.n, o]))
 

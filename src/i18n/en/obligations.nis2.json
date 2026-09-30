@@ -13,7 +13,7 @@
     },
     "deadline": "Two weeks to report any change",
     "evidence": ["ANSSI registration acknowledgement", "Entity identity sheet kept up to date"],
-    "guidance": ["My NIS2 Space portal (ANSSI)"]
+    "guidance": ["MonEspaceNIS2 portal (ANSSI)"]
   },
   "NIS2-A20": {
     "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
@@ -31,7 +31,7 @@
   },
   "NIS2-A21-1": {
     "article": "Article 21(1)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Appropriate, proportionate, risk-based measures",
     "statement": "Take appropriate and proportionate technical, operational and organisational measures to manage the risks posed to network and information systems, and to limit the impact of incidents on service recipients. Proportionality is assessed against exposure, size and the likely severity of incidents.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -45,7 +45,7 @@
   },
   "NIS2-A21-2a": {
     "article": "Article 21(2)(a)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Risk analysis and information system security policies",
     "statement": "Have a risk analysis policy and an information system security policy that are formalised, approved and applied. The ReCyF makes them the foundation: without this documentary framework, no other objective can be demonstrated.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -59,7 +59,7 @@
   },
   "NIS2-A21-2b": {
     "article": "Article 21(2)(b)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Incident handling",
     "statement": "Have a documented process for detecting, qualifying, handling and learning from security incidents, with identified roles and an alert chain operating around the clock.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -73,7 +73,7 @@
   },
   "NIS2-A21-2c": {
     "article": "Article 21(2)(c)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Business continuity, backups and crisis management",
     "statement": "Have a continuity and recovery set-up based on tested backups, defined recovery objectives, and a formalised and exercised crisis organisation.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -88,7 +88,7 @@
   },
   "NIS2-A21-2d": {
     "article": "Article 21(2)(d)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Supply chain security",
     "statement": "Address the security of relationships with direct suppliers and service providers, taking into account each one's specific vulnerabilities, the overall quality of their cybersecurity practices and their secure development procedures. Article 21(3) also requires taking into account coordinated risk assessments carried out at EU level.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -103,7 +103,7 @@
   },
   "NIS2-A21-2e": {
     "article": "Article 21(2)(e)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Security in acquisition, development and maintenance",
     "statement": "Build security into the acquisition, development and maintenance of systems, including vulnerability handling and disclosure. This covers in-house development as well as off-the-shelf purchases.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -118,7 +118,7 @@
   },
   "NIS2-A21-2f": {
     "article": "Article 21(2)(f)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Assessing the effectiveness of measures",
     "statement": "Have policies and procedures to assess the actual effectiveness of risk-management measures, not just their existence. This is where documentary compliance stops being enough.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -132,7 +132,7 @@
   },
   "NIS2-A21-2g": {
     "article": "Article 21(2)(g)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Cyber hygiene and cybersecurity training",
     "statement": "Put in place basic cyber hygiene practices and a cybersecurity training programme covering all users, including service providers acting on the entity's behalf.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -146,7 +146,7 @@
   },
   "NIS2-A21-2h": {
     "article": "Article 21(2)(h)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Cryptography and encryption",
     "statement": "Define and apply policies and procedures on the use of cryptography and, where appropriate, encryption, which requires a key and algorithm management policy, not just turning on encryption in transit.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -160,7 +160,7 @@
   },
   "NIS2-A21-2i": {
     "article": "Article 21(2)(i)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Human resources security, access control and asset management",
     "statement": "Manage security across the people life cycle (joining, moving, leaving), apply a need-to-know access control policy, and keep an asset inventory.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -175,7 +175,7 @@
   },
   "NIS2-A21-2j": {
     "article": "Article 21(2)(j)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Multi-factor authentication and secure communications",
     "statement": "Use, where appropriate, multi-factor or continuous authentication, secured voice, video and text communications, and secured emergency communication systems within the entity.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -189,7 +189,7 @@
   },
   "NIS2-A21-4": {
     "article": "Article 21(4)",
-    "chapter": "Chapter IV: Cybersecurity risk-management measures",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Corrective measures when non-compliance is found",
     "statement": "When the entity itself finds that it does not comply with the measures of paragraph 2, take all necessary, appropriate and proportionate corrective measures without undue delay.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -202,7 +202,7 @@
   },
   "NIS2-A23-1": {
     "article": "Article 23(1)",
-    "chapter": "Chapter IV: Reporting obligations",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Notification of significant incidents to the CSIRT",
     "statement": "Notify without undue delay any incident with a significant impact on service provision. An incident is significant if it has caused or may cause severe operational disruption or financial loss, or has affected others by causing considerable damage.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -217,7 +217,7 @@
   },
   "NIS2-A23-4": {
     "article": "Article 23(4)",
-    "chapter": "Chapter IV: Reporting obligations",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Reporting sequence: 24 hours, 72 hours, one month",
     "statement": "Follow the three-step sequence: an early warning within 24 hours, an incident notification within 72 hours, then a final report no later than one month after that notification. Trust service providers have a single 24-hour deadline.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -233,7 +233,7 @@
   },
   "NIS2-A23-2": {
     "article": "Article 23(1) and (2)",
-    "chapter": "Chapter IV: Reporting obligations",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Informing service recipients",
     "statement": "Inform service recipients without undue delay of significant incidents likely to affect the provision of those services, and tell them what measures they can take in response to a significant cyber threat.",
     "appliesTo": ["Essential entity", "Important entity"],
@@ -245,7 +245,7 @@
     "evidence": ["Communication templates", "History of communications sent"]
   },
   "NIS2-A24": {
-    "chapter": "Chapter IV",
+    "chapter": "Chapter IV: Cybersecurity risk-management measures and reporting obligations",
     "title": "Use of European certification schemes",
     "statement": "Member States may require the use of products, services or processes certified under a European cybersecurity certification scheme. Absent such a requirement, certification remains a way to demonstrate compliance.",
     "appliesTo": ["Essential entity", "Important entity"],

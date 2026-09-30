@@ -2,7 +2,7 @@ import type { Obligation } from '@/types/domain'
 
 const URL = 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022R2554'
 
-const ESA = (label: string, url: string) => ({ label, issuer: 'AES', url })
+const ESA = (label: string, url: string) => ({ label, issuer: 'Commission (sur projet des AES)', url })
 
 /**
  * Obligations DORA : Règlement (UE) 2022/2554.
@@ -22,7 +22,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     statement:
       "L'organe de direction définit, approuve, supervise et répond de la mise en œuvre du cadre de gestion du risque lié aux TIC. Il porte la responsabilité finale et doit entretenir activement ses connaissances par une formation régulière, proportionnée au risque géré.",
     quote:
-      "L'organe de direction de l'entité financière définit, approuve, supervise et est responsable de la mise en œuvre de tous les dispositifs liés au cadre de gestion du risque lié aux TIC visé à l'article 6, paragraphe 1.",
+      "L'organe de direction de l'entité financière définit, approuve, supervise et est responsable de la mise en œuvre de toutes les dispositions relatives au cadre de gestion du risque lié aux TIC visé à l'article 6, paragraphe 1.",
     appliesTo: ['Entité financière'],
     requirements: [
       { id: 'DORA-A5-R1', text: "Faire approuver par l'organe de direction la stratégie de résilience opérationnelle numérique et la politique TIC.", type: 'gouvernance' },
@@ -75,7 +75,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     statement:
       "Utiliser et maintenir des systèmes, protocoles et outils TIC fiables, dotés d'une capacité suffisante pour absorber les pics d'activité, technologiquement résilients, et suffisamment à jour. C'est l'article qui interdit, en pratique, de faire reposer une fonction critique sur une technologie obsolète ou sous-dimensionnée.",
     quote:
-      "Les entités financières utilisent et maintiennent des systèmes, protocoles et outils de TIC à jour qui sont [...] adaptés à l'ampleur des opérations soutenant l'exercice de leurs activités [...] fiables [...] dotés d'une capacité suffisante [...] technologiquement résilients.",
+      "les entités financières utilisent et tiennent à jour des systèmes, protocoles et outils de TIC qui sont: a) adaptés à l'ampleur des opérations qui sous-tendent l'exercice de leurs activités [...]; b) fiables; c) équipés d'une capacité suffisante [...]; d) suffisamment résilients sur le plan technologique [...]",
     appliesTo: ['Entité financière'],
     requirements: [
       { id: 'DORA-A7-R1', text: "Employer des systèmes adaptés à l'ampleur des opérations soutenant les activités de l'entité.", type: 'technique' },
@@ -295,7 +295,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 17',
     order: 17,
-    chapter: 'Chapitre III : Gestion et notification des incidents',
+    chapter: 'Chapitre III : Gestion, classification et notification des incidents liés aux TIC',
     title: 'Processus de gestion des incidents liés aux TIC',
     statement:
       "Définir et mettre en œuvre un processus de gestion des incidents liés aux TIC permettant de les détecter, gérer et notifier, avec des indicateurs d'alerte précoce, des rôles et responsabilités identifiés, et des procédures de remontée à la direction et, le cas échéant, aux organes de résolution.",
@@ -320,7 +320,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 18',
     order: 18,
-    chapter: 'Chapitre III : Gestion et notification des incidents',
+    chapter: 'Chapitre III : Gestion, classification et notification des incidents liés aux TIC',
     title: 'Classification des incidents et des cybermenaces',
     statement:
       "Classer les incidents selon sept critères : nombre de clients ou contreparties touchés, réputation, durée et interruption de service, propagation géographique, pertes de données, criticité des services affectés, incidence économique. Les seuils d'importance sont fixés par le règlement délégué 2024/1772.",
@@ -344,14 +344,14 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 19',
     order: 19,
-    chapter: 'Chapitre III : Gestion et notification des incidents',
+    chapter: 'Chapitre III : Gestion, classification et notification des incidents liés aux TIC',
     title: 'Déclaration des incidents majeurs à l\'autorité compétente',
     statement:
       "Déclarer les incidents majeurs liés aux TIC à l'autorité compétente selon trois échéances fixées par le règlement délégué 2025/301 : notification initiale, rapport intermédiaire, rapport final. La déclaration emprunte des modèles harmonisés obligatoires.",
     appliesTo: ['Entité financière'],
     requirements: [
       { id: 'DORA-A19-R1', text: "Transmettre la notification initiale dans les délais fixés par les normes techniques.", type: 'notification' },
-      { id: 'DORA-A19-R2', text: "Transmettre un rapport intermédiaire dès que la situation est rétablie, puis à chaque évolution significative.", type: 'notification' },
+      { id: 'DORA-A19-R2', text: "Transmettre un rapport intermédiaire dans les 72 heures suivant la notification initiale, puis à chaque évolution significative de la situation.", type: 'notification' },
       { id: 'DORA-A19-R3', text: "Transmettre un rapport final incluant l'analyse des causes profondes.", type: 'notification' },
       { id: 'DORA-A19-R4', text: "Utiliser les modèles harmonisés de l'article 20 ; signaler toute impossibilité technique par un autre moyen.", type: 'notification' },
       { id: 'DORA-A19-R5', text: "Informer les clients concernés lorsque l'incident a une incidence sur leurs intérêts financiers.", type: 'notification' },
@@ -447,36 +447,36 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 28',
     order: 28,
-    chapter: 'Chapitre V : Gestion du risque lié aux tiers',
+    chapter: 'Chapitre V : Gestion des risques liés aux prestataires tiers de services TIC',
     title: 'Principes généraux de gestion du risque lié aux prestataires TIC',
     statement:
-      "Gérer le risque lié aux prestataires tiers de services TIC comme une composante intégrale du risque TIC, sous la responsabilité pleine et entière de l'entité financière. Adopter une stratégie de risque tiers, tenir un registre d'information de tous les accords contractuels, et le remettre annuellement à l'autorité compétente.",
+      "Gérer le risque lié aux prestataires tiers de services TIC comme une composante intégrale du risque TIC, sous la responsabilité pleine et entière de l'entité financière. Adopter une stratégie de risque tiers, tenir un registre d'informations de tous les accords contractuels, et le remettre annuellement à l'autorité compétente.",
     quote:
       "Aux fins de leur cadre de gestion du risque lié aux TIC, les entités financières tiennent et mettent à jour, au niveau de l'entité et aux niveaux sous-consolidé et consolidé, un registre d'informations en rapport avec tous les accords contractuels portant sur l'utilisation de services TIC fournis par des prestataires tiers de services TIC.",
     appliesTo: ['Entité financière'],
     requirements: [
       { id: 'DORA-A28-R1', text: "Adopter une stratégie relative au risque lié aux prestataires tiers de services TIC, approuvée par l'organe de direction.", type: 'gouvernance' },
-      { id: 'DORA-A28-R2', text: "Tenir un registre d'information conforme aux modèles du règlement d'exécution 2024/2956.", type: 'documentaire' },
+      { id: 'DORA-A28-R2', text: "Tenir un registre d'informations conforme aux modèles du règlement d'exécution 2024/2956.", type: 'documentaire' },
       { id: 'DORA-A28-R3', text: "Distinguer dans le registre les accords soutenant des fonctions critiques ou importantes.", type: 'documentaire' },
       { id: 'DORA-A28-R4', text: "Remettre le registre à l'autorité compétente au moins une fois par an et à chaque demande.", type: 'notification' },
       { id: 'DORA-A28-R5', text: "Informer en temps utile l'autorité de tout projet d'accord portant sur des fonctions critiques ou importantes.", type: 'notification' },
       { id: 'DORA-A28-R6', text: "Déclarer annuellement à l'autorité le nombre de nouveaux accords conclus.", type: 'notification' },
     ],
     deadline: { kind: 'recurrente', label: "Registre remis annuellement à l'autorité compétente" },
-    evidence: ["Registre d'information aux quinze modèles", "Stratégie risque tiers approuvée", "Accusés de remise à l'autorité"],
+    evidence: ["Registre d'informations aux quinze modèles", "Stratégie risque tiers approuvée", "Accusés de remise à l'autorité"],
     sanctionTier: 'DORA-NAT',
     effort: 5,
     binding: 'obligatoire',
     themes: ['TIE-02', 'TIE-01', 'DOC-02'],
     sourceUrl: URL,
-    guidance: [ESA("Règlement d'exécution (UE) 2024/2956 : modèles du registre d'information", 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R2956')],
+    guidance: [ESA("Règlement d'exécution (UE) 2024/2956 : modèles du registre d'informations", 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R2956')],
   },
   {
     id: 'DORA-A29',
     regulation: 'DORA',
     article: 'Article 29',
     order: 29,
-    chapter: 'Chapitre V : Gestion du risque lié aux tiers',
+    chapter: 'Chapitre V : Gestion des risques liés aux prestataires tiers de services TIC',
     title: 'Évaluation préalable du risque de concentration',
     statement:
       "Avant de conclure un accord portant sur une fonction critique ou importante, évaluer le risque de concentration : recours à un prestataire difficilement substituable, recours à plusieurs prestataires liés entre eux, et conséquences d'une défaillance. Examiner les chaînes de sous-traitance et leurs incidences sur la capacité de surveillance.",
@@ -501,7 +501,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 30',
     order: 30,
-    chapter: 'Chapitre V : Gestion du risque lié aux tiers',
+    chapter: 'Chapitre V : Gestion des risques liés aux prestataires tiers de services TIC',
     title: 'Dispositions contractuelles obligatoires',
     statement:
       "Faire figurer dans chaque contrat TIC les mentions minimales de l'article 30, paragraphe 2, et, pour les fonctions critiques ou importantes, les mentions renforcées du paragraphe 3 : niveaux de service quantitatifs, coopération aux tests de pénétration, droits d'accès et d'audit sans restriction, stratégies de sortie et périodes de transition.",
@@ -528,7 +528,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Articles 31 à 44',
     order: 31,
-    chapter: 'Chapitre V : Cadre de supervision',
+    chapter: 'Chapitre V, section II : Cadre de supervision des prestataires tiers critiques de services TIC',
     title: 'Supervision des prestataires tiers critiques',
     statement:
       "Les prestataires tiers désignés comme critiques par les autorités européennes de surveillance relèvent d'une supervision directe européenne, conduite par un superviseur principal assisté d'équipes d'examen conjointes. Pour l'entité financière cliente, la conséquence est double : elle doit tenir compte des recommandations adressées au prestataire, et cesser d'utiliser un service lorsque le superviseur le requiert.",
@@ -552,7 +552,7 @@ export const DORA_OBLIGATIONS: Obligation[] = [
     regulation: 'DORA',
     article: 'Article 45',
     order: 45,
-    chapter: "Chapitre VI : Partage d'informations",
+    chapter: "Chapitre VI : Dispositifs de partage d'informations",
     title: "Partage d'informations sur les cybermenaces",
     statement:
       "Les entités financières peuvent échanger entre elles des informations et des renseignements sur les cybermenaces, au sein de communautés de confiance, dans des conditions qui protègent le caractère commercialement sensible des informations et respectent le droit des données personnelles.",

@@ -9,7 +9,7 @@ const PROVIDER_HR = [{ key: 'derived.aiProviderHighRisk', op: 'truthy' as const,
 const DEPLOYER_HR = [{ key: 'derived.aiDeployerHighRisk', op: 'truthy' as const, label: "Déployeur d'un système d'IA à haut risque" }]
 
 /** Échéance des systèmes à haut risque de l'annexe III, depuis l'Omnibus IA. */
-const HIGH_RISK_DEADLINE = { kind: 'ponctuelle' as const, label: 'Exigible au 2 décembre 2027 (annexe III), au 2 août 2028 (annexe I)', date: '2027-12-02' }
+const HIGH_RISK_DEADLINE = { kind: 'ponctuelle' as const, label: 'Exigible à compter du 2 décembre 2027 (annexe III) et du 2 août 2028 (annexe I)', date: '2027-12-02' }
 
 /**
  * Obligations AI Act : règlement (UE) 2024/1689 sur l'intelligence artificielle.
@@ -82,7 +82,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     article: 'Article 6 et article 49, paragraphe 2',
     shortRef: 'Art. 6 et 49 § 2',
     order: 6,
-    chapter: 'Chapitre III : Systèmes d\'IA à haut risque',
+    chapter: 'Chapitre III, section 1 : Classification des systèmes d\'IA comme systèmes à haut risque',
     title: "Inventaire et classification des systèmes d'IA",
     statement:
       "Recenser les systèmes d'IA fournis ou utilisés et déterminer, pour chacun, s'il relève d'un domaine à haut risque. Un fournisseur qui estime qu'un système de l'annexe III n'est pas à haut risque au titre de l'article 6, paragraphe 3, doit documenter son appréciation avant la mise sur le marché et enregistrer le système dans la base de données de l'Union.",
@@ -108,7 +108,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 9',
     order: 9,
-    chapter: "Chapitre III : Exigences applicables aux systèmes à haut risque",
+    chapter: "Chapitre III, section 2 : Exigences applicables aux systèmes d'IA à haut risque",
     title: 'Système de gestion des risques',
     statement:
       "Établir, mettre en œuvre, documenter et tenir à jour un système de gestion des risques couvrant tout le cycle de vie du système à haut risque : identification des risques pour la santé, la sécurité et les droits fondamentaux, estimation, mesures de maîtrise et tests.",
@@ -135,7 +135,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 10',
     order: 10,
-    chapter: "Chapitre III : Exigences applicables aux systèmes à haut risque",
+    chapter: "Chapitre III, section 2 : Exigences applicables aux systèmes d'IA à haut risque",
     title: 'Données et gouvernance des données',
     statement:
       "Développer le système sur des jeux de données d'entraînement, de validation et de test soumis à des pratiques de gouvernance adaptées : choix de conception, origine et collecte des données, préparation, examen des biais possibles et mesures pour les détecter et les corriger.",
@@ -159,9 +159,9 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
   {
     id: 'AIACT-A11-12',
     regulation: 'AIACT',
-    article: 'Articles 11 et 12',
+    article: 'Articles 11, 12 et 19',
     order: 11,
-    chapter: "Chapitre III : Exigences applicables aux systèmes à haut risque",
+    chapter: "Chapitre III, section 2 : Exigences applicables aux systèmes d'IA à haut risque",
     title: 'Documentation technique et journalisation',
     statement:
       "Établir la documentation technique de l'annexe IV avant la mise sur le marché et la tenir à jour. Concevoir le système pour qu'il enregistre automatiquement les événements pertinents tout au long de sa durée de vie, afin d'en assurer la traçabilité.",
@@ -188,7 +188,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Articles 13 et 14',
     order: 13,
-    chapter: "Chapitre III : Exigences applicables aux systèmes à haut risque",
+    chapter: "Chapitre III, section 2 : Exigences applicables aux systèmes d'IA à haut risque",
     title: "Transparence envers les déployeurs et contrôle humain",
     statement:
       "Concevoir le système pour que les déployeurs puissent en interpréter les sorties, et l'accompagner d'une notice d'utilisation claire. Permettre un contrôle effectif par des personnes physiques, au moyen d'interfaces appropriées, y compris la capacité d'interrompre le système.",
@@ -214,7 +214,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 15',
     order: 15,
-    chapter: "Chapitre III : Exigences applicables aux systèmes à haut risque",
+    chapter: "Chapitre III, section 2 : Exigences applicables aux systèmes d'IA à haut risque",
     title: 'Exactitude, robustesse et cybersécurité',
     statement:
       "Atteindre un niveau approprié d'exactitude, de robustesse et de cybersécurité tout au long du cycle de vie, y compris face aux attaques propres à l'IA : empoisonnement des données ou du modèle, exemples contradictoires, atteintes à la confidentialité.",
@@ -240,7 +240,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Articles 16 et 17',
     order: 16,
-    chapter: "Chapitre III : Obligations des fournisseurs",
+    chapter: "Chapitre III, section 3 : Obligations des fournisseurs et des déployeurs",
     title: 'Système de gestion de la qualité',
     statement:
       "Mettre en place un système de gestion de la qualité documenté sous forme de politiques, procédures et instructions : stratégie de conformité, conception et contrôle, tests, gestion des données, gestion des risques, surveillance après commercialisation, signalement des incidents et responsabilités.",
@@ -265,9 +265,9 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     id: 'AIACT-A43-49',
     regulation: 'AIACT',
     article: 'Articles 43, 47, 48 et 49',
-    shortRef: 'Art. 43 à 49',
+    shortRef: 'Art. 43, 47 à 49',
     order: 43,
-    chapter: 'Chapitre III : Évaluation de la conformité et enregistrement',
+    chapter: 'Chapitre III, section 5 : Normes, évaluation de la conformité et enregistrement',
     title: 'Évaluation de la conformité, marquage CE et enregistrement',
     statement:
       "Soumettre le système à la procédure d'évaluation de la conformité applicable, établir la déclaration UE de conformité, apposer le marquage CE et enregistrer le système dans la base de données de l'Union avant sa mise sur le marché.",
@@ -293,7 +293,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 72',
     order: 72,
-    chapter: 'Chapitre IX : Surveillance après commercialisation',
+    chapter: 'Chapitre IX, section 1 : Surveillance après commercialisation',
     title: 'Surveillance après commercialisation',
     statement:
       "Établir et documenter un système de surveillance après commercialisation qui collecte et analyse les données de performance du système tout au long de son cycle de vie, sur la base d'un plan intégré à la documentation technique.",
@@ -318,7 +318,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 73',
     order: 73,
-    chapter: 'Chapitre IX : Partage des informations sur les incidents graves',
+    chapter: 'Chapitre IX, section 2 : Partage d\'informations sur les incidents graves',
     title: 'Signalement des incidents graves',
     statement:
       "Signaler tout incident grave à l'autorité de surveillance du marché de l'État membre où il s'est produit, immédiatement après avoir établi un lien de causalité avec le système et au plus tard 15 jours après en avoir eu connaissance. Le délai est ramené à 2 jours pour une infraction de grande ampleur ou une perturbation d'infrastructure critique, et à 10 jours en cas de décès.",
@@ -344,7 +344,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 26',
     order: 26,
-    chapter: 'Chapitre III : Obligations des déployeurs',
+    chapter: 'Chapitre III, section 3 : Obligations des fournisseurs et des déployeurs',
     title: 'Obligations des déployeurs de systèmes à haut risque',
     statement:
       "Utiliser le système conformément à sa notice, confier le contrôle humain à des personnes compétentes et disposant de l'autorité nécessaire, veiller à la pertinence des données d'entrée, surveiller le fonctionnement, conserver les journaux au moins six mois et informer les travailleurs concernés avant la mise en service sur le lieu de travail.",
@@ -372,13 +372,13 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 27',
     order: 27,
-    chapter: 'Chapitre III : Obligations des déployeurs',
+    chapter: 'Chapitre III, section 3 : Obligations des fournisseurs et des déployeurs',
     title: "Analyse d'impact sur les droits fondamentaux",
     statement:
       "Avant la première utilisation d'un système à haut risque, les déployeurs publics, les entités privées fournissant des services publics, et les déployeurs de systèmes de notation de crédit ou de tarification d'assurance vie et santé analysent l'impact du système sur les droits fondamentaux et en notifient le résultat à l'autorité de surveillance du marché.",
     quote:
       "les déployeurs qui sont des organismes de droit public ou des entités privées fournissant des services publics et les déployeurs de systèmes d'IA à haut risque visés à l'annexe III, points 5), b) et c), effectuent une analyse de l'impact sur les droits fondamentaux que l'utilisation de ce système peut produire.",
-    appliesTo: ['Déployeur public ou de services essentiels'],
+    appliesTo: ["Déployeur public, de services publics, de notation de crédit ou d'assurance"],
     requirements: [
       { id: 'AIACT-A27-R1', text: "Décrire les processus, la période et la fréquence d'utilisation, et les catégories de personnes concernées.", type: 'documentaire' },
       { id: 'AIACT-A27-R2', text: "Identifier les risques de préjudice et les mesures de contrôle humain et de recours.", type: 'organisationnel' },
@@ -400,7 +400,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     regulation: 'AIACT',
     article: 'Article 25',
     order: 25,
-    chapter: 'Chapitre III : Obligations le long de la chaîne de valeur',
+    chapter: 'Chapitre III, section 3 : Obligations des fournisseurs et des déployeurs',
     title: "Responsabilités tout au long de la chaîne de valeur de l'IA",
     statement:
       "Un déployeur, un importateur ou un distributeur devient fournisseur d'un système à haut risque, avec toutes les obligations correspondantes, s'il le commercialise sous son nom, le modifie substantiellement ou en change la destination. Les contrats avec les fournisseurs de composants doivent préciser les informations et l'assistance nécessaires.",
@@ -408,7 +408,7 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
       "Tout distributeur, importateur, déployeur ou autre tiers est considéré comme un fournisseur d'un système d'IA à haut risque aux fins du présent règlement et est soumis aux obligations incombant au fournisseur au titre de l'article 16",
     appliesTo: ['Déployeur', 'Importateur', 'Distributeur'],
     requirements: [
-      { id: 'AIACT-A25-R1', text: "Vérifier, pour chaque système acquis, qu'aucune modification ou rebranding ne fait basculer l'entité dans le rôle de fournisseur.", type: 'gouvernance' },
+      { id: 'AIACT-A25-R1', text: "Vérifier, pour chaque système acquis, qu'aucune modification ni commercialisation sous son propre nom ne fasse basculer l'entité dans le rôle de fournisseur.", type: 'gouvernance' },
       { id: 'AIACT-A25-R2', text: "Prévoir contractuellement les informations, capacités techniques et assistance nécessaires à la conformité.", type: 'contractuel' },
     ],
     deadline: HIGH_RISK_DEADLINE,
@@ -461,12 +461,12 @@ export const AIACT_OBLIGATIONS: Obligation[] = [
     appliesTo: ["Fournisseur de modèle d'IA à usage général"],
     requirements: [
       { id: 'AIACT-A53-R1', text: "Tenir la documentation technique de l'annexe XI à disposition du Bureau de l'IA.", type: 'documentaire' },
-      { id: 'AIACT-A53-R2', text: "Fournir aux intégrateurs la documentation de l'annexe XII sur les capacités et limites du modèle.", type: 'documentaire' },
+      { id: 'AIACT-A53-R2', text: "Fournir aux fournisseurs en aval la documentation de l'annexe XII sur les capacités et limites du modèle.", type: 'documentaire' },
       { id: 'AIACT-A53-R3', text: "Mettre en place une politique de respect du droit d'auteur, y compris des réservations de droits.", type: 'gouvernance' },
       { id: 'AIACT-A53-R4', text: "Publier le résumé des données d'entraînement selon le modèle du Bureau de l'IA.", type: 'documentaire' },
     ],
     deadline: { kind: 'ponctuelle', label: 'Applicable depuis le 2 août 2025', date: '2025-08-02' },
-    evidence: ['Documentation technique du modèle', "Documentation à l'intention des intégrateurs", "Politique de droit d'auteur", "Résumé public des données d'entraînement"],
+    evidence: ['Documentation technique du modèle', "Documentation à l'intention des fournisseurs en aval", "Politique de droit d'auteur", "Résumé public des données d'entraînement"],
     sanctionTier: 'AIACT-T2',
     effort: 4,
     binding: 'conditionnelle',

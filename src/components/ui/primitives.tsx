@@ -258,7 +258,9 @@ export function Citation({
         </figcaption>
       ) : null}
       <blockquote className="citation" style={regulation ? { borderColor: REG_STYLE[regulation].hex } : undefined}>
-        « {children} »
+        {tr('« ', '“')}
+        {children}
+        {tr(' »', '”')}
       </blockquote>
     </figure>
   )
@@ -428,7 +430,7 @@ export function Bar({
   const bg = tone === 'positive' ? 'bg-positive' : tone === 'caution' ? 'bg-caution' : tone === 'critical' ? 'bg-critical' : 'bg-accent'
   const pct = Math.max(0, Math.min(1, ratio)) * 100
   return (
-    <div className={cn('h-1.5 w-full overflow-hidden rounded-full bg-overlay', className)} role="img" aria-label={label ?? `${Math.round(pct)} %`}>
+    <div className={cn('h-1.5 w-full overflow-hidden rounded-full bg-overlay', className)} role="img" aria-label={label ?? tr(`${Math.round(pct)} %`, `${Math.round(pct)}%`)}>
       <motion.div
         className={cn('h-full rounded-full', !color && bg)}
         style={color ? { background: color } : undefined}
@@ -483,7 +485,7 @@ export function ScoreRing({
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
         <span className="tabular text-3xl font-semibold tracking-tight text-ink">
           <AnimatedNumber value={Math.round(pct * 100)} />
-          <span className="text-lg text-ink-3"> %</span>
+          <span className="text-lg text-ink-3">{tr(' %', '%')}</span>
         </span>
         {label ? <span className="mt-0.5 text-2xs text-ink-3">{label}</span> : null}
         {sublabel ? <span className="text-2xs text-ink-4">{sublabel}</span> : null}

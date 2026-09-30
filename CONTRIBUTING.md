@@ -18,7 +18,7 @@ Use the **"Regulatory update"** issue template and **always attach an official s
 
 ## Development setup
 
-Prerequisites: Node.js 20+, Python 3.11+.
+Prerequisites: Node.js 20.19+ (22 recommended), Python 3.11+.
 
 ```bash
 npm install
@@ -87,7 +87,7 @@ Utilisez le modèle d'issue **« Évolution réglementaire »** en joignant **to
 
 ## Environnement de développement
 
-Prérequis : Node.js 20+, Python 3.11+.
+Prérequis : Node.js 20.19+ (22 recommandé), Python 3.11+.
 
 ```bash
 npm install

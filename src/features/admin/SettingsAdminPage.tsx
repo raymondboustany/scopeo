@@ -96,7 +96,7 @@ function SettingsForm({ initial }: { initial: GlobalSettings }) {
             )}
             control={
               <div className="w-72">
-                <Input value={form.public_url} onChange={(e) => set('public_url', e.target.value)} placeholder="https://scopeo.exemple.fr" aria-label={tr('Adresse publique', 'Public address')} />
+                <Input value={form.public_url} onChange={(e) => set('public_url', e.target.value)} placeholder={tr('https://scopeo.exemple.fr', 'https://scopeo.example.com')} aria-label={tr('Adresse publique', 'Public address')} />
               </div>
             }
           />

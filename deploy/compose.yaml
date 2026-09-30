@@ -24,7 +24,7 @@ services:
       # Facultatif : clé de chiffrement des secrets (sinon secret.key dans le volume).
       SCOPEO_SECRET_KEY: ${SCOPEO_SECRET_KEY:-}
       # Trust the client address forwarded by Caddy (sign-in throttling, log).
-      # Faire confiance à l'adresse client transmise par Caddy (freinage des connexions).
+      # Faire confiance à l'adresse client transmise par Caddy (freinage des connexions, journal).
       FORWARDED_ALLOW_IPS: "*"
     volumes:
       - scopeo-data:/data

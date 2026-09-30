@@ -208,7 +208,7 @@ export function buildReportData(s: Scoping): ReportData {
   if (g.evaluated < g.themes)
     decisions.push(
       tr(
-        `Faire compléter l'évaluation : ${g.themes - g.evaluated} exigence${g.themes - g.evaluated > 1 ? 's' : ''} restent à évaluer.`,
+        `Faire compléter l'évaluation : ${g.themes - g.evaluated} ${g.themes - g.evaluated > 1 ? 'exigences restent' : 'exigence reste'} à évaluer.`,
         `Have the assessment completed: ${g.themes - g.evaluated} requirement${g.themes - g.evaluated > 1 ? 's' : ''} still to assess.`,
       ),
     )

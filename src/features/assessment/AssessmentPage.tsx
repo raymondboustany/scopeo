@@ -310,8 +310,8 @@ export default function AssessmentPage() {
                                     </div>
                                     {suggestion && suggestion.controls.length > 0 ? (
                                       <div className="rounded-lg border border-rule-2 px-3 py-2.5 text-2xs text-ink-3">
-                                        <span className="font-medium text-ink-2">{tr('Contrôles ISO 27001 correspondants', 'Matching ISO 27001 controls')} : </span>
-                                        {suggestion.controls.map((c) => (c.id.startsWith('C') ? c.id.replace('C', tr('clause ', 'clause ')) : `A.${c.id}`)).join(' · ')}
+                                        <span className="font-medium text-ink-2">{tr('Contrôles ISO 27001 correspondants', 'Matching ISO 27001 controls')}{COLON}</span>
+                                        {suggestion.controls.map((c) => (c.id.startsWith('C') ? c.id.replace('C', tr('article ', 'clause ')) : `A.${c.id}`)).join(' · ')}
                                         {suggestion.capReason ? <span className="mt-1 block">{suggestion.capReason}</span> : null}
                                         {entry?.isoDismissed && !readOnly ? (
                                           <button
@@ -414,7 +414,7 @@ function AnssiView({ readOnly, onSet }: { readOnly: boolean; onSet: (id: string,
       <Callout tone="accent" title={tr('Exigences NIS2 détaillées par le ReCyF', 'NIS2 requirements detailed by the ReCyF')}>
         {tr(
           `Les mesures du Référentiel Cyber France traduisent concrètement les exigences de l'article 21 de NIS2. Seules celles attendues d'une entité ${nis2Category ?? 'essentielle ou importante'} sont listées : ${measures.total} mesures, dont ${measures.en_place} en place.`,
-          `The French cyber framework (ReCyF) measures turn the requirements of NIS2 Article 21 into concrete actions. Only those expected of ${nis2Category === 'importante' ? 'an important' : nis2Category === 'essentielle' ? 'an essential' : 'an essential or important'} entity are listed: ${measures.total} measures, ${measures.en_place} of them in place.`,
+          `The Référentiel Cyber France (ReCyF) measures turn the requirements of NIS2 Article 21 into concrete actions. Only those expected of ${nis2Category === 'importante' ? 'an important' : nis2Category === 'essentielle' ? 'an essential' : 'an essential or important'} entity are listed: ${measures.total} measures, ${measures.en_place} of them in place.`,
         )}{' '}
         <FrameworkNote />
       </Callout>

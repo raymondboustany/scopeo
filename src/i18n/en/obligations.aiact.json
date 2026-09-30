@@ -30,7 +30,7 @@
   "AIACT-A6": {
     "article": "Article 6 and Article 49(2)",
     "shortRef": "Art. 6 and 49(2)",
-    "chapter": "Chapter III: High-risk AI systems",
+    "chapter": "Chapter III, Section 1: Classification of AI systems as high-risk AI systems",
     "title": "Inventory and classification of AI systems",
     "statement": "Inventory the AI systems provided or used and determine, for each, whether it falls within a high-risk area. A provider who considers that an Annex III system is not high-risk under Article 6(3) must document its assessment before placing it on the market and register the system in the EU database.",
     "appliesTo": ["Provider", "Deployer"],
@@ -44,7 +44,7 @@
     "evidence": ["Inventory of AI systems", "Reasoned classification sheets", "Proof of registration of derogating systems"]
   },
   "AIACT-A9": {
-    "chapter": "Chapter III: Requirements for high-risk systems",
+    "chapter": "Chapter III, Section 2: Requirements for high-risk AI systems",
     "title": "Risk management system",
     "statement": "Establish, implement, document and maintain a risk management system covering the whole life cycle of the high-risk system: identification of risks to health, safety and fundamental rights, estimation, control measures and testing.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -59,7 +59,7 @@
     "conditions": ["Provider of a high-risk AI system"]
   },
   "AIACT-A10": {
-    "chapter": "Chapter III: Requirements for high-risk systems",
+    "chapter": "Chapter III, Section 2: Requirements for high-risk AI systems",
     "title": "Data and data governance",
     "statement": "Develop the system on training, validation and test data sets subject to appropriate governance practices: design choices, origin and collection of data, preparation, examination of possible biases and measures to detect and correct them.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -73,8 +73,8 @@
     "conditions": ["Provider of a high-risk AI system"]
   },
   "AIACT-A11-12": {
-    "article": "Articles 11 and 12",
-    "chapter": "Chapter III: Requirements for high-risk systems",
+    "article": "Articles 11, 12 and 19",
+    "chapter": "Chapter III, Section 2: Requirements for high-risk AI systems",
     "title": "Technical documentation and logging",
     "statement": "Draw up the Annex IV technical documentation before placing on the market and keep it up to date. Design the system to automatically record relevant events throughout its lifetime, to ensure traceability.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -90,7 +90,7 @@
   },
   "AIACT-A13-14": {
     "article": "Articles 13 and 14",
-    "chapter": "Chapter III: Requirements for high-risk systems",
+    "chapter": "Chapter III, Section 2: Requirements for high-risk AI systems",
     "title": "Transparency to deployers and human oversight",
     "statement": "Design the system so that deployers can interpret its output, and supply clear instructions for use. Allow effective oversight by natural persons, through appropriate interfaces, including the ability to stop the system.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -104,7 +104,7 @@
     "conditions": ["Provider of a high-risk AI system"]
   },
   "AIACT-A15": {
-    "chapter": "Chapter III: Requirements for high-risk systems",
+    "chapter": "Chapter III, Section 2: Requirements for high-risk AI systems",
     "title": "Accuracy, robustness and cybersecurity",
     "statement": "Achieve an appropriate level of accuracy, robustness and cybersecurity throughout the life cycle, including against AI-specific attacks: data or model poisoning, adversarial examples, confidentiality attacks.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -119,7 +119,7 @@
   },
   "AIACT-A16-17": {
     "article": "Articles 16 and 17",
-    "chapter": "Chapter III: Obligations of providers",
+    "chapter": "Chapter III, Section 3: Obligations of providers and deployers",
     "title": "Quality management system",
     "statement": "Put in place a quality management system documented as policies, procedures and instructions: compliance strategy, design and control, testing, data management, risk management, post-market monitoring, incident reporting and responsibilities.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -134,8 +134,8 @@
   },
   "AIACT-A43-49": {
     "article": "Articles 43, 47, 48 and 49",
-    "shortRef": "Art. 43 to 49",
-    "chapter": "Chapter III: Conformity assessment and registration",
+    "shortRef": "Art. 43, 47 to 49",
+    "chapter": "Chapter III, Section 5: Standards, conformity assessment and registration",
     "title": "Conformity assessment, CE marking and registration",
     "statement": "Submit the system to the applicable conformity assessment procedure, draw up the EU declaration of conformity, affix the CE marking and register the system in the EU database before placing it on the market.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -149,7 +149,7 @@
     "conditions": ["Provider of a high-risk AI system"]
   },
   "AIACT-A72": {
-    "chapter": "Chapter IX: Post-market monitoring",
+    "chapter": "Chapter IX, Section 1: Post-market monitoring",
     "title": "Post-market monitoring",
     "statement": "Establish and document a post-market monitoring system that collects and analyses the system's performance data throughout its life cycle, based on a plan included in the technical documentation.",
     "appliesTo": ["Provider of a high-risk system"],
@@ -162,7 +162,7 @@
     "conditions": ["Provider of a high-risk AI system"]
   },
   "AIACT-A73": {
-    "chapter": "Chapter IX: Sharing of information on serious incidents",
+    "chapter": "Chapter IX, Section 2: Sharing of information on serious incidents",
     "title": "Reporting serious incidents",
     "statement": "Report any serious incident to the market surveillance authority of the Member State where it occurred, immediately after establishing a causal link with the system and no later than 15 days after becoming aware of it. The deadline drops to 2 days for a widespread infringement or disruption of critical infrastructure, and to 10 days in case of death.",
     "appliesTo": ["Provider of a high-risk system", "Deployer of a high-risk system"],
@@ -176,7 +176,7 @@
     "conditions": ["Provider or deployer of a high-risk AI system"]
   },
   "AIACT-A26": {
-    "chapter": "Chapter III: Obligations of deployers",
+    "chapter": "Chapter III, Section 3: Obligations of providers and deployers",
     "title": "Obligations of deployers of high-risk systems",
     "statement": "Use the system in line with its instructions, entrust human oversight to competent people with the necessary authority, ensure input data is relevant, monitor operation, keep logs for at least six months and inform the workers concerned before putting the system into service at the workplace.",
     "appliesTo": ["Deployer of a high-risk system"],
@@ -192,10 +192,10 @@
     "conditions": ["Deployer of a high-risk AI system"]
   },
   "AIACT-A27": {
-    "chapter": "Chapter III: Obligations of deployers",
+    "chapter": "Chapter III, Section 3: Obligations of providers and deployers",
     "title": "Fundamental rights impact assessment",
     "statement": "Before first use of a high-risk system, public deployers, private entities providing public services, and deployers of credit-scoring or life and health insurance pricing systems assess the system's impact on fundamental rights and notify the result to the market surveillance authority.",
-    "appliesTo": ["Public or essential-services deployer"],
+    "appliesTo": ["Public-sector, public-service, credit-scoring or insurance deployer"],
     "requirements": {
       "AIACT-A27-R1": "Describe the processes, period and frequency of use, and the categories of people affected.",
       "AIACT-A27-R2": "Identify risks of harm and the human oversight and redress measures.",
@@ -208,12 +208,12 @@
     "guidance": ["CNIL recommendations on AI systems"]
   },
   "AIACT-A25": {
-    "chapter": "Chapter III: Obligations along the value chain",
+    "chapter": "Chapter III, Section 3: Obligations of providers and deployers",
     "title": "Responsibilities along the AI value chain",
     "statement": "A deployer, importer or distributor becomes the provider of a high-risk system, with all the corresponding obligations, if it markets it under its own name, substantially modifies it or changes its intended purpose. Contracts with component suppliers must specify the information and assistance needed.",
     "appliesTo": ["Deployer", "Importer", "Distributor"],
     "requirements": {
-      "AIACT-A25-R1": "Check, for each system acquired, that no modification or rebranding turns the entity into a provider.",
+      "AIACT-A25-R1": "Check, for each system acquired, that no modification or marketing under its own name turns the entity into a provider.",
       "AIACT-A25-R2": "Provide contractually for the information, technical capabilities and assistance needed for compliance."
     },
     "deadline": "Applicable from 2 December 2027 (Annex III), 2 August 2028 (Annex I)",
@@ -242,12 +242,12 @@
     "appliesTo": ["Provider of a general-purpose AI model"],
     "requirements": {
       "AIACT-A53-R1": "Keep the Annex XI technical documentation available to the AI Office.",
-      "AIACT-A53-R2": "Give integrators the Annex XII documentation on the model's capabilities and limitations.",
+      "AIACT-A53-R2": "Give downstream providers the Annex XII documentation on the model's capabilities and limitations.",
       "AIACT-A53-R3": "Put in place a copyright compliance policy, including rights reservations.",
       "AIACT-A53-R4": "Publish the training data summary using the AI Office template."
     },
     "deadline": "Applicable since 2 August 2025",
-    "evidence": ["Model technical documentation", "Documentation for integrators", "Copyright policy", "Public training data summary"],
+    "evidence": ["Model technical documentation", "Documentation for downstream providers", "Copyright policy", "Public training data summary"],
     "conditions": ["Provider of a general-purpose AI model"],
     "guidance": ["Code of practice for general-purpose models"]
   },

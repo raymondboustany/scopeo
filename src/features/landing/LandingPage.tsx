@@ -14,7 +14,7 @@ import { needsMfa, type AuthStatus, type UserProfile, type UserRole } from '@/ty
 import { REGULATION_ORDER } from '@/data/regulations'
 import { TIMELINE } from '@/data/timeline'
 import { LanguageToggle, ThemeToggle } from '@/components/layout/ThemeToggle'
-import { tr } from '@/i18n'
+import { plural, tr } from '@/i18n'
 import { USER_ROLES as ROLES } from '@/components/auth/roles'
 
 
@@ -34,8 +34,8 @@ function useWatchItems() {
         days === 0
           ? tr("aujourd'hui", 'today')
           : days > 0
-            ? tr(`dans ${days} j`, `in ${days} d`)
-            : tr(`depuis ${-days} j`, `${-days} d ago`),
+            ? tr(`dans ${days} ${plural(days, 'jour', 'jours')}`, `in ${days} ${plural(days, 'day', 'days')}`)
+            : tr(`il y a ${-days} ${plural(-days, 'jour', 'jours')}`, `${-days} ${plural(-days, 'day', 'days')} ago`),
       past: days < 0,
     }))
 }
@@ -236,7 +236,7 @@ function AuthPanel() {
   if (error || !status) {
     return (
       <div className="py-6 text-center">
-        <p className="text-sm font-medium text-ink">{tr('Le serveur local ne répond pas', 'The local server is not responding')}</p>
+        <p className="text-sm font-medium text-ink">{tr('Le serveur Scopeo ne répond pas', 'The Scopeo server is not responding')}</p>
         <p className="mt-1 text-xs text-ink-3">{tr('Vérifiez qu’il est démarré, puis réessayez.', 'Check that it is running, then try again.')}</p>
         <Button className="mt-4" onClick={() => void refetch()}>
           {tr('Réessayer', 'Retry')}
@@ -599,8 +599,8 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
           <ShieldCheck size={15} className="mt-px shrink-0 text-accent" />
           <span>
             {tr(
-              "Ce premier profil devient automatiquement administrateur. Il gère les comptes, l'annuaire LDAP et les réglages dans un espace séparé, et utilise Scopeo comme les autres profils, sans accès à leurs entités.",
-              'This first profile automatically becomes the administrator. It manages accounts, the LDAP directory and settings in a separate space, and uses Scopeo like any other profile, without access to their entities.',
+              "Ce premier profil devient automatiquement administrateur. Il gère les comptes, l'annuaire LDAP, la connexion unique et les réglages dans un espace séparé, et utilise Scopeo comme les autres profils, sans accès à leurs entités.",
+              'This first profile automatically becomes the administrator. It manages accounts, the LDAP directory, single sign-on and settings in a separate space, and uses Scopeo like any other profile, without access to their entities.',
             )}
           </span>
         </div>
@@ -609,8 +609,8 @@ function CreateProfile({ onBack, onCreated, firstRun = false }: { onBack?: () =>
         <Field label={tr('Nom du profil', 'Profile name')}>
           <Input autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Claire Martin" autoComplete="username" required />
         </Field>
-        <Field label={tr('Fonction', 'Role')}>
-          <Select value={role} onValueChange={(v) => setRole(v as UserRole)} options={ROLES} ariaLabel={tr('Fonction', 'Role')} />
+        <Field label={tr('Fonction', 'Job title')}>
+          <Select value={role} onValueChange={(v) => setRole(v as UserRole)} options={ROLES} ariaLabel={tr('Fonction', 'Job title')} />
         </Field>
         <Field label={tr('Organisation', 'Organisation')} hint={tr('facultatif', 'optional')}>
           <Input value={organisation} onChange={(e) => setOrganisation(e.target.value)} placeholder={tr('Cabinet, direction, société', 'Firm, department, company')} />

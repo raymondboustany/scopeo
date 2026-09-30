@@ -150,8 +150,8 @@ export default function SettingsPage() {
               <Input value={form.name} onChange={(e) => setDraft({ ...form, name: e.target.value })} />
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Fonction', 'Role')}</span>
-              <Select value={form.role} onValueChange={(v) => setDraft({ ...form, role: v as UserRole })} options={ROLES} ariaLabel={tr('Fonction', 'Role')} />
+              <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Fonction', 'Job title')}</span>
+              <Select value={form.role} onValueChange={(v) => setDraft({ ...form, role: v as UserRole })} options={ROLES} ariaLabel={tr('Fonction', 'Job title')} />
             </label>
             <label className="block">
               <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Organisation', 'Organisation')}</span>
@@ -310,15 +310,15 @@ export default function SettingsPage() {
           </p>
           <p>
             {tr(
-              'Les secrets de sécurité (double authentification, compte de service LDAP) y sont chiffrés avec la clé ',
-              'Security secrets (two-factor authentication, LDAP service account) are encrypted there with the key ',
+              'Les secrets de sécurité (double authentification, compte de service LDAP, secret client de la connexion unique) y sont chiffrés avec la clé ',
+              'Security secrets (two-factor authentication, LDAP service account, single sign-on client secret) are encrypted there with the key ',
             )}
             <code className="rounded bg-raised px-1.5 py-0.5 font-mono text-xs text-ink">secret.key</code>
             {tr(', placée dans le même dossier : sauvegardez-la avec la base.', ', kept in the same folder: back it up with the database.')}
           </p>
           <p>
             {tr(
-              "Aucune donnée de cadrage n'est envoyée à un service extérieur : pas de télémétrie, pas de nuage imposé. La connexion par annuaire ou par connexion unique n'échange que l'identité.",
+              "Aucune donnée de cadrage n'est envoyée à un service extérieur : pas de télémétrie, pas de nuage imposé. L'annuaire et la connexion unique n'échangent que l'identité.",
               'No scoping data is sent to an outside service: no telemetry, no mandatory cloud. Directory or single sign-on only exchanges identity.',
             )}
           </p>
@@ -358,8 +358,12 @@ export default function SettingsPage() {
         }}
         title={tr('Supprimer ce profil ?', 'Delete this profile?')}
         description={tr(
-          `Le profil « ${user.name} » et ses ${user.entity_count} entité(s) seront définitivement supprimés, avec leurs liens publics.`,
-          `The profile "${user.name}" and its ${user.entity_count} entit${user.entity_count > 1 ? 'ies' : 'y'} will be permanently deleted, with their public links.`,
+          user.entity_count === 0
+            ? `Le profil « ${user.name} » sera définitivement supprimé.`
+            : `Le profil « ${user.name} » et ${user.entity_count === 1 ? 'son entité' : `ses ${user.entity_count} entités`} seront définitivement supprimés, avec leurs éventuels liens publics.`,
+          user.entity_count === 0
+            ? `The profile "${user.name}" will be permanently deleted.`
+            : `The profile "${user.name}" and its ${user.entity_count === 1 ? 'entity' : `${user.entity_count} entities`} will be permanently deleted, with any public links.`,
         )}
         footer={
           <>

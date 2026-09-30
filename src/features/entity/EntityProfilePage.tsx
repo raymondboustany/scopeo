@@ -6,6 +6,7 @@ import { useScoping } from '@/lib/hooks'
 import { useEntityEditor } from '@/lib/queries'
 import { cn, uid } from '@/lib/utils'
 import { NextStep } from '@/components/layout/NextStep'
+import { QUESTIONS } from '@/data/questionnaire'
 import { tr } from '@/i18n'
 import type { EntityProfile, Stakeholder } from '@/types/domain'
 
@@ -194,14 +195,14 @@ export default function EntityProfilePage() {
             <div className="mb-3 space-y-2">
               <div className="hidden grid-cols-[1fr_1fr_1fr_auto] gap-3 px-1 text-2xs font-medium text-ink-3 sm:grid">
                 <span>{tr('Nom', 'Name')}</span>
-                <span>{tr('Fonction', 'Role')}</span>
+                <span>{tr('Fonction', 'Job title')}</span>
                 <span>{tr('Courriel', 'Email')}</span>
                 <span className="w-8" />
               </div>
               {people.map((p) => (
                 <div key={p.id} className="grid gap-2 rounded-lg bg-sunken p-2 sm:grid-cols-[1fr_1fr_1fr_auto] sm:gap-3 sm:bg-transparent sm:p-0">
                   <Input disabled={readOnly} value={p.name} placeholder={tr('Nom', 'Name')} onChange={(e) => setPeople(people.map((x) => (x.id === p.id ? { ...x, name: e.target.value } : x)))} />
-                  <Input disabled={readOnly} list="role-suggestions" value={p.role} placeholder={tr('Fonction', 'Role')} onChange={(e) => setPeople(people.map((x) => (x.id === p.id ? { ...x, role: e.target.value } : x)))} />
+                  <Input disabled={readOnly} list="role-suggestions" value={p.role} placeholder={tr('Fonction', 'Job title')} onChange={(e) => setPeople(people.map((x) => (x.id === p.id ? { ...x, role: e.target.value } : x)))} />
                   <Input disabled={readOnly} type="email" value={p.email} placeholder={tr('Courriel', 'Email')} onChange={(e) => setPeople(people.map((x) => (x.id === p.id ? { ...x, email: e.target.value } : x)))} />
                   {readOnly ? (
                     <span />
@@ -242,7 +243,7 @@ export default function EntityProfilePage() {
       <NextStep
         to="/app/qualification"
         label={tr("Qualifier l'entité", 'Scope the entity')}
-        hint={tr("Une quarantaine de questions, chacune rattachée à l'article qu'elle établit", 'About forty questions, each tied to the article it establishes')}
+        hint={tr(`${QUESTIONS.length} questions, chacune rattachée à l'article qu'elle établit`, `${QUESTIONS.length} questions, each tied to the article it establishes`)}
       />
     </div>
   )

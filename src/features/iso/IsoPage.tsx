@@ -8,7 +8,7 @@ import { useScoping } from '@/lib/hooks'
 import { useEntityEditor } from '@/lib/queries'
 import { api, type StoredFile } from '@/lib/api'
 import { cn, formatDate } from '@/lib/utils'
-import { COLON, tr } from '@/i18n'
+import { COLON, plural, tr } from '@/i18n'
 import { ISO_CONTROLS, ISO_MAPPING, ISO_STRUCTURAL_LABEL, ISO_THEME_META } from '@/data/iso27001'
 import { CROSSWALK_BY_ID } from '@/data/crosswalk'
 import { REGULATIONS } from '@/data/regulations'
@@ -143,7 +143,7 @@ export default function IsoPage() {
         value={mode}
         onChange={setMode}
         options={[
-          { value: 'checklist', label: tr('Checklist manuelle', 'Manual checklist') },
+          { value: 'checklist', label: tr('Liste de contrôle manuelle', 'Manual checklist') },
           { value: 'import', label: tr("Importer une déclaration d'applicabilité", 'Import a Statement of Applicability') },
         ]}
       />
@@ -462,7 +462,7 @@ function SoaImport({ assessment, readOnly, onDone }: { assessment: IsoAssessment
       <CardHeader
         title={tr("Déclaration d'applicabilité existante", 'Existing Statement of Applicability')}
         subtitle={tr(
-          'CSV, TSV, XLSX ou ODS : les lignes portant un numéro de contrôle sont lues, puis soumises à votre validation. Un PDF est conservé comme pièce de référence, à reporter dans la checklist.',
+          'CSV, TSV, XLSX ou ODS : les lignes portant un numéro de contrôle sont lues, puis soumises à votre validation. Un PDF est conservé comme pièce de référence, à reporter dans la liste de contrôle.',
           'CSV, TSV, XLSX or ODS: rows carrying a control number are read, then submitted for your review. A PDF is kept as a reference document, to be transcribed into the checklist.',
         )}
         icon={<FileSpreadsheet size={16} />}
@@ -474,7 +474,7 @@ function SoaImport({ assessment, readOnly, onDone }: { assessment: IsoAssessment
               <span className="block truncate font-medium text-ink">{assessment.soa.name}</span>
               <span className="block text-2xs text-ink-3">
                 {tr(`Déposée le ${formatDate(assessment.soa.uploadedAt)}`, `Uploaded on ${formatDate(assessment.soa.uploadedAt)}`)}
-                {assessment.soa.imported ? tr(` · ${assessment.soa.imported} contrôles importés`, ` · ${assessment.soa.imported} controls imported`) : ''}
+                {assessment.soa.imported ? tr(` · ${assessment.soa.imported} ${plural(assessment.soa.imported, 'contrôle importé', 'contrôles importés')}`, ` · ${assessment.soa.imported} ${plural(assessment.soa.imported, 'control', 'controls')} imported`) : ''}
               </span>
             </span>
             <span className="flex gap-1.5">
@@ -517,33 +517,33 @@ function SoaImport({ assessment, readOnly, onDone }: { assessment: IsoAssessment
           parsed.unreadable ? (
             <Callout tone="caution" title={tr('Fichier conservé, lecture automatique impossible', 'File kept, automatic reading not possible')}>
               {tr(
-                "Aucun numéro de contrôle exploitable n'a été trouvé. Le fichier reste disponible en téléchargement ; reportez son contenu dans la checklist manuelle.",
+                "Aucun numéro de contrôle exploitable n'a été trouvé. Le fichier reste disponible en téléchargement ; reportez son contenu dans la liste de contrôle manuelle.",
                 'No usable control number was found. The file remains available for download; transcribe its content into the manual checklist.',
               )}
             </Callout>
           ) : (
             <div className="rounded-lg border border-rule-2 p-4">
               <p className="text-sm text-ink">
-                {tr(`${parsed.recognized} contrôles reconnus sur 93.`, `${parsed.recognized} of 93 controls recognised.`)}
+                {tr(`${parsed.recognized} ${plural(parsed.recognized, 'contrôle reconnu', 'contrôles reconnus')} sur 93.`, `${parsed.recognized} of 93 ${plural(parsed.recognized, 'control', 'controls')} recognised.`)}
               </p>
               {counts ? (
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   <Tag tone="positive">{tr(`${counts.done} mis en œuvre`, `${counts.done} implemented`)}</Tag>
                   <Tag tone="caution">{tr(`${counts.partial} partiellement`, `${counts.partial} partially`)}</Tag>
                   <Tag tone="critical">{tr(`${counts.none} non mis en œuvre`, `${counts.none} not implemented`)}</Tag>
-                  <Tag>{tr(`${counts.na} non applicables`, `${counts.na} not applicable`)}</Tag>
-                  {counts.applicable ? <Tag>{tr(`${counts.applicable} applicables sans état`, `${counts.applicable} applicable, no state`)}</Tag> : null}
+                  <Tag>{tr(`${counts.na} ${plural(counts.na, 'non applicable', 'non applicables')}`, `${counts.na} not applicable`)}</Tag>
+                  {counts.applicable ? <Tag>{tr(`${counts.applicable} ${plural(counts.applicable, 'applicable', 'applicables')} sans état`, `${counts.applicable} applicable, no state`)}</Tag> : null}
                 </div>
               ) : null}
               <p className="mt-3 text-2xs text-ink-3">
                 {tr(
-                  'Les contrôles reconnus remplacent les saisies existantes pour ces mêmes contrôles ; les autres ne sont pas modifiés. Tout reste modifiable ensuite dans la checklist.',
+                  'Les contrôles reconnus remplacent les saisies existantes pour ces mêmes contrôles ; les autres ne sont pas modifiés. Tout reste modifiable ensuite dans la liste de contrôle.',
                   'Recognised controls replace existing entries for the same controls; others are unchanged. Everything remains editable afterwards in the checklist.',
                 )}
               </p>
               <div className="mt-3 flex gap-2">
                 <Button variant="primary" size="sm" onClick={apply}>
-                  {tr('Appliquer à la checklist', 'Apply to the checklist')}
+                  {tr('Appliquer à la liste de contrôle', 'Apply to the checklist')}
                 </Button>
                 <Button size="sm" variant="ghost" onClick={() => setParsed(null)}>
                   {tr('Ignorer', 'Ignore')}
@@ -681,7 +681,12 @@ function Overlap() {
                   <span className="flex items-center gap-2">
                     <ChevronRight size={13} className={cn('text-ink-4 transition-transform', open && 'rotate-90')} />
                     <RegChip id={regulation} size="sm" />
-                    <span className="text-2xs text-ink-3">{tr(`${total} obligations dans le périmètre`, `${total} obligations in scope`)}</span>
+                    <span className="text-2xs text-ink-3">{unmapped > 0
+                        ? tr(
+                            `${total} ${plural(total, 'obligation rapprochée', 'obligations rapprochées')} d'ISO 27001, sur ${total + unmapped} dans le périmètre`,
+                            `${total} ${plural(total, 'obligation', 'obligations')} matched to ISO 27001, out of ${total + unmapped} in scope`,
+                          )
+                        : tr(`${total} ${plural(total, 'obligation', 'obligations')} dans le périmètre`, `${total} ${plural(total, 'obligation', 'obligations')} in scope`)}</span>
                   </span>
                   <span className="flex gap-3 text-2xs text-ink-2">
                     {ORDER.map((c) => (

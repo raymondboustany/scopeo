@@ -45,7 +45,7 @@ import type { Domain } from '@/types/domain'
 import { IsoBadge } from '@/features/iso/IsoBadge'
 import { FrameworkNote } from '@/components/ui/primitives'
 import { formatPct } from '@/lib/utils'
-import { COLON, tr } from '@/i18n'
+import { COLON, plural, tr } from '@/i18n'
 
 export default function DashboardPage() {
   const scoping = useScoping()
@@ -110,7 +110,7 @@ function NoEntity() {
           </>
         }
       >
-        {tr("Une entité, c'est l'organisation que vous cadrez : un client, une filiale, votre propre société. Créez-en une, ou partez d'une copie de Finexa, une fintech de 50 salariés déjà qualifiée et évaluée, pour explorer la plateforme.", 'An entity is the organisation you are scoping: a client, a subsidiary, your own company. Create one, or start from a copy of Finexa, a 50-person fintech already scoped and assessed, to explore the platform.')}
+        {tr("Une entité, c'est l'organisation que vous cadrez : un client, une filiale, votre propre société. Créez-en une, ou partez d'une copie de Finexa, un établissement de paiement de 50 salariés déjà qualifié et évalué, pour explorer la plateforme.", 'An entity is the organisation you are scoping: a client, a subsidiary, your own company. Create one, or start from a copy of Finexa, a 50-person payment institution already scoped and assessed, to explore the platform.')}
       </EmptyState>
     </div>
   )
@@ -133,8 +133,8 @@ function NotQualified({ answered }: { answered: number }) {
                     `${answered} answer${answered > 1 ? 's' : ''} already saved. Finish the questionnaire to establish the applicable texts, the score and the authorities to notify in case of an incident.`,
                   )
                 : tr(
-                    "Une quarantaine de questions, chacune rattachée à l'article qu'elle établit. Le score, les priorités et la section incident en découlent.",
-                    'About forty questions, each tied to the article it establishes. The score, priorities and incident section follow from them.',
+                    `${QUESTIONS.length} questions, chacune rattachée à l'article qu'elle établit. Le score, les priorités et la section incident en découlent.`,
+                    `${QUESTIONS.length} questions, each tied to the article it establishes. The score, priorities and incident section follow from them.`,
                   )}
             </p>
           </div>
@@ -236,7 +236,7 @@ function Qualified() {
                     <div className="flex min-w-0 items-center gap-3">
                       <RegChip id={r} size="sm" muted={v.status === 'hors_champ'} />
                       <span className={cn('truncate text-sm', v.status === 'hors_champ' ? 'text-ink-3' : 'text-ink')}>
-                        {v.qualification ?? tr('Non concerné', 'Not concerned')}
+                        {v.qualification ?? (v.status === 'probable' ? tr('À confirmer', 'To be confirmed') : tr('Non concerné', 'Not concerned'))}
                       </span>
                     </div>
                     <span className={cn('inline-flex shrink-0 items-center gap-1.5 text-2xs font-medium', st.text)}>
@@ -256,7 +256,7 @@ function Qualified() {
         <Card>
           <CardHeader
             title={tr('Alertes', 'Alerts')}
-            subtitle={tr('Échéances réglementaires des six prochaines semaines', 'Regulatory deadlines in the next six weeks')}
+            subtitle={tr('Échéances réglementaires récentes et à venir', 'Recent and upcoming regulatory deadlines')}
             icon={<BellRing size={16} />}
             aside={
               alerts.some((a) => a.pulse && a.id.startsWith('TL:')) ? (
@@ -381,9 +381,9 @@ function Qualified() {
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <Tag tone="positive">{scoping.measures.en_place} {tr('en place', 'in place')}</Tag>
-                <Tag tone="caution">{scoping.measures.partiel} {tr('partielles', 'partial')}</Tag>
-                <Tag tone="critical">{scoping.measures.absent} {tr('absentes', 'missing')}</Tag>
-                <Tag>{scoping.measures.non_evalue} {tr('non évaluées', 'not assessed')}</Tag>
+                <Tag tone="caution">{scoping.measures.partiel} {tr(plural(scoping.measures.partiel, 'partielle', 'partielles'), 'partial')}</Tag>
+                <Tag tone="critical">{scoping.measures.absent} {tr(plural(scoping.measures.absent, 'absente', 'absentes'), 'missing')}</Tag>
+                <Tag>{scoping.measures.non_evalue} {tr(plural(scoping.measures.non_evalue, 'non évaluée', 'non évaluées'), 'not assessed')}</Tag>
                 <LinkButton to="/app/evaluation?vue=anssi" size="sm">
                   {tr('Évaluer', 'Assess')}
                 </LinkButton>
@@ -444,7 +444,7 @@ function Journey() {
       to: '/app/signalement',
       state: readyDone === ready.length ? 'fait' : readyDone > 0 ? 'en_cours' : 'a_faire',
     },
-    { n: 5, label: tr('Restituer', 'Report'), detail: tr('Note COMEX, rapport complet', 'Executive note, full report'), to: '/app/rapport', state: 'a_faire' },
+    { n: 5, label: tr('Restituer', 'Report'), detail: tr('Note au comité de direction, rapport complet', 'Executive summary, full report'), to: '/app/rapport', state: 'a_faire' },
   ]
   const currentIndex = steps.findIndex((s) => s.state !== 'fait')
 
@@ -487,7 +487,7 @@ function Journey() {
    Préparation au signalement : résumé
    ========================================================================== */
 
-const SHORTEST: Record<string, string> = { RGPD: '72 h', NIS2: '24 h', DORA: '4 h', CRA: '24 h', AIACT: tr('2 j', '2 d') }
+const SHORTEST: Record<string, string> = { RGPD: '72 h', NIS2: '24 h', DORA: '4 h', CRA: '24 h', AIACT: tr('2 jours', '2 days') }
 
 function PreparationSummary() {
   const { entity, applicable } = useScoping()
@@ -520,7 +520,7 @@ function PreparationSummary() {
                     <RegChip id={r} size="sm" />
                     <span className="truncate text-sm text-ink">{viaDora ? tr('Via DORA', 'Via DORA') : names}</span>
                   </span>
-                  <span className="shrink-0 font-mono text-2xs text-ink-2">{viaDora ? '' : tr(`dès ${SHORTEST[r]}`, `from ${SHORTEST[r]}`)}</span>
+                  <span className="shrink-0 font-mono text-2xs text-ink-2">{viaDora ? '' : tr(`sous ${SHORTEST[r]}`, `within ${SHORTEST[r]}`)}</span>
                 </li>
               )
             })}

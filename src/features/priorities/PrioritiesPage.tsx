@@ -26,7 +26,9 @@ import {
 import { CROSSWALK_BY_ID } from '@/data/crosswalk'
 import { cn, formatPct } from '@/lib/utils'
 import type { PriorityWeights, PrioritisedItem } from '@/types/domain'
-import { COLON, tr } from '@/i18n'
+import { COLON, LOCALE, tr } from '@/i18n'
+
+const fmt1 = (v: number) => (v * 100).toLocaleString(LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
 export default function PrioritiesPage() {
   const scoping = useScoping()
@@ -162,7 +164,7 @@ export default function PrioritiesPage() {
           </Card>
 
           <Callout tone="neutral" className="mt-4" title={tr('Ce que la pondération ne change pas', 'What weighting does not change')}>
-            {tr("Les dépendances techniques restent respectées quelle que soit la pondération : une exigence dont un prérequis n'est pas traité est repoussée d'une phase, même si son score la place en tête. On ne sécurise pas un système qu'on n'a pas recensé.", 'Technical dependencies are respected whatever the weighting: a requirement whose prerequisite is not handled is pushed back one phase, even if its score puts it first. You cannot secure a system you have not inventoried.')}
+            {tr("Les dépendances techniques sont prises en compte quelle que soit la pondération : une exigence dont un prérequis est mieux classé attend son tour et passe d'une phase. On ne sécurise pas un système qu'on n'a pas recensé.", 'Technical dependencies are taken into account whatever the weighting: a requirement whose prerequisite is ranked higher waits its turn and moves back one phase. You cannot secure a system you have not inventoried.')}
           </Callout>
 
           <Card className="mt-4 p-4">
@@ -294,10 +296,10 @@ function ScoreBreakdown({ item }: { item: PrioritisedItem }) {
               <div className="mb-1 flex items-baseline justify-between gap-3">
                 <span className="text-sm font-medium text-ink">{f.label}</span>
                 <span className="font-mono text-2xs tabular text-ink-3">
-                  {formatPct(f.raw)} · contribution {(f.weighted * 100).toFixed(1)}
+                  {formatPct(f.raw)} · contribution {fmt1(f.weighted)}
                 </span>
               </div>
-              <Bar ratio={max > 0 ? f.weighted / max : 0} label={`${f.label} : contribution ${(f.weighted * 100).toFixed(1)}`} />
+              <Bar ratio={max > 0 ? f.weighted / max : 0} label={`${f.label}${COLON}contribution ${fmt1(f.weighted)}`} />
               <p className="mt-1 text-xs leading-relaxed text-ink-2">{f.rationale}</p>
             </li>
           ))}

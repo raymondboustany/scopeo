@@ -28,18 +28,42 @@ function detect(): Lang {
 
 export const LANG: Lang = detect()
 
+/** Espace insécable : elle garde la ponctuation et les unités attachées au mot qui les précède. */
+export const NBSP = '\u00a0'
+
+/**
+ * Typographie d'affichage. Apostrophe droite partout ; en français, espace
+ * insécable devant « : ; ! ? % » et à l'intérieur des guillemets « ».
+ */
+export function typo(text: string): string {
+  const straight = text.replace(/\u2019/g, "'")
+  if (LANG !== 'fr') return straight
+  return straight.replace(/ (?=[:;!?»%])/g, NBSP).replace(/« /g, '«' + NBSP)
+}
+
+/** Applique `typo` à toutes les chaînes d'une donnée (objets, listes), sans toucher au reste. */
+export function typoDeep<T>(value: T): T {
+  if (typeof value === 'string') return typo(value) as T
+  if (Array.isArray(value)) return value.map((v) => typoDeep(v)) as T
+  if (value !== null && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, typoDeep(v)])) as T
+  }
+  return value
+}
+
 /** Locale des formats de date et de nombre. */
-export const COLON = LANG === 'fr' ? ' : ' : ': '
+export const COLON = LANG === 'fr' ? NBSP + ': ' : ': '
 export const LOCALE = LANG === 'en' ? 'en-GB' : 'fr-FR'
 
 /** Libellé bilingue : le français fait référence, l'anglais l'accompagne. */
 export function tr(fr: string, en: string): string {
-  return LANG === 'en' ? en : fr
+  return typo(LANG === 'en' ? en : fr)
 }
 
 /** Choisit une valeur quelconque selon la langue (listes, nœuds React). */
 export function pick<T>(fr: T, en: T): T {
-  return LANG === 'en' ? en : fr
+  const value = LANG === 'en' ? en : fr
+  return typeof value === 'string' ? (typo(value) as T) : value
 }
 
 export function setLang(lang: Lang): void {

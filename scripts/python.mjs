@@ -11,7 +11,7 @@ export const venvPython =
 
 export function requireVenv() {
   if (!existsSync(venvPython)) {
-    console.error("\nL'environnement Python du serveur est absent. Lancez d'abord :\n\n  npm run setup\n")
+    console.error("\nThe server Python environment is missing. Run first / L'environnement Python du serveur est absent. Lancez d'abord :\n\n  npm run setup\n")
     process.exit(1)
   }
   return venvPython

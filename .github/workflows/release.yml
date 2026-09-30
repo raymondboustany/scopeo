@@ -26,7 +26,7 @@ jobs:
       - run: npm ci
       - run: npx vite build
 
-      - name: Assembler l'archive portable
+      - name: Assemble the portable archive / Assembler l'archive portable
         run: |
           NAME=scopeo-${GITHUB_REF_NAME}
           mkdir -p release/$NAME/server
@@ -37,11 +37,11 @@ jobs:
           find release -name '__pycache__' -type d -prune -exec rm -rf {} +
           (cd release && zip -qr $NAME-portable.zip $NAME)
 
-      - name: Extraire la note de version du CHANGELOG
+      - name: Extract release notes from the CHANGELOG / Extraire la note de version du CHANGELOG
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           awk -v v="$VERSION" '/^## \[/{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > release/notes.md
-          test -s release/notes.md || echo "Voir CHANGELOG.md." > release/notes.md
+          test -s release/notes.md || echo "See CHANGELOG.md. / Voir CHANGELOG.md." > release/notes.md
 
       - uses: softprops/action-gh-release@v3
         with:

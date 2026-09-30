@@ -122,6 +122,7 @@ const ERROR_MESSAGES: Record<string, () => string> = {
   guest_forbidden: () => tr('Action indisponible en mode invité.', 'Not available in guest mode.'),
   link_inactive: () => tr("Ce lien n'est pas ou plus actif.", 'This link is not or no longer active.'),
   csrf: () => tr('Requête refusée par le serveur.', 'Request refused by the server.'),
+  validation_error: () => tr("Une valeur saisie n'est pas valide : vérifiez la longueur et le format des champs.", 'A value is not valid: check the length and format of the fields.'),
   unsupported_file: () =>
     tr('Format de fichier non pris en charge.', 'Unsupported file format.'),
   file_too_large: () => tr('Fichier trop volumineux (5 Mo au plus).', 'File too large (5 MB maximum).'),
@@ -164,14 +165,14 @@ async function request<T>(path: string, init?: RequestInit & { raw?: boolean }):
       },
     })
   } catch {
-    throw new ApiError(0, tr("Le serveur local ne répond pas. Vérifiez qu'il est démarré.", 'The local server is not responding. Check that it is running.'))
+    throw new ApiError(0, tr("Le serveur Scopeo ne répond pas. Vérifiez qu'il est démarré.", 'The Scopeo server is not responding. Check that it is running.'))
   }
   if (res.status === 204) return undefined as T
   if (!res.ok) {
     let code = res.statusText
     try {
       const body = await res.json()
-      code = typeof body.detail === 'string' ? body.detail : code
+      code = typeof body.detail === 'string' ? body.detail : res.status === 422 ? 'validation_error' : code
     } catch {
       /* corps non JSON : on garde le libellé HTTP */
     }

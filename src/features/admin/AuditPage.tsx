@@ -36,6 +36,14 @@ const ACTIONS: Record<string, string> = {
   backup_downloaded: tr('Sauvegarde téléchargée', 'Backup downloaded'),
 }
 
+const SETTING_LABEL: Record<string, string> = {
+  registration_open: tr('création libre de profils', 'self-service profile creation'),
+  guest_enabled: tr('mode invité', 'guest mode'),
+  session_hours: tr('durée d’une session', 'session length'),
+  public_url: tr('adresse publique', 'public address'),
+  api_tokens_enabled: tr('jetons d’API', 'API tokens'),
+}
+
 const FMT = new Intl.DateTimeFormat(LOCALE, { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 
 export default function AuditPage() {
@@ -81,7 +89,7 @@ export default function AuditPage() {
                   <td className="whitespace-nowrap px-4 py-2.5 text-xs tabular-nums text-ink-3">{FMT.format(new Date(e.at))}</td>
                   <td className="px-4 py-2.5 text-ink">
                     {ACTIONS[e.action] ?? e.action}
-                    {e.detail && ['settings_updated', 'api_token_created', 'api_token_revoked'].includes(e.action) ? <span className="ml-1.5 font-mono text-2xs text-ink-3">{e.detail}</span> : null}
+                    {e.detail && ['settings_updated', 'api_token_created', 'api_token_revoked'].includes(e.action) ? <span className="ml-1.5 text-2xs text-ink-3">{e.action === 'settings_updated' ? e.detail.split(', ').map((k) => SETTING_LABEL[k] ?? k).join(', ') : e.detail}</span> : null}
                   </td>
                   <td className="px-4 py-2.5 text-ink-2">{e.target}</td>
                   <td className="px-4 py-2.5 text-ink-2">{e.actor || tr('Système', 'System')}</td>

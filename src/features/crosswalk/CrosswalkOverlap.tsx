@@ -61,7 +61,7 @@ export default function CrosswalkOverlap({
               {formatPct(total ? shared / total : 0)}
             </div>
             <p className="text-xs text-ink-3">
-              {tr('des exigences satisfont au moins deux textes à la fois : une action, plusieurs conformités.', 'of requirements satisfy at least two texts at once: one action, several compliances.')}
+              {tr('des exigences satisfont au moins deux textes à la fois : une action, plusieurs conformités.', 'of requirements satisfy at least two texts at once: one action, compliance with several texts.')}
             </p>
           </div>
           <ul className="space-y-2.5">
@@ -144,7 +144,7 @@ export default function CrosswalkOverlap({
                           {row.regs.map((r) => (
                             <RegChip key={r} id={r} size="sm" />
                           ))}
-                          <span className="ml-1">{row.regs.length > 1 ? tr('couverts ensemble par :', 'covered together by:') : tr('seul, par :', 'alone, by:')}</span>
+                          <span className="ml-1">{row.regs.length > 1 ? tr('couverts ensemble par :', 'covered together by:') : tr('couvert seul par :', 'covered on its own by:')}</span>
                         </span>
                         {row.themes.map((t) => (
                           <button

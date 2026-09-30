@@ -19,7 +19,7 @@
     "acts": [
       ["EDPB guidelines", "Body of guidelines from the European Data Protection Board (security, breaches, transfers, impact assessment)", "Not legally binding, but the reference doctrine of the supervisory authorities."],
       ["Decision (EU) 2021/914", "Standard contractual clauses for transfers of data to third countries", null],
-      ["Digital Omnibus, COM(2025) 837", "Proposal for a regulation amending the GDPR, the ePrivacy directive, NIS2 and DORA", "Data strand still under negotiation as of 22 September 2026. The EDPB and EDPS issued joint opinion 2/2026 on 11 February 2026. To watch: definition of personal data, cookie regime, legal basis of legitimate interest."]
+      ["Digital Omnibus, COM(2025) 837", "Proposal for a regulation amending the GDPR, the ePrivacy directive, NIS2 and DORA", "Data strand still under negotiation as of 24 September 2026. The EDPB and EDPS issued joint opinion 2/2026 on 11 February 2026. To watch: definition of personal data, cookie regime, legal basis of legitimate interest."]
     ]
   },
   "NIS2": {
@@ -38,7 +38,7 @@
     "sanctions": {
       "NIS2-EE": ["Essential entity: €10M or 2% of worldwide turnover", "Article 34(4)", "Minimum cap Member States must provide for breaches of Articles 21 and 23. National law may go further."],
       "NIS2-EI": ["Important entity: €7M or 1.4% of worldwide turnover", "Article 34(5)", "Minimum cap applicable to important entities for the same breaches."],
-      "NIS2-DIR": ["Liability of management bodies", "Articles 20 and 32(6)", "Beyond fines, the authority may temporarily suspend a certification or ban a natural person with managerial responsibilities from exercising those functions. This sanction only applies to essential entities."]
+      "NIS2-DIR": ["Liability of management bodies", "Articles 20 and 32(5)", "Beyond fines, the authority may temporarily suspend a certification or ban a natural person with managerial responsibilities from exercising those functions. This sanction only applies to essential entities."]
     },
     "acts": [
       ["Implementing Regulation (EU) 2024/2690", "Technical and methodological requirements for risk-management measures, and cases in which an incident is considered significant, for certain digital providers", "In force since 7 November 2024. Covers DNS service providers, TLD registries, cloud computing, data centres, content delivery networks, managed and managed security services, online marketplaces, search engines, social networks and trust service providers. For these actors, it replaces case-by-case assessment with quantified thresholds."],
@@ -53,7 +53,7 @@
     "reference": "Regulation (EU) 2022/2554",
     "officialJournal": "OJ L 333, 27.12.2022, p. 1",
     "purpose": "Ensure the European financial sector can withstand, respond to and recover from disruptions and threats related to information and communication technologies.",
-    "scopeSummary": "Twenty-one types of financial entities listed in Article 2: credit, payment and e-money institutions, investment firms, crypto-asset service providers, central securities depositories, central counterparties, trading venues, trade repositories, fund managers, insurance and reinsurance undertakings, intermediaries, occupational retirement institutions, credit rating agencies, benchmark administrators, crowdfunding service providers, as well as ICT third-party service providers. A lighter regime applies to microenterprises.",
+    "scopeSummary": "Twenty types of financial entities listed in Article 2: credit, payment and e-money institutions, investment firms, crypto-asset service providers, central securities depositories, central counterparties, trading venues, trade repositories, fund managers, insurance and reinsurance undertakings, intermediaries, occupational retirement institutions, credit rating agencies, benchmark administrators, crowdfunding service providers. Article 2 also covers ICT third-party service providers. A lighter regime applies to microenterprises.",
     "euAuthorities": ["EBA", "ESMA", "EIOPA", "Oversight Forum"],
     "frAuthorities": ["ACPR", "AMF", "Banque de France"],
     "frenchStatus": {

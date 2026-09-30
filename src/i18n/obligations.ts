@@ -15,6 +15,12 @@ import AIACT from './en/obligations.aiact.json'
  * texte officiel publié au Journal officiel.
  */
 
+const ISSUER_EN: Record<string, string> = {
+  'Commission européenne': 'European Commission',
+  CEPD: 'EDPB',
+  'Commission (sur projet des AES)': 'Commission (drafted by the ESAs)',
+}
+
 interface ObligationEn {
   article?: string
   shortRef?: string
@@ -45,7 +51,12 @@ export function localizeObligations(list: Obligation[]): Obligation[] {
   if (LANG !== 'en') return list
   return list.map((o) => {
     const e = EN[o.id]
-    const base: Obligation = { ...o, article: articleEn(o.article), sourceUrl: o.sourceUrl.replace('/FR/', '/EN/') }
+    const base: Obligation = {
+      ...o,
+      article: articleEn(o.article),
+      sourceUrl: o.sourceUrl.replace('/FR/', '/EN/'),
+      guidance: o.guidance?.map((g) => ({ ...g, issuer: ISSUER_EN[g.issuer] ?? g.issuer })),
+    }
     if (!e) return base
     return {
       ...base,
@@ -63,7 +74,7 @@ export function localizeObligations(list: Obligation[]): Obligation[] {
       deadline: { ...o.deadline, label: e.deadline ?? o.deadline.label },
       evidence: e.evidence ?? o.evidence,
       conditions: o.conditions?.map((c, i) => ({ ...c, label: e.conditions?.[i] ?? c.label })),
-      guidance: o.guidance?.map((g, i) => ({ ...g, label: e.guidance?.[i] ?? g.label })),
+      guidance: base.guidance?.map((g, i) => ({ ...g, label: e.guidance?.[i] ?? g.label })),
     }
   })
 }

@@ -1,7 +1,7 @@
 {
   "CRA-A14-VULN": {
     "article": "Article 14(1) and (2)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Reporting actively exploited vulnerabilities",
     "statement": "Notify any actively exploited vulnerability in a product, simultaneously to the coordinating CSIRT and ENISA, via the single reporting platform: early warning within 24 hours, notification within 72 hours, final report no later than 14 days after a fix or mitigation is made available. This obligation has applied since 11 September 2026, including for products placed on the market before that date.",
     "appliesTo": ["Manufacturer"],
@@ -19,7 +19,7 @@
   },
   "CRA-A14-INC": {
     "article": "Article 14(3) and (4)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Reporting severe incidents affecting product security",
     "statement": "Notify any severe incident with an impact on the security of a product, for example a compromised update infrastructure, following the same sequence: early warning within 24 hours, notification within 72 hours, final report within one month of the notification.",
     "appliesTo": ["Manufacturer"],
@@ -35,7 +35,7 @@
   },
   "CRA-A14-USERS": {
     "article": "Article 14(8)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Informing users",
     "statement": "After becoming aware of an actively exploited vulnerability or a severe incident, inform the affected users (and, where relevant, all users) of the consequences and of the mitigating or corrective measures they can take, in a structured, machine-readable format where appropriate.",
     "appliesTo": ["Manufacturer"],
@@ -49,7 +49,7 @@
   },
   "CRA-A13-RISK": {
     "article": "Article 13(1) to (4)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Product cybersecurity risk assessment",
     "statement": "Design, develop and produce the product in line with the essential requirements of Annex I, Part I, based on a documented cybersecurity risk assessment grounded in intended and reasonably foreseeable use, taken into account at every phase (planning, design, development, production, delivery, maintenance) and included in the technical documentation.",
     "appliesTo": ["Manufacturer"],
@@ -101,13 +101,13 @@
   },
   "CRA-A13-COMP": {
     "article": "Article 13(5) and (6)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Due diligence on third-party and open-source components",
     "statement": "Exercise due diligence when integrating third-party components, including open-source software, so that they do not compromise the product's security; report any vulnerability found in a component to whoever maintains it, and remediate it.",
     "appliesTo": ["Manufacturer"],
     "requirements": {
       "CRA-A13C-R1": "Assess the security of third-party components before integrating them, including whether they are actively maintained.",
-      "CRA-A13C-R2": "Report vulnerabilities found in a component to its maintainer.",
+      "CRA-A13C-R2": "Report vulnerabilities found in a component to whoever maintains it.",
       "CRA-A13C-R3": "Track published vulnerabilities affecting integrated dependencies."
     },
     "deadline": "Applicable from 11 December 2027",
@@ -116,7 +116,7 @@
   },
   "CRA-A13-SUPPORT": {
     "article": "Article 13(8), (9) and (19)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Support period of at least five years",
     "statement": "Set a support period reflecting the product's expected time in use, of at least five years unless the expected use is shorter; display its end date, at least month and year, at the time of purchase; keep each security update available for ten years or until the end of the support period.",
     "appliesTo": ["Manufacturer"],
@@ -132,7 +132,7 @@
   },
   "CRA-A13-CONTACT": {
     "article": "Article 13(17)",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Single point of contact for users",
     "statement": "Designate a single, easily identifiable point of contact allowing users to communicate directly and rapidly with the manufacturer, notably to report a vulnerability, through means not limited to automated tools.",
     "appliesTo": ["Manufacturer"],
@@ -145,9 +145,9 @@
     "conditions": ["Manufacturer of products with digital elements"]
   },
   "CRA-A31-DOC": {
-    "article": "Articles 13(12)-(13), 28 and 31, Annex VII",
-    "shortRef": "31 · Annex VII",
-    "chapter": "Chapter III: Conformity of the product",
+    "article": "Article 13(12) and (13), Articles 28 and 31, Annex VII",
+    "shortRef": "Art. 31 · Annex VII",
+    "chapter": "Chapter III: Conformity of the product with digital elements",
     "title": "Technical documentation and EU declaration of conformity",
     "statement": "Before placing on the market, draw up the Annex VII technical documentation (including the risk assessment and the software bill of materials) and the EU declaration of conformity; keep them available to market surveillance authorities for ten years or for the support period if longer.",
     "appliesTo": ["Manufacturer"],
@@ -162,8 +162,8 @@
   },
   "CRA-A32-CONF": {
     "article": "Articles 30 and 32, Annexes III and IV",
-    "shortRef": "32 · Annex III",
-    "chapter": "Chapter III: Conformity of the product",
+    "shortRef": "Art. 32 · Annex III",
+    "chapter": "Chapter III: Conformity of the product with digital elements",
     "title": "Conformity assessment and CE marking",
     "statement": "Apply the conformity assessment procedure matching the product category (internal control for default products, harmonised standard or third party for class I, mandatory third party for class II, European certification for critical products), then affix the CE marking.",
     "appliesTo": ["Manufacturer"],
@@ -178,7 +178,7 @@
   },
   "CRA-A19-IMP": {
     "article": "Articles 19 and 20",
-    "chapter": "Chapter II: Obligations of economic operators",
+    "chapter": "Chapter II: Obligations of economic operators and provisions in relation to free and open-source software",
     "title": "Obligations of importers and distributors",
     "statement": "Only make compliant products available: check the CE marking, the declaration of conformity, the instructions and the manufacturer's identification; inform the manufacturer and market surveillance authorities without delay of a vulnerability or significant risk; withdraw or recall the product if necessary.",
     "appliesTo": ["Importer", "Distributor"],

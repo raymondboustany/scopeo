@@ -4,6 +4,32 @@
 
 **Français.** Les évolutions notables du projet sont consignées ici, en anglais puis en français pour chaque version. Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/). Les mises à jour du corpus réglementaire figurent dans une rubrique dédiée.
 
+## [Unreleased] / [Non publié]
+
+### English
+
+#### Fixed
+
+- Wording, typography and translation refinements across the interface and reports.
+- Consistency of the regulatory data, exports and sample documents.
+- Documentation, launch scripts and deployment files updated.
+
+#### Maintenance
+
+- Refreshed screenshots, animated tours and sample documents.
+
+### Français
+
+#### Corrections
+
+- Améliorations de rédaction, de typographie et de traduction dans l'interface et les rapports.
+- Cohérence des données réglementaires, des exports et des documents d'exemple.
+- Documentation, scripts de lancement et fichiers de déploiement mis à jour.
+
+#### Maintenance
+
+- Captures, visites animées et documents d'exemple actualisés.
+
 ## [1.1.0] - 2026-09-25
 
 ### English
@@ -127,7 +153,7 @@ Première version publique.
 
 - Qualification au regard du RGPD, de NIS2 (détaillée par le ReCyF v2.5 de l'ANSSI), de DORA, du Cyber Resilience Act et de l'AI Act : 35 questions, chaque verdict justifié article par article, avec réserves et sanctions plafonds.
 - Comparateur avant / après : obligations qui entrent dans le périmètre ou en sortent lorsqu'une réponse change.
-- Corpus de 95 obligations et 348 exigences élémentaires ; 40 exigences unifiées sur la carte de croisement (recouvrements, divergences, hiérarchies) et vue « Mutualisation ».
+- Corpus de 95 obligations et 348 exigences élémentaires ; 40 exigences unifiées sur la carte de croisement (recouvrements, divergences, règles de primauté) et vue « Mutualisation ».
 - Mesures du ReCyF sous les exigences NIS2, filtrées selon la catégorie d'entité (importante ou essentielle).
 - Évaluation à trois états (en place, partiel, absent), score global et par texte, priorisation pondérable et feuille de route en quatre phases, de 0 à 3 mois à plus de 12 mois.
 - Échéancier réglementaire interactif.

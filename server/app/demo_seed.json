@@ -51,132 +51,132 @@
       "REP-03": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "DON-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "GOV-01": {
         "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "DON-01": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "RSK-02": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "REP-02": {
         "level": "absent",
         "owner": "RSSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "GOV-02": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "GOV-04": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "GOV-03": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "DOC-01": {
         "level": "absent",
         "owner": "Conformité",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "RSK-01": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "REP-01": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "TIE-02": {
         "level": "absent",
         "owner": "Achats",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "TIE-03": {
         "level": "partiel",
         "owner": "Achats",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "HIE-01": {
         "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "IA-01": {
         "level": "absent",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "IA-02": {
         "level": "partiel",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "IA-03": {
         "level": "absent",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "RES-01": {
         "level": "partiel",
         "owner": "DSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "RES-04": {
         "level": "absent",
         "owner": "DSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "TIE-01": {
         "level": "partiel",
         "owner": "Achats",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "IA-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "DON-02": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "IA-05": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "DON-03": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       },
       "RES-03": {
         "level": "absent",
         "owner": "DSI",
-        "updatedAt": "2026-09-25T10:10:08.039Z"
+        "updatedAt": "2026-09-30T13:25:09.775Z"
       }
     },
     "measures": {},
@@ -186,7 +186,7 @@
         "id": "c-rssi",
         "role": "rssi",
         "name": "Karim Benali",
-        "title": "Responsable de la sécurité des systèmes d’information",
+        "title": "Responsable de la sécurité des systèmes d'information",
         "email": "rssi@finexa.example",
         "phone": "+33 1 84 00 00 11"
       },
@@ -194,7 +194,7 @@
         "id": "c-ir",
         "role": "reponse",
         "name": "Astreinte 24/7",
-        "title": "Prestataire de réponse aux incidents qualifié PRIS, contrat d’intervention",
+        "title": "Prestataire de réponse aux incidents qualifié PRIS, contrat d'intervention",
         "email": "astreinte@prestataire.example",
         "phone": "+33 1 84 00 00 20"
       },
@@ -218,7 +218,7 @@
         "id": "c-jur",
         "role": "juridique",
         "name": "Inès Garnier",
-        "title": "Responsable conformité",
+        "title": "Responsable juridique et conformité",
         "email": "conformite@finexa.example",
         "phone": "+33 1 84 00 00 13"
       }
@@ -336,7 +336,7 @@
       "controls": {
         "8.16": {
           "applicability": "non_applicable",
-          "justification": "Supervision confiée au prestataire d’hébergement, hors du système de management."
+          "justification": "Supervision confiée au prestataire d'hébergement, hors du système de management."
         },
         "8.28": {
           "applicability": "applicable",
@@ -348,8 +348,9 @@
       ]
     },
     "public_snapshot": {
-      "generatedAt": "2026-09-25T10:10:08.040Z",
+      "generatedAt": "2026-09-30T13:25:09.776Z",
       "sectorLabel": "Infrastructure numérique",
+      "sector": "infra_numerique",
       "score": 46,
       "scores": {
         "RGPD": 50,
@@ -362,7 +363,7 @@
         {
           "regulation": "RGPD",
           "status": "applicable",
-          "qualification": "Responsable soumis à désignation d'un délégué"
+          "qualification": "Responsable de traitement et sous-traitant, délégué obligatoire"
         },
         {
           "regulation": "NIS2",

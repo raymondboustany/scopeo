@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { LOCALE, tr } from '@/i18n'
+import { LOCALE, NBSP, tr } from '@/i18n'
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs))
@@ -30,20 +30,20 @@ export function formatDateShort(iso: string): string {
 
 export function formatEur(n: number): string {
   const en = LOCALE === 'en-GB'
-  if (n >= 1_000_000) {
+  if (n >= 999_500) {
     const m = n / 1_000_000
     const v = m.toLocaleString(LOCALE, { maximumFractionDigits: m < 10 ? 1 : 0 })
-    return en ? `€${v}M` : `${v} M€`
+    return en ? `€${v}M` : `${v}${NBSP}M€`
   }
   if (n >= 1_000) {
     const v = Math.round(n / 1_000).toLocaleString(LOCALE)
-    return en ? `€${v}k` : `${v} k€`
+    return en ? `€${v}k` : `${v}${NBSP}k€`
   }
-  return en ? `€${n.toLocaleString(LOCALE)}` : `${n.toLocaleString(LOCALE)} €`
+  return en ? `€${n.toLocaleString(LOCALE)}` : `${n.toLocaleString(LOCALE)}${NBSP}€`
 }
 
 export function formatPct(ratio: number): string {
-  return LOCALE === 'en-GB' ? `${Math.round(ratio * 100)}%` : `${Math.round(ratio * 100)} %`
+  return LOCALE === 'en-GB' ? `${Math.round(ratio * 100)}%` : `${Math.round(ratio * 100)}${NBSP}%`
 }
 
 /** Délai en heures rendu lisible : 24 h, 72 h, 1 mois. */

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import type { NoteAnchor } from '@/types/domain'
 import { sameAnchor, useNotes } from './notes'
 import { NoteComposer, TagBadge } from './NoteComposer'
-import { tr } from '@/i18n'
+import { plural, tr } from '@/i18n'
 
 /**
  * Bouton de note, posé à côté d'une question, d'une exigence ou d'un article.
@@ -22,7 +22,7 @@ export function NoteButton({ anchor, className }: { anchor: NoteAnchor; classNam
       <Popover.Trigger asChild>
         <button
           type="button"
-          aria-label={here.length ? tr(`${here.length} note(s) sur « ${anchor.label} »`, `${here.length} note(s) on "${anchor.label}"`) : tr(`Ajouter une note sur « ${anchor.label} »`, `Add a note on "${anchor.label}"`)}
+          aria-label={here.length ? tr(`${here.length} ${plural(here.length, 'note', 'notes')} sur « ${anchor.label} »`, `${here.length} ${plural(here.length, 'note', 'notes')} on "${anchor.label}"`) : tr(`Ajouter une note sur « ${anchor.label} »`, `Add a note on "${anchor.label}"`)}
           className={cn(
             'inline-flex h-7 items-center gap-1 rounded-md px-1.5 text-2xs transition-colors',
             here.length ? 'bg-accent-wash text-accent-strong' : 'text-ink-4 hover:bg-tint hover:text-ink-2',

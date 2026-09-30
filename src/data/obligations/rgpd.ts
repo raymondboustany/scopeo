@@ -42,7 +42,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['DON-01', 'GOV-01', 'DOC-01', 'IA-05'],
     sourceUrl: URL,
-    guidance: [CNIL('Les principes clés de la protection des données', 'https://www.cnil.fr/fr/les-principes-cles')],
+    guidance: [CNIL('Le RGPD : le règlement européen sur la protection des données', 'https://www.cnil.fr/fr/reglement-europeen-protection-donnees')],
   },
   {
     id: 'RGPD-A6',
@@ -58,8 +58,8 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     appliesTo: ['Responsable de traitement'],
     requirements: [
       { id: 'RGPD-A6-R1', text: "Attribuer une base juridique unique et explicite à chaque finalité de traitement.", type: 'documentaire' },
-      { id: 'RGPD-A6-R2', text: "Documenter le test de mise en balance lorsque la base retenue est l'intérêt légitime (art. 6.1.f).", type: 'documentaire' },
-      { id: 'RGPD-A6-R3', text: "Vérifier la compatibilité de tout traitement ultérieur avec la finalité initiale (art. 6.4).", type: 'organisationnel' },
+      { id: 'RGPD-A6-R2', text: "Documenter le test de mise en balance lorsque la base retenue est l'intérêt légitime (art. 6, § 1, point f).", type: 'documentaire' },
+      { id: 'RGPD-A6-R3', text: "Vérifier la compatibilité de tout traitement ultérieur avec la finalité initiale (art. 6, § 4).", type: 'organisationnel' },
     ],
     deadline: { kind: 'permanente', label: "À établir avant le début de chaque traitement" },
     evidence: ["Registre des traitements mentionnant la base juridique", "Tests de mise en balance pour les intérêts légitimes"],
@@ -105,7 +105,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     appliesTo: ['Responsable de traitement'],
     requirements: [
       { id: 'RGPD-A9-R1', text: "Recenser les traitements portant sur des données de santé, biométriques, génétiques, ou révélant l'origine, les opinions, les convictions, l'appartenance syndicale, la vie ou l'orientation sexuelle.", type: 'documentaire' },
-      { id: 'RGPD-A9-R2', text: "Identifier pour chacun l'exception de l'article 9.2 mobilisée, en sus de la base de l'article 6.", type: 'documentaire' },
+      { id: 'RGPD-A9-R2', text: "Identifier pour chacun l'exception de l'article 9, § 2 mobilisée, en sus de la base de l'article 6.", type: 'documentaire' },
       { id: 'RGPD-A9-R3', text: "Renforcer les mesures de sécurité en proportion de la sensibilité des données.", type: 'technique' },
     ],
     deadline: { kind: 'permanente', label: 'Exigence permanente' },
@@ -129,7 +129,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     appliesTo: ['Responsable de traitement'],
     requirements: [
       { id: 'RGPD-A12-R1', text: "Fournir l'identité du responsable, les finalités, les bases juridiques, les destinataires, les durées de conservation et les droits.", type: 'documentaire' },
-      { id: 'RGPD-A12-R2', text: "Informer au moment de la collecte directe, ou dans un délai maximal d'un mois en cas de collecte indirecte (art. 14.3).", type: 'organisationnel' },
+      { id: 'RGPD-A12-R2', text: "Informer au moment de la collecte directe, ou dans un délai maximal d'un mois en cas de collecte indirecte (art. 14, § 3).", type: 'organisationnel' },
       { id: 'RGPD-A12-R3', text: "Mentionner les transferts hors Union et les garanties associées lorsque le cas se présente.", type: 'documentaire' },
     ],
     deadline: { kind: 'declenchee', label: "Au moment de la collecte, ou sous un mois en cas de collecte indirecte" },
@@ -245,13 +245,13 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: "Représentant des organismes non établis dans l'Union",
     statement:
-      "Une organisation non établie dans l'Union mais soumise au règlement au titre de l'article 3.2 doit désigner par écrit un représentant dans l'Union, dans l'un des États membres où se trouvent les personnes concernées.",
+      "Une organisation non établie dans l'Union mais soumise au règlement au titre de l'article 3, § 2 doit désigner par écrit un représentant dans l'Union, dans l'un des États membres où se trouvent les personnes concernées.",
     appliesTo: ['Responsable de traitement hors Union', 'Sous-traitant hors Union'],
     requirements: [
       { id: 'RGPD-A27-R1', text: "Désigner par écrit un représentant établi dans l'Union.", type: 'contractuel' },
       { id: 'RGPD-A27-R2', text: "Mentionner ce représentant dans les informations fournies aux personnes concernées.", type: 'documentaire' },
     ],
-    deadline: { kind: 'permanente', label: "Dès que le traitement entre dans le champ de l'article 3.2" },
+    deadline: { kind: 'permanente', label: "Dès que le traitement entre dans le champ de l'article 3, § 2" },
     evidence: ["Mandat de représentation", "Mentions d'information actualisées"],
     sanctionTier: 'RGPD-T1',
     effort: 1,
@@ -268,9 +268,9 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     chapter: 'Chapitre IV : Responsable du traitement et sous-traitant',
     title: 'Encadrement contractuel de la sous-traitance',
     statement:
-      "Ne recourir qu'à des sous-traitants présentant des garanties suffisantes, et régir la relation par un contrat écrit comportant les huit mentions obligatoires de l'article 28.3. L'absence de ces clauses est l'un des manquements les plus fréquemment relevés en contrôle.",
+      "Ne recourir qu'à des sous-traitants présentant des garanties suffisantes, et régir la relation par un contrat écrit comportant les huit mentions obligatoires de l'article 28, § 3. L'absence de ces clauses est l'un des manquements les plus fréquemment relevés en contrôle.",
     quote:
-      "Le traitement par un sous-traitant est régi par un contrat ou un autre acte juridique [...] qui lie le sous-traitant à l'égard du responsable du traitement, qui définit l'objet et la durée du traitement, la nature et la finalité du traitement, le type de données à caractère personnel et les catégories de personnes concernées [...]",
+      "Le traitement par un sous-traitant est régi par un contrat ou un autre acte juridique [...] qui lie le sous-traitant à l'égard du responsable du traitement, définit l'objet et la durée du traitement, la nature et la finalité du traitement, le type de données à caractère personnel et les catégories de personnes concernées [...]",
     appliesTo: ['Responsable de traitement', 'Sous-traitant'],
     requirements: [
       { id: 'RGPD-A28-R1', text: "Évaluer les garanties du sous-traitant avant contractualisation.", type: 'organisationnel' },
@@ -317,7 +317,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 32',
     order: 32,
-    chapter: 'Chapitre IV : Section 2 : Sécurité',
+    chapter: 'Chapitre IV, section 2 : Sécurité',
     title: 'Sécurité du traitement',
     statement:
       "Mettre en œuvre des mesures techniques et organisationnelles garantissant un niveau de sécurité adapté au risque, et disposer d'une procédure permettant d'en tester et d'en évaluer régulièrement l'efficacité. C'est l'article qui recoupe le plus directement NIS2 et DORA.",
@@ -345,7 +345,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 33',
     order: 33,
-    chapter: 'Chapitre IV : Section 2 : Sécurité',
+    chapter: 'Chapitre IV, section 2 : Sécurité',
     title: "Notification d'une violation à l'autorité de contrôle",
     statement:
       "Notifier à l'autorité de contrôle toute violation de données personnelles dans les 72 heures après en avoir pris connaissance, sauf si la violation est peu susceptible d'engendrer un risque pour les droits et libertés. Toute violation, notifiée ou non, doit être documentée en interne.",
@@ -372,7 +372,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 34',
     order: 34,
-    chapter: 'Chapitre IV : Section 2 : Sécurité',
+    chapter: 'Chapitre IV, section 2 : Sécurité',
     title: 'Communication de la violation aux personnes concernées',
     statement:
       "Lorsque la violation est susceptible d'engendrer un risque élevé pour les droits et libertés, informer les personnes concernées dans les meilleurs délais, en termes clairs et simples. Le chiffrement rendant les données incompréhensibles dispense de cette communication.",
@@ -395,7 +395,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 35',
     order: 35,
-    chapter: 'Chapitre IV : Section 3 : Analyse d\'impact',
+    chapter: 'Chapitre IV, section 3 : Analyse d\'impact',
     title: "Analyse d'impact relative à la protection des données",
     statement:
       "Réaliser une analyse d'impact avant tout traitement susceptible d'engendrer un risque élevé, notamment en cas d'évaluation systématique, de traitement à grande échelle de données sensibles, ou de surveillance systématique à grande échelle d'une zone accessible au public.",
@@ -420,7 +420,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 36',
     order: 36,
-    chapter: 'Chapitre IV : Section 3 : Analyse d\'impact',
+    chapter: 'Chapitre IV, section 3 : Analyse d\'impact',
     title: 'Consultation préalable de l\'autorité de contrôle',
     statement:
       "Lorsque l'analyse d'impact conclut à un risque élevé résiduel que le responsable ne peut atténuer, consulter l'autorité de contrôle avant de démarrer le traitement. L'autorité dispose de huit semaines, prorogeables de six.",
@@ -442,7 +442,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 37 à 39',
     order: 37,
-    chapter: 'Chapitre IV : Section 4 : Délégué à la protection des données',
+    chapter: 'Chapitre IV, section 4 : Délégué à la protection des données',
     title: 'Désignation et mission du délégué à la protection des données',
     statement:
       "Désigner un délégué lorsque l'organisation est une autorité publique, ou que ses activités de base impliquent un suivi régulier et systématique à grande échelle, ou un traitement à grande échelle de données sensibles. Le délégué doit être associé à toutes les questions de protection des données et ne recevoir aucune instruction sur l'exercice de ses missions.",
@@ -466,7 +466,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Articles 40 à 43',
     order: 40,
-    chapter: 'Chapitre IV : Section 5 : Codes de conduite et certification',
+    chapter: 'Chapitre IV, section 5 : Codes de conduite et certification',
     title: 'Codes de conduite et certification',
     statement:
       "L'adhésion à un code de conduite approuvé ou l'obtention d'une certification agréée constitue un élément permettant de démontrer le respect des obligations. Ces dispositifs sont facultatifs mais opposables en contrôle.",
@@ -514,7 +514,7 @@ export const RGPD_OBLIGATIONS: Obligation[] = [
     regulation: 'RGPD',
     article: 'Article 83',
     order: 83,
-    chapter: 'Chapitre VIII : Voies de recours et sanctions',
+    chapter: 'Chapitre VIII : Voies de recours, responsabilité et sanctions',
     title: 'Conditions générales des amendes administratives',
     statement:
       "Connaître les deux paliers de sanction et les onze critères de modulation, afin d'apprécier l'exposition réelle. Les mesures de sécurité, la coopération avec l'autorité et l'existence de certifications sont expressément retenues comme circonstances atténuantes.",

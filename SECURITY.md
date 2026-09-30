@@ -18,7 +18,7 @@ Scopeo runs **on the user's machine**, or on a server of the organisation behind
 ### Administration
 
 - The first profile created becomes administrator. Administrators manage accounts, the directory, global settings and the log in a separate space.
-- The role is **checked by the server** on every `/api/admin` route. An administrator never reads nor changes other people's entities.
+- The role is **checked by the server** on every `/api/admin` route. An administrator never reads or changes other people's entities.
 - At least one active administrator always remains; an administrator cannot remove their own rights.
 - Administration actions and account security changes are recorded in a log.
 - If the only administrator is locked out, `python -m app.recover "Account name"` run on the server restores access. It requires access to the server itself and is recorded in the log.

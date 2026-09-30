@@ -56,7 +56,7 @@ Reference screens (**Corpus**, **Crosswalk**, **Timeline**) are available at any
 |---|---|---|---|
 | Local account | Everyone, always available | Scopeo (bcrypt) | Scopeo (TOTP), optional |
 | LDAP directory | On-premises Active Directory, OpenLDAP | The directory | Scopeo (TOTP), optional |
-| Single sign-on (OIDC) | Entra ID, Google, Okta, Keycloak | The identity provider | The identity provider |
+| Single sign-on (OIDC) | Entra ID, Google Workspace, Okta, Keycloak | The identity provider | The identity provider |
 
 - **First launch**: the home page only offers to create the administrator profile.
 - **Administration space** (profile menu → Administration): Accounts, LDAP directory, Single sign-on, Settings, Log. Dedicated guided tour at first visit.
@@ -142,7 +142,7 @@ Regulatory results (applicable texts, score, priorities) are computed by the int
 
 - **Entity export** (Profile and data → Export): JSON `{"format": "scopeo/entity", "version": 2, "entity": {…}}` with answers, assessment, profile, notes, ISO 27001 data, weights and contacts. Import always creates a new entity.
 - **PDF deliverables**: from the Report page.
-- **Statement of Applicability**: CSV, XLSX or ODS import in the ISO 27001 module.
+- **Statement of Applicability**: CSV, TSV, XLSX or ODS import in the ISO 27001 module; a PDF is kept as a reference document.
 
 ### Identity
 
@@ -196,7 +196,7 @@ Database migrations run automatically at start-up (added columns); no manual ste
 - **Where**: data folder `server/data` (or the Docker volume): `scopeo.db` and `secret.key`. Both are sensitive.
 - **What leaves the server**: nothing, apart from identity exchanges with your directory or identity provider when you enable them, and the GitHub issue a user chooses to open from the feedback button. No telemetry.
 - **Backup**: Administration → Settings → Download a backup, or `python -m app.backup <folder>` for scheduled backups. Keep archives encrypted and off the server.
-- **Deletion**: deleting a profile deletes its entities, sessions and tokens. Guest data is erased at sign-out or when its session expires.
+- **Deletion**: deleting a profile deletes its entities, sessions and tokens. Guest data is erased at sign-out, or at the next server start once the session has expired.
 
 ## 11. Frequently asked questions
 
@@ -270,7 +270,7 @@ Les écrans de référence (**Corpus**, **Croisements**, **Échéancier**) sont 
 |---|---|---|---|
 | Compte local | Tout le monde, toujours disponible | Scopeo (bcrypt) | Scopeo (TOTP), facultative |
 | Annuaire LDAP | Active Directory sur site, OpenLDAP | L'annuaire | Scopeo (TOTP), facultative |
-| Connexion unique (OIDC) | Entra ID, Google, Okta, Keycloak | Le fournisseur d'identité | Le fournisseur d'identité |
+| Connexion unique (OIDC) | Entra ID, Google Workspace, Okta, Keycloak | Le fournisseur d'identité | Le fournisseur d'identité |
 
 - **Premier lancement** : l'accueil ne propose que la création du profil administrateur.
 - **Espace Administration** (menu du profil → Administration) : Comptes, Annuaire LDAP, Connexion unique, Réglages, Journal. Parcours guidé dédié à la première visite.
@@ -307,7 +307,7 @@ Signalez les vulnérabilités en privé, comme décrit dans [SECURITY.md](../SEC
 
 ### Réglages (Administration → Réglages)
 
-Création libre de profils, mode invité, durée des sessions (1 heure à 7 jours), adresse publique, jetons d'API personnels (désactivés par défaut), téléchargement d'une sauvegarde.
+Création libre de profils, mode invité, durée d'une session (1 heure à 7 jours), adresse publique, jetons d'API personnels (désactivés par défaut), téléchargement d'une sauvegarde.
 
 ## 7. Intégrations et API
 
@@ -356,7 +356,7 @@ Les résultats réglementaires (textes applicables, score, priorités) sont calc
 
 - **Export d'entité** (Profil et données → Exporter) : JSON `{"format": "scopeo/entity", "version": 2, "entity": {…}}` avec réponses, évaluation, fiche, notes, données ISO 27001, pondérations et contacts. L'import crée toujours une nouvelle entité.
 - **Livrables PDF** : depuis la page Rapport.
-- **Déclaration d'applicabilité** : import CSV, XLSX ou ODS dans le module ISO 27001.
+- **Déclaration d'applicabilité** : import CSV, TSV, XLSX ou ODS dans le module ISO 27001 ; un PDF est conservé comme pièce de référence.
 
 ### Identité
 
@@ -410,7 +410,7 @@ Les migrations de la base s'exécutent automatiquement au démarrage (colonnes a
 - **Où** : dossier de données `server/data` (ou le volume Docker) : `scopeo.db` et `secret.key`. Les deux sont sensibles.
 - **Ce qui sort du serveur** : rien, hormis les échanges d'identité avec votre annuaire ou votre fournisseur d'identité quand vous les activez, et l'issue GitHub qu'un utilisateur choisit d'ouvrir depuis le bouton de retour. Aucune télémétrie.
 - **Sauvegarde** : Administration → Réglages → Télécharger une sauvegarde, ou `python -m app.backup <dossier>` pour une sauvegarde planifiée. Conservez les archives chiffrées et hors du serveur.
-- **Suppression** : supprimer un profil supprime ses entités, ses sessions et ses jetons. Les données d'un invité sont effacées à la déconnexion ou à l'expiration de sa session.
+- **Suppression** : supprimer un profil supprime ses entités, ses sessions et ses jetons. Les données d'un invité sont effacées à la déconnexion, ou au démarrage suivant du serveur une fois la session expirée.
 
 ## 11. Questions fréquentes
 

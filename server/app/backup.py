@@ -23,19 +23,19 @@ from pathlib import Path
 
 from .db import DATA_DIR, DATABASE_URL
 
-RESTORE_NOTE = """Scopeo : restauration / restore
-
-FR
-1. Arrêter Scopeo.
-2. Remplacer scopeo.db et secret.key du dossier de données (server/data, ou le volume Docker scopeo-data) par ceux de cette archive.
-   Si SCOPEO_SECRET_KEY est défini, garder la même valeur.
-3. Supprimer scopeo.db-wal et scopeo.db-shm s'ils existent, puis relancer Scopeo.
+RESTORE_NOTE = """Scopeo : restore / restauration
 
 EN
 1. Stop Scopeo.
 2. Replace scopeo.db and secret.key in the data folder (server/data, or the scopeo-data Docker volume) with those from this archive.
    If SCOPEO_SECRET_KEY is set, keep the same value.
 3. Delete scopeo.db-wal and scopeo.db-shm if present, then start Scopeo again.
+
+FR
+1. Arrêter Scopeo.
+2. Remplacer scopeo.db et secret.key du dossier de données (server/data, ou le volume Docker scopeo-data) par ceux de cette archive.
+   Si SCOPEO_SECRET_KEY est défini, garder la même valeur.
+3. Supprimer scopeo.db-wal et scopeo.db-shm s'ils existent, puis relancer Scopeo.
 """
 
 
@@ -72,9 +72,9 @@ def build_archive() -> tuple[bytes, str]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Sauvegarde Scopeo / Scopeo backup")
-    parser.add_argument("destination", help="Dossier de destination / destination folder")
-    parser.add_argument("--keep", type=int, default=14, help="Nombre d'archives conservées / archives kept (0 = all)")
+    parser = argparse.ArgumentParser(description="Scopeo backup / Sauvegarde Scopeo")
+    parser.add_argument("destination", help="Destination folder / Dossier de destination")
+    parser.add_argument("--keep", type=int, default=14, help="Archives kept (0 = all) / Nombre d'archives conservées (0 = toutes)")
     args = parser.parse_args()
     dest = Path(args.destination)
     dest.mkdir(parents=True, exist_ok=True)

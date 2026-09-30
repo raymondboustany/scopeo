@@ -21,7 +21,7 @@ const WITHHELD = [
   tr('Sanctions encourues et montants', 'Penalties and amounts at stake'),
   tr('Détail de l’évaluation : notes, preuves, responsables', 'Assessment details: notes, evidence, owners'),
   tr('Détail des contrôles ISO 27001 et déclaration d’applicabilité', 'ISO 27001 control details and Statement of Applicability'),
-  tr('Contacts internes et incidents', 'Internal contacts and incidents'),
+  tr('Contacts internes et chaîne d’escalade', 'Internal contacts and escalation chain'),
 ]
 
 function publicUrl(token: string) {

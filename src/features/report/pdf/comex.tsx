@@ -41,7 +41,7 @@ export function ComexReport({ d }: { d: ReportData }) {
           <Kpi
             label={tr('Sanction maximale', 'Maximum penalty')}
             value={d.maxExposure ? eur(d.maxExposure.eur) : tr('n.c.', 'n/a')}
-            note={d.maxExposure ? tr(`Plafond ${REG_NAME[d.maxExposure.regulation]}`, `${REG_NAME[d.maxExposure.regulation]} cap`) : tr('Non valorisée', 'Not quantified')}
+            note={d.maxExposure ? tr(`Plafond ${REG_NAME[d.maxExposure.regulation].replace(' (ReCyF)', '')}`, `${REG_NAME[d.maxExposure.regulation].replace(' (ReCyF)', '')} cap`) : tr('Non valorisée', 'Not quantified')}
           />
         </View>
 
@@ -77,7 +77,7 @@ export function ComexReport({ d }: { d: ReportData }) {
               <Text key="t" style={{ fontSize: 8, fontFamily: 'Helvetica-Bold', color: REG_HEX[v.regulation] }}>{REG_NAME[v.regulation]}</Text>,
               clean(v.qualification ?? v.status),
               pct(cov.byRegulation.find((b) => b.regulation === v.regulation)?.score ?? 0),
-              v.exposure?.maxEur ? eur(v.exposure.maxEur) : tr('Régime national', 'National regime'),
+              v.exposure?.maxEur ? eur(v.exposure.maxEur) : tr('Non chiffré', 'Not quantified'),
             ])}
         />
 

@@ -138,7 +138,7 @@ export function IsoThemeSection({ view }: { view: IsoThemeView }) {
               : tr("Cette correspondance alimente le pré-remplissage de l'évaluation, toujours modifiable.", 'This match feeds the pre-filling of the assessment, which stays editable.')}
           </p>
           <Link to="/app/iso27001" className="inline-block text-xs text-accent hover:underline">
-            {tr('Ouvrir la checklist ISO 27001', 'Open the ISO 27001 checklist')}
+            {tr('Ouvrir la liste de contrôle ISO 27001', 'Open the ISO 27001 checklist')}
           </Link>
         </div>
       )}

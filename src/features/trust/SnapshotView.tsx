@@ -7,6 +7,7 @@ import { cn, formatDate, formatPct } from '@/lib/utils'
 import type { PublicSnapshot } from '@/types/domain'
 import { IsoBadge } from '@/features/iso/IsoBadge'
 import { DOMAIN_LABELS } from '@/engines/scores'
+import { SECTOR_BY_VALUE } from '@/data/questionnaire'
 import { tr } from '@/i18n'
 
 /**
@@ -26,7 +27,7 @@ export function SnapshotView({ name, snapshot }: { name: string; snapshot: Publi
         <Card>
           <CardHeader
             title={name}
-            subtitle={[snapshot.sectorLabel, snapshot.nis2Category ? tr(`Entité ${snapshot.nis2Category} au sens de NIS2`, `${snapshot.nis2Category === 'essentielle' ? 'Essential' : 'Important'} entity under NIS2`) : null].filter(Boolean).join(' · ') || undefined}
+            subtitle={[(snapshot.sector ? SECTOR_BY_VALUE.get(snapshot.sector)?.label : undefined) ?? snapshot.sectorLabel, snapshot.nis2Category ? tr(`Entité ${snapshot.nis2Category} au sens de NIS2`, `${snapshot.nis2Category === 'essentielle' ? 'Essential' : 'Important'} entity under NIS2`) : null].filter(Boolean).join(' · ') || undefined}
             icon={<ShieldCheck size={16} />}
           />
           <div className="grid gap-4 p-5 sm:grid-cols-2">

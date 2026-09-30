@@ -130,10 +130,10 @@ export const ISO_THEME_META: Record<IsoThemeId, { code: string; label: string; c
  * statut déclaré de la démarche, sans saisie contrôle par contrôle.
  */
 export const ISO_CLAUSES: { id: string; title: string }[] = [
-  { id: 'C6.1', title: tr('Clause 6.1 : appréciation et traitement des risques', 'Clause 6.1: risk assessment and treatment') },
-  { id: 'C7.2', title: tr('Clause 7.2 : compétences', 'Clause 7.2: competence') },
-  { id: 'C7.5', title: tr('Clause 7.5 : informations documentées', 'Clause 7.5: documented information') },
-  { id: 'C9.2', title: tr('Clause 9.2 : audit interne', 'Clause 9.2: internal audit') },
+  { id: 'C6.1', title: tr('Article 6.1 : appréciation et traitement des risques', 'Clause 6.1: risk assessment and treatment') },
+  { id: 'C7.2', title: tr('Article 7.2 : compétences', 'Clause 7.2: competence') },
+  { id: 'C7.5', title: tr('Article 7.5 : informations documentées', 'Clause 7.5: documented information') },
+  { id: 'C9.2', title: tr('Article 9.2 : audit interne', 'Clause 9.2: internal audit') },
 ]
 
 export const ISO_CLAUSE_BY_ID = new Map(ISO_CLAUSES.map((c) => [c.id, c]))

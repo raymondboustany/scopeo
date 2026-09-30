@@ -1,6 +1,6 @@
 import type { Answers, RegulationId, TimelineEvent } from '@/types/domain'
 import { TIMELINE } from '@/data/timeline'
-import { COLON, tr } from '@/i18n'
+import { tr } from '@/i18n'
 import { parseDate } from '@/lib/utils'
 
 /**
@@ -49,13 +49,21 @@ export function regulatoryAlerts(
       const upcoming = date.getTime() >= now.getTime()
       const days = Math.round(Math.abs(date.getTime() - now.getTime()) / DAY)
       const id = `TL:${e.id}`
+      const when =
+        days === 0
+          ? tr("Aujourd'hui", 'Today')
+          : upcoming
+            ? days === 1
+              ? tr('Demain', 'Tomorrow')
+              : tr(`Dans ${days} jours`, `In ${days} days`)
+            : days === 1
+              ? tr('Hier', 'Yesterday')
+              : tr(`Il y a ${days} jours`, `${days} days ago`)
       return {
         id,
         level: upcoming && days <= 14 ? 'warning' : 'info',
         title: e.title,
-        detail: upcoming
-          ? `${days === 0 ? tr("Aujourd'hui", 'Today') : tr(`Dans ${days} jour${days > 1 ? 's' : ''}`, `In ${days} day${days > 1 ? 's' : ''}`)}${COLON}${e.detail}`
-          : `${tr(`En vigueur depuis ${days} jour${days > 1 ? 's' : ''}`, `In force for ${days} day${days > 1 ? 's' : ''}`)}${COLON}${e.detail}`,
+        detail: `${when}. ${e.detail}`,
         date,
         href: `/app/echeancier?event=${e.id}`,
         pulse: upcoming && days <= 30 && !seen.includes(id),

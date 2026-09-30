@@ -37,6 +37,7 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
       {applicable.map((r, i) => {
         const authorities = authoritiesFor(r, answers)
         const main = authorities[0]
+        const viaDora = r === 'NIS2' && applicable.includes('DORA') && answers.entite_financiere === 'oui'
         return (
           <motion.a
             key={r}
@@ -54,20 +55,20 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
             </div>
             <div className="mt-3 text-base font-semibold text-ink">{authorities.map((a) => a.name).join(' / ')}</div>
             <div className="text-2xs text-ink-3">{main.role}</div>
-            {r === 'NIS2' && applicable.includes('DORA') && answers.entite_financiere === 'oui' ? (
+            {viaDora ? (
               <p className="mt-3 rounded-sm bg-overlay px-2.5 py-2 text-2xs leading-snug text-ink-2">
                 {tr('Incidents notifiés au titre de DORA, qui prime ici sur NIS2 (article 4 de NIS2).', 'Incidents are reported under DORA, which prevails over NIS2 here (Article 4 of NIS2).')}
               </p>
             ) : null}
             <ul className="mt-3 space-y-1">
-              {NOTIFICATION_DELAYS[r].map((d) => (
+              {(viaDora ? [] : NOTIFICATION_DELAYS[r]).map((d) => (
                 <li key={d.step} className="flex items-center justify-between gap-2 text-xs">
                   <span className="text-ink-2">{d.step}</span>
                   <span className="shrink-0 whitespace-nowrap rounded-full bg-overlay px-2 py-0.5 font-mono text-2xs text-ink">{d.delay}</span>
                 </li>
               ))}
             </ul>
-            {main.phone || main.email ? (
+            {!viaDora && (main.phone || main.email) ? (
               <div className="mt-3 space-y-1 border-t border-rule pt-2.5 text-2xs text-ink-3">
                 {main.phone ? (
                   <div className="flex items-center gap-1.5">
@@ -80,7 +81,7 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
                   </div>
                 ) : null}
               </div>
-            ) : (
+            ) : viaDora ? null : (
               <p className="mt-3 border-t border-rule pt-2.5 text-2xs leading-snug text-ink-3">{main.channel}</p>
             )}
             {r === 'AIACT' ? (
@@ -92,7 +93,7 @@ export function AuthorityCards({ applicable, answers }: { applicable: Regulation
               </p>
             ) : null}
             {r === 'DORA' ? (
-              <p className="mt-2 text-[10px] leading-snug text-ink-4">{tr('* 4 h après classification comme majeur, 24 h au plus tard après la détection.', '* 4 h after classification as major, no later than 24 h after detection.')}</p>
+              <p className="mt-2 text-[10px] leading-snug text-ink-4">{tr('* 4 h après classification comme majeur, 24 h au plus tard après la prise de connaissance.', '* 4 h after classification as major, no later than 24 h after becoming aware.')}</p>
             ) : null}
           </motion.a>
         )
@@ -133,7 +134,7 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
   let last: { id: string; left: number } | null = null
   for (const st of [...dated].sort((a, b) => a.due!.getTime() - b.due!.getTime())) {
     const l = x(st.due!.getTime())
-    const clear = !last || l - last.left >= 14
+    const clear = !last || l - last.left >= 22
     if (clear || st.id === nearest?.id) {
       // Le prochain délai prend la place d'un voisin trop proche.
       if (!clear && last && last.id !== nearest?.id) labelled.delete(last.id)
@@ -182,7 +183,7 @@ export function DeadlineTimeline({ steps, detectedAt, now }: { steps: IncidentSt
                     style.tone,
                   )}
                 >
-                  {REG_LABEL[REGIME_REGULATION[s.regime]].split(' ')[0]} · {s.label.split(' ')[0]}
+                  {REG_LABEL[REGIME_REGULATION[s.regime]]} · {s.label.split(' ').slice(0, 2).join(' ')}
                 </span>
               ) : null}
             </div>
@@ -363,6 +364,8 @@ export function ReadinessList({ items }: { items: ReadinessItem[] }) {
    Simulation : exercer les horloges sans rien enregistrer
    ========================================================================== */
 
+const dueFromT0 = (hours: number) => (hours > 72 ? `T0 + ${Math.round(hours / 24)} ${tr('jours', 'days')}` : `T0 + ${hours} h`)
+
 const ALL_REGIMES: Regime[] = ['RGPD', 'NIS2', 'DORA', 'CRA-VULN', 'CRA-INC', 'AIACT']
 
 export function Simulator({ applicable, answers }: { applicable: RegulationId[]; answers: Answers }) {
@@ -497,7 +500,7 @@ export function Simulator({ applicable, answers }: { applicable: RegulationId[];
                   </td>
                   <td className="py-2.5 pr-3 text-ink-2">{s.authority}</td>
                   <td className="py-2.5 pr-3 font-mono text-xs text-ink-2">
-                    {s.due ? `T0 + ${Math.round((s.due.getTime() - t0.getTime()) / 3_600_000)} h` : tr('sans délai chiffré', 'no fixed deadline')}
+                    {s.due ? dueFromT0(Math.round((s.due.getTime() - t0.getTime()) / 3_600_000)) : tr('sans délai chiffré', 'no fixed deadline')}
                     {s.provisional && s.due ? <span className="ml-1 text-ink-4">{tr('(provisoire)', '(provisional)')}</span> : null}
                   </td>
                   <td className={cn('py-2.5 text-xs font-medium', st.tone)}>{st.label}</td>

@@ -19,10 +19,10 @@ import { NextStep } from '@/components/layout/NextStep'
 import { COVERAGE_LABEL, WAVES } from '@/engines/prioritisation'
 import { CROSSWALK_BY_ID } from '@/data/crosswalk'
 import { RECURRING_DUTIES } from '@/data/timeline'
-import { cn, formatDateShort, formatPct } from '@/lib/utils'
+import { cn, formatDateShort, formatPct, slugify } from '@/lib/utils'
 import { REG_LABEL } from '@/components/ui/tokens'
 import type { PrioritisedItem } from '@/types/domain'
-import { COLON, tr } from '@/i18n'
+import { COLON, LANG, tr } from '@/i18n'
 
 /**
  * Marque d'ordre des octets. Sans elle, un tableur francophone ouvre le
@@ -83,7 +83,7 @@ export default function RoadmapPage() {
       }),
     ]
     const csv = rows
-      .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(';'))
+      .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(LANG === 'fr' ? ';' : ','))
       .join('\r\n')
     // La marque d'ordre des octets en tête garantit qu'un tableur francophone
     // ouvre le fichier en UTF-8 plutôt qu'en page de code locale.
@@ -91,7 +91,7 @@ export default function RoadmapPage() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${tr('feuille-de-route', 'roadmap')}-${profile.name.replace(/[^\w-]+/g, '-').toLowerCase()}.csv`
+    a.download = `${tr('feuille-de-route', 'roadmap')}-${slugify(profile.name)}.csv`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -116,7 +116,7 @@ export default function RoadmapPage() {
             label={tr('Restant à traiter', 'Remaining')}
             value={remaining.length}
             tone={remaining.length > 0 ? 'caution' : 'positive'}
-            hint={tr('Exigences non formalisées et non testées.', 'Requirements not yet formalised and tested.')}
+            hint={tr('Exigences pas encore en place : absentes, partielles ou non évaluées.', 'Requirements not yet in place: missing, partial or not assessed.')}
           />
           <Stat
             label={tr('Charge totale', 'Total effort')}

@@ -347,8 +347,8 @@ function CreateDialog({ onClose, onCreated }: { onClose: () => void; onCreated: 
         <Field label={tr('Nom du profil', 'Profile name')}>
           <Input value={name} onChange={(e) => setName(e.target.value)} autoFocus placeholder="Claire Martin" />
         </Field>
-        <Field label={tr('Fonction', 'Role')}>
-          <Select value={role} onValueChange={(v) => setRole(v as UserRole)} options={ROLES} ariaLabel={tr('Fonction', 'Role')} />
+        <Field label={tr('Fonction', 'Job title')}>
+          <Select value={role} onValueChange={(v) => setRole(v as UserRole)} options={ROLES} ariaLabel={tr('Fonction', 'Job title')} />
         </Field>
         <Field label={tr('Organisation', 'Organisation')} hint={tr('facultatif', 'optional')}>
           <Input value={organisation} onChange={(e) => setOrganisation(e.target.value)} />
@@ -385,7 +385,7 @@ function PasswordDialog({ user, onClose, onDone }: { user: AdminUser; onClose: (
       open
       onOpenChange={(v) => (v ? null : onClose())}
       title={tr(`Mot de passe provisoire pour ${user.name}`, `Temporary password for ${user.name}`)}
-      description={tr('Ses sessions ouvertes sont fermées ; il choisira un nouveau mot de passe à la connexion.', 'Their open sessions are closed; they will choose a new password at sign-in.')}
+      description={tr('Ses sessions ouvertes sont fermées ; la personne choisira un nouveau mot de passe à la connexion.', 'Their open sessions are closed; they will choose a new password at sign-in.')}
       footer={
         <>
           <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>
@@ -453,8 +453,12 @@ function DeleteDialog({ user, onClose, onDone }: { user: AdminUser; onClose: () 
       onOpenChange={(v) => (v ? null : onClose())}
       title={tr('Supprimer ce compte ?', 'Delete this account?')}
       description={tr(
-        `Le compte « ${user.name} » et ses ${user.entity_count} entité(s) seront définitivement supprimés.`,
-        `The account "${user.name}" and its ${user.entity_count} entit${user.entity_count > 1 ? 'ies' : 'y'} will be permanently deleted.`,
+        user.entity_count === 0
+          ? `Le compte « ${user.name} » sera définitivement supprimé.`
+          : `Le compte « ${user.name} » et ${user.entity_count === 1 ? 'son entité' : `ses ${user.entity_count} entités`} seront définitivement supprimés.`,
+        user.entity_count === 0
+          ? `The account "${user.name}" will be permanently deleted.`
+          : `The account "${user.name}" and its ${user.entity_count === 1 ? 'entity' : `${user.entity_count} entities`} will be permanently deleted.`,
       )}
       footer={
         <>

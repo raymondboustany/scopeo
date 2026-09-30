@@ -61,8 +61,8 @@ export const REGIME_LABEL: Record<Regime, { title: string; trigger: string }> = 
   AIACT: {
     title: tr("Incident grave lié à un système d'IA", 'Serious incident involving an AI system'),
     trigger: tr(
-      "Incident ou dysfonctionnement d'un système d'IA à haut risque ayant entraîné un décès, une atteinte grave à la santé, une perturbation grave d'une infrastructure critique, une violation des droits fondamentaux ou un dommage grave aux biens ou à l'environnement (art. 3, point 49).",
-      'Incident or malfunction of a high-risk AI system leading to death, serious harm to health, serious disruption of critical infrastructure, an infringement of fundamental rights, or serious harm to property or the environment (Art. 3(49)).',
+      "Incident ou dysfonctionnement d'un système d'IA à haut risque ayant entraîné un décès, une atteinte grave à la santé, une perturbation grave et irréversible d'une infrastructure critique, une violation des obligations du droit de l'Union protégeant les droits fondamentaux ou un dommage grave aux biens ou à l'environnement (art. 3, point 49).",
+      'Incident or malfunction of a high-risk AI system leading to death, serious harm to health, serious and irreversible disruption of critical infrastructure, an infringement of obligations under Union law protecting fundamental rights, or serious harm to property or the environment (Art. 3(49)).',
     ),
   },
 }
@@ -107,7 +107,7 @@ export const AUTHORITIES: Record<string, Authority> = {
     id: 'ACPR',
     name: 'ACPR',
     role: tr('Autorité de supervision, banque, paiement, assurance', 'Supervisor, banking, payments, insurance'),
-    channel: tr("Déclaration des incidents majeurs selon l'instruction n° 2025-I-10", 'Major incident reporting under instruction no. 2025-I-10'),
+    channel: tr("Déclaration des incidents majeurs selon l'instruction n°\u00a02025-I-10", 'Major incident reporting under instruction no. 2025-I-10'),
     url: 'https://acpr.banque-france.fr/fr/publications-et-statistiques/publications/instruction-ndeg-2025-i-10-relative-aux-declarations-des-incidents-majeurs-lies-aux-tic-et-aux',
   },
   AMF: {
@@ -115,14 +115,14 @@ export const AUTHORITIES: Record<string, Authority> = {
     name: 'AMF',
     role: tr('Autorité de supervision, marchés et gestion d’actifs', 'Supervisor, markets and asset management'),
     channel: tr('Formulaire de notification DORA des incidents et cybermenaces', 'DORA incident and cyber threat notification form'),
-    url: 'https://www.amf-france.org/en/forms-and-declarations/dora',
+    url: tr('https://www.amf-france.org/fr/formulaires-et-declarations/dora', 'https://www.amf-france.org/en/forms-and-declarations/dora'),
   },
   ESMA: {
     id: 'ESMA',
-    name: 'AEMF (ESMA)',
+    name: tr('AEMF', 'ESMA'),
     role: tr('Supervision européenne directe', 'Direct European supervision'),
     channel: tr(
-      "Agences de notation, référentiels centraux et référentiels des titrisations relèvent directement de l'ESMA",
+      "Agences de notation, référentiels centraux et référentiels des titrisations relèvent directement de l'AEMF",
       'Credit rating agencies, trade repositories and securitisation repositories report directly to ESMA',
     ),
     url: 'https://www.esma.europa.eu/',
@@ -201,12 +201,12 @@ export const NOTIFICATION_DELAYS: Record<RegulationId, { step: string; delay: st
   CRA: [
     { step: tr('Alerte précoce', 'Early warning'), delay: '24 h' },
     { step: tr('Notification', 'Notification'), delay: '72 h' },
-    { step: tr('Rapport final', 'Final report'), delay: tr('14 j / 1 mois', '14 d / 1 month') },
+    { step: tr('Rapport final', 'Final report'), delay: tr('14 jours / 1 mois', '14 days / 1 month') },
   ],
   AIACT: [
-    { step: tr('Infrastructure critique, grande ampleur', 'Critical infrastructure, widespread'), delay: tr('2 j', '2 d') },
-    { step: tr('Décès', 'Death'), delay: tr('10 j', '10 d') },
-    { step: tr('Autre incident grave', 'Other serious incident'), delay: tr('15 j', '15 d') },
+    { step: tr('Infrastructure critique, grande ampleur', 'Critical infrastructure, widespread'), delay: tr('2 jours', '2 days') },
+    { step: tr('Décès', 'Death'), delay: tr('10 jours', '10 days') },
+    { step: tr('Autre incident grave', 'Other serious incident'), delay: tr('15 jours', '15 days') },
   ],
 }
 
@@ -367,12 +367,12 @@ export function incidentSteps(incident: IncidentRecord, answers: Answers, now = 
         label: tr('Notification initiale', 'Initial notification'),
         detail: classified
           ? tr(
-              '4 heures après la classification comme incident majeur, et au plus tard 24 heures après la détection.',
-              '4 hours after classification as a major incident, and no later than 24 hours after detection.',
+              '4 heures après la classification comme incident majeur, et au plus tard 24 heures après la prise de connaissance.',
+              '4 hours after classification as a major incident, and no later than 24 hours after becoming aware.',
             )
           : tr(
-              "L'incident n'est pas encore classé : l'échéance retenue est le plafond de 24 heures après la détection. Renseignez l'heure de classification pour appliquer le délai de 4 heures.",
-              'The incident is not yet classified: the deadline used is the 24-hour cap after detection. Enter the classification time to apply the 4-hour deadline.',
+              "L'incident n'est pas encore classé : l'échéance retenue est le plafond de 24 heures après la prise de connaissance. Renseignez l'heure de classification pour appliquer le délai de 4 heures.",
+              'The incident is not yet classified: the deadline used is the 24-hour cap after becoming aware. Enter the classification time to apply the 4-hour deadline.',
             ),
         basis: tr('DORA, article 19 ; règlement délégué (UE) 2025/301, article 5', 'DORA, Article 19; Delegated Regulation (EU) 2025/301, Article 5'),
         authority: doraAuthority,
@@ -420,7 +420,7 @@ export function incidentSteps(incident: IncidentRecord, answers: Answers, now = 
     const isVuln = kind === 'CRA-VULN'
     const notifDue = addH(detected, 72)
     const notifDone = done(`${kind}-notification`)
-    const authority = 'ENISA (CERT-FR)'
+    const authority = AUTHORITIES.ENISA.name
     push(
       {
         id: `${kind}-alerte`,
@@ -538,7 +538,7 @@ export function formatRemaining(ms: number): string {
   const h = Math.floor((abs % 86_400_000) / H)
   const m = Math.floor((abs % H) / 60_000)
   const day = tr('j', 'd')
-  const core = d > 0 ? `${d} ${day} ${h} h` : h > 0 ? `${h} h ${String(m).padStart(2, '0')}` : `${m} min`
+  const core = d > 0 ? `${d} ${day} ${h} h` : h > 0 ? tr(`${h} h ${String(m).padStart(2, '0')}`, `${h}h ${String(m).padStart(2, '0')}m`) : `${m} min`
   return ms < 0 ? tr(`dépassé de ${core}`, `overdue by ${core}`) : core
 }
 
@@ -602,7 +602,7 @@ export function readiness(applicable: RegulationId[], answers: Answers, contacts
       id: 'reponse',
       label: tr('Appui technique à la réponse identifié', 'Technical response support identified'),
       detail: tr(
-        'Équipe interne ou prestataire sous contrat (de préférence qualifié PRIS) pour contenir l’incident et préserver les preuves.',
+        'Équipe interne ou prestataire sous contrat (de préférence un prestataire qualifié PRIS) pour contenir l’incident et préserver les preuves.',
         'Internal team or contracted provider (preferably PRIS-qualified) to contain the incident and preserve evidence.',
       ),
       ok: has('reponse'),
@@ -633,8 +633,8 @@ export function readiness(applicable: RegulationId[], answers: Answers, contacts
       id: 'dora',
       label: tr('Critères de classification DORA connus', 'DORA classification criteria known'),
       detail: tr(
-        'Le délai de 4 h court à partir de la classification comme majeur (règlement délégué 2024/1772).',
-        'The 4-hour clock runs from classification as major (Delegated Regulation 2024/1772).',
+        'Le délai de 4 h court à partir de la classification comme majeur, selon les critères du règlement délégué 2024/1772 (délai fixé par le règlement délégué 2025/301).',
+        'The 4-hour clock runs from classification as major under the criteria of Delegated Regulation 2024/1772 (deadline set by Delegated Regulation 2025/301).',
       ),
       ok: true,
     })

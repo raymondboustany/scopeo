@@ -7,9 +7,9 @@ import type {
   RegulationVerdict,
   VerdictStatus,
 } from '@/types/domain'
-import { SECTOR_BY_VALUE, SIZE_INDEPENDENT_TYPES } from '@/data/questionnaire'
+import { FINANCIAL_TYPES, SECTOR_BY_VALUE, SIZE_INDEPENDENT_TYPES } from '@/data/questionnaire'
 import { REGULATIONS } from '@/data/regulations'
-import { LOCALE, tr } from '@/i18n'
+import { LOCALE, NBSP, tr } from '@/i18n'
 
 /**
  * Moteur de qualification.
@@ -119,15 +119,15 @@ function exposure(
 
 export function fmtEur(n: number): string {
   const en = LOCALE === 'en-GB'
-  if (n >= 1_000_000) {
+  if (n >= 999_500) {
     const v = (n / 1_000_000).toLocaleString(LOCALE, { maximumFractionDigits: 1 })
-    return en ? `€${v}M` : `${v} M€`
+    return en ? `€${v}M` : `${v}${NBSP}M€`
   }
   if (n >= 1_000) {
     const v = (n / 1_000).toLocaleString(LOCALE, { maximumFractionDigits: 0 })
-    return en ? `€${v}k` : `${v} k€`
+    return en ? `€${v}k` : `${v}${NBSP}k€`
   }
-  return en ? `€${n.toLocaleString(LOCALE)}` : `${n.toLocaleString(LOCALE)} €`
+  return en ? `€${n.toLocaleString(LOCALE)}` : `${n.toLocaleString(LOCALE)}${NBSP}€`
 }
 
 // ---------------------------------------------------------------------------
@@ -222,6 +222,12 @@ function qualifyRgpd(a: Answers): RegulationVerdict {
   }
 
   const dpoRequired = str(a, 'autorite_publique') === 'oui' || str(a, 'suivi_grande_echelle') === 'oui'
+  const roleLabel =
+    str(a, 'role_rgpd') === 'sous_traitant'
+      ? tr('Sous-traitant', 'Processor')
+      : str(a, 'role_rgpd') === 'les_deux'
+        ? tr('Responsable de traitement et sous-traitant', 'Controller and processor')
+        : tr('Responsable de traitement', 'Controller')
 
   return {
     regulation: 'RGPD',
@@ -230,12 +236,8 @@ function qualifyRgpd(a: Answers): RegulationVerdict {
       status === 'hors_champ'
         ? null
         : dpoRequired
-          ? tr("Responsable soumis à désignation d'un délégué", 'Controller required to designate a DPO')
-          : str(a, 'role_rgpd') === 'sous_traitant'
-            ? tr('Sous-traitant', 'Processor')
-            : str(a, 'role_rgpd') === 'les_deux'
-              ? tr('Responsable de traitement et sous-traitant', 'Controller and processor')
-              : tr('Responsable de traitement', 'Controller'),
+          ? tr(`${roleLabel}, délégué obligatoire`, `${roleLabel}, DPO required`)
+          : roleLabel,
     basis,
     caveats,
     exposure: status === 'hors_champ' ? null : exposure('RGPD', 'RGPD-T2', a),
@@ -321,7 +323,7 @@ function qualifyNis2(a: Answers, recIdentified: boolean): Nis2Outcome {
   if (recIdentified) {
     basis.push({
       article: tr('Article 3, paragraphe 1, point f)', 'Article 3(1)(f)'),
-      label: tr("Entité désignée critique ou d'importance vitale", 'Entity designated as critical'),
+      label: tr("Entité désignée critique ou d'importance vitale", 'Entity designated as critical or of vital importance'),
       met: true,
       detail: tr(
         "L'identification comme entité critique emporte de plein droit la qualification d'entité essentielle, sans condition de taille ni de secteur.",
@@ -431,6 +433,7 @@ function qualifyDora(a: Answers): RegulationVerdict {
   const providesIct = str(a, 'services_ict') === 'oui'
   const financialClients = str(a, 'clients_financiers')
   const typeFin = str(a, 'type_financier')
+  const typeLabel = FINANCIAL_TYPES.find((t) => t.value === typeFin)?.label ?? typeFin
 
   const basis: LegalBasis[] = [
     {
@@ -439,12 +442,12 @@ function qualifyDora(a: Answers): RegulationVerdict {
       met: isFinancial,
       detail: isFinancial
         ? tr(
-            `L'entité relève du type « ${typeFin || 'non précisé'} », visé à l'article 2. Le règlement s'applique directement et intégralement.`,
-            `The entity is of type "${typeFin || 'unspecified'}", listed in Article 2. The regulation applies directly and in full.`,
+            `L'entité relève du type « ${typeLabel || 'non précisé'} », visé à l'article 2. Le règlement s'applique directement et intégralement.`,
+            `The entity is of type "${typeLabel || 'unspecified'}", listed in Article 2. The regulation applies directly and in full.`,
           )
         : tr(
-            "L'entité ne figure pas parmi les vingt et un types d'entités financières énumérés. Le règlement ne lui est pas directement applicable.",
-            'The entity is not one of the twenty-one listed types of financial entity. The regulation does not apply to it directly.',
+            "L'entité ne figure pas parmi les vingt types d'entités financières énumérés. Le règlement ne lui est pas directement applicable.",
+            'The entity is not one of the twenty listed types of financial entity. The regulation does not apply to it directly.',
           ),
     },
   ]
@@ -560,8 +563,8 @@ const CRA_PROCEDURE: Record<string, string> = {
     'Self-assessment is only possible by fully applying a harmonised standard or a European certification scheme; otherwise a notified body must be involved.',
   ),
   classe_ii: tr(
-    "L'évaluation par un organisme notifié est obligatoire (examen UE de type ou assurance qualité complète).",
-    'Assessment by a notified body is mandatory (EU type examination or full quality assurance).',
+    "L'évaluation par un organisme notifié est obligatoire (examen UE de type, assurance qualité complète ou schéma européen de certification de cybersécurité).",
+    'Assessment by a notified body is mandatory (EU type examination, full quality assurance or European cybersecurity certification scheme).',
   ),
   critique: tr(
     "Une certification européenne de cybersécurité est requise, au niveau d'assurance au moins « substantiel ».",
@@ -784,7 +787,7 @@ function qualifyAiAct(a: Answers): RegulationVerdict {
       met: f.highRisk,
       detail: f.highRisk
         ? tr(
-            `Au moins un système relève d'un domaine à haut risque${f.annexI ? " (composant de sécurité d'un produit de l'annexe I, applicable au 2 août 2028)" : ''}${f.annexIII.length > 0 ? " (annexe III, applicable au 2 décembre 2027)" : ''}. Les exigences des articles 8 à 27 s'appliquent selon le rôle de l'entité.`,
+            `Au moins un système relève d'un domaine à haut risque${f.annexI ? " (composant de sécurité d'un produit de l'annexe I, applicable à compter du 2 août 2028)" : ''}${f.annexIII.length > 0 ? " (annexe III, applicable à compter du 2 décembre 2027)" : ''}. Les exigences des articles 8 à 27 s'appliquent selon le rôle de l'entité.`,
             `At least one system falls within a high-risk area${f.annexI ? ' (safety component of an Annex I product, applicable from 2 August 2028)' : ''}${f.annexIII.length > 0 ? ' (Annex III, applicable from 2 December 2027)' : ''}. Articles 8 to 27 apply according to the entity's role.`,
           )
         : f.derogation && f.annexIII.length > 0

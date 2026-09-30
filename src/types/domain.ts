@@ -706,6 +706,8 @@ export interface IncidentRecord {
 export interface PublicSnapshot {
   generatedAt: string
   sectorLabel: string | null
+  /** Code du secteur : l'affichage public le traduit dans la langue du visiteur. */
+  sector?: string
   score: number
   scores: Partial<Record<RegulationId, number>>
   verdicts: { regulation: RegulationId; status: VerdictStatus; qualification: string | null }[]

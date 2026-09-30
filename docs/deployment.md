@@ -58,7 +58,7 @@ server {
 }
 ```
 
-Without Docker, run the server from the sources: `server/.venv/bin/python -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port 8000`, as a system service (systemd, Windows service).
+Without Docker, run the server from the sources: `server/.venv/bin/python -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port 8000`, as a system service (systemd, Windows service). On Windows, the interpreter is `server\.venv\Scripts\python.exe`.
 
 ## 2. Configure access (Administration space)
 
@@ -66,7 +66,7 @@ Sign in with the administrator profile, then **profile menu → Administration**
 
 1. **Settings**: enter the **public address** (`https://…`), close **self-service profile creation**, disable **guest mode** if you do not need it, choose the **session length**.
 2. **Accounts**: create accounts with a temporary password, or let people sign in through the directory or single sign-on. Appoint a second administrator.
-3. **LDAP directory** (on-premises Active Directory, OpenLDAP): address in `ldaps://`, service account with read-only rights, search base, filter, optional group (name or full DN; Active Directory nested groups are followed). If the directory certificate comes from an internal authority, paste that authority's certificate (PEM). Use the **Test** button, then switch it on. People can type `alice`, `DOMAINlice` or `alice@company.com`.
+3. **LDAP directory** (on-premises Active Directory, OpenLDAP): address in `ldaps://`, service account with read-only rights, search base, filter, optional group (name or full DN; Active Directory nested groups are followed). If the directory certificate comes from an internal authority, paste that authority's certificate (PEM). Use the **Test** button, then switch it on. People can type `alice`, `DOMAIN\alice` or `alice@company.com`.
 4. **Single sign-on (SSO)** (organisations in the cloud or hybrid): see below.
 5. **Log**: every administration action is recorded.
 
@@ -204,9 +204,9 @@ Sans Docker, lancez le serveur depuis les sources : `server/.venv/bin/python -m 
 
 Connectez-vous avec le profil administrateur, puis **menu du profil → Administration**.
 
-1. **Réglages** : renseignez l'**adresse publique** (`https://…`), fermez la **création libre de profils**, désactivez le **mode invité** si vous n'en avez pas besoin, choisissez la **durée des sessions**.
+1. **Réglages** : renseignez l'**adresse publique** (`https://…`), fermez la **création libre de profils**, désactivez le **mode invité** si vous n'en avez pas besoin, choisissez la **durée d'une session**.
 2. **Comptes** : créez des comptes avec un mot de passe provisoire, ou laissez les personnes se connecter par l'annuaire ou la connexion unique. Nommez un second administrateur.
-3. **Annuaire LDAP** (Active Directory sur site, OpenLDAP) : adresse en `ldaps://`, compte de service en lecture seule, base de recherche, filtre, groupe facultatif (nom ou DN complet ; les groupes imbriqués d'Active Directory sont suivis). Si le certificat de l'annuaire est émis par une autorité interne, collez le certificat de cette autorité (PEM). Utilisez le bouton **Tester**, puis activez. Les personnes peuvent saisir `alice`, `DOMAINElice` ou `alice@entreprise.fr`.
+3. **Annuaire LDAP** (Active Directory sur site, OpenLDAP) : adresse en `ldaps://`, compte de service en lecture seule, base de recherche, filtre, groupe facultatif (nom ou DN complet ; les groupes imbriqués d'Active Directory sont suivis). Si le certificat de l'annuaire est émis par une autorité interne, collez le certificat de cette autorité (PEM). Utilisez le bouton **Tester**, puis activez. Les personnes peuvent saisir `alice`, `DOMAINE\alice` ou `alice@entreprise.fr`.
 4. **Connexion unique (SSO)** (organisations dans le cloud ou hybrides) : voir ci-dessous.
 5. **Journal** : chaque action d'administration y est consignée.
 
@@ -223,7 +223,7 @@ Dans la page **Connexion unique**, copiez l'**adresse de retour** (`https://<dom
 | Okta | Console d'administration → Applications → Create App Integration → OIDC, Web Application | `https://<organisation>.okta.com` |
 | Keycloak | Realm → Clients → Create client → OpenID Connect, Client authentication activé | `https://<serveur>/realms/<realm>` |
 
-Saisissez l'émetteur, l'identifiant et le secret client, restreignez l'accès si besoin (domaines de courriel, groupe requis), **Testez**, puis activez. Un bouton « Se connecter avec… » apparaît sur l'accueil. Les comptes sont créés à la première connexion, en utilisateur ordinaire ; la double authentification relève du fournisseur.
+Saisissez l'émetteur, l'identifiant et le secret client, restreignez l'accès si besoin (domaines de courriel, groupe requis), cliquez sur **Tester**, puis activez. Un bouton « Se connecter avec… » apparaît sur l'accueil. Les comptes sont créés à la première connexion, en utilisateur ordinaire ; la double authentification relève du fournisseur.
 
 Pour une restriction par groupe avec Entra ID, ajoutez la revendication `groups` au jeton d'identité (Configuration de jetons) et saisissez l'identifiant d'objet du groupe.
 

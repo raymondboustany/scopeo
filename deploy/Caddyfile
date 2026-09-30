@@ -2,11 +2,9 @@
 # Automatic HTTPS for the domain set in .env (SCOPEO_DOMAIN).
 # HTTPS automatique pour le domaine défini dans .env (SCOPEO_DOMAIN).
 #
-# Internal network without public DNS: replace the first line with
-#   {$SCOPEO_DOMAIN} {
-#       tls internal
+# Internal network without public DNS: add a "tls internal" line inside the block
 # (Caddy's own certificate authority, to be trusted on the team's computers),
-# or with "tls /certs/scopeo.crt /certs/scopeo.key" for a certificate issued by your IT.
+# or "tls /certs/scopeo.crt /certs/scopeo.key" for a certificate issued by your IT.
 # Réseau interne sans DNS public : ajouter « tls internal » (autorité de Caddy, à
 # approuver sur les postes) ou « tls /certs/scopeo.crt /certs/scopeo.key » pour un
 # certificat fourni par votre service informatique.

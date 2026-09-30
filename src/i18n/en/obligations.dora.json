@@ -164,7 +164,7 @@
     "conditions": ["Entity under the simplified framework"]
   },
   "DORA-A17": {
-    "chapter": "Chapter III: ICT-related incident management and reporting",
+    "chapter": "Chapter III: ICT-related incident management, classification and reporting",
     "title": "ICT-related incident management process",
     "statement": "Define and implement an ICT-related incident management process to detect, manage and notify incidents, with early-warning indicators, identified roles and responsibilities, and escalation procedures to senior management and, where relevant, resolution authorities.",
     "appliesTo": ["Financial entity"],
@@ -179,7 +179,7 @@
     "evidence": ["ICT incident management procedure", "Incident log", "Root-cause analyses"]
   },
   "DORA-A18": {
-    "chapter": "Chapter III: ICT-related incident management and reporting",
+    "chapter": "Chapter III: ICT-related incident management, classification and reporting",
     "title": "Classification of incidents and cyber threats",
     "statement": "Classify incidents against seven criteria: number of clients or counterparts affected, reputation, duration and service downtime, geographical spread, data losses, criticality of the services affected, economic impact. Materiality thresholds are set by Delegated Regulation 2024/1772.",
     "appliesTo": ["Financial entity"],
@@ -193,13 +193,13 @@
     "guidance": ["Delegated Regulation (EU) 2024/1772: incident classification"]
   },
   "DORA-A19": {
-    "chapter": "Chapter III: ICT-related incident management and reporting",
+    "chapter": "Chapter III: ICT-related incident management, classification and reporting",
     "title": "Reporting major incidents to the competent authority",
     "statement": "Report major ICT-related incidents to the competent authority according to three deadlines set by Delegated Regulation 2025/301: initial notification, intermediate report, final report. Reporting uses mandatory harmonised templates.",
     "appliesTo": ["Financial entity"],
     "requirements": {
       "DORA-A19-R1": "Send the initial notification within the deadlines set by the technical standards.",
-      "DORA-A19-R2": "Send an intermediate report once the situation is restored, then at each significant change.",
+      "DORA-A19-R2": "Send an intermediate report within 72 hours of the initial notification, then whenever the situation changes significantly.",
       "DORA-A19-R3": "Send a final report including root-cause analysis.",
       "DORA-A19-R4": "Use the Article 20 harmonised templates; report any technical impossibility by other means.",
       "DORA-A19-R5": "Inform affected clients when the incident has an impact on their financial interests."
@@ -304,7 +304,7 @@
   },
   "DORA-A31": {
     "article": "Articles 31 to 44",
-    "chapter": "Chapter V: Oversight framework",
+    "chapter": "Chapter V, Section II: Oversight framework of critical ICT third-party service providers",
     "title": "Oversight of critical third-party providers",
     "statement": "Third-party providers designated as critical by the European supervisory authorities are subject to direct EU oversight, led by a lead overseer supported by joint examination teams. For the client financial entity, the consequence is twofold: it must take into account recommendations addressed to the provider, and stop using a service when the overseer requires it.",
     "appliesTo": ["Financial entity", "Critical ICT third-party service provider"],
@@ -318,7 +318,7 @@
     "evidence": ["List of critical providers identified", "Records of how recommendations were taken into account"]
   },
   "DORA-A45": {
-    "chapter": "Chapter VI: Information sharing",
+    "chapter": "Chapter VI: Information-sharing arrangements",
     "title": "Sharing cyber threat information",
     "statement": "Financial entities may exchange cyber threat information and intelligence among themselves, within trusted communities, under conditions that protect the commercially sensitive nature of the information and respect data protection law.",
     "appliesTo": ["Financial entity"],

@@ -34,7 +34,7 @@ export const STATUS_STYLE: Record<VerdictStatus, { text: string; wash: string; l
 export const RELATION_STYLE: Record<CrosswalkRelation, { text: string; wash: string; line: string; label: string }> = {
   recouvrement: { text: 'text-ink-2', wash: 'bg-neutral-wash', line: 'border-neutral-line', label: tr('Recouvrement', 'Overlap') },
   divergence: { text: 'text-critical', wash: 'bg-critical-wash', line: 'border-critical-line', label: tr('Divergence', 'Divergence') },
-  hierarchie: { text: 'text-brass', wash: 'bg-brass-wash', line: 'border-brass-line', label: tr('Hiérarchie', 'Precedence') },
+  hierarchie: { text: 'text-brass', wash: 'bg-brass-wash', line: 'border-brass-line', label: tr('Primauté', 'Precedence') },
 }
 
 /** Trois états, et une absence d'évaluation qui n'est ni verte ni rouge. */

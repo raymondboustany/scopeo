@@ -6,6 +6,7 @@ import { TIMELINE } from '@/data/timeline'
 import { ISO_CONTROLS, ISO_THEME_META } from '@/data/iso27001'
 import { REGULATIONS } from '@/data/regulations'
 import { COLON, tr } from '@/i18n'
+import { formatDate } from '@/lib/utils'
 
 /**
  * Index de recherche transverse.
@@ -65,7 +66,7 @@ function buildRecords(): SearchRecord[] {
       id: e.id,
       kind: 'echeance',
       title: e.title,
-      reference: `${tr('Échéancier', 'Timeline')} · ${e.date}`,
+      reference: `${tr('Échéancier', 'Timeline')} · ${formatDate(e.date)}`,
       body: e.detail,
       route: `/app/echeancier?event=${e.id}`,
       tag: e.regulation,

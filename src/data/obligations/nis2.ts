@@ -39,14 +39,14 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     binding: 'obligatoire',
     themes: ['GOV-03'],
     sourceUrl: URL,
-    guidance: [ANSSI('Portail Mon Espace NIS2', 'https://monespacenis2.cyber.gouv.fr')],
+    guidance: [ANSSI('Portail MonEspaceNIS2', 'https://monespacenis2.cyber.gouv.fr')],
   },
   {
     id: 'NIS2-A20',
     regulation: 'NIS2',
     article: 'Article 20',
     order: 20,
-    chapter: 'Chapitre IV : Mesures de gestion des risques et obligations d\'information',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Gouvernance et responsabilité des organes de direction',
     statement:
       "Faire approuver les mesures de gestion des risques par l'organe de direction, lui en faire superviser la mise en œuvre, et former ses membres. C'est la disposition qui engage personnellement les dirigeants : la violation de l'article 21 leur est imputable, et l'autorité peut aller jusqu'à leur interdire d'exercer des fonctions dirigeantes.",
@@ -73,7 +73,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 1',
     order: 2101,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Mesures appropriées et proportionnées, fondées sur le risque",
     statement:
       "Prendre des mesures techniques, opérationnelles et organisationnelles appropriées et proportionnées pour gérer les risques pesant sur les réseaux et systèmes d'information, et pour limiter les conséquences des incidents sur les destinataires des services. La proportionnalité s'apprécie au regard de l'exposition, de la taille et de la gravité probable des incidents.",
@@ -99,7 +99,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point a)',
     order: 2102,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Politiques d'analyse des risques et de sécurité des systèmes d'information",
     statement:
       "Disposer d'une politique d'analyse des risques et d'une politique de sécurité des systèmes d'information formalisées, approuvées et appliquées. Le ReCyF en fait le socle : sans ce cadre documentaire, aucun autre objectif ne peut être démontré.",
@@ -123,7 +123,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point b)',
     order: 2103,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Gestion des incidents',
     statement:
       "Disposer d'un processus documenté de détection, de qualification, de traitement et de retour d'expérience sur les incidents de sécurité, avec des rôles identifiés et une chaîne d'alerte opérationnelle en continu.",
@@ -147,7 +147,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point c)',
     order: 2104,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Continuité des activités, sauvegardes et gestion de crise',
     statement:
       "Disposer d'un dispositif de continuité et de reprise reposant sur des sauvegardes éprouvées, des objectifs de reprise définis, et une organisation de crise formalisée et exercée.",
@@ -172,7 +172,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point d)',
     order: 2105,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Sécurité de la chaîne d'approvisionnement",
     statement:
       "Traiter la sécurité des relations avec les fournisseurs et prestataires directs, en tenant compte des vulnérabilités propres à chacun, de la qualité globale de leurs pratiques de cybersécurité et de leurs procédures de développement sécurisé. L'article 21, paragraphe 3, impose en outre de prendre en compte les évaluations coordonnées des risques menées au niveau européen.",
@@ -199,7 +199,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point e)',
     order: 2106,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Sécurité de l'acquisition, du développement et de la maintenance",
     statement:
       "Intégrer la sécurité dans l'acquisition, le développement et la maintenance des systèmes, y compris le traitement et la divulgation des vulnérabilités. Cela couvre aussi bien le développement interne que l'achat de solutions sur étagère.",
@@ -224,7 +224,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point f)',
     order: 2107,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Évaluation de l'efficacité des mesures",
     statement:
       "Disposer de politiques et de procédures permettant d'évaluer l'efficacité réelle des mesures de gestion des risques, et non leur seule existence. C'est le point où la conformité documentaire cesse de suffire.",
@@ -248,7 +248,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point g)',
     order: 2108,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Cyberhygiène et formation à la cybersécurité',
     statement:
       "Mettre en place des pratiques de base de cyberhygiène et un dispositif de formation à la cybersécurité couvrant l'ensemble des utilisateurs, y compris les prestataires agissant pour le compte de l'entité.",
@@ -272,7 +272,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point h)',
     order: 2109,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Cryptographie et chiffrement',
     statement:
       "Définir et appliquer des politiques et procédures relatives à l'usage de la cryptographie et, le cas échéant, du chiffrement, ce qui suppose une politique de gestion des clés et des algorithmes, et pas seulement l'activation du chiffrement en transit.",
@@ -296,7 +296,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point i)',
     order: 2110,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Sécurité des ressources humaines, contrôle d'accès et gestion des actifs",
     statement:
       "Encadrer la sécurité tout au long du cycle de vie des personnes (arrivée, mobilité, départ), appliquer une politique de contrôle d'accès fondée sur le besoin d'en connaître, et tenir un inventaire des actifs.",
@@ -321,7 +321,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 2, point j)',
     order: 2111,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Authentification multifacteur et communications sécurisées',
     statement:
       "Recourir, selon les besoins, à l'authentification multifacteur ou continue, à des communications vocales, vidéo et textuelles sécurisées, et à des systèmes sécurisés de communication d'urgence au sein de l'entité.",
@@ -345,7 +345,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 21, paragraphe 4',
     order: 2112,
-    chapter: 'Chapitre IV : Mesures de gestion des risques',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Mesures correctives en cas de non-conformité constatée',
     statement:
       "Lorsque l'entité constate elle-même qu'elle ne se conforme pas aux mesures du paragraphe 2, prendre sans retard injustifié toutes les mesures correctives nécessaires, appropriées et proportionnées.",
@@ -368,7 +368,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 23, paragraphe 1',
     order: 2301,
-    chapter: "Chapitre IV : Obligations d'information",
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Notification des incidents importants au CSIRT",
     statement:
       "Notifier sans retard injustifié tout incident ayant un impact important sur la fourniture des services. Un incident est important s'il a causé ou est susceptible de causer une perturbation opérationnelle grave ou des pertes financières, ou s'il a affecté d'autres personnes en causant des dommages considérables.",
@@ -395,7 +395,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 23, paragraphe 4',
     order: 2302,
-    chapter: "Chapitre IV : Obligations d'information",
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: "Séquence de déclaration : 24 heures, 72 heures, un mois",
     statement:
       "Respecter la séquence en trois temps : une alerte précoce dans les 24 heures, une notification d'incident dans les 72 heures, puis un rapport final au plus tard un mois après cette notification. Les prestataires de services de confiance sont soumis à un délai unique de 24 heures.",
@@ -423,7 +423,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 23, paragraphes 1 et 2',
     order: 2303,
-    chapter: "Chapitre IV : Obligations d'information",
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Information des destinataires des services',
     statement:
       "Informer sans retard injustifié les destinataires des services des incidents importants susceptibles de nuire à la fourniture de ces services, et leur communiquer les mesures qu'ils peuvent appliquer face à une cybermenace importante.",
@@ -446,7 +446,7 @@ export const NIS2_OBLIGATIONS: Obligation[] = [
     regulation: 'NIS2',
     article: 'Article 24',
     order: 24,
-    chapter: 'Chapitre IV',
+    chapter: "Chapitre IV : Mesures de gestion des risques en matière de cybersécurité et obligations d'information",
     title: 'Utilisation de schémas européens de certification',
     statement:
       "Les États membres peuvent exiger l'utilisation de produits, services ou processus certifiés au titre d'un schéma européen de certification de cybersécurité. À défaut d'exigence, la certification reste un moyen de démontrer la conformité.",

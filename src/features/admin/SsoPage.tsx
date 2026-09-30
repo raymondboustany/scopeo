@@ -13,8 +13,8 @@ import { copyText } from '@/lib/utils'
 const PRESETS = [
   { id: 'entra', label: 'Microsoft Entra ID', issuer: 'https://login.microsoftonline.com/<tenant-id>/v2.0', name: 'Microsoft' },
   { id: 'google', label: 'Google Workspace', issuer: 'https://accounts.google.com', name: 'Google' },
-  { id: 'okta', label: 'Okta', issuer: 'https://<organisation>.okta.com', name: 'Okta' },
-  { id: 'keycloak', label: 'Keycloak', issuer: 'https://<serveur>/realms/<realm>', name: 'Keycloak' },
+  { id: 'okta', label: 'Okta', issuer: tr('https://<organisation>.okta.com', 'https://<organization>.okta.com'), name: 'Okta' },
+  { id: 'keycloak', label: 'Keycloak', issuer: tr('https://<serveur>/realms/<realm>', 'https://<server>/realms/<realm>'), name: 'Keycloak' },
 ]
 
 const STEP_LABEL: Record<string, string> = {
@@ -161,7 +161,7 @@ function SsoForm({ initial }: { initial: SsoConfigRead }) {
         />
         <div className="grid gap-4 p-5 sm:grid-cols-3">
           <Field label={tr('Domaines de courriel autorisés', 'Allowed email domains')} hint={tr('séparés par des virgules', 'comma-separated')}>
-            <Input value={form.allowed_domains} onChange={(e) => set('allowed_domains', e.target.value)} placeholder="exemple.fr, filiale.fr" />
+            <Input value={form.allowed_domains} onChange={(e) => set('allowed_domains', e.target.value)} placeholder={tr('exemple.fr, filiale.fr', 'example.com, subsidiary.com')} />
           </Field>
           <Field label={tr('Groupe requis', 'Required group')}>
             <Input value={form.required_group} onChange={(e) => set('required_group', e.target.value)} className="font-mono text-xs" />

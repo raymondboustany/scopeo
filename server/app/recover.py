@@ -35,7 +35,10 @@ def main(argv: list[str]) -> int:
         users = real_users(session)
         found = [u for u in users if u.name.strip().casefold() == wanted]
         if len(found) != 1:
-            print("Account not found / Compte introuvable. Accounts / Comptes :")
+            if len(found) > 1:
+                print("Several accounts have this name / Plusieurs comptes portent ce nom. Accounts / Comptes :")
+            else:
+                print("Account not found / Compte introuvable. Accounts / Comptes :")
             for user in sorted(users, key=lambda u: u.created_at):
                 print(f"  - {user.name}{' (admin)' if user.is_admin else ''}")
             return 1

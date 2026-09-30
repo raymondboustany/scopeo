@@ -4,7 +4,7 @@ import { Circle, Font, Line, Page, Path, StyleSheet, Svg, Text, View } from '@re
 import type { Style } from '@react-pdf/types'
 import type { CoverageLevel, RegulationId } from '@/types/domain'
 import type { Distribution } from '../reportData'
-import { LOCALE, tr } from '@/i18n'
+import { LOCALE, NBSP, tr } from '@/i18n'
 
 /**
  * Boîte à outils des rapports PDF.
@@ -54,12 +54,13 @@ export function clean(s: string | null | undefined): string {
 
 export const eur = (n: number) => {
   const en = LOCALE === 'en-GB'
-  if (n >= 1_000_000) {
+  if (n < 1_000) return en ? `€${Math.round(n)}` : `${Math.round(n)}${NBSP}€`
+  if (n >= 999_500) {
     const m = n / 1_000_000
     const v = m.toLocaleString(LOCALE, { maximumFractionDigits: m < 10 ? 1 : 0 }).replace(/[\u202f\u00a0]/g, ' ')
-    return en ? `€${v}M` : `${v} M€`
+    return en ? `€${v}M` : `${v}${NBSP}M€`
   }
-  return en ? `€${Math.round(n / 1000)}k` : `${Math.round(n / 1000)} k€`
+  return en ? `€${Math.round(n / 1000)}k` : `${Math.round(n / 1000)}${NBSP}k€`
 }
 /** Ligne de méta d'ouverture : qui, pour qui, quand. */
 export function missionMeta(profile: { mode?: string; legalName?: string; siren?: string; lead?: string; sponsor?: string }, entityName: string): string[] {

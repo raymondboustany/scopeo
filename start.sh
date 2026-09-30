@@ -21,15 +21,15 @@ if [ ! -x "$VENV_PY" ] || ! "$VENV_PY" -m pip --version >/dev/null 2>&1; then
     fi
   done
   if [ -z "$PY" ]; then
-    echo "Python 3.11 ou plus récent est requis : https://www.python.org/downloads/" >&2
+    echo "Python 3.11 or later is required / Python 3.11 ou plus récent est requis : https://www.python.org/downloads/" >&2
     exit 1
   fi
-  echo "Installation du serveur local…"
+  echo "Installing the local server… / Installation du serveur local…"
   rm -rf server/.venv
   if ! "$PY" -m venv server/.venv; then
     rm -rf server/.venv
     echo "" >&2
-    echo "Le module venv de Python est absent. Debian, Ubuntu : sudo apt install python3-venv" >&2
+    echo "The Python venv module is missing / Le module venv de Python est absent. Debian, Ubuntu: sudo apt install python3-venv" >&2
     exit 1
   fi
 fi
@@ -37,7 +37,7 @@ fi
 # Composants du serveur : installés au premier lancement, puis à chaque
 # changement de server/requirements.txt (nouvelle version de l'archive).
 if ! cmp -s server/requirements.txt server/.venv/requirements.txt; then
-  echo "Installation des composants du serveur…"
+  echo "Installing the server components… / Installation des composants du serveur…"
   "$VENV_PY" -m pip install --disable-pip-version-check -q -r server/requirements.txt
   cp server/requirements.txt server/.venv/requirements.txt
 fi
@@ -45,11 +45,11 @@ fi
 # --- Interface (déjà compilée dans les versions publiées) -------------------
 if [ ! -f dist/index.html ]; then
   if ! command -v npm >/dev/null 2>&1; then
-    echo "L'interface n'est pas compilée et Node.js est introuvable." >&2
-    echo "Téléchargez la version « portable » depuis la page Releases, ou installez Node.js 20+." >&2
+    echo "The interface is not built and Node.js was not found. Download the \"portable\" version from the Releases page, or install Node.js 20.19 or later." >&2
+    echo "L'interface n'est pas compilée et Node.js est introuvable. Téléchargez la version « portable » depuis la page Releases, ou installez Node.js 20.19 ou plus." >&2
     exit 1
   fi
-  echo "Compilation de l'interface…"
+  echo "Building the interface… / Compilation de l'interface…"
   npm ci --no-audit --no-fund
   npx vite build
 fi
@@ -57,7 +57,7 @@ fi
 URL="http://127.0.0.1:$PORT"
 echo ""
 echo "  Scopeo : $URL"
-echo "  Ctrl + C pour arrêter."
+echo "  Ctrl + C to stop / pour arrêter."
 echo ""
 ( sleep 3; (command -v xdg-open >/dev/null && xdg-open "$URL") || (command -v open >/dev/null && open "$URL") || true ) >/dev/null 2>&1 &
 exec "$VENV_PY" -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port "$PORT"

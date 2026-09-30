@@ -78,7 +78,7 @@ describe('instantané public', () => {
     expect(text).not.toContain('sensible')
     expect(text).not.toContain('gt1000')
     expect(Object.keys(snap).sort()).toEqual(
-      ['domains', 'generatedAt', 'nis2Category', 'score', 'scores', 'sectorLabel', 'themesCovered', 'themesTotal', 'verdicts'].sort(),
+      ['domains', 'generatedAt', 'nis2Category', 'score', 'scores', 'sector', 'sectorLabel', 'themesCovered', 'themesTotal', 'verdicts'].sort(),
     )
   })
 })

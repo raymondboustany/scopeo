@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { Document, Text, View } from '@react-pdf/renderer'
 import type { ReportData } from '../reportData'
 import { RECYF_VERSION } from '../reportData'
-import { COLON, LANG, tr } from '@/i18n'
+import { COLON, LANG, plural, tr } from '@/i18n'
 import {
   BarRow,
   C,
@@ -72,7 +72,7 @@ export function FullReport({ d }: { d: ReportData }) {
           <Kpi label={tr('Obligations', 'Obligations')} value={String(d.totals.obligations)} note={tr(`${d.totals.requirements} exigences élémentaires`, `${d.totals.requirements} elementary requirements`)} />
           <Kpi label={tr('Exigences unifiées', 'Unified requirements')} value={String(cov.themes)} note={tr(`dont ${cov.evaluated} évaluées`, `${cov.evaluated} assessed`)} />
           <Kpi label={tr('Couverture', 'Coverage')} value={pct(cov.score)} note={tr('partiel compté pour moitié', 'partial counts for half')} tone={C.accent} />
-          <Kpi label={tr('Sanction maximale', 'Maximum penalty')} value={d.maxExposure ? eur(d.maxExposure.eur) : tr('n.c.', 'n/a')} note={d.maxExposure ? tr(`Plafond ${REG_NAME[d.maxExposure.regulation]}`, `${REG_NAME[d.maxExposure.regulation]} cap`) : ''} />
+          <Kpi label={tr('Sanction maximale', 'Maximum penalty')} value={d.maxExposure ? eur(d.maxExposure.eur) : tr('n.c.', 'n/a')} note={d.maxExposure ? tr(`Plafond ${REG_NAME[d.maxExposure.regulation].replace(' (ReCyF)', '')}`, `${REG_NAME[d.maxExposure.regulation].replace(' (ReCyF)', '')} cap`) : ''} />
         </View>
         <View style={[S.row, { gap: 18 }]} wrap={false}>
           <Ring value={cov.score} size={92} label={tr('couverture globale', 'overall coverage')} />
@@ -140,7 +140,7 @@ export function FullReport({ d }: { d: ReportData }) {
                 {v.exposure ? (
                   <Text style={[S.small, { marginBottom: 2 }]}>
                     <Text style={S.bold}>{tr('Exposition : ', 'Exposure: ')}</Text>
-                    {clean(`${v.exposure.maxEur ? eur(v.exposure.maxEur) : tr('régime national', 'national regime')}. ${v.exposure.formula}`)}
+                    {clean(`${v.exposure.maxEur ? eur(v.exposure.maxEur) : tr('non chiffré', 'not quantified')}. ${v.exposure.formula}`)}
                   </Text>
                 ) : null}
                 {v.caveats.map((c, i) => (
@@ -184,7 +184,7 @@ export function FullReport({ d }: { d: ReportData }) {
         {d.measures ? (
           <P>
             {tr(
-              `Exigences NIS2 détaillées par le ReCyF (v${RECYF_VERSION}, ANSSI, document de travail) : ${d.measures.total} mesures attendues, dont ${d.measures.en_place} en place, ${d.measures.partiel} partielles et ${d.measures.absent} absentes.`,
+              `Exigences NIS2 détaillées par le ReCyF (v${RECYF_VERSION}, ANSSI, document de travail) : ${d.measures.total} mesures attendues, dont ${d.measures.en_place} en place, ${d.measures.partiel} ${plural(d.measures.partiel, 'partielle', 'partielles')} et ${d.measures.absent} ${plural(d.measures.absent, 'absente', 'absentes')}.`,
               `NIS2 requirements detailed by the ReCyF (v${RECYF_VERSION}, ANSSI, working document): ${d.measures.total} measures expected, ${d.measures.en_place} in place, ${d.measures.partiel} partial and ${d.measures.absent} missing.`,
             )}
           </P>
@@ -221,15 +221,15 @@ export function FullReport({ d }: { d: ReportData }) {
         {d.iso ? (
           <P>
             {tr(
-              `Démarche ISO/IEC 27001 déclarée : ${d.iso.profile.status === 'certifie' ? 'certifiée' : d.iso.profile.status === 'conforme' ? 'conforme sans certification' : d.iso.profile.status === 'partiel' ? 'partielle' : 'aucune'}${d.iso.profile.perimeter === 'partiel' ? ', sur une partie seulement du périmètre (pré-remplissage désactivé)' : ''}. ${d.iso.controlsAssessed} contrôles de l'annexe A renseignés ; ${d.iso.prefilled} exigence${d.iso.prefilled > 1 ? 's' : ''} unifiée${d.iso.prefilled > 1 ? 's' : ''} pré-remplie${d.iso.prefilled > 1 ? 's' : ''} à partir des contrôles mis en œuvre${d.iso.exclusions > 0 ? ` ; ${d.iso.exclusions} exigence${d.iso.exclusions > 1 ? 's' : ''} obligatoire${d.iso.exclusions > 1 ? 's' : ''} dont le contrôle correspondant a été exclu de la démarche` : ''}.`,
-              `Declared ISO/IEC 27001 status: ${d.iso.profile.status === 'certifie' ? 'certified' : d.iso.profile.status === 'conforme' ? 'compliant, not certified' : d.iso.profile.status === 'partiel' ? 'partial' : 'none'}${d.iso.profile.perimeter === 'partiel' ? ', covering only part of the scope (pre-filling turned off)' : ''}. ${d.iso.controlsAssessed} Annex A controls filled in; ${d.iso.prefilled} unified requirement${d.iso.prefilled > 1 ? 's' : ''} pre-filled from implemented controls${d.iso.exclusions > 0 ? `; ${d.iso.exclusions} mandatory requirement${d.iso.exclusions > 1 ? 's' : ''} whose matching control was excluded from the initiative` : ''}.`,
+              `Démarche ISO/IEC 27001 déclarée : ${d.iso.profile.status === 'certifie' ? 'certifiée' : d.iso.profile.status === 'conforme' ? 'conforme sans certification' : d.iso.profile.status === 'partiel' ? 'partielle' : 'aucune'}${d.iso.profile.perimeter === 'partiel' ? ', sur une partie seulement du périmètre (pré-remplissage désactivé)' : ''}. ${d.iso.controlsAssessed} ${plural(d.iso.controlsAssessed, 'contrôle', 'contrôles')} de l'annexe A ${plural(d.iso.controlsAssessed, 'renseigné', 'renseignés')} ; ${d.iso.prefilled} exigence${d.iso.prefilled > 1 ? 's' : ''} unifiée${d.iso.prefilled > 1 ? 's' : ''} pré-remplie${d.iso.prefilled > 1 ? 's' : ''} à partir des contrôles mis en œuvre${d.iso.exclusions > 0 ? ` ; ${d.iso.exclusions} exigence${d.iso.exclusions > 1 ? 's' : ''} obligatoire${d.iso.exclusions > 1 ? 's' : ''} dont le contrôle correspondant a été exclu de la démarche` : ''}.`,
+              `Declared ISO/IEC 27001 status: ${d.iso.profile.status === 'certifie' ? 'certified' : d.iso.profile.status === 'conforme' ? 'compliant, not certified' : d.iso.profile.status === 'partiel' ? 'partial' : 'none'}${d.iso.profile.perimeter === 'partiel' ? ', covering only part of the scope (pre-filling turned off)' : ''}. ${d.iso.controlsAssessed} Annex A ${plural(d.iso.controlsAssessed, 'control', 'controls')} filled in; ${d.iso.prefilled} unified requirement${d.iso.prefilled > 1 ? 's' : ''} pre-filled from implemented controls${d.iso.exclusions > 0 ? `; ${d.iso.exclusions} mandatory requirement${d.iso.exclusions > 1 ? 's' : ''} whose matching control was excluded from the initiative` : ''}.`,
             )}
           </P>
         ) : null}
         {gaps.length > 0 ? (
           <>
             <Table
-              lead={<H3 aside={tr(`${gaps.length} exigences`, `${gaps.length} requirements`)}>{tr('Écarts constatés', 'Gaps observed')}</H3>}
+              lead={<H3 aside={tr(`${gaps.length} ${plural(gaps.length, 'exigence', 'exigences')}`, `${gaps.length} ${plural(gaps.length, 'requirement', 'requirements')}`)}>{tr('Écarts constatés', 'Gaps observed')}</H3>}
               cols={[
                 { title: tr('Rang', 'Rank'), width: '7%' },
                 { title: tr('Exigence unifiée', 'Unified requirement'), width: d.tracking ? '43%' : '55%' },
@@ -335,7 +335,7 @@ export function FullReport({ d }: { d: ReportData }) {
         />
         {d.notification.some((nt) => nt.regulation === 'DORA') ? (
           <Text style={[S.small, S.muted, { fontSize: 7.2, marginBottom: 5 }]}>
-            {clean(tr('* DORA : 4 h après la classification comme incident majeur, et au plus tard 24 h après la détection (règlement délégué 2025/301).', '* DORA: 4 h after classification as a major incident, and no later than 24 h after detection (Delegated Regulation 2025/301).'))}
+            {clean(tr('* DORA : 4 h après la classification comme incident majeur, et au plus tard 24 h après la prise de connaissance (règlement délégué 2025/301).', '* DORA: 4 h after classification as a major incident, and no later than 24 h after becoming aware (Delegated Regulation 2025/301).'))}
           </Text>
         ) : null}
         <View style={[S.row, { gap: 16 }]} wrap={false}>
@@ -356,7 +356,7 @@ export function FullReport({ d }: { d: ReportData }) {
               d.contacts.map((c, i) => (
                 <Text key={i} style={{ fontSize: 8, marginBottom: 3 }}>
                   <Text style={S.bold}>{`${i + 1}. ${clean(c.role)}`}</Text>
-                  {clean(` : ${c.name}${c.title ? `, ${c.title}` : ''}`)}
+                  {clean(`${COLON}${c.name}${c.title ? `, ${c.title}` : ''}`)}
                 </Text>
               ))
             )}

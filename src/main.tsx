@@ -9,7 +9,7 @@ import { useSession } from './lib/store'
 import { LANG, tr } from './i18n'
 
 document.documentElement.lang = LANG
-document.title = tr('Scopeo : cadrage réglementaire RGPD, NIS2, DORA, CRA, AI Act', 'Scopeo: regulatory scoping for GDPR, NIS2, DORA, CRA and the AI Act')
+document.title = tr('Scopeo : cadrage réglementaire RGPD, NIS2, DORA, CRA, AI Act', 'Scopeo: GDPR, NIS2, DORA, CRA and AI Act regulatory scoping')
 
 // Le thème suit la préférence enregistrée ; clair par défaut.
 const applyTheme = (theme: 'light' | 'dark') => {

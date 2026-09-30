@@ -109,6 +109,7 @@ export function buildSnapshot(
   return {
     generatedAt: new Date().toISOString(),
     sectorLabel: sector,
+    sector: typeof answers.secteur === 'string' ? answers.secteur : undefined,
     score: Math.round(scores.global.score * 100),
     scores: Object.fromEntries(
       Object.entries(scores.byRegulation).map(([k, v]) => [k, Math.round((v?.score ?? 0) * 100)]),

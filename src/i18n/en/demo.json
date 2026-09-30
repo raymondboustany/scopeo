@@ -15,7 +15,7 @@
     "c-ir": "PRIS-qualified incident response provider, call-out contract",
     "c-dpo": "Data protection officer",
     "c-dir": "Deputy chief executive",
-    "c-jur": "Head of compliance"
+    "c-jur": "Head of legal and compliance"
   },
   "notes": {
     "n1": ["Confirm that the ACPR authorisation does not also cover issuing electronic money: that would change the type of financial entity.", "Type of financial entity"],

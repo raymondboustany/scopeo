@@ -291,7 +291,7 @@
     "ia_gpai": {
       "basis": "AI Act, Articles 51 to 55",
       "question": "Does the entity place a general-purpose AI model on the Union market?",
-      "help": "A model trained on a large amount of data, able to perform a wide range of tasks and to be integrated into downstream systems. Systemic risk is presumed above 10^25 floating-point operations of training compute. Integrating a third party's model into a product does not make the entity a model provider.",
+      "help": "A model trained on a large amount of data, able to perform a wide range of tasks and to be integrated into downstream systems. Systemic risk is presumed above 10²⁵ floating-point operations of training compute. Integrating a third party's model into a product does not make the entity a model provider.",
       "options": { "non": ["No"], "oui": ["Yes"], "systemique": ["Yes, with systemic risk"] }
     },
     "incidents_recents": {

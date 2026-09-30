@@ -60,16 +60,17 @@ const LABEL: Record<FeedbackKind, string> = {
 
 /** Texte du signalement, tel qu'il est copié. */
 export function feedbackText(d: FeedbackDraft, tech: TechnicalInfo): string {
-  const lines = [`[Scopeo] ${LABEL[d.kind]}${d.title.trim() ? `: ${d.title.trim()}` : ''}`, '', d.message.trim()]
-  if (d.kind === 'corpus' && d.source.trim()) lines.push('', `${tr('Source officielle', 'Official source')}: ${d.source.trim()}`)
+  const colon = LANG === 'fr' ? ' : ' : ': '
+  const lines = [`[Scopeo] ${LABEL[d.kind]}${d.title.trim() ? `${colon}${d.title.trim()}` : ''}`, '', d.message.trim()]
+  if (d.kind === 'corpus' && d.source.trim()) lines.push('', `${tr('Source officielle', 'Official source')}${colon}${d.source.trim()}`)
   if (d.includeTechnical) {
     lines.push(
       '',
       '---',
-      `${tr('Version', 'Version')}: ${tech.version}`,
-      `${tr('Langue', 'Language')}: ${tech.language}`,
-      `${tr('Écran', 'Screen')}: ${tech.screen}`,
-      `${tr('Navigateur', 'Browser')}: ${tech.browser}`,
+      `${tr('Version', 'Version')}${colon}${tech.version}`,
+      `${tr('Langue', 'Language')}${colon}${tech.language}`,
+      `${tr('Écran', 'Screen')}${colon}${tech.screen}`,
+      `${tr('Navigateur', 'Browser')}${colon}${tech.browser}`,
     )
   }
   return lines.join('\n')

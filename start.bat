@@ -20,7 +20,7 @@ if not defined PY where python >nul 2>nul && set "PY=python"
 if not defined PY goto :nopython
 rem Version verifiee : ecarte aussi le raccourci "python" du Microsoft Store.
 %PY% -c "import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)" >nul 2>nul || goto :nopython
-echo Installation du serveur local...
+echo Installing the local server... / Installation du serveur local...
 %PY% -m venv server\.venv || goto :error
 
 :deps
@@ -29,7 +29,7 @@ rem Composants du serveur : installes au premier lancement, puis a chaque
 rem changement de server\requirements.txt (nouvelle version de l'archive).
 fc /b server\requirements.txt server\.venv\requirements.txt >nul 2>nul
 if errorlevel 1 (
-  echo Installation des composants du serveur...
+  echo Installing the server components... / Installation des composants du serveur...
   "%VENV_PY%" -m pip install --disable-pip-version-check -q -r server\requirements.txt || goto :error
   copy /y server\requirements.txt server\.venv\requirements.txt >nul
 )
@@ -38,21 +38,25 @@ rem --- Interface (deja compilee dans les versions publiees) -----------------
 if not exist "dist\index.html" (
   where npm >nul 2>nul || (
     echo.
-    echo  L'interface n'est pas compilee et Node.js est introuvable.
-    echo  Telechargez la version "portable" depuis la page Releases du projet,
-    echo  ou installez Node.js 20+ : https://nodejs.org
+    echo  The interface is not built and Node.js was not found.
+    echo  Download the "portable" version from the project's Releases page,
+    echo  or install Node.js 20.19 or later: https://nodejs.org
+    echo.
+    echo  L'interface n'est pas compilée et Node.js est introuvable.
+    echo  Téléchargez la version "portable" depuis la page Releases du projet,
+    echo  ou installez Node.js 20.19 ou plus : https://nodejs.org
     echo.
     pause
     exit /b 1
   )
-  echo Compilation de l'interface...
+  echo Building the interface... / Compilation de l'interface...
   call npm ci --no-audit --no-fund || goto :error
   call npx vite build || goto :error
 )
 
 echo.
 echo  Scopeo : http://127.0.0.1:%SCOPEO_PORT%
-echo  Fermez cette fenetre pour arreter l'application.
+echo  Close this window to stop the application. / Fermez cette fenêtre pour arrêter l'application.
 echo.
 start "" cmd /c "timeout /t 3 >nul & start http://127.0.0.1:%SCOPEO_PORT%"
 "%VENV_PY%" -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port %SCOPEO_PORT%
@@ -60,14 +64,17 @@ exit /b 0
 
 :nopython
 echo.
-echo  Python 3.11 ou plus recent est requis : https://www.python.org/downloads/
-echo  Cochez "Add python.exe to PATH" pendant l'installation, puis relancez.
+echo  Python 3.11 or later is required: https://www.python.org/downloads/
+echo  Tick "Add python.exe to PATH" during installation, then run this file again.
+echo.
+echo  Python 3.11 ou plus récent est requis : https://www.python.org/downloads/
+echo  Cochez "Add python.exe to PATH" pendant l'installation, puis relancez ce fichier.
 echo.
 pause
 exit /b 1
 
 :error
 echo.
-echo  L'installation a echoue. Consultez les messages ci-dessus.
+echo  Installation failed. See the messages above. / L'installation a échoué. Consultez les messages ci-dessus.
 pause
 exit /b 1

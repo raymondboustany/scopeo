@@ -331,7 +331,7 @@ function DeleteDialog({ entity, onClose, onDeleted }: { entity: EntitySummary; o
       open
       onOpenChange={(v) => !v && onClose()}
       title={tr(`Supprimer « ${entity.name} » ?`, `Delete "${entity.name}"?`)}
-      description={tr('Réponses, évaluation, démarche ISO 27001, contacts et lien public seront supprimés. Les autres entités ne sont pas touchées.', 'Answers, assessment, ISO 27001 data, contacts and public link will be deleted. Other entities are not affected.')}
+      description={tr('Réponses, évaluation, démarche ISO 27001, notes, contacts et lien public seront supprimés. Les autres entités ne sont pas touchées.', 'Answers, assessment, ISO 27001 data, notes, contacts and public link will be deleted. Other entities are not affected.')}
       footer={
         <>
           <Button onClick={onClose}>{tr('Annuler', 'Cancel')}</Button>

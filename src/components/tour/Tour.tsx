@@ -136,8 +136,8 @@ const ADMIN_STEPS: Step[] = [
     id: 'admin-bienvenue',
     title: tr("L'espace d'administration", 'The administration space'),
     body: tr(
-      "Ici, vous gérez les accès à Scopeo : comptes, annuaire LDAP, réglages et journal. Vous n'y voyez jamais le contenu des cadrages : les entités de chacun restent privées.",
-      'Here you manage access to Scopeo: accounts, LDAP directory, settings and log. You never see scoping content here: everyone’s entities stay private.',
+      "Ici, vous gérez les accès à Scopeo : comptes, annuaire LDAP, connexion unique, réglages et journal. Vous n'y voyez jamais le contenu des cadrages : les entités de chacun restent privées.",
+      'Here you manage access to Scopeo: accounts, LDAP directory, single sign-on, settings and log. You never see scoping content here: everyone’s entities stay private.',
     ),
     route: '/admin',
   },
@@ -164,8 +164,8 @@ const ADMIN_STEPS: Step[] = [
     id: 'admin-sso',
     title: tr('La connexion unique', 'Single sign-on'),
     body: tr(
-      "Pour une organisation sous Microsoft Entra ID, Google, Okta ou Keycloak : un bouton « Se connecter avec… » apparaît sur l'accueil, et le fournisseur gère mot de passe et double authentification.",
-      'For an organisation using Microsoft Entra ID, Google, Okta or Keycloak: a "Sign in with…" button appears on the home page, and the provider handles password and two-factor authentication.',
+      "Pour une organisation sous Microsoft Entra ID, Google Workspace, Okta ou Keycloak : un bouton « Se connecter avec… » apparaît sur l'accueil, et le fournisseur gère mot de passe et double authentification.",
+      'For an organisation using Microsoft Entra ID, Google Workspace, Okta or Keycloak: a "Sign in with…" button appears on the home page, and the provider handles password and two-factor authentication.',
     ),
     target: 'admin-nav-sso',
   },

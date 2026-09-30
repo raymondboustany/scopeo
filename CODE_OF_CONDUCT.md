@@ -22,7 +22,7 @@ We pledge to make participation in this project a harassment-free experience for
 
 ## Enforcement
 
-Behaviour that goes against this code can be reported confidentially to the maintainers through GitHub's private reporting. All complaints will be reviewed promptly and discreetly. Maintainers may remove or edit any contribution that goes against this code, and temporarily or permanently exclude its authors.
+Behaviour that goes against this code can be reported confidentially to the maintainer, through the contact details on their GitHub profile. All complaints will be reviewed promptly and discreetly. Maintainers may remove or edit any contribution that goes against this code, and temporarily or permanently exclude its authors.
 
 ---
 
@@ -48,4 +48,4 @@ Nous nous engageons à faire de la participation à ce projet une expérience ex
 
 ## Application
 
-Les comportements contraires à ce code peuvent être signalés de manière confidentielle aux mainteneurs, par le signalement privé de GitHub. Toutes les plaintes seront examinées avec diligence et discrétion. Les mainteneurs peuvent retirer ou modifier toute contribution contraire à ce code et exclure temporairement ou définitivement ses auteurs.
+Les comportements contraires à ce code peuvent être signalés de manière confidentielle au mainteneur, par les coordonnées de son profil GitHub. Toutes les plaintes seront examinées avec diligence et discrétion. Les mainteneurs peuvent retirer ou modifier toute contribution contraire à ce code et exclure temporairement ou définitivement ses auteurs.

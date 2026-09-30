@@ -83,7 +83,7 @@ Your data is kept when you stop and when you update.
 
 On the first launch, a command window installs the necessary components (about a minute), then the browser opens on the platform.
 
-**To stop the platform**, close the command window. **To start it again**, double-click `start.bat` again.
+**To stop the platform**, close the command window. **To start it again**, double-click `start.bat` again (or type `./start.sh` on macOS and Linux).
 
 **To update**, download the new archive and copy the `server/data` folder of the old version into it: it holds your data.
 
@@ -104,10 +104,9 @@ In the **Administration** space:
 
 - **Accounts**: create an account with a temporary password (the person replaces it at first sign-in), suspend an account, appoint another administrator, or turn off two-factor authentication for someone who lost their phone.
 - **LDAP directory**: connect Scopeo to Active Directory or OpenLDAP (address, service account, search base, filter, optional group). The **Test** button checks each step; once switched on, a directory tab appears on the sign-in page.
+- **Single sign-on**: let people sign in with their Microsoft, Google Workspace, Okta or Keycloak account.
 - **Settings**: close self-service profile creation, disable guest mode, set the session length.
 - **Log**: administration actions and account security changes.
-
-- **Single sign-on**: let people sign in with their Microsoft, Google, Okta or Keycloak account.
 
 Serving Scopeo to several people requires a server and HTTPS: follow the [deployment guide](deployment.md). Everything else is described in the [documentation](documentation.md).
 
@@ -136,11 +135,11 @@ For any other problem, [open an issue](https://github.com/raymondboustany/scopeo
 
 Ce guide s'adresse à tous les profils, y compris sans connaissance technique. Il suffit de suivre les étapes dans l'ordre. Comptez **10 à 15 minutes** pour une première installation.
 
-La plateforme fonctionne **sur votre ordinateur** : aucune donnée envoyée sur Internet. Une fois lancée, elle s'utilise dans votre navigateur (Chrome, Edge, Firefox…), à l'adresse **http://localhost:8000**.
+La plateforme fonctionne **sur votre ordinateur** : aucune donnée envoyée sur internet. Une fois lancée, elle s'utilise dans votre navigateur (Chrome, Edge, Firefox…), à l'adresse **http://localhost:8000**.
 
 Deux méthodes sont proposées :
 
-| | Méthode A : Docker | Méthode B : Archive prête à l'emploi |
+| | Méthode A : Docker | Méthode B : archive portable |
 |---|---|---|
 | Recommandée pour | La plupart des utilisateurs, les équipes | Les postes où Docker n'est pas autorisé |
 | Logiciel à installer une fois | Docker Desktop | Python |
@@ -194,7 +193,7 @@ Vos données sont conservées lors des arrêts et des mises à jour.
 
 ---
 
-## Méthode B : Archive prête à l'emploi (sans Docker)
+## Méthode B : archive portable (sans Docker)
 
 ### 1. Installer Python
 
@@ -210,12 +209,12 @@ Vos données sont conservées lors des arrêts et des mises à jour.
 ### 3. Démarrer la plateforme
 
 - **Windows** : ouvrez le dossier extrait et double-cliquez sur **`start.bat`**.
-  Si Windows affiche un avertissement de sécurité, confirmez l'exécution (« Exécuter », ou « Informations complémentaires » puis « Exécuter quand même »). Ce message apparaît pour tout script téléchargé sur Internet.
+  Si Windows affiche un avertissement de sécurité, confirmez l'exécution (« Exécuter », ou « Informations complémentaires » puis « Exécuter quand même »). Ce message apparaît pour tout script téléchargé sur internet.
 - **macOS / Linux** : ouvrez un terminal dans le dossier extrait et tapez `./start.sh`.
 
 Au premier lancement, une fenêtre de commande installe les composants nécessaires (environ une minute), puis le navigateur s'ouvre sur la plateforme.
 
-**Pour arrêter la plateforme**, fermez la fenêtre de commande. **Pour la relancer**, double-cliquez à nouveau sur `start.bat`.
+**Pour arrêter la plateforme**, fermez la fenêtre de commande. **Pour la relancer**, double-cliquez à nouveau sur `start.bat` (ou tapez `./start.sh` sous macOS et Linux).
 
 **Pour mettre à jour**, téléchargez la nouvelle archive et copiez-y le dossier `server/data` de l'ancienne version : il contient vos données.
 
@@ -236,10 +235,9 @@ Dans l'espace **Administration** :
 
 - **Comptes** : créer un compte avec un mot de passe provisoire (la personne le remplace à sa première connexion), suspendre un compte, nommer un autre administrateur, ou désactiver la double authentification d'une personne qui a perdu son téléphone.
 - **Annuaire LDAP** : relier Scopeo à Active Directory ou OpenLDAP (adresse, compte de service, base de recherche, filtre, groupe facultatif). Le bouton **Tester** vérifie chaque étape ; une fois activé, un onglet annuaire apparaît sur la page de connexion.
+- **Connexion unique** : permettre de se connecter avec son compte Microsoft, Google Workspace, Okta ou Keycloak.
 - **Réglages** : fermer la création libre de profils, désactiver le mode invité, fixer la durée des sessions.
 - **Journal** : les actions d'administration et les changements de sécurité des comptes.
-
-- **Connexion unique** : permettre de se connecter avec son compte Microsoft, Google, Okta ou Keycloak.
 
 Servir Scopeo à plusieurs personnes suppose un serveur et du HTTPS : suivez le [guide de déploiement](deployment.md#déployer-scopeo-pour-une-équipe). Tout le reste est décrit dans la [documentation](documentation.md#documentation-de-scopeo).
 

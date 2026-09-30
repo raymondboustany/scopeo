@@ -12,17 +12,13 @@ import { CRA_OBLIGATIONS } from '@/data/obligations/cra'
 import { AIACT_OBLIGATIONS } from '@/data/obligations/aiact'
 import { RECYF_OBJECTIVES } from '@/data/recyf'
 import { REGULATION_ORDER } from '@/data/regulations'
-import { tr } from '@/i18n'
+import { tr, typoDeep } from '@/i18n'
 import { localizeObligations } from '@/i18n/obligations'
 import { applicableRegulations } from './qualification'
 
-export const ALL_OBLIGATIONS: Obligation[] = localizeObligations([
-  ...RGPD_OBLIGATIONS,
-  ...NIS2_OBLIGATIONS,
-  ...DORA_OBLIGATIONS,
-  ...CRA_OBLIGATIONS,
-  ...AIACT_OBLIGATIONS,
-])
+export const ALL_OBLIGATIONS: Obligation[] = typoDeep(
+  localizeObligations([...RGPD_OBLIGATIONS, ...NIS2_OBLIGATIONS, ...DORA_OBLIGATIONS, ...CRA_OBLIGATIONS, ...AIACT_OBLIGATIONS]),
+)
 
 export const OBLIGATION_BY_ID = new Map(ALL_OBLIGATIONS.map((o) => [o.id, o]))
 

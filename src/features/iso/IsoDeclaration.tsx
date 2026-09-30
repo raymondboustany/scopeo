@@ -18,7 +18,7 @@ import { ISO_STATUS_OPTIONS, namedList } from './labels'
  * Elle vit dans le module ISO et à la fin du questionnaire de qualification,
  * jamais dans la fiche entité. Elle ne pré-remplit rien sans que l'utilisateur
  * l'ait demandé : « certifié » ou « conforme » propose le pré-remplissage,
- * « partiel » ou « aucune démarche » renvoie vers la checklist ou l'évaluation.
+ * « partiel » ou « aucune démarche » renvoie vers la liste de contrôle ou l'évaluation.
  */
 
 export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean }) {
@@ -143,7 +143,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
             blocked ? (
               <Callout tone="caution" icon={<TriangleAlert size={14} />} title={tr('Pré-remplissage désactivé', 'Pre-filling turned off')}>
                 {tr(
-                  "La démarche ne couvre qu'une partie du périmètre : rien n'est pré-rempli, car on ne peut pas savoir quelles exigences elle recouvre. Évaluez chaque exigence à la main, ou renseignez la checklist ISO pour aller plus loin.",
+                  "La démarche ne couvre qu'une partie du périmètre : rien n'est pré-rempli, car on ne peut pas savoir quelles exigences elle recouvre. Évaluez chaque exigence à la main, ou renseignez la liste de contrôle ISO pour aller plus loin.",
                   'The initiative only covers part of the scope: nothing is pre-filled, because there is no way to know which requirements it covers. Assess each requirement by hand, or fill in the ISO checklist to go further.',
                 )}
               </Callout>
@@ -191,7 +191,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
               <p className="mt-1 text-2xs text-ink-3">
                 {status === 'partiel'
                   ? tr(
-                      "Vous pouvez renseigner la checklist ISO 27001, même sur quelques points seulement : les exigences correspondantes se pré-rempliront à mesure. Vous pouvez aussi cocher directement les exigences des textes, dans l'évaluation.",
+                      "Vous pouvez renseigner la liste de contrôle ISO 27001, même sur quelques points seulement : les exigences correspondantes se pré-rempliront à mesure. Vous pouvez aussi cocher directement les exigences des textes, dans l'évaluation.",
                       'You can fill in the ISO 27001 checklist, even for a few points only: the matching requirements will be pre-filled as you go. You can also tick the requirements of the texts directly, in the assessment.',
                     )
                   : tr(
@@ -202,7 +202,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
               <div className="mt-3 flex flex-wrap gap-2">
                 {status === 'partiel' ? (
                   <LinkButton to="/app/iso27001" variant="primary" size="md" icon={<ListChecks size={13} />}>
-                    {tr('Remplir la checklist ISO 27001', 'Fill in the ISO 27001 checklist')}
+                    {tr('Remplir la liste de contrôle ISO 27001', 'Fill in the ISO 27001 checklist')}
                   </LinkButton>
                 ) : null}
                 <LinkButton to="/app/evaluation" size="md" icon={<ArrowRight size={13} />}>
@@ -232,8 +232,8 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
           <p>
             {confirmation && confirmation.count > 0
               ? tr(
-                  `${confirmation.count} exigence${confirmation.count > 1 ? 's' : ''} ${confirmation.count > 1 ? 'ont' : 'a'} été pré-remplie${confirmation.count > 1 ? 's' : ''} via ISO 27001. Elles portent la mention « Renseigné via ISO 27001 » dans l'évaluation.`,
-                  `${confirmation.count} requirement${confirmation.count > 1 ? 's were' : ' was'} pre-filled via ISO 27001. They carry the "Filled in via ISO 27001" tag in the assessment.`,
+                  `${confirmation.count} exigence${confirmation.count > 1 ? 's' : ''} ${confirmation.count > 1 ? 'ont' : 'a'} été pré-remplie${confirmation.count > 1 ? 's' : ''} via ISO 27001. ${confirmation.count > 1 ? 'Elles portent' : 'Elle porte'} la mention « Renseigné via ISO 27001 » dans l'évaluation.`,
+                  `${confirmation.count} requirement${confirmation.count > 1 ? 's were' : ' was'} pre-filled via ISO 27001. ${confirmation.count > 1 ? 'They carry' : 'It carries'} the "Filled in via ISO 27001" tag in the assessment.`,
                 )
               : tr(
                   "Aucune exigence n'avait de contrôle ISO correspondant sur les textes applicables : rien n'a été pré-rempli.",
@@ -242,7 +242,7 @@ export function IsoDeclaration({ showFollowUp = true }: { showFollowUp?: boolean
           </p>
           <p>
             {tr(
-              'Vérifiez ce résultat : chaque niveau reste modifiable à la main, et la checklist ISO permet de déclarer les contrôles exclus de votre déclaration d’applicabilité ou seulement partiellement en place.',
+              'Vérifiez ce résultat : chaque niveau reste modifiable à la main, et la liste de contrôle ISO permet de déclarer les contrôles exclus de votre déclaration d’applicabilité ou seulement partiellement en place.',
               'Please check the result: each level can still be changed by hand, and the ISO checklist lets you declare controls excluded from your Statement of Applicability or only partly in place.',
             )}
           </p>

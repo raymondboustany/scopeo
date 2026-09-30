@@ -60,11 +60,11 @@ const KINDS: {
     icon: <Siren size={18} />,
     title: tr('Fiche réflexe incident', 'Incident quick-reference sheet'),
     audience: tr('À diffuser en interne dès maintenant', 'To share internally right away'),
-    length: tr('1 page', '1 page'),
+    length: tr('1 à 2 pages', '1 to 2 pages'),
     contents: [
       tr('Qui appeler, dans l’ordre, avec leurs coordonnées', 'Who to call, in order, with their contact details'),
       tr('Qui notifier et dans quel délai, selon les textes applicables', 'Who to notify and how fast, according to the applicable texts'),
-      tr('Les six réflexes des premières heures', 'The six reflexes of the first hours'),
+      tr('Les huit réflexes des premières heures', 'The eight reflexes of the first hours'),
     ],
   },
 ]
@@ -140,7 +140,9 @@ export default function ReportPage() {
       {evaluatedShare < 1 ? (
         <p className="rounded-md border border-caution-line bg-caution-wash px-4 py-2.5 text-xs text-ink-2">
           {tr(
-            `${data.coverage.themes - data.coverage.evaluated} exigence${data.coverage.themes - data.coverage.evaluated > 1 ? 's' : ''} ne sont pas encore évaluées : les rapports les signalent comme telles, et la couverture affichée en tient compte.`,
+            data.coverage.themes - data.coverage.evaluated > 1
+              ? `${data.coverage.themes - data.coverage.evaluated} exigences ne sont pas encore évaluées : les rapports les signalent comme telles, et la couverture affichée en tient compte.`
+              : `${data.coverage.themes - data.coverage.evaluated} exigence n'est pas encore évaluée : les rapports la signalent comme telle, et la couverture affichée en tient compte.`,
             `${data.coverage.themes - data.coverage.evaluated} requirement${data.coverage.themes - data.coverage.evaluated > 1 ? 's are' : ' is'} not assessed yet: the reports flag them as such, and the coverage shown takes this into account.`,
           )}
         </p>

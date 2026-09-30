@@ -6,7 +6,7 @@ import { Callout, Card, CardHeader, PageHeader, Tag } from '@/components/ui/prim
 import { Field } from '@/components/auth/fields'
 import { api } from '@/lib/api'
 import type { LdapConfig, LdapConfigRead, LdapTestReport } from '@/types/domain'
-import { tr } from '@/i18n'
+import { COLON, tr } from '@/i18n'
 
 const PRESETS = [
   { id: 'ad', label: 'Active Directory', filter: '(&(objectClass=user)(sAMAccountName={username}))', name: 'displayName' },
@@ -37,7 +37,7 @@ const DETAIL_LABEL: Record<string, string> = {
 /** Détail d'une étape : code traduit, suivi des groupes trouvés pour un refus d'appartenance. */
 function detailText(detail: string): string {
   const [code, extra] = detail.split('|')
-  const label = DETAIL_LABEL[code] ?? code
+  const label = DETAIL_LABEL[code] ?? `${tr('Erreur technique', 'Technical error')}${COLON}${code}`
   return extra ? `${label} ${tr('Groupes trouvés :', 'Groups found:')} ${extra}` : label
 }
 
@@ -100,7 +100,7 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
         <CardHeader title={tr('Serveur', 'Server')} icon={<Network size={16} />} aside={<Switch checked={form.enabled} onCheckedChange={(v) => set('enabled', v)} label={tr('Activer la connexion par annuaire', 'Enable directory sign-in')} />} />
         <div className="grid gap-4 p-5 sm:grid-cols-2">
           <Field label={tr('Adresse', 'Address')}>
-            <Input value={form.url} onChange={(e) => set('url', e.target.value)} placeholder="ldaps://ad.exemple.fr" className="font-mono text-xs" />
+            <Input value={form.url} onChange={(e) => set('url', e.target.value)} placeholder={tr('ldaps://ad.exemple.fr', 'ldaps://ad.example.com')} className="font-mono text-xs" />
           </Field>
           <Field label={tr('Nom affiché sur la page de connexion', 'Name shown on the sign-in page')} hint={tr('facultatif', 'optional')}>
             <Input value={form.label} onChange={(e) => set('label', e.target.value)} placeholder={tr('Compte Exemple', 'Example account')} />
@@ -156,7 +156,7 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
         />
         <div className="grid gap-4 p-5 sm:grid-cols-2">
           <Field label={tr('DN du compte', 'Account DN')}>
-            <Input value={form.bind_dn} onChange={(e) => set('bind_dn', e.target.value)} placeholder="CN=svc-scopeo,OU=Services,DC=exemple,DC=fr" className="font-mono text-xs" />
+            <Input value={form.bind_dn} onChange={(e) => set('bind_dn', e.target.value)} placeholder={tr('CN=svc-scopeo,OU=Services,DC=exemple,DC=fr', 'CN=svc-scopeo,OU=Services,DC=example,DC=com')} className="font-mono text-xs" />
           </Field>
           <Field label={tr('Mot de passe', 'Password')} hint={data.has_bind_password ? tr('enregistré, chiffré ; laisser vide pour le conserver', 'saved, encrypted; leave empty to keep it') : undefined}>
             <Input type="password" autoComplete="new-password" value={bindPassword} onChange={(e) => { setBindPassword(e.target.value); setSaved(false) }} placeholder={data.has_bind_password ? '••••••••' : ''} />
@@ -177,7 +177,7 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label={tr('Base de recherche', 'Search base')}>
-              <Input value={form.base_dn} onChange={(e) => set('base_dn', e.target.value)} placeholder="OU=Utilisateurs,DC=exemple,DC=fr" className="font-mono text-xs" />
+              <Input value={form.base_dn} onChange={(e) => set('base_dn', e.target.value)} placeholder={tr('OU=Utilisateurs,DC=exemple,DC=fr', 'OU=Users,DC=example,DC=com')} className="font-mono text-xs" />
             </Field>
             <Field label={tr('Filtre', 'Filter')} hint="{username}">
               <Input value={form.user_filter} onChange={(e) => set('user_filter', e.target.value)} className="font-mono text-xs" />
@@ -200,7 +200,7 @@ function LdapForm({ initial }: { initial: LdapConfigRead }) {
         />
         <div className="p-5">
           <Field label={tr('Groupe autorisé', 'Allowed group')} hint={tr('nom du groupe ou DN complet, facultatif', 'group name or full DN, optional')}>
-            <Input value={form.group_dn} onChange={(e) => set('group_dn', e.target.value)} placeholder="Scopeo  ou  CN=Scopeo,OU=Groupes,DC=exemple,DC=fr" className="font-mono text-xs" />
+            <Input value={form.group_dn} onChange={(e) => set('group_dn', e.target.value)} placeholder={tr('Scopeo  ou  CN=Scopeo,OU=Groupes,DC=exemple,DC=fr', 'Scopeo  or  CN=Scopeo,OU=Groups,DC=example,DC=com')} className="font-mono text-xs" />
           </Field>
         </div>
       </Card>

@@ -84,7 +84,7 @@ export default function CrosswalkPage() {
             { value: 'tous', label: tr('Tous', 'All'), count: counts.tous },
             { value: 'recouvrement', label: tr('Recouvrements', 'Overlaps'), count: counts.recouvrement },
             { value: 'divergence', label: tr('Divergences', 'Divergences'), count: counts.divergence },
-            { value: 'hierarchie', label: tr('Hiérarchies', 'Precedence'), count: counts.hierarchie },
+            { value: 'hierarchie', label: tr('Primauté', 'Precedence'), count: counts.hierarchie },
           ]}
         />
         {scoping.qualified ? (
@@ -163,7 +163,7 @@ function shortRef(obligationId: string): string {
   if (o.shortRef) return o.shortRef
   return o.article
     .replace(/^Articles? /, '')
-    .replace(/, paragraphe (\d+)/g, '§$1')
+    .replace(/, paragraphes? /g, '§')
     .replace(/, point ([a-z])\)/g, '.$1')
     .replace(/ (à|to) /, '–')
     .replace(/ (et|and) /, ', ')
@@ -204,7 +204,7 @@ function Matrix({
                 <IsoHeader />
               </th>
             ) : null}
-            <th scope="col" className="label-caps w-[4.5rem] px-2 py-2.5 text-right font-semibold">
+            <th scope="col" className="label-caps w-[6.25rem] px-2 py-2.5 text-right font-semibold">
               {tr('Nature', 'Type')}
             </th>
           </tr>
@@ -282,10 +282,10 @@ function Matrix({
 
                   <td className="px-2 py-2.5 text-right">
                     {t.relation === 'recouvrement' ? (
-                      <span className="text-2xs text-ink-4">{tr('Recouvr.', 'Overlap')}</span>
+                      <span className="text-2xs text-ink-4">{tr('Recouvrement', 'Overlap')}</span>
                     ) : (
                       <Tag tone={t.relation === 'divergence' ? 'critical' : 'brass'}>
-                        {t.relation === 'divergence' ? tr('Diverg.', 'Diverg.') : tr('Hiérar.', 'Preced.')}
+                        {t.relation === 'divergence' ? tr('Divergence', 'Divergence') : tr('Primauté', 'Precedence')}
                       </Tag>
                     )}
                   </td>
@@ -453,7 +453,7 @@ function ReadingGuide() {
         const s = RELATION_STYLE[r]
         const body = {
           recouvrement: tr("Les textes demandent la même chose, à des degrés de précision différents. Une action unique, calibrée sur l'exigence la plus détaillée, les satisfait tous. C'est le cas le plus fréquent, et la source principale d'économie dans un plan de conformité.", 'The texts ask for the same thing, at different levels of detail. A single action, calibrated on the most detailed requirement, satisfies them all. This is the most common case, and the main source of savings in a compliance plan.'),
-          divergence: tr("Les textes traitent du même sujet mais posent des exigences inconciliables : un délai plus court, une mesure nommée, un format imposé. Il faut alors identifier la règle la plus stricte et dimensionner sur elle : satisfaire la plus exigeante satisfait les autres, l'inverse est faux.", 'The texts address the same subject but set irreconcilable requirements: a shorter deadline, a named measure, a mandated format. You then identify the strictest rule and size for it: meeting the most demanding one meets the others, not the reverse.'),
+          divergence: tr("Les textes traitent du même sujet mais posent des exigences d'intensité inégale : un délai plus court, une mesure nommée, un format imposé. Il faut alors identifier la règle la plus stricte et dimensionner sur elle : satisfaire la plus exigeante satisfait les autres, l'inverse est faux.", 'The texts address the same subject but set requirements of unequal intensity: a shorter deadline, a named measure, a mandated format. You then identify the strictest rule and size for it: meeting the most demanding one meets the others, not the reverse.'),
           hierarchie: tr("Un texte écarte expressément l'autre sur un champ donné. Ce n'est pas un arbitrage à faire mais une règle de droit à constater : appliquer les deux en parallèle est une erreur, pas une précaution.", 'One text expressly sets the other aside in a given area. It is not a judgment call but a rule of law to acknowledge: applying both in parallel is a mistake, not a precaution.'),
         }[r]
         return (

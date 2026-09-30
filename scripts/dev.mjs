@@ -16,7 +16,7 @@ const procs = []
 function start(name, cmd, args, cwd) {
   const p = spawn(cmd, args, { cwd, stdio: 'inherit', shell: process.platform === 'win32' && cmd === 'npx' })
   p.on('exit', (code) => {
-    console.log(`[${name}] arrêté (${code ?? 0}).`)
+    console.log(`[${name}] stopped / arrêté (${code ?? 0}).`)
     shutdown(code ?? 0)
   })
   procs.push(p)
