@@ -15,7 +15,6 @@ const base: Answers = {
   bilan: 'lte10',
   etablissement_ue: 'oui',
   etats_membres: 'un',
-  donnees_perso: 'oui',
   role_rgpd: 'responsable',
   donnees_sensibles: 'non',
   suivi_grande_echelle: 'non',

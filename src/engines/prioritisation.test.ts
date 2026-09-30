@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_WEIGHTS, coverageRatio, prioritise } from './prioritisation'
+import { DEFAULT_PLAN, DEFAULT_WEIGHTS, coverageRatio, normalisePlan, prioritise, wavesFor } from './prioritisation'
 import { qualify } from './qualification'
 import { scopeObligations } from './corpus'
 import { CROSSWALK } from '@/data/crosswalk'
@@ -12,7 +12,6 @@ const profile: Answers = {
   bilan: 'gt43',
   etablissement_ue: 'oui',
   etats_membres: 'deux_cinq',
-  donnees_perso: 'oui',
   role_rgpd: 'les_deux',
   donnees_sensibles: 'non',
   suivi_grande_echelle: 'non',
@@ -98,11 +97,31 @@ describe('moteur de priorisation', () => {
     }
   })
 
-  it('répartit toutes les exigences sur quatre phases au plus', () => {
+  it('répartit toutes les exigences sur les quatre phases proposées par défaut', () => {
     const items = run()
     for (const item of items) {
       expect([1, 2, 3, 4]).toContain(item.wave)
     }
+    expect(items[0].wave).toBe(1)
+  })
+
+  it('suit un découpage personnalisé : nombre de phases et durées', () => {
+    const plan = { months: [2, 4] }
+    const qualification = qualify(profile)
+    const obligations = scopeObligations(profile, qualification).filter((o) => o.inScope)
+    const items = prioritise({ qualification, coverage: {}, weights: DEFAULT_WEIGHTS, obligations, plan })
+    for (const item of items) expect([1, 2]).toContain(item.wave)
+    // Au prorata des durées : environ un tiers des exigences en phase 1.
+    const first = items.filter((i) => i.wave === 1 && i.blockedBy.length === 0).length
+    expect(first).toBeGreaterThan(0)
+    expect(first).toBeLessThanOrEqual(Math.ceil(items.length / 3))
+    expect(wavesFor(plan).map((w) => w.horizon)).toEqual(['0 à 2 mois', '2 à 6 mois'])
+  })
+
+  it('ramène un découpage invalide à la proposition de la plateforme', () => {
+    expect(normalisePlan({ months: [5] })).toEqual(DEFAULT_PLAN)
+    expect(normalisePlan(null)).toEqual(DEFAULT_PLAN)
+    expect(normalisePlan({ months: [0, 99, 3] }).months).toEqual([1, 36, 3])
   })
 })
 

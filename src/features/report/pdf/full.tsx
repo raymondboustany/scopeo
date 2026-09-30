@@ -287,7 +287,7 @@ export function FullReport({ d }: { d: ReportData }) {
           )}
         </P>
         <H3>{tr('Priorité et charge de chaque exigence', 'Priority and effort of each requirement')}</H3>
-        <PriorityScatter items={d.items.map((i) => ({ rank: i.rank, score: i.score, effort: i.theme.effort, wave: i.wave }))} />
+        <PriorityScatter phases={d.phaseCount} items={d.items.map((i) => ({ rank: i.rank, score: i.score, effort: i.theme.effort, wave: i.wave }))} />
         </Keep>
         {d.waves.map((w) => (
           <Fragment key={w.n}>

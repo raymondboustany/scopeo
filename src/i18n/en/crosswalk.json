@@ -337,7 +337,7 @@
   "mappings": {
    "RGPD": [
     "Limit retention to the necessary period and document the processing that logging represents.",
-    "The CNIL generally uses six months as the default retention period for technical logs, unless a legal obligation says otherwise."
+    "The CNIL generally recommends six months to one year for technical logs, unless a legal obligation says otherwise."
    ],
    "NIS2": [
     "Logging needed to detect, qualify and investigate incidents.",
@@ -353,7 +353,7 @@
    ]
   },
   "strictest": [
-   "Retention sufficient for root-cause analysis and prudential reconstruction of incidents, which exceeds the default retention period for technical logs.",
+   "Log retention set according to the needs of detecting incidents and analysing their causes, which may exceed the default period recommended by the CNIL.",
    "When DORA applies, retention must be raised to prudential level, but it must then be justified and documented in the record of processing. It is the duration, not the collection, that must be decided."
   ],
   "evidence": [

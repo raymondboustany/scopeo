@@ -96,9 +96,19 @@ export function uid(): string {
   return crypto.randomUUID?.() ?? Math.random().toString(36).slice(2) + Date.now().toString(36)
 }
 
-/** Nombre de jours entre aujourd'hui et une date ISO. Négatif si passée. */
-export function daysUntil(iso: string): number {
-  const target = new Date(iso).getTime()
-  const now = Date.now()
-  return Math.round((target - now) / 86_400_000)
+const PARIS_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' })
+
+/**
+ * Date du jour en France, à minuit. Les échéances du corpus sont des dates
+ * françaises et européennes : le décompte se fait en jours calendaires à
+ * l'heure de Paris, quel que soit le fuseau du poste.
+ */
+export function todayInParis(now: Date = new Date()): Date {
+  return parseDate(PARIS_DAY.format(now))
+}
+
+/** Nombre de jours calendaires entre aujourd'hui (heure de Paris) et une date ISO. Négatif si passée. */
+export function daysUntil(iso: string, now: Date = new Date()): number {
+  const day = /^\d{4}-\d{2}-\d{2}/.exec(iso)?.[0] ?? iso
+  return Math.round((parseDate(day).getTime() - todayInParis(now).getTime()) / 86_400_000)
 }

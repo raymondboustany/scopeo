@@ -243,7 +243,7 @@ export default function EntityProfilePage() {
       <NextStep
         to="/app/qualification"
         label={tr("Qualifier l'entité", 'Scope the entity')}
-        hint={tr(`${QUESTIONS.length} questions au plus, chacune adossée à l'article dont elle relève`, `Up to ${QUESTIONS.length} questions, each tied to the article it relies on`)}
+        hint={tr(`Jusqu'à ${QUESTIONS.length} questions selon les réponses, chacune adossée à l'article dont elle relève`, `Up to ${QUESTIONS.length} questions depending on the answers, each tied to the article it relies on`)}
       />
     </div>
   )

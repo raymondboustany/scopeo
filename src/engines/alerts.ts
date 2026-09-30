@@ -1,7 +1,7 @@
 import type { Answers, RegulationId, TimelineEvent } from '@/types/domain'
 import { TIMELINE } from '@/data/timeline'
 import { tr } from '@/i18n'
-import { parseDate } from '@/lib/utils'
+import { daysUntil, parseDate } from '@/lib/utils'
 
 /**
  * Alertes du tableau de bord.
@@ -44,10 +44,11 @@ export function regulatoryAlerts(
   return TIMELINE.filter((e) => e.regulation === 'TRANSVERSE' || applicable.includes(e.regulation))
     .filter((e) => conditionsMet(e, answers))
     .map((e) => ({ e, date: parseDate(e.date) }))
-    .filter(({ date }) => date.getTime() - now.getTime() <= 45 * DAY && now.getTime() - date.getTime() <= 20 * DAY)
+    .filter(({ e }) => daysUntil(e.date, now) <= 45 && daysUntil(e.date, now) >= -20)
     .map(({ e, date }) => {
-      const upcoming = date.getTime() >= now.getTime()
-      const days = Math.round(Math.abs(date.getTime() - now.getTime()) / DAY)
+      const delta = daysUntil(e.date, now)
+      const upcoming = delta >= 0
+      const days = Math.abs(delta)
       const id = `TL:${e.id}`
       const when =
         days === 0

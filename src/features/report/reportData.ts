@@ -6,14 +6,14 @@ import { RECURRING_DUTIES } from '@/data/timeline'
 import { SECTOR_BY_VALUE } from '@/data/questionnaire'
 import { RECYF_META } from '@/data/recyf'
 import { STATUS_LABEL } from '@/engines/qualification'
-import { WAVES, WEIGHT_LABELS } from '@/engines/prioritisation'
+import { WEIGHT_LABELS } from '@/engines/prioritisation'
 import { DOMAIN_LABELS } from '@/engines/scores'
 import { authoritiesFor, NOTIFICATION_DELAYS, readiness } from '@/engines/incidents'
 import { nextMilestones, relevantEvents } from '@/engines/alerts'
 import { isoCertificateValid } from '@/engines/scores'
 import { isoProgress } from '@/engines/iso'
 import { COLON, tr } from '@/i18n'
-import { parseDate } from '@/lib/utils'
+import { daysUntil } from '@/lib/utils'
 
 /**
  * Données des rapports.
@@ -59,6 +59,8 @@ export interface ReportData {
   maxExposure: { regulation: RegulationId; eur: number } | null
   items: (PrioritisedItem & { owner?: string; targetDate?: string })[]
   waves: { n: number; label: string; horizon: string; intent: string; items: ReportData['items'] }[]
+  /** Nombre de phases du plan retenu, y compris celles restées vides. */
+  phaseCount: number
   frictions: { code: string; title: string; relation: string; summary: string; rule: string | null }[]
   milestones: TimelineEvent[]
   upcoming: TimelineEvent[]
@@ -194,8 +196,8 @@ export function buildReportData(s: Scoping): ReportData {
   if (wave1.length > 0)
     decisions.push(
       tr(
-        `Valider la phase 1 (${wave1.length} exigence${wave1.length > 1 ? 's' : ''}, 0 à 3 mois) et le budget associé.`,
-        `Approve phase 1 (${wave1.length} requirement${wave1.length > 1 ? 's' : ''}, 0 to 3 months) and its budget.`,
+        `Valider la phase 1 (${wave1.length} exigence${wave1.length > 1 ? 's' : ''}, ${s.waves[0].horizon}) et le budget associé.`,
+        `Approve phase 1 (${wave1.length} requirement${wave1.length > 1 ? 's' : ''}, ${s.waves[0].horizon}) and its budget.`,
       ),
     )
   if (tracking && unowned > 0)
@@ -295,11 +297,12 @@ export function buildReportData(s: Scoping): ReportData {
     },
     maxExposure: exposures[0] ?? null,
     items,
-    waves: WAVES.map((w) => ({ ...w, items: items.filter((i) => i.wave === w.n) })).filter((w) => w.items.length > 0),
+    waves: s.waves.map((w) => ({ ...w, items: items.filter((i) => i.wave === w.n) })).filter((w) => w.items.length > 0),
+    phaseCount: s.waves.length,
     frictions,
     milestones: nextMilestones(s.applicable, entity.answers, now, 3),
     upcoming: relevantEvents(s.applicable, entity.answers)
-      .filter((e) => parseDate(e.date).getTime() >= now.getTime() - 86_400_000)
+      .filter((e) => daysUntil(e.date, now) >= 0)
       .sort((a, b) => a.date.localeCompare(b.date))
       .slice(0, 8),
     duties: RECURRING_DUTIES.filter((d) => s.applicable.includes(d.regulation)),

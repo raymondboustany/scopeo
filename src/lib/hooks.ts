@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useCurrentEntity, useEntityEditor } from './queries'
 import { applicableRegulations, qualify } from '@/engines/qualification'
-import { DEFAULT_WEIGHTS, prioritise } from '@/engines/prioritisation'
+import { DEFAULT_WEIGHTS, normalisePlan, prioritise, wavesFor, type Wave } from '@/engines/prioritisation'
 import { recyfCounts, recyfForCategory, scopeObligations, type ScopedObligation } from '@/engines/corpus'
 import { buildSnapshot, computeScores, measureProgress, type Scores } from '@/engines/scores'
 import { isComplete } from '@/data/questionnaire'
@@ -20,6 +20,7 @@ import type {
   MeasureStatus,
   PrioritisedItem,
   PriorityWeights,
+  RoadmapPlan,
   QualificationResult,
   RecyfObjective,
   RegulationId,
@@ -44,6 +45,9 @@ export interface Scoping {
   prioritised: PrioritisedItem[]
   scores: Scores
   weights: PriorityWeights
+  /** Découpage en phases retenu (proposition de la plateforme ou réglage de l'utilisateur). */
+  plan: RoadmapPlan
+  waves: Wave[]
   recyf: RecyfObjective[]
   recyfCounts: ReturnType<typeof recyfCounts>
   measures: ReturnType<typeof measureProgress>
@@ -87,7 +91,9 @@ export function deriveScoping(entity: EntityRecord | null, loading = false): Sco
   const alerts = qualification ? isoExclusionAlerts(isoContext) : new Map<string, IsoExclusionAlert>()
   const coverage = mergeCoverage(manual, suggestions)
 
-  const prioritised = qualification ? prioritise({ qualification, coverage, weights, obligations: inScope }) : []
+  const plan = normalisePlan(entity?.profile?.roadmap)
+  const waves = wavesFor(plan)
+  const prioritised = qualification ? prioritise({ qualification, coverage, weights, obligations: inScope, plan }) : []
   const category = qualification?.nis2Category ?? null
   const recyf = recyfForCategory(category)
   const doraPrevails = qualification?.derived.doraPrevails === true
@@ -107,6 +113,8 @@ export function deriveScoping(entity: EntityRecord | null, loading = false): Sco
     prioritised,
     scores: computeScores(prioritised, applicable),
     weights,
+    plan,
+    waves,
     recyf,
     recyfCounts: recyfCounts(category),
     measures: measureProgress(anssiApplies ? recyf : [], measureStatuses),

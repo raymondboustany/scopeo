@@ -330,14 +330,14 @@ const CROSSWALK_FR: CrosswalkTheme[] = [
       "Définir une politique de journalisation unique fixant, par catégorie de journal, ce qui est collecté, pourquoi, pendant combien de temps et qui y accède, puis inscrire cette politique au registre des traitements. Le besoin de détection fixe le plancher, la minimisation fixe le plafond.",
     relation: 'divergence',
     mappings: [
-      { regulation: 'RGPD', obligationIds: ['RGPD-A5', 'RGPD-A30'], requirement: "Limiter la conservation à la durée nécessaire et documenter le traitement que constitue la journalisation.", nuance: "La CNIL retient généralement six mois comme durée de conservation de principe des journaux techniques, sauf obligation légale contraire." },
+      { regulation: 'RGPD', obligationIds: ['RGPD-A5', 'RGPD-A30'], requirement: "Limiter la conservation à la durée nécessaire et documenter le traitement que constitue la journalisation.", nuance: "La CNIL recommande en principe une durée de six mois à un an pour les journaux techniques, sauf obligation légale contraire." },
       { regulation: 'NIS2', obligationIds: ['NIS2-A21-2b', 'NIS2-A21-2i'], requirement: "Journalisation nécessaire à la détection, à la qualification et à l'investigation des incidents." },
       { regulation: 'DORA', obligationIds: ['DORA-A10', 'DORA-A17'], requirement: "Journalisation des incidents et surveillance des activités, avec conservation permettant l'analyse des causes profondes.", nuance: "Les normes techniques imposent une conservation cohérente avec les besoins d'investigation prudentielle." },
       { regulation: 'AIACT', obligationIds: ['AIACT-A11-12', 'AIACT-A26'], requirement: "Journalisation automatique des événements par conception, et conservation des journaux par le déployeur pendant au moins six mois." },
     ],
     strictest: {
       regulation: 'DORA',
-      rule: "Conservation suffisante pour permettre l'analyse des causes profondes et la reconstitution prudentielle des incidents, ce qui excède la durée de principe retenue en matière de journaux techniques.",
+      rule: "Conservation des journaux fixée selon les besoins de détection et d'analyse des causes des incidents, qui peut dépasser la durée de principe recommandée par la CNIL.",
       rationale:
         "Lorsque DORA s'applique, la durée de conservation doit être portée au niveau prudentiel, mais elle doit alors être justifiée et documentée au registre des traitements. C'est la durée, et non la collecte, qui doit être arbitrée.",
     },

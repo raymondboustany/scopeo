@@ -135,7 +135,6 @@ export function fmtEur(n: number): string {
 // ---------------------------------------------------------------------------
 
 function qualifyRgpd(a: Answers): RegulationVerdict {
-  const traite = str(a, 'donnees_perso')
   const etabliUe = str(a, 'etablissement_ue') === 'oui'
   const cible = str(a, 'cible_ue') === 'oui'
 
@@ -143,22 +142,11 @@ function qualifyRgpd(a: Answers): RegulationVerdict {
     {
       article: tr('Article 2', 'Article 2'),
       label: tr('Traitement de données à caractère personnel', 'Processing of personal data'),
-      met: traite === 'oui',
-      detail:
-        traite === 'oui'
-          ? tr(
-              "L'entité déclare traiter des données à caractère personnel : le règlement s'applique matériellement.",
-              'The entity reports processing personal data: the regulation applies materially.',
-            )
-          : traite === 'incertain'
-            ? tr(
-                "La présence de traitements reste à confirmer. En pratique, toute organisation qui emploie du personnel traite des données personnelles.",
-                'Whether personal data is processed remains to be confirmed. In practice, any organisation with staff processes personal data.',
-              )
-            : tr(
-                'Aucun traitement déclaré. Cette situation est exceptionnelle et doit être vérifiée, notamment au regard des données de salariés et des journaux techniques.',
-                'No processing reported. This is exceptional and should be checked, in particular for employee data and technical logs.',
-              ),
+      met: true,
+      detail: tr(
+        "Toute organisation traite des données personnelles, ne serait-ce que celles de ses salariés, de ses clients ou de ses journaux techniques : le champ matériel du règlement est rempli.",
+        'Every organisation processes personal data, if only that of its staff, its customers or its technical logs: the material scope of the regulation is met.',
+      ),
     },
     {
       article: tr('Article 3, paragraphe 1', 'Article 3(1)'),
@@ -191,19 +179,9 @@ function qualifyRgpd(a: Answers): RegulationVerdict {
   }
 
   const territorial = etabliUe || cible
-  let status: VerdictStatus = 'hors_champ'
-  if (traite === 'oui' && territorial) status = 'applicable'
-  else if (traite === 'incertain' && territorial) status = 'probable'
+  const status: VerdictStatus = territorial ? 'applicable' : 'hors_champ'
 
   const caveats: string[] = []
-  if (traite === 'incertain') {
-    caveats.push(
-      tr(
-        'Confirmer la présence de traitements de données personnelles, y compris les données de salariés et les journaux techniques contenant des identifiants ou des adresses réseau.',
-        'Confirm whether personal data is processed, including employee data and technical logs containing identifiers or network addresses.',
-      ),
-    )
-  }
   if (status !== 'hors_champ' && str(a, 'suivi_grande_echelle') === 'incertain') {
     caveats.push(
       tr(

@@ -1,7 +1,7 @@
 {
   "sections": {
     "identite": ["Entity identity", "Sector, size and location: these three elements drive most of the scoping."],
-    "donnees": ["Personal data", "Scope of the GDPR and intensity of obligations."],
+    "donnees": ["Personal data", "Intensity of GDPR obligations: the entity's role, sensitive data, data protection officer and transfers."],
     "numerique": ["Digital activity and criticality", "Scope of NIS2, including cases where size does not matter."],
     "financier": ["Financial sector", "Scope of DORA and how it fits with NIS2."],
     "produits": ["Digital products", "Scope of the CRA: hardware and software products placed on the Union market."],
@@ -111,12 +111,6 @@
       "question": "In how many Member States does the entity provide its services?",
       "help": "Determines the competent authority and, for the GDPR, whether the one-stop shop with a lead authority may apply.",
       "options": { "un": ["One"], "deux_cinq": ["Two to five"], "six_plus": ["Six or more"] }
-    },
-    "donnees_perso": {
-      "basis": "GDPR, Articles 2 and 4",
-      "question": "Does the entity process personal data?",
-      "help": "Customer, employee or prospect data, logs containing IP addresses, CCTV footage. In practice a negative answer is rare and should be checked.",
-      "options": { "oui": ["Yes"], "non": ["No, no personal data"], "incertain": ["Unsure"] }
     },
     "role_rgpd": {
       "basis": "GDPR, Article 4(7) and (8)",

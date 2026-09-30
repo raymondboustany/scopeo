@@ -21,7 +21,7 @@
 <text x="444" y="45" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">3</text>
 <text x="431" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="650" fill="#0e1014">Prioritise</text>
 <text x="431" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">Order of treatment</text>
-<text x="431" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">in four phases</text>
+<text x="431" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#555b66">in adjustable phases</text>
 <path d="M596 91.0 H610" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round"/>
 <path d="M605 86.0 L610 91.0 L605 96.0" fill="none" stroke="#a3a9b4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="616" y="10" width="176" height="162" rx="12" fill="#ffffff" stroke="#dfe2e8" filter="url(#s)"/>

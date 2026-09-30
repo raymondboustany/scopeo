@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Download, Lock } from 'lucide-react'
+import { CalendarRange, Download, Lock, RotateCcw } from 'lucide-react'
 import {
   Callout,
   Card,
+  CardHeader,
   EmptyState,
   Ladder,
   PageHeader,
@@ -13,10 +14,11 @@ import {
   Tag,
 } from '@/components/ui/primitives'
 import { RELATION_STYLE } from '@/components/ui/tokens'
-import { Button, LinkButton, Tooltip } from '@/components/ui/controls'
+import { Button, Input, LinkButton, Select, Tooltip } from '@/components/ui/controls'
 import { useScoping } from '@/lib/hooks'
+import { useEntityEditor } from '@/lib/queries'
 import { NextStep } from '@/components/layout/NextStep'
-import { COVERAGE_LABEL, WAVES } from '@/engines/prioritisation'
+import { COVERAGE_LABEL, DEFAULT_PLAN, PLAN_LIMITS, isDefaultPlan, normalisePlan, wavesFor } from '@/engines/prioritisation'
 import { CROSSWALK_BY_ID } from '@/data/crosswalk'
 import { RECURRING_DUTIES } from '@/data/timeline'
 import { cn, formatDateShort, formatPct, slugify } from '@/lib/utils'
@@ -37,8 +39,8 @@ export default function RoadmapPage() {
   const profile = scoping.entity
 
   const byWave = useMemo(
-    () => WAVES.map((w) => ({ ...w, items: scoping.prioritised.filter((p) => p.wave === w.n) })),
-    [scoping.prioritised],
+    () => scoping.waves.map((w) => ({ ...w, items: scoping.prioritised.filter((p) => p.wave === w.n) })),
+    [scoping.prioritised, scoping.waves],
   )
 
   if (!profile) return null
@@ -66,7 +68,7 @@ export default function RoadmapPage() {
       [tr('Rang', 'Rank'), tr('Phase', 'Phase'), tr('Horizon', 'Horizon'), 'Code', tr('Exigence', 'Requirement'), tr('Textes', 'Texts'), tr('Couverture', 'Coverage'), tr('Charge', 'Effort'), tr('Responsable', 'Owner'), tr('Échéance', 'Due date'), 'Action'],
       ...scoping.prioritised.map((p) => {
         const entry = scoping.coverage[p.themeId]
-        const wave = WAVES.find((w) => w.n === p.wave)
+        const wave = scoping.waves.find((w) => w.n === p.wave)
         return [
           String(p.rank),
           String(p.wave),
@@ -101,7 +103,7 @@ export default function RoadmapPage() {
       <PageHeader
         eyebrow={profile.name}
         title={tr('Feuille de route', 'Roadmap')}
-        lead={tr("L'ordre de traitement réparti en quatre phases, dans le respect des prérequis techniques. Les phases fixent une séquence, pas des dates : les horizons restent indicatifs.", 'The treatment order split into four phases, respecting technical prerequisites. Phases set a sequence, not dates: horizons remain indicative.')}
+        lead={tr("L'ordre de traitement réparti en phases, dans le respect des prérequis techniques. La plateforme propose un découpage ; vous pouvez en changer le nombre de phases et la durée de chacune.", 'The treatment order split into phases, respecting technical prerequisites. The platform proposes a breakdown; you can change the number of phases and the length of each one.')}
         actions={
           <Button icon={<Download size={13} />} onClick={exportCsv}>
             {tr('Exporter en CSV', 'Export as CSV')}
@@ -133,6 +135,8 @@ export default function RoadmapPage() {
           />
         </div>
       </Card>
+
+      <PhasePlanner />
 
       <div className="space-y-8">
         {byWave.map((wave) => (
@@ -186,6 +190,105 @@ export default function RoadmapPage() {
         <NextStep to="/app/signalement" label={tr('Préparer le signalement', 'Prepare incident reporting')} hint={tr("Autorités, délais et chaîne d'escalade", 'Authorities, deadlines and escalation chain')} />
       </div>
     </>
+  )
+}
+
+/* ==========================================================================
+   Découpage en phases : proposition de la plateforme, ajustable
+   ========================================================================== */
+
+const PHASE_COUNTS = Array.from({ length: PLAN_LIMITS.maxPhases - PLAN_LIMITS.minPhases + 1 }, (_, i) => PLAN_LIMITS.minPhases + i)
+
+function PhasePlanner() {
+  const { plan, readOnly } = useScoping()
+  const edit = useEntityEditor()
+  const isDefault = isDefaultPlan(plan)
+  const total = plan.months.reduce((a, b) => a + b, 0)
+  const waves = wavesFor(plan)
+
+  const save = (months: number[]) => {
+    if (readOnly) return
+    const next = normalisePlan({ months })
+    edit((cur) => ({ profile: { ...(cur.profile ?? {}), roadmap: isDefaultPlan(next) ? undefined : next } }))
+  }
+  const setCount = (count: number) => {
+    const months = plan.months.slice(0, count)
+    while (months.length < count) months.push(months[months.length - 1] ?? 6)
+    save(months)
+  }
+  const setMonths = (i: number, value: string) => {
+    const m = Number(value)
+    if (!Number.isFinite(m) || m < PLAN_LIMITS.minMonths) return
+    save(plan.months.map((x, j) => (j === i ? m : x)))
+  }
+  const proposal = DEFAULT_PLAN.months.join(', ').replace(/, (\d+)$/, tr(' et $1', ' and $1'))
+
+  return (
+    <Card className="mb-8">
+      <CardHeader
+        title={tr('Découpage en phases', 'Phase breakdown')}
+        subtitle={
+          isDefault
+            ? tr(
+                `Proposition de la plateforme : ${DEFAULT_PLAN.months.length} phases de ${proposal} mois. Ajustez-la selon vos moyens et votre calendrier.`,
+                `Platform proposal: ${DEFAULT_PLAN.months.length} phases of ${proposal} months. Adjust it to your resources and timetable.`,
+              )
+            : tr(
+                `Découpage personnalisé : ${plan.months.length} phases sur ${total} mois. Les exigences sont réparties au prorata de la durée de chaque phase.`,
+                `Custom breakdown: ${plan.months.length} phases over ${total} months. Requirements are spread in proportion to each phase's length.`,
+              )
+        }
+        icon={<CalendarRange size={16} />}
+        aside={
+          isDefault ? (
+            <Tag tone="accent">{tr('Proposition de la plateforme', 'Platform proposal')}</Tag>
+          ) : readOnly ? null : (
+            <Button size="sm" variant="ghost" icon={<RotateCcw size={13} />} onClick={() => save([...DEFAULT_PLAN.months])}>
+              {tr('Revenir à la proposition', 'Back to the proposal')}
+            </Button>
+          )
+        }
+      />
+      <div className="flex flex-wrap items-start gap-4 p-5">
+        <label className="block w-36">
+          <span className="mb-1.5 block text-xs font-medium text-ink-2">{tr('Nombre de phases', 'Number of phases')}</span>
+          {readOnly ? (
+            <Input value={String(plan.months.length)} disabled />
+          ) : (
+            <Select
+              value={String(plan.months.length)}
+              onValueChange={(v) => setCount(Number(v))}
+              options={PHASE_COUNTS.map((n) => ({ value: String(n), label: String(n) }))}
+              ariaLabel={tr('Nombre de phases', 'Number of phases')}
+            />
+          )}
+        </label>
+        {waves.map((w, i) => (
+          <label key={w.n} className="block w-28">
+            <span className="mb-1.5 block text-xs font-medium text-ink-2">{w.label}</span>
+            <span className="relative block">
+              <Input
+                type="number"
+                min={PLAN_LIMITS.minMonths}
+                max={PLAN_LIMITS.maxMonths}
+                disabled={readOnly}
+                value={String(plan.months[i])}
+                onChange={(e) => setMonths(i, e.target.value)}
+                className="pr-12"
+                aria-label={tr(`Durée de la phase ${w.n}, en mois`, `Length of phase ${w.n}, in months`)}
+              />
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-2xs text-ink-4">{tr('mois', 'months')}</span>
+            </span>
+            <span className="mt-1 block text-2xs text-ink-4">{w.horizon}</span>
+          </label>
+        ))}
+      </div>
+      {readOnly ? (
+        <p className="border-t border-rule px-5 py-3 text-2xs text-ink-3">
+          {tr('Démonstration en lecture seule : copiez-la depuis la page Entités pour ajuster les phases.', 'Read-only demo: copy it from the Entities page to adjust the phases.')}
+        </p>
+      ) : null}
+    </Card>
   )
 }
 

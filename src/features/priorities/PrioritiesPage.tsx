@@ -20,7 +20,6 @@ import { useEntityEditor } from '@/lib/queries'
 import {
   COVERAGE_LABEL,
   DEFAULT_WEIGHTS,
-  WAVES,
   WEIGHT_LABELS,
 } from '@/engines/prioritisation'
 import { CROSSWALK_BY_ID } from '@/data/crosswalk'
@@ -170,7 +169,7 @@ export default function PrioritiesPage() {
           <Card className="mt-4 p-4">
             <div className="label-caps mb-2">{tr('Répartition par phase', 'Breakdown by phase')}</div>
             <ul className="space-y-2">
-              {WAVES.map((w) => {
+              {scoping.waves.map((w) => {
                 const count = scoping.prioritised.filter((p) => p.wave === w.n).length
                 return (
                   <li key={w.n} className="flex items-baseline justify-between gap-2 border-b border-rule pb-2 last:border-0 last:pb-0">
@@ -192,7 +191,7 @@ export default function PrioritiesPage() {
         </aside>
       </div>
       <div className="mt-6">
-        <NextStep to="/app/feuille-de-route" label={tr('Planifier : la feuille de route', 'Plan: the roadmap')} hint={tr('Les exigences réparties en quatre phases', 'Requirements split into four phases')} />
+        <NextStep to="/app/feuille-de-route" label={tr('Planifier : la feuille de route', 'Plan: the roadmap')} hint={tr('Les exigences réparties en phases ajustables', 'Requirements split into adjustable phases')} />
       </div>
     </>
   )

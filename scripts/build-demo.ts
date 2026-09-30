@@ -21,7 +21,6 @@ const answers: Answers = {
   bilan: '10a43',
   etablissement_ue: 'oui',
   etats_membres: 'deux_cinq',
-  donnees_perso: 'oui',
   role_rgpd: 'les_deux',
   donnees_sensibles: 'non',
   suivi_grande_echelle: 'oui',

@@ -11,7 +11,6 @@ const answers: Answers = {
   bilan: 'gt43',
   etablissement_ue: 'oui',
   etats_membres: 'un',
-  donnees_perso: 'oui',
   role_rgpd: 'responsable',
   donnees_sensibles: 'non',
   suivi_grande_echelle: 'non',
@@ -101,9 +100,9 @@ describe('comparateur avant / après', () => {
     expect(d.requirementDelta).toBeGreaterThan(0)
   })
 
-  it('fait disparaître les obligations RGPD sans donnée personnelle', () => {
-    const d = diffScope(answers, { ...answers, donnees_perso: 'non' })
+  it("fait disparaître les obligations RGPD pour une entité hors de l'Union qui n'y cible personne", () => {
+    const d = diffScope(answers, { ...answers, etablissement_ue: 'non', cible_ue: 'non' })
     expect(d.removed.some((o) => o.regulation === 'RGPD')).toBe(true)
-    expect(d.answers.map((a) => a.questionId)).toContain('donnees_perso')
+    expect(d.answers.map((a) => a.questionId)).toContain('etablissement_ue')
   })
 })

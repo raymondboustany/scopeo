@@ -74,7 +74,7 @@ The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI A
 <td width="50%" valign="top">
 
 ### Scoping, article by article
-35 questions, each tied to the article it establishes. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
+Up to 34 questions depending on the answers, each tied to the article it relies on. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
 
 </td>
 <td width="50%"><img src="docs/assets/en/qualification.jpg" alt="Scoping and before / after comparator"></td>
@@ -84,7 +84,7 @@ The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI A
 <td width="50%" valign="top">
 
 ### Diagnosis at a glance
-Overall and per-framework coverage, a five-step scoping path, alerts on upcoming regulatory deadlines, priorities and weaknesses by domain.
+Overall and per-text coverage, a five-step scoping path, alerts on upcoming regulatory deadlines, priorities and weaknesses by domain.
 
 </td>
 </tr>
@@ -98,7 +98,7 @@ Overall and per-framework coverage, a five-step scoping path, alerts on upcoming
 <td width="50%"><img src="docs/assets/en/mutualisation.jpg" alt="Shared actions view of the crosswalk"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/en/iso-overlap.jpg" alt="ISO 27001 module: excluded controls and overlap by framework"></td>
+<td width="50%"><img src="docs/assets/en/iso-overlap.jpg" alt="ISO 27001 module: excluded controls and overlap by text"></td>
 <td width="50%" valign="top">
 
 ### Optional ISO 27001 module
@@ -110,7 +110,7 @@ An optional question at the end of scoping records the entity's ISO 27001 status
 <td width="50%" valign="top">
 
 ### The full regulatory corpus
-**95 obligations** from the five texts, broken down into **348 elementary requirements**, each with its official quotation and the evidence expected in an audit. The view can be filtered to the entity's scope. NIS2 is detailed by the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category.
+**95 obligations** from the five texts, each with its link to the official text, the evidence expected in an audit, its deadline and penalty tier, and broken down into **348 elementary requirements**. The key obligations carry the verbatim quotation of the article. The view can be filtered to the entity's scope. NIS2 is detailed by the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category.
 
 </td>
 <td width="50%"><img src="docs/assets/en/corpus.jpg" alt="Regulatory corpus"></td>
@@ -120,13 +120,13 @@ An optional question at the end of scoping records the entity's ISO 27001 status
 <td width="50%" valign="top">
 
 ### Incident notification readiness
-Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, points to technical support (PRIS-qualified provider, regional CSIRT, 17Cyber) and produces a one-page **incident quick-reference sheet**.
+Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, points to technical support (PRIS-qualified provider, regional CSIRT, 17Cyber) and produces a one- to two-page **incident quick-reference sheet**.
 
 </td>
 </tr>
 </table>
 
-**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in four phases, from 0 to 3 months to beyond 12 months · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes.
+**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in phases whose number and length you set (the platform proposes four: 3, 3, 6 and 12 months) · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes.
 
 ### Accounts, administration and integration
 
@@ -225,12 +225,12 @@ At first launch, the home page only offers to create the **administrator profile
 | | |
 |---|---|
 | Texts | GDPR, NIS2 (ReCyF), DORA, CRA, AI Act |
-| Obligations | 95 (GDPR 21, NIS2 22, DORA 22, CRA 12, AI Act 18) |
-| Elementary requirements | 348, with expected evidence, deadlines and penalty tier |
+| Obligations | 95 (GDPR 21, NIS2 22, DORA 22, CRA 12, AI Act 18), with expected evidence, deadline and penalty tier |
+| Elementary requirements | 348 |
 | Unified requirements | 40, including 7 divergences and 1 precedence rule |
 | NIS2 detail (ReCyF v2.5) | 20 objectives, 152 measures |
 | ISO/IEC 27001:2022 | 93 Annex A controls (public titles only), mapped by theme |
-| Scoping questions | 35, each tied to the article it establishes |
+| Scoping questions | Up to 34 depending on the answers, each tied to the article it relies on |
 
 <details>
 <summary>Status of the texts and notification deadlines</summary>
@@ -375,7 +375,7 @@ La première étape établit les textes applicables (RGPD, NIS2 (ReCyF), DORA, C
 <td width="50%" valign="top">
 
 ### Qualification, article par article
-35 questions, chacune rattachée à l'article qu'elle établit. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre quand une réponse change.
+Jusqu'à 34 questions selon les réponses, chacune adossée à l'article dont elle relève. Chaque verdict expose ses conditions, ses réserves et la sanction plafond. Le **comparateur avant / après** montre les obligations qui entrent ou sortent du périmètre quand une réponse change.
 
 </td>
 <td width="50%"><img src="docs/assets/fr/qualification.jpg" alt="Qualification et comparateur avant / après"></td>
@@ -399,7 +399,7 @@ Couverture globale et par texte, parcours de cadrage en cinq étapes, alertes su
 <td width="50%"><img src="docs/assets/fr/mutualisation.jpg" alt="Vue Mutualisation des croisements"></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/fr/iso-overlap.jpg" alt="Module ISO 27001 : contrôles exclus et recoupement par référentiel"></td>
+<td width="50%"><img src="docs/assets/fr/iso-overlap.jpg" alt="Module ISO 27001 : contrôles exclus et recoupement par texte"></td>
 <td width="50%" valign="top">
 
 ### Module ISO 27001 facultatif
@@ -411,7 +411,7 @@ Une question facultative, en fin de qualification, recueille la situation de l'e
 <td width="50%" valign="top">
 
 ### Tout le corpus réglementaire
-**95 obligations** issues des cinq textes, décomposées en **348 exigences élémentaires**, chacune avec sa citation officielle et les preuves attendues en contrôle. La vue se filtre sur le périmètre de l'entité. NIS2 est détaillée par les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité.
+**95 obligations** issues des cinq textes, chacune avec son lien vers le texte officiel, les preuves attendues en contrôle, son échéance et son palier de sanction, et décomposée en **348 exigences élémentaires**. Les obligations clés portent la citation littérale de l'article. La vue se filtre sur le périmètre de l'entité. NIS2 est détaillée par les **152 mesures du ReCyF** de l'ANSSI (v2.5, version de travail de mars 2026), filtrées selon la catégorie de l'entité.
 
 </td>
 <td width="50%"><img src="docs/assets/fr/corpus.jpg" alt="Corpus réglementaire"></td>
@@ -421,13 +421,13 @@ Une question facultative, en fin de qualification, recueille la situation de l'e
 <td width="50%" valign="top">
 
 ### Préparation au signalement d'incident
-Les obligations de notification s'appliquent avant même la mise en conformité. La plateforme désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA, autorité de surveillance du marché pour l'IA), leurs délais et la chaîne d'escalade interne, indique l'appui technique à solliciter (prestataire qualifié PRIS, CSIRT territorial, 17Cyber) et produit une **fiche réflexe** d'une page.
+Les obligations de notification s'appliquent avant même la mise en conformité. La plateforme désigne les autorités (CNIL, ANSSI, ACPR ou AMF, ENISA, autorité de surveillance du marché pour l'IA), leurs délais et la chaîne d'escalade interne, indique l'appui technique à solliciter (prestataire qualifié PRIS, CSIRT territorial, 17Cyber) et produit une **fiche réflexe** d'une à deux pages.
 
 </td>
 </tr>
 </table>
 
-**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable · feuille de route en quatre phases, de 0 à 3 mois à plus de 12 mois · échéancier réglementaire · fiche entité · notes d'entretien · Trust Center en lecture seule (local pour l'instant) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · interface en français et en anglais · thèmes clair et sombre.
+**Et aussi :** évaluation à trois états (en place, partiel, absent) · priorisation pondérable · feuille de route en phases dont vous fixez le nombre et la durée (la plateforme en propose quatre : 3, 3, 6 et 12 mois) · échéancier réglementaire · fiche entité · notes d'entretien · Trust Center en lecture seule (local pour l'instant) · recherche transverse (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · interface en français et en anglais · thèmes clair et sombre.
 
 ### Comptes, administration et intégration
 
@@ -526,12 +526,12 @@ Au premier lancement, l'accueil ne propose que la création du **profil administ
 | | |
 |---|---|
 | Textes | RGPD, NIS2 (ReCyF), DORA, CRA, AI Act |
-| Obligations | 95 (RGPD 21, NIS2 22, DORA 22, CRA 12, AI Act 18) |
-| Exigences élémentaires | 348, avec preuves attendues, échéances et palier de sanction |
+| Obligations | 95 (RGPD 21, NIS2 22, DORA 22, CRA 12, AI Act 18), avec preuves attendues, échéance et palier de sanction |
+| Exigences élémentaires | 348 |
 | Exigences unifiées | 40, dont 7 divergences et 1 règle de primauté |
 | Détail NIS2 (ReCyF v2.5) | 20 objectifs, 152 mesures |
 | ISO/IEC 27001:2022 | 93 contrôles de l'annexe A (intitulés publics uniquement), reliés par thème |
-| Questions de qualification | 35, chacune rattachée à l'article qu'elle établit |
+| Questions de qualification | Jusqu'à 34 selon les réponses, chacune adossée à l'article dont elle relève |
 
 <details>
 <summary>État des textes et délais de notification retenus</summary>

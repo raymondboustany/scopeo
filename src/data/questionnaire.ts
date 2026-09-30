@@ -222,21 +222,6 @@ export const QUESTIONS: Question[] = [
   // 2. Données personnelles
   // -------------------------------------------------------------------------
   {
-    id: 'donnees_perso',
-    section: 'donnees',
-    sectionLabel: 'Données à caractère personnel',
-    basis: 'RGPD, articles 2 et 4',
-    question: "L'entité traite-t-elle des données à caractère personnel ?",
-    help: "Données de clients, de salariés, de prospects, journaux contenant des adresses IP, images de vidéosurveillance. En pratique, la réponse négative est rare et mérite d'être vérifiée.",
-    type: 'radio',
-    options: [
-      { value: 'oui', label: 'Oui' },
-      { value: 'non', label: 'Non, aucune donnée personnelle' },
-      { value: 'incertain', label: 'Incertain' },
-    ],
-    required: true,
-  },
-  {
     id: 'role_rgpd',
     section: 'donnees',
     sectionLabel: 'Données à caractère personnel',
@@ -250,7 +235,6 @@ export const QUESTIONS: Question[] = [
       { value: 'les_deux', label: 'Les deux, selon les traitements' },
     ],
     required: true,
-    showIf: (a) => a.donnees_perso !== 'non',
   },
   {
     id: 'donnees_sensibles',
@@ -262,7 +246,6 @@ export const QUESTIONS: Question[] = [
     type: 'radio',
     options: yesNo,
     required: true,
-    showIf: (a) => a.donnees_perso !== 'non',
   },
   {
     id: 'suivi_grande_echelle',
@@ -278,7 +261,6 @@ export const QUESTIONS: Question[] = [
       { value: 'incertain', label: 'Incertain' },
     ],
     required: true,
-    showIf: (a) => a.donnees_perso !== 'non',
   },
   {
     id: 'autorite_publique',
@@ -290,7 +272,6 @@ export const QUESTIONS: Question[] = [
     type: 'radio',
     options: yesNo,
     required: true,
-    showIf: (a) => a.donnees_perso !== 'non',
   },
   {
     id: 'transferts_hors_ue',
@@ -302,7 +283,6 @@ export const QUESTIONS: Question[] = [
     type: 'radio',
     options: yesNo,
     required: true,
-    showIf: (a) => a.donnees_perso !== 'non',
   },
   {
     id: 'base_consentement',
@@ -314,7 +294,6 @@ export const QUESTIONS: Question[] = [
     type: 'radio',
     options: yesNo,
     required: true,
-    showIf: (a) => a.donnees_perso !== 'non',
   },
 
   // -------------------------------------------------------------------------
@@ -658,7 +637,7 @@ export const QUESTIONS: Question[] = [
 
 export const QUESTION_SECTIONS = [
   { id: 'identite', label: "Identité de l'entité", hint: "Secteur, taille et implantation : ces trois éléments commandent l'essentiel de la qualification." },
-  { id: 'donnees', label: 'Données à caractère personnel', hint: "Champ d'application du RGPD et intensité des obligations." },
+  { id: 'donnees', label: 'Données à caractère personnel', hint: "Intensité des obligations du RGPD : rôle de l'entité, données sensibles, délégué et transferts." },
   { id: 'numerique', label: 'Activité numérique et criticité', hint: "Champ d'application de NIS2, y compris les cas où la taille est indifférente." },
   { id: 'financier', label: 'Secteur financier', hint: "Champ d'application de DORA et articulation avec NIS2." },
   { id: 'produits', label: 'Produits numériques', hint: "Champ d'application du CRA : produits matériels et logiciels mis sur le marché de l'Union." },

@@ -15,7 +15,7 @@ import { REGULATION_ORDER } from '@/data/regulations'
 import { conditionsMet } from '@/engines/alerts'
 import { useScoping } from '@/lib/hooks'
 import { useEntityEditor } from '@/lib/queries'
-import { cn, formatDate, parseDate } from '@/lib/utils'
+import { cn, daysUntil, formatDate, parseDate } from '@/lib/utils'
 import type { RegulationId, TimelineEvent } from '@/types/domain'
 import { REG_LABEL } from '@/components/ui/tokens'
 import { COLON, LOCALE, plural, tr } from '@/i18n'
@@ -66,7 +66,7 @@ export default function TimelinePage() {
   // Le prochain jalon qui concerne l'entité clignote tant qu'il n'a pas été consulté.
   const seen = [...(entity?.seen_alerts ?? []), ...seenLocal]
   const nearest = TIMELINE.filter(concerns)
-    .filter((e) => parseDate(e.date).getTime() >= now.getTime() - DAY / 2)
+    .filter((e) => daysUntil(e.date, now) >= 0)
     .sort((a, b) => a.date.localeCompare(b.date))[0]
   const nearestPulses = nearest ? !seen.includes(`TL:${nearest.id}`) : false
 
@@ -83,7 +83,7 @@ export default function TimelinePage() {
   }
 
   const selected = TIMELINE.find((e) => e.id === selectedId) ?? null
-  const nearestDays = nearest ? Math.max(0, Math.round((parseDate(nearest.date).getTime() - now.getTime()) / DAY)) : 0
+  const nearestDays = nearest ? Math.max(0, daysUntil(nearest.date, now)) : 0
 
   return (
     <>
@@ -156,7 +156,7 @@ export default function TimelinePage() {
             <CardHeader title={tr('Liste chronologique', 'Chronological list')} subtitle={tr(`${events.length} jalon${events.length > 1 ? 's' : ''} affiché${events.length > 1 ? 's' : ''}`, `${events.length} milestone${events.length > 1 ? 's' : ''} shown`)} />
             <ol className="divide-y divide-rule">
               {events.map((e) => {
-                const past = parseDate(e.date).getTime() < now.getTime() - DAY / 2
+                const past = daysUntil(e.date, now) < 0
                 return (
                   <li key={e.id}>
                     <button
@@ -384,7 +384,7 @@ function TimelineChart({
               if (!visibleLanes.includes(e.regulation)) return null
               const cx = x(parseDate(e.date))
               const cy = laneY(e.regulation)
-              const past = parseDate(e.date).getTime() < now.getTime() - DAY / 2
+              const past = daysUntil(e.date, now) < 0
               const color = laneColor(e.regulation)
               const isSel = e.id === selectedId
               const isNear = e.id === nearestId
@@ -462,7 +462,7 @@ function EventDetail({
   qualified: boolean
   onClose: () => void
 }) {
-  const days = Math.round((parseDate(e.date).getTime() - now.getTime()) / DAY)
+  const days = daysUntil(e.date, now)
   const kind = KIND_LABEL[e.kind]
   return (
     <Card className="overflow-hidden">

@@ -390,9 +390,9 @@ export function Note({ children, tone = 'accent', title }: { children: string; t
 // Nuage de priorisation : score contre charge
 // ---------------------------------------------------------------------------
 
-const WAVE_HEX = ['#5B45E0', '#3D68BF', '#008C99', '#9AA0AA']
+const WAVE_HEX = ['#5B45E0', '#3D68BF', '#008C99', '#4F8A3A', '#B7791F', '#9AA0AA']
 
-export function PriorityScatter({ items, width = 507, height = 170 }: { items: { rank: number; score: number; effort: number; wave: number }[]; width?: number; height?: number }) {
+export function PriorityScatter({ items, phases = 4, width = 507, height = 170 }: { items: { rank: number; score: number; effort: number; wave: number }[]; phases?: number; width?: number; height?: number }) {
   if (items.length === 0) return null
   const pad = { l: 28, r: 10, t: 8, b: 20 }
   const scores = items.map((i) => i.score)
@@ -444,7 +444,7 @@ export function PriorityScatter({ items, width = 507, height = 170 }: { items: {
       </View>
       <View style={[S.row, { justifyContent: 'space-between', marginTop: 3 }]}>
         <View style={[S.row, { gap: 10 }]}>
-          {WAVE_HEX.map((c, i) => (
+          {WAVE_HEX.slice(0, phases).map((c, i) => (
             <View key={c} style={[S.row, { alignItems: 'center', gap: 3 }]}>
               <View style={{ width: 7, height: 7, borderRadius: 3.5, backgroundColor: c }} />
               <Text style={[S.small, { fontSize: 7 }]}>{tr('Phase', 'Phase')} {i + 1}</Text>

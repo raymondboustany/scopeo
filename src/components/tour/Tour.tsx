@@ -84,10 +84,10 @@ const APP_STEPS: Step[] = [
   },
   {
     id: 'priorisation',
-    title: tr('Prioriser en quatre phases', 'Prioritise in four phases'),
+    title: tr('Prioriser par phases', 'Prioritise by phase'),
     body: tr(
-      "Les écarts sont classés selon leur urgence et leur poids, puis répartis dans ces phases, des trois premiers mois à plus de douze mois. Les pondérations restent ajustables.",
-      'Gaps are ranked by urgency and weight, then spread across these phases, from the first three months to beyond twelve months. Weights remain adjustable.',
+      'Les écarts sont classés selon leur urgence et leur poids, puis répartis en phases. La plateforme en propose quatre ; leur nombre, leur durée et les pondérations restent ajustables.',
+      'Gaps are ranked by urgency and weight, then spread across phases. The platform proposes four; their number, their length and the weights all remain adjustable.',
     ),
     target: 'nav-priorities',
   },

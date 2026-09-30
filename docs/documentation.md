@@ -35,16 +35,16 @@ It is **self-hosted**: on one computer, or on your organisation's server. No sco
 | Entity | The organisation being scoped (client, subsidiary, own company). Each entity belongs to one profile and is private to it. |
 | Guest | Password-less trial session on a copy of the Finexa demo, erased on sign-out. |
 | Unified requirement | One requirement grouping what several texts ask on the same topic (40 in total), used for the score and the crosswalk. |
-| Phase | Treatment horizon of a gap: 0 to 3 months, 3 to 6, 6 to 12, beyond 12. |
+| Phase | Treatment horizon of a gap. The platform proposes four phases (0 to 3 months, 3 to 6, 6 to 12, 12 to 24); their number and length are adjustable in the roadmap. |
 
 ## 3. Running a scoping engagement
 
 The navigation follows the exercise; the dashboard shows where you stand.
 
 1. **Entity profile**: company, engagement, contacts (never published).
-2. **Scoping**: 35 questions, each tied to the article it establishes; optional ISO 27001 question at the end. The before / after comparator shows what an answer change adds or removes.
+2. **Scoping**: up to 34 questions depending on the answers, each tied to the article it relies on; optional ISO 27001 question at the end. The before / after comparator shows what an answer change adds or removes.
 3. **Assessment**: each requirement in place, partial or missing; ISO 27001 can pre-fill matching requirements, to be checked.
-4. **Prioritisation and roadmap**: gaps ordered by urgency and weight, spread over four phases; weights are adjustable.
+4. **Prioritisation and roadmap**: gaps ordered by urgency and weight, then spread over phases. Weights, the number of phases and the length of each phase are adjustable; the platform proposes four phases of 3, 3, 6 and 12 months.
 5. **Who to notify**: authorities and deadlines per text, internal escalation chain, technical response support (PRIS provider, regional CSIRT, 17Cyber), deadline simulator.
 6. **Report**: executive note (2 pages), full scoping report, incident quick-reference sheet.
 
@@ -249,16 +249,16 @@ Elle est **auto-hébergée** : sur un poste, ou sur le serveur de votre organisa
 | Entité | L'organisation cadrée (client, filiale, sa propre société). Chaque entité appartient à un profil et lui reste privée. |
 | Invité | Session d'essai sans mot de passe, sur une copie de la démonstration Finexa, effacée à la déconnexion. |
 | Exigence unifiée | Une exigence qui regroupe ce que plusieurs textes demandent sur un même sujet (40 au total), base du score et du croisement. |
-| Phase | Horizon de traitement d'un écart : 0 à 3 mois, 3 à 6, 6 à 12, au-delà de 12. |
+| Phase | Horizon de traitement d'un écart. La plateforme propose quatre phases (0 à 3 mois, 3 à 6, 6 à 12, 12 à 24) ; leur nombre et leur durée se règlent dans la feuille de route. |
 
 ## 3. Mener un cadrage
 
 La navigation suit l'exercice ; le tableau de bord indique où vous en êtes.
 
 1. **Fiche entité** : société, mission, interlocuteurs (jamais publiés).
-2. **Qualification** : 35 questions, chacune rattachée à l'article qu'elle établit ; question ISO 27001 facultative à la fin. Le comparateur avant / après montre ce qu'un changement de réponse ajoute ou retire.
+2. **Qualification** : jusqu'à 34 questions selon les réponses, chacune adossée à l'article dont elle relève ; question ISO 27001 facultative à la fin. Le comparateur avant / après montre ce qu'un changement de réponse ajoute ou retire.
 3. **Évaluation** : chaque exigence en place, partielle ou absente ; ISO 27001 peut pré-remplir les exigences correspondantes, à vérifier.
-4. **Priorisation et feuille de route** : écarts ordonnés selon l'urgence et le poids, répartis en quatre phases ; pondérations ajustables.
+4. **Priorisation et feuille de route** : écarts ordonnés selon l'urgence et le poids, puis répartis en phases. Les pondérations, le nombre de phases et la durée de chacune sont ajustables ; la plateforme propose quatre phases de 3, 3, 6 et 12 mois.
 5. **Qui notifier** : autorités et délais par texte, chaîne d'escalade interne, appui technique à la réponse (prestataire PRIS, CSIRT territorial, 17Cyber), simulateur de délais.
 6. **Rapport** : note de direction (2 pages), rapport de cadrage complet, fiche réflexe incident.
 

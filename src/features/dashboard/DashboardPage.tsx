@@ -133,8 +133,8 @@ function NotQualified({ answered }: { answered: number }) {
                     `${answered} answer${answered > 1 ? 's' : ''} already saved. Finish the questionnaire to establish the applicable texts, the score and the authorities to notify in case of an incident.`,
                   )
                 : tr(
-                    `${QUESTIONS.length} questions au plus, chacune adossée à l'article dont elle relève. Le score, les priorités et la préparation au signalement en découlent.`,
-                    `Up to ${QUESTIONS.length} questions, each tied to the article it relies on. The score, priorities and incident readiness follow from them.`,
+                    `Jusqu'à ${QUESTIONS.length} questions selon les réponses, chacune adossée à l'article dont elle relève. Le score, les priorités et la préparation au signalement en découlent.`,
+                    `Up to ${QUESTIONS.length} questions depending on the answers, each tied to the article it relies on. The score, priorities and incident readiness follow from them.`,
                   )}
             </p>
           </div>

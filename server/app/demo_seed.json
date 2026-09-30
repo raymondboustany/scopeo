@@ -9,7 +9,6 @@
       "bilan": "10a43",
       "etablissement_ue": "oui",
       "etats_membres": "deux_cinq",
-      "donnees_perso": "oui",
       "role_rgpd": "les_deux",
       "donnees_sensibles": "non",
       "suivi_grande_echelle": "oui",
@@ -51,132 +50,132 @@
       "REP-03": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "DON-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "GOV-01": {
         "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "DON-01": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "RSK-02": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "REP-02": {
         "level": "absent",
         "owner": "RSSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "GOV-02": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "GOV-04": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "GOV-03": {
         "level": "partiel",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "DOC-01": {
         "level": "absent",
         "owner": "Conformité",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "RSK-01": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "REP-01": {
         "level": "partiel",
         "owner": "RSSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "TIE-02": {
         "level": "absent",
         "owner": "Achats",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "TIE-03": {
         "level": "partiel",
         "owner": "Achats",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "HIE-01": {
         "level": "absent",
         "owner": "Direction générale",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "IA-01": {
         "level": "absent",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "IA-02": {
         "level": "partiel",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "IA-03": {
         "level": "absent",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "RES-01": {
         "level": "partiel",
         "owner": "DSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "RES-04": {
         "level": "absent",
         "owner": "DSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "TIE-01": {
         "level": "partiel",
         "owner": "Achats",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "IA-04": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "DON-02": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "IA-05": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "DON-03": {
         "level": "en_place",
         "owner": "DPO",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       },
       "RES-03": {
         "level": "absent",
         "owner": "DSI",
-        "updatedAt": "2026-09-30T13:25:09.775Z"
+        "updatedAt": "2026-09-30T17:56:25.705Z"
       }
     },
     "measures": {},
@@ -348,7 +347,7 @@
       ]
     },
     "public_snapshot": {
-      "generatedAt": "2026-09-30T13:25:09.776Z",
+      "generatedAt": "2026-09-30T17:56:25.706Z",
       "sectorLabel": "Infrastructure numérique",
       "sector": "infra_numerique",
       "score": 46,

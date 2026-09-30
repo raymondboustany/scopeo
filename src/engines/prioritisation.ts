@@ -8,6 +8,7 @@ import type {
   PrioritisedItem,
   QualificationResult,
   RegulationId,
+  RoadmapPlan,
 } from '@/types/domain'
 import { CROSSWALK } from '@/data/crosswalk'
 import { REGULATIONS } from '@/data/regulations'
@@ -143,6 +144,8 @@ interface PrioritiseInput {
   coverage: Record<string, CoverageEntry>
   weights: PriorityWeights
   obligations: Obligation[]
+  /** Découpage en phases ; la proposition par défaut s'applique s'il est absent. */
+  plan?: RoadmapPlan
 }
 
 const regName = (r: RegulationId) => REGULATIONS[r].shortName
@@ -256,6 +259,7 @@ export function prioritise({
   coverage,
   weights,
   obligations,
+  plan = DEFAULT_PLAN,
 }: PrioritiseInput): PrioritisedItem[] {
   const applicable = applicableRegulations(qualification)
   const relevantObligationIds = new Set(obligations.map((o) => o.id))
@@ -352,8 +356,8 @@ export function prioritise({
     )
 
     const depthPenalty = blockedBy.length > 0 ? 1 : 0
-    const base = index < 4 ? 1 : index < 10 ? 2 : index < 18 ? 3 : 4
-    const wave = Math.min(4, base + depthPenalty) as 1 | 2 | 3 | 4
+    const base = waveForRank(index, scored.length, plan)
+    const wave = Math.min(plan.months.length, base + depthPenalty)
 
     return {
       themeId: s.theme.id,
@@ -369,38 +373,89 @@ export function prioritise({
   })
 }
 
-export const WAVES = [
-  {
-    n: 1 as const,
-    label: tr('Phase 1', 'Phase 1'),
-    horizon: tr('0 à 3 mois', '0 to 3 months'),
-    intent: tr(
-      "Réduire l'exposition la plus grave et poser les prérequis dont tout le reste dépend.",
-      'Reduce the most serious exposure and lay the groundwork everything else depends on.',
-    ),
-  },
-  {
-    n: 2 as const,
-    label: tr('Phase 2', 'Phase 2'),
-    horizon: tr('3 à 6 mois', '3 to 6 months'),
-    intent: tr(
-      'Traiter les exigences à fort effet de levier une fois les fondations en place.',
-      'Tackle high-leverage requirements once the foundations are in place.',
-    ),
-  },
-  {
-    n: 3 as const,
-    label: tr('Phase 3', 'Phase 3'),
-    horizon: tr('6 à 12 mois', '6 to 12 months'),
-    intent: tr("Consolider et formaliser, en vue d'un contrôle.", 'Consolidate and formalise, ready for an inspection.'),
-  },
-  {
-    n: 4 as const,
-    label: tr('Phase 4', 'Phase 4'),
-    horizon: tr('Au-delà de 12 mois', 'Beyond 12 months'),
-    intent: tr('Approfondir, et anticiper les régimes non encore exigibles.', 'Go further, and prepare for regimes not yet in force.'),
-  },
-]
+/**
+ * Découpage en phases de la feuille de route.
+ *
+ * La plateforme propose quatre phases (3, 3, 6 et 12 mois) : c'est une
+ * recommandation, que l'utilisateur ajuste (nombre de phases et durée de
+ * chacune) selon ses moyens et son calendrier.
+ */
+export const DEFAULT_PLAN: RoadmapPlan = { months: [3, 3, 6, 12] }
+export const PLAN_LIMITS = { minPhases: 2, maxPhases: 6, minMonths: 1, maxMonths: 36 } as const
+
+/** Plan valide : bornes respectées, proposition par défaut si rien n'est réglé. */
+export function normalisePlan(plan?: Partial<RoadmapPlan> | null): RoadmapPlan {
+  const raw = Array.isArray(plan?.months) ? plan!.months : []
+  const months = raw
+    .map((m) => Math.round(Number(m)))
+    .filter((m) => Number.isFinite(m))
+    .map((m) => Math.min(PLAN_LIMITS.maxMonths, Math.max(PLAN_LIMITS.minMonths, m)))
+    .slice(0, PLAN_LIMITS.maxPhases)
+  return months.length >= PLAN_LIMITS.minPhases ? { months } : { months: [...DEFAULT_PLAN.months] }
+}
+
+export function isDefaultPlan(plan: RoadmapPlan): boolean {
+  return plan.months.length === DEFAULT_PLAN.months.length && plan.months.every((m, i) => m === DEFAULT_PLAN.months[i])
+}
+
+const INTENT = {
+  first: tr(
+    "Réduire l'exposition la plus grave et poser les prérequis dont tout le reste dépend.",
+    'Reduce the most serious exposure and lay the groundwork everything else depends on.',
+  ),
+  second: tr(
+    'Traiter les exigences à fort effet de levier une fois les fondations en place.',
+    'Tackle high-leverage requirements once the foundations are in place.',
+  ),
+  middle: tr("Consolider et formaliser, en vue d'un contrôle.", 'Consolidate and formalise, ready for an inspection.'),
+  last: tr('Approfondir, et anticiper les régimes non encore exigibles.', 'Go further, and prepare for regimes not yet in force.'),
+}
+
+export interface Wave {
+  n: number
+  label: string
+  horizon: string
+  intent: string
+  /** Début et fin de la phase, en mois depuis le lancement du plan. */
+  start: number
+  end: number
+}
+
+export function wavesFor(plan: RoadmapPlan = DEFAULT_PLAN): Wave[] {
+  const count = plan.months.length
+  let start = 0
+  return plan.months.map((m, i) => {
+    const end = start + m
+    const wave: Wave = {
+      n: i + 1,
+      label: tr(`Phase ${i + 1}`, `Phase ${i + 1}`),
+      horizon: tr(`${start} à ${end} mois`, `${start} to ${end} months`),
+      intent: i === 0 ? INTENT.first : i === count - 1 ? INTENT.last : i === 1 ? INTENT.second : INTENT.middle,
+      start,
+      end,
+    }
+    start = end
+    return wave
+  })
+}
+
+/** Phases de la proposition par défaut. */
+export const WAVES = wavesFor(DEFAULT_PLAN)
+
+/**
+ * Phase d'un rang donné : les exigences, dans l'ordre de traitement, sont
+ * réparties au prorata de la durée de chaque phase.
+ */
+export function waveForRank(index: number, total: number, plan: RoadmapPlan): number {
+  const span = plan.months.reduce((a, b) => a + b, 0)
+  const position = (index + 1) / Math.max(1, total)
+  let cumulated = 0
+  for (let i = 0; i < plan.months.length; i++) {
+    cumulated += plan.months[i]
+    if (position <= cumulated / span + 1e-9) return i + 1
+  }
+  return plan.months.length
+}
 
 /** Part de couverture, de 0 à 1, pondérée par le niveau déclaré. */
 export function coverageRatio(items: PrioritisedItem[]): number {

@@ -394,8 +394,8 @@ export interface PrioritisedItem {
   score: number
   rank: number
   factors: PriorityFactor[]
-  /** Vague de traitement proposée. */
-  wave: 1 | 2 | 3 | 4
+  /** Phase de traitement proposée, numérotée à partir de 1. */
+  wave: number
   coverage: CoverageLevel
   regulations: RegulationId[]
   /** Thèmes à traiter avant celui-ci. */
@@ -614,6 +614,13 @@ export interface EntityProfile {
   stakeholders?: Stakeholder[]
   /** Démarche ISO/IEC 27001 de l'entité, renseignée après la qualification. */
   iso27001?: IsoProfile
+  /** Découpage de la feuille de route, s'il diffère de la proposition de la plateforme. */
+  roadmap?: RoadmapPlan
+}
+
+/** Durée de chaque phase de la feuille de route, en mois ; le nombre de phases s'en déduit. */
+export interface RoadmapPlan {
+  months: number[]
 }
 
 export const NOTE_TAGS = ['verifier', 'hypothese', 'decision', 'preuve', 'note'] as const
