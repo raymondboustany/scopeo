@@ -53,13 +53,13 @@ Toute règle réglementaire vit dans `src/engines` ou `src/data`, jamais dans un
 
 1. Créez une branche depuis `main` : `feat/…`, `fix/…`, `corpus/…` ou `docs/…`.
 2. Rédigez des messages de commit clairs, idéalement au format [Conventional Commits](https://www.conventionalcommits.org/fr/) : `feat: …`, `fix: …`, `corpus: …`.
-3. Ajoutez une entrée dans la section « Non publié » de `CHANGELOG.md`, en français et en anglais.
+3. Décrivez votre modification dans la pull request ; le mainteneur met à jour `CHANGELOG.md` lors de la publication d'une version.
 4. Ouvrez une pull request en remplissant le modèle. L'intégration continue doit passer et le mainteneur doit l'approuver.
 
 ## Conventions
 
 - Les textes de l'interface passent par `tr('français', 'English')`, pour que les deux langues restent alignées.
-- La documentation et les textes GitHub (README, journal des modifications, modèles) sont rédigés en anglais et en français.
+- La documentation et les textes GitHub (README, journal des modifications, modèles) sont rédigés en français puis en anglais.
 - Pas de dépendance nouvelle sans justification.
 - Aucune donnée réelle d'entreprise ou donnée personnelle dans le dépôt, les tests ou les captures.
 
@@ -122,13 +122,13 @@ Every regulatory rule lives in `src/engines` or `src/data`, never in an interfac
 
 1. Create a branch from `main`: `feat/…`, `fix/…`, `corpus/…` or `docs/…`.
 2. Write clear commit messages, ideally following [Conventional Commits](https://www.conventionalcommits.org/): `feat: …`, `fix: …`, `corpus: …`.
-3. Add an entry under "Non publié" in `CHANGELOG.md`, in English and in French.
+3. Describe your change in the pull request; the maintainer updates `CHANGELOG.md` when a version is released.
 4. Open a pull request using the template. CI must pass and the maintainer must approve it.
 
 ## Conventions
 
 - Interface texts go through `tr('français', 'English')`, so both languages stay in step.
-- Documentation and GitHub texts (README, changelog, templates) are written in English and French.
+- Documentation and GitHub texts (README, changelog, templates) are written in French, then in English.
 - No new dependency without a reason.
 - No real company data or personal data in the repository, tests or screenshots.
 

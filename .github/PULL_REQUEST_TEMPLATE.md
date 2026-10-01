@@ -15,7 +15,7 @@
 - [ ] `npm run lint`, `npm run typecheck` et `npm test` réussissent / pass
 - [ ] `npm run test:server` réussit / passes
 - [ ] Captures d'écran jointes pour tout changement visible / Screenshots attached for any visible change
-- [ ] `CHANGELOG.md` mis à jour dans la section « Non publié », en français et en anglais / updated in the "Unreleased" section, in French and English
+- [ ] Modification décrite ci-dessus (le mainteneur met à jour `CHANGELOG.md` à la publication) / Change described above (the maintainer updates `CHANGELOG.md` on release)
 - [ ] Aucune donnée réelle d'entreprise ni donnée personnelle / No real company data or personal data
 
 ## Sources (corpus)
