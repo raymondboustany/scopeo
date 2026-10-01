@@ -575,6 +575,9 @@ export interface ReadinessItem {
 export function readiness(applicable: RegulationId[], answers: Answers, contacts: InternalContact[]): ReadinessItem[] {
   const has = (role: InternalContact['role']) => contacts.some((c) => c.role === role && c.name.trim())
   const n = applicable.length
+  const boards = (['NIS2', 'DORA'] as RegulationId[]).filter((r) => applicable.includes(r))
+  const boardFr = boards.length ? ` ; ${boards.join(' et ')} ${boards.length > 1 ? 'engagent' : 'engage'} l’organe de direction` : ''
+  const boardEn = boards.length ? `; ${boards.join(' and ')} ${boards.length > 1 ? 'hold' : 'holds'} the management body accountable` : ''
   const items: ReadinessItem[] = [
     {
       id: 'autorites',
@@ -610,10 +613,7 @@ export function readiness(applicable: RegulationId[], answers: Answers, contacts
     {
       id: 'direction',
       label: tr('Décideur de direction désigné', 'Executive decision-maker designated'),
-      detail: tr(
-        'Arbitre la notification et la communication ; NIS2 et DORA engagent l’organe de direction.',
-        'Decides on notification and communication; NIS2 and DORA hold the management body accountable.',
-      ),
+      detail: tr(`Arbitre la notification et la communication${boardFr}.`, `Decides on notification and communication${boardEn}.`),
       ok: has('direction'),
     },
   ]

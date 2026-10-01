@@ -2,6 +2,7 @@ import { Document, Text, View } from '@react-pdf/renderer'
 import type { ReportData } from '../reportData'
 import { C, clean, dateFr, DocHeader, H2, Keep, missionMeta, Note, REG_HEX, REG_NAME, ReportPage, S, Table } from './kit'
 import { COLON, LANG, tr } from '@/i18n'
+import type { RegulationId } from '@/types/domain'
 
 /**
  * Fiche réflexe en cas d'incident.
@@ -10,13 +11,25 @@ import { COLON, LANG, tr } from '@/i18n'
  * de notification s'appliquent aujourd'hui, même tant que la mise en
  * conformité est en cours. Qui appeler, qui notifier, dans quel délai.
  */
-const REFLEXES = [
+const QUALIFY: [RegulationId, string, string][] = [
+  ['RGPD', 'données personnelles touchées ?', 'personal data affected?'],
+  ['NIS2', 'service perturbé ?', 'service disrupted?'],
+  ['DORA', 'incident majeur au sens de DORA ?', 'major incident under DORA?'],
+  ['CRA', 'vulnérabilité d’un produit exploitée ?', 'product vulnerability exploited?'],
+  ['AIACT', 'système d’IA à haut risque en cause ?', 'high-risk AI system involved?'],
+]
+
+/** Les questions de qualification ne portent que sur les textes applicables. */
+function qualify(applicable: RegulationId[]) {
+  const rows = QUALIFY.filter(([r]) => applicable.includes(r))
+  const list = rows.length ? rows : QUALIFY
+  return tr(`Qualifier rapidement : ${list.map((q) => q[1]).join(' ')}`, `Qualify quickly: ${list.map((q) => q[2]).join(' ')}`)
+}
+
+const reflexes = (applicable: RegulationId[]) => [
   tr("Noter l'heure exacte de la prise de connaissance : c'est elle qui fait courir les délais.", 'Record the exact time you became aware: it starts the clocks.'),
   tr('Appeler la chaîne d’escalade dans l’ordre, sans attendre d’avoir toutes les informations.', 'Call the escalation chain in order, without waiting to have all the information.'),
-  tr(
-    'Qualifier rapidement : données personnelles touchées ? service perturbé ? incident majeur au sens de DORA ? vulnérabilité d’un produit exploitée ? système d’IA à haut risque en cause ?',
-    'Qualify quickly: personal data affected? service disrupted? major incident under DORA? product vulnerability exploited? high-risk AI system involved?',
-  ),
+  qualify(applicable),
   tr('Préserver les traces (journaux, postes, sauvegardes) avant toute remise en état.', 'Preserve traces (logs, workstations, backups) before any restoration.'),
   tr(
     "Mobiliser l'appui technique prévu (équipe interne ou prestataire, de préférence un prestataire qualifié PRIS) ; à défaut, le CSIRT territorial ou 17cyber.gouv.fr.",
@@ -123,7 +136,7 @@ export function ReflexeSheet({ d }: { d: ReportData }) {
 
         <Keep>
           <H2 n="3">{tr('Les bons réflexes', 'The right reflexes')}</H2>
-          {REFLEXES.map((r, i) => (
+          {reflexes(d.applicable).map((r, i) => (
             <View key={i} style={[S.row, { gap: 7, marginBottom: 4 }]}>
               <Text style={[S.bold, { width: 12, color: C.accent, fontSize: 9 }]}>{i + 1}.</Text>
               <Text style={{ flex: 1, fontSize: 9, lineHeight: 1.4 }}>{clean(r)}</Text>

@@ -156,4 +156,11 @@ describe('préparation au signalement', () => {
     const ids = readiness(['RGPD'], {}, []).map((i) => i.id)
     expect(ids).toEqual(['autorites', 'securite', 'reponse', 'dpo', 'direction'])
   })
+
+  it('ne cite que les textes applicables qui engagent la direction', () => {
+    const detail = (regs: Parameters<typeof readiness>[0]) => readiness(regs, {}, []).find((i) => i.id === 'direction')!.detail.replace(/\s/g, ' ')
+    expect(detail(['RGPD', 'NIS2', 'CRA'])).toBe("Arbitre la notification et la communication ; NIS2 engage l'organe de direction.")
+    expect(detail(['NIS2', 'DORA'])).toBe("Arbitre la notification et la communication ; NIS2 et DORA engagent l'organe de direction.")
+    expect(detail(['RGPD'])).toBe('Arbitre la notification et la communication.')
+  })
 })
