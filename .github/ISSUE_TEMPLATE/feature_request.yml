@@ -1,29 +1,29 @@
 name: Suggestion / Feature request
-description: An improvement or a new feature. / Une amélioration ou une nouvelle fonctionnalité.
+description: Une amélioration ou une nouvelle fonctionnalité. / An improvement or a new feature.
 labels: [enhancement]
 body:
   - type: markdown
     attributes:
       value: |
-        Scopeo is a **scoping and diagnosis platform**. Evidence verification, certified maturity
-        levels and continuous compliance tracking are out of scope.
-
         Scopeo est une plateforme de **cadrage et de diagnostic**. La vérification de preuves, les niveaux
         de maturité certifiants et le suivi continu de la conformité sortent de son périmètre.
+
+        Scopeo is a **scoping and diagnosis platform**. Evidence verification, certified maturity
+        levels and continuous compliance tracking are out of scope.
   - type: textarea
     id: problem
     attributes:
-      label: Need / Besoin
-      description: What problem does this suggestion solve, and for whom? / Quel problème cette suggestion résout-elle, et pour qui ?
+      label: Besoin / Need
+      description: Quel problème cette suggestion résout-elle, et pour qui ? / What problem does this suggestion solve, and for whom?
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: Proposal / Proposition
+      label: Proposition / Proposal
     validations:
       required: true
   - type: textarea
     id: alternatives
     attributes:
-      label: Alternatives considered / Alternatives envisagées
+      label: Alternatives envisagées / Alternatives considered
