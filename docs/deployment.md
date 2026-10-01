@@ -1,146 +1,6 @@
-# Deploying Scopeo for a team
-
-**English** · [Français](#déployer-scopeo-pour-une-équipe)
-
-This guide is for the IT team installing Scopeo on a server shared by several people: on premises, in the cloud, or both. For use on a single computer, the [installation guide](installation.md) is enough.
-
-## What you need
-
-| | |
-|---|---|
-| Server | Linux, Windows Server or macOS with Docker (1 vCPU, 1 GB RAM and 5 GB of disk are plenty for a team of a few dozen people) |
-| Address | A domain name such as `scopeo.example.com`, pointing to the server |
-| Encryption | A TLS certificate: automatic (Let's Encrypt), from your internal certificate authority, or from Caddy's internal authority |
-| Optional | Your Active Directory / OpenLDAP directory, or your identity provider (Microsoft Entra ID, Google Workspace, Okta, Keycloak) |
-
-Scopeo keeps everything in one data folder (SQLite database and encryption key). It runs as a **single instance**: no load balancing across several servers.
-
-## 1. Install with Docker and Caddy (recommended)
-
-The [`deploy/`](../deploy) folder holds a ready-to-use configuration: Scopeo behind Caddy, which handles HTTPS.
-
-```bash
-git clone https://github.com/raymondboustany/scopeo.git
-cd scopeo/deploy
-cp .env.example .env        # then set SCOPEO_DOMAIN
-docker compose up -d
-```
-
-Open `https://<your domain>`. The home page offers to create the **administrator profile**: do it at once, before sharing the address.
-
-**Internal network without public DNS**: in [`deploy/Caddyfile`](../deploy/Caddyfile), add `tls internal` (then trust Caddy's root certificate on the team's computers) or point to a certificate issued by your IT (`tls /certs/scopeo.crt /certs/scopeo.key`, with a volume mounting the certificates).
-
-### Already have a reverse proxy?
-
-Serve Scopeo's image (port 8000) behind your proxy and set these variables:
-
-| Variable | Value |
-|---|---|
-| `SCOPEO_PUBLIC_URL` | `https://scopeo.example.com` |
-| `SCOPEO_COOKIE_SECURE` | `1` |
-| `FORWARDED_ALLOW_IPS` | the proxy's address (or `*` if only the proxy can reach Scopeo) |
-
-Nginx example:
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name scopeo.example.com;
-    ssl_certificate     /etc/ssl/scopeo.crt;
-    ssl_certificate_key /etc/ssl/scopeo.key;
-    client_max_body_size 6m;
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-Without Docker, run the server from the sources: `server/.venv/bin/python -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port 8000`, as a system service (systemd, Windows service). On Windows, the interpreter is `server\.venv\Scripts\python.exe`.
-
-## 2. Configure access (Administration space)
-
-Sign in with the administrator profile, then **profile menu → Administration**.
-
-1. **Settings**: enter the **public address** (`https://…`), close **self-service profile creation**, disable **guest mode** if you do not need it, choose the **session length**.
-2. **Accounts**: create accounts with a temporary password, or let people sign in through the directory or single sign-on. Appoint a second administrator.
-3. **LDAP directory** (on-premises Active Directory, OpenLDAP): address in `ldaps://`, service account with read-only rights, search base, filter, optional group (name or full DN; Active Directory nested groups are followed). If the directory certificate comes from an internal authority, paste that authority's certificate (PEM). Use the **Test** button, then switch it on. People can type `alice`, `DOMAIN\alice` or `alice@company.com`.
-4. **Single sign-on (SSO)** (organisations in the cloud or hybrid): see below.
-5. **Log**: every administration action is recorded.
-
-Local accounts always remain available: the first administrator can sign in even if the directory or the identity provider is unavailable.
-
-### Single sign-on (OpenID Connect)
-
-In the **Single sign-on** page, copy the **redirect address** (`https://<domain>/api/auth/sso/callback`), then register Scopeo with your provider:
-
-| Provider | Where | Issuer to enter |
-|---|---|---|
-| Microsoft Entra ID | Entra admin center → App registrations → New registration → Web platform, redirect URI; then Certificates & secrets → New client secret | `https://login.microsoftonline.com/<tenant-id>/v2.0` |
-| Google Workspace | Google Cloud console → APIs & Services → Credentials → OAuth client ID → Web application | `https://accounts.google.com` |
-| Okta | Admin console → Applications → Create App Integration → OIDC, Web Application | `https://<organisation>.okta.com` |
-| Keycloak | Realm → Clients → Create client → OpenID Connect, Client authentication on | `https://<server>/realms/<realm>` |
-
-Enter the issuer, client ID and client secret, restrict access if needed (email domains, required group), **Test**, then switch on. A "Sign in with…" button appears on the home page. Accounts are created at first sign-in as ordinary users; two-factor authentication is handled by the provider.
-
-For group restriction with Entra ID, add the `groups` claim to the ID token (Token configuration) and enter the group's object ID.
-
-## 3. Security checklist
-
-- [ ] HTTPS only, `SCOPEO_COOKIE_SECURE=1`, public address set.
-- [ ] Administrator profile created immediately, with two-factor authentication on; a second administrator appointed.
-- [ ] Self-service profile creation closed; guest mode off unless needed.
-- [ ] LDAP in `ldaps://` or StartTLS, certificate verification on, read-only service account.
-- [ ] Scopeo only reachable through the reverse proxy (no published port 8000).
-- [ ] Backups scheduled, stored encrypted and off the server, restore tested once.
-- [ ] Server and Docker images kept up to date.
-- [ ] API tokens left off unless an integration needs them.
-
-## 4. Back up and restore
-
-- **On demand**: Administration → Settings → **Download a backup** (database + key, logged).
-- **Scheduled** (Docker):
-
-  ```bash
-  docker compose exec scopeo python -m app.backup /data/backups --keep 14
-  ```
-
-  Run it daily with cron (Linux) or the Task Scheduler (Windows), then copy `/data/backups` elsewhere. Without Docker: `cd server && .venv/bin/python -m app.backup /path/to/backups`.
-- **Restore**: stop Scopeo, put `scopeo.db` and `secret.key` back in the data folder, delete `scopeo.db-wal` and `scopeo.db-shm` if present, start again. Each archive includes these instructions.
-
-## 5. Update
-
-```bash
-cd scopeo/deploy
-docker compose pull && docker compose up -d
-```
-
-The database is migrated automatically at start-up. Take a backup first.
-
-## Cloud, on premises, hybrid
-
-| Setup | How |
-|---|---|
-| On premises | Docker server in your network, internal certificate, Active Directory through LDAP (or SSO if you use Entra ID). |
-| Cloud | Virtual machine or container service with a persistent volume for `/data` and a public HTTPS address; single sign-on with your cloud identity provider. |
-| Hybrid | Scopeo in the cloud, directory on premises: open a private link (VPN) so Scopeo reaches the directory over `ldaps://`, or prefer single sign-on, which needs no network opening. |
-
-In every case, scoping data stays on the server you run. Only identity is exchanged with the directory or the identity provider.
-
-## Good to know
-
-- **One instance only.** Scopeo keeps its data in a SQLite file: run a single container (Kubernetes: `replicas: 1`, `strategy: Recreate`). Two instances on the same data would break two-factor sign-in and single sign-on.
-- **Host folder instead of a volume.** The container runs as user `10001`. If you mount a folder of the server (`-v ./data:/data`), give it to that user first: `sudo chown 10001 ./data`. Any user ID with group `0` also works (OpenShift).
-- **Podman.** Build with `podman build --format docker` to keep the health check.
-- **Proxy.** The launchers and `pip` use the standard `HTTPS_PROXY` and `HTTP_PROXY` variables.
-- **Offline server.** On a computer with internet access, run `pip download -d wheels -r server/requirements.txt` for the same system and Python version, copy the `wheels` folder, then start with `PIP_NO_INDEX=1` and `PIP_FIND_LINKS=wheels`.
-- **Request size.** Requests are limited to 2 MB (5 MB for a Statement of Applicability). A reverse proxy can apply the same limit earlier.
-
----
-
 # Déployer Scopeo pour une équipe
+
+**Français** · [English](#deploying-scopeo-for-a-team)
 
 Ce guide s'adresse au service informatique qui installe Scopeo sur un serveur partagé par plusieurs personnes : sur site, dans le cloud, ou les deux. Pour un usage sur un seul poste, le [guide d'installation](installation.md) suffit.
 
@@ -277,3 +137,143 @@ Dans tous les cas, les données de cadrage restent sur le serveur que vous explo
 - **Proxy.** Les lanceurs et `pip` utilisent les variables standard `HTTPS_PROXY` et `HTTP_PROXY`.
 - **Serveur sans internet.** Sur un poste connecté, lancez `pip download -d wheels -r server/requirements.txt` pour le même système et la même version de Python, copiez le dossier `wheels`, puis démarrez avec `PIP_NO_INDEX=1` et `PIP_FIND_LINKS=wheels`.
 - **Taille des requêtes.** Les requêtes sont limitées à 2 Mo (5 Mo pour une déclaration d'applicabilité). Un mandataire inverse peut appliquer la même limite plus tôt.
+
+---
+
+# Deploying Scopeo for a team
+
+This guide is for the IT team installing Scopeo on a server shared by several people: on premises, in the cloud, or both. For use on a single computer, the [installation guide](installation.md) is enough.
+
+## What you need
+
+| | |
+|---|---|
+| Server | Linux, Windows Server or macOS with Docker (1 vCPU, 1 GB RAM and 5 GB of disk are plenty for a team of a few dozen people) |
+| Address | A domain name such as `scopeo.example.com`, pointing to the server |
+| Encryption | A TLS certificate: automatic (Let's Encrypt), from your internal certificate authority, or from Caddy's internal authority |
+| Optional | Your Active Directory / OpenLDAP directory, or your identity provider (Microsoft Entra ID, Google Workspace, Okta, Keycloak) |
+
+Scopeo keeps everything in one data folder (SQLite database and encryption key). It runs as a **single instance**: no load balancing across several servers.
+
+## 1. Install with Docker and Caddy (recommended)
+
+The [`deploy/`](../deploy) folder holds a ready-to-use configuration: Scopeo behind Caddy, which handles HTTPS.
+
+```bash
+git clone https://github.com/raymondboustany/scopeo.git
+cd scopeo/deploy
+cp .env.example .env        # then set SCOPEO_DOMAIN
+docker compose up -d
+```
+
+Open `https://<your domain>`. The home page offers to create the **administrator profile**: do it at once, before sharing the address.
+
+**Internal network without public DNS**: in [`deploy/Caddyfile`](../deploy/Caddyfile), add `tls internal` (then trust Caddy's root certificate on the team's computers) or point to a certificate issued by your IT (`tls /certs/scopeo.crt /certs/scopeo.key`, with a volume mounting the certificates).
+
+### Already have a reverse proxy?
+
+Serve Scopeo's image (port 8000) behind your proxy and set these variables:
+
+| Variable | Value |
+|---|---|
+| `SCOPEO_PUBLIC_URL` | `https://scopeo.example.com` |
+| `SCOPEO_COOKIE_SECURE` | `1` |
+| `FORWARDED_ALLOW_IPS` | the proxy's address (or `*` if only the proxy can reach Scopeo) |
+
+Nginx example:
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name scopeo.example.com;
+    ssl_certificate     /etc/ssl/scopeo.crt;
+    ssl_certificate_key /etc/ssl/scopeo.key;
+    client_max_body_size 6m;
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Without Docker, run the server from the sources: `server/.venv/bin/python -m uvicorn app.main:app --app-dir server --host 127.0.0.1 --port 8000`, as a system service (systemd, Windows service). On Windows, the interpreter is `server\.venv\Scripts\python.exe`.
+
+## 2. Configure access (Administration space)
+
+Sign in with the administrator profile, then **profile menu → Administration**.
+
+1. **Settings**: enter the **public address** (`https://…`), close **self-service profile creation**, disable **guest mode** if you do not need it, choose the **session length**.
+2. **Accounts**: create accounts with a temporary password, or let people sign in through the directory or single sign-on. Appoint a second administrator.
+3. **LDAP directory** (on-premises Active Directory, OpenLDAP): address in `ldaps://`, service account with read-only rights, search base, filter, optional group (name or full DN; Active Directory nested groups are followed). If the directory certificate comes from an internal authority, paste that authority's certificate (PEM). Use the **Test** button, then switch it on. People can type `alice`, `DOMAIN\alice` or `alice@company.com`.
+4. **Single sign-on (SSO)** (organisations in the cloud or hybrid): see below.
+5. **Log**: every administration action is recorded.
+
+Local accounts always remain available: the first administrator can sign in even if the directory or the identity provider is unavailable.
+
+### Single sign-on (OpenID Connect)
+
+In the **Single sign-on** page, copy the **redirect address** (`https://<domain>/api/auth/sso/callback`), then register Scopeo with your provider:
+
+| Provider | Where | Issuer to enter |
+|---|---|---|
+| Microsoft Entra ID | Entra admin center → App registrations → New registration → Web platform, redirect URI; then Certificates & secrets → New client secret | `https://login.microsoftonline.com/<tenant-id>/v2.0` |
+| Google Workspace | Google Cloud console → APIs & Services → Credentials → OAuth client ID → Web application | `https://accounts.google.com` |
+| Okta | Admin console → Applications → Create App Integration → OIDC, Web Application | `https://<organisation>.okta.com` |
+| Keycloak | Realm → Clients → Create client → OpenID Connect, Client authentication on | `https://<server>/realms/<realm>` |
+
+Enter the issuer, client ID and client secret, restrict access if needed (email domains, required group), **Test**, then switch on. A "Sign in with…" button appears on the home page. Accounts are created at first sign-in as ordinary users; two-factor authentication is handled by the provider.
+
+For group restriction with Entra ID, add the `groups` claim to the ID token (Token configuration) and enter the group's object ID.
+
+## 3. Security checklist
+
+- [ ] HTTPS only, `SCOPEO_COOKIE_SECURE=1`, public address set.
+- [ ] Administrator profile created immediately, with two-factor authentication on; a second administrator appointed.
+- [ ] Self-service profile creation closed; guest mode off unless needed.
+- [ ] LDAP in `ldaps://` or StartTLS, certificate verification on, read-only service account.
+- [ ] Scopeo only reachable through the reverse proxy (no published port 8000).
+- [ ] Backups scheduled, stored encrypted and off the server, restore tested once.
+- [ ] Server and Docker images kept up to date.
+- [ ] API tokens left off unless an integration needs them.
+
+## 4. Back up and restore
+
+- **On demand**: Administration → Settings → **Download a backup** (database + key, logged).
+- **Scheduled** (Docker):
+
+  ```bash
+  docker compose exec scopeo python -m app.backup /data/backups --keep 14
+  ```
+
+  Run it daily with cron (Linux) or the Task Scheduler (Windows), then copy `/data/backups` elsewhere. Without Docker: `cd server && .venv/bin/python -m app.backup /path/to/backups`.
+- **Restore**: stop Scopeo, put `scopeo.db` and `secret.key` back in the data folder, delete `scopeo.db-wal` and `scopeo.db-shm` if present, start again. Each archive includes these instructions.
+
+## 5. Update
+
+```bash
+cd scopeo/deploy
+docker compose pull && docker compose up -d
+```
+
+The database is migrated automatically at start-up. Take a backup first.
+
+## Cloud, on premises, hybrid
+
+| Setup | How |
+|---|---|
+| On premises | Docker server in your network, internal certificate, Active Directory through LDAP (or SSO if you use Entra ID). |
+| Cloud | Virtual machine or container service with a persistent volume for `/data` and a public HTTPS address; single sign-on with your cloud identity provider. |
+| Hybrid | Scopeo in the cloud, directory on premises: open a private link (VPN) so Scopeo reaches the directory over `ldaps://`, or prefer single sign-on, which needs no network opening. |
+
+In every case, scoping data stays on the server you run. Only identity is exchanged with the directory or the identity provider.
+
+## Good to know
+
+- **One instance only.** Scopeo keeps its data in a SQLite file: run a single container (Kubernetes: `replicas: 1`, `strategy: Recreate`). Two instances on the same data would break two-factor sign-in and single sign-on.
+- **Host folder instead of a volume.** The container runs as user `10001`. If you mount a folder of the server (`-v ./data:/data`), give it to that user first: `sudo chown 10001 ./data`. Any user ID with group `0` also works (OpenShift).
+- **Podman.** Build with `podman build --format docker` to keep the health check.
+- **Proxy.** The launchers and `pip` use the standard `HTTPS_PROXY` and `HTTP_PROXY` variables.
+- **Offline server.** On a computer with internet access, run `pip download -d wheels -r server/requirements.txt` for the same system and Python version, copy the `wheels` folder, then start with `PIP_NO_INDEX=1` and `PIP_FIND_LINKS=wheels`.
+- **Request size.** Requests are limited to 2 MB (5 MB for a Statement of Applicability). A reverse proxy can apply the same limit earlier.

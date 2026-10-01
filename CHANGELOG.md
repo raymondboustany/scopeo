@@ -1,36 +1,10 @@
-# Changelog / Journal des modifications
+# Journal des modifications / Changelog
 
-**English.** Notable changes to the project are recorded here, in English then in French for each version. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project follows [semantic versioning](https://semver.org/). Regulatory corpus updates have their own heading.
+**Français.** Les évolutions notables du projet sont consignées ici, en français puis en anglais pour chaque version. Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/). Les mises à jour du corpus réglementaire figurent dans une rubrique dédiée.
 
-**Français.** Les évolutions notables du projet sont consignées ici, en anglais puis en français pour chaque version. Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/). Les mises à jour du corpus réglementaire figurent dans une rubrique dédiée.
+**English.** Notable changes to the project are recorded here, in French then in English for each version. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project follows [semantic versioning](https://semver.org/). Regulatory corpus updates have their own heading.
 
 ## [1.1.0] - 2026-09-25
-
-### English
-
-#### Added
-
-- Recovery command for a locked-out administrator, run on the server: `python -m app.recover "Account name"`.
-- Directory: Active Directory nested groups, sign-in as `DOMAIN\user` or `user@company.com`, internal certificate authority, allowed group by name or DN.
-- Account search in the administration space.
-- Request size limit and throttling of guest sessions.
-
-#### Fixed
-
-- First start of `start.bat` on a new Windows computer.
-- `start.sh`: executable, clear message when `python3-venv` is missing, automatic choice of a recent Python.
-- Docker image: runs with any user ID (OpenShift), clear message when the data folder is not writable.
-- A person moved in the directory keeps their account.
-- Deadlines shown one day early outside mainland France (French Caribbean, French Polynesia, Quebec).
-- "Copy" buttons over plain HTTP on a local network.
-- Stability under load with many simultaneous users.
-- Clear messages for an expired directory password and a damaged encryption key.
-- Accessibility of the effort indicator.
-
-#### Maintenance
-
-- Documentation: troubleshooting, proxy and offline installation, single instance, recovery.
-- Continuous integration actions updated.
 
 ### Français
 
@@ -58,66 +32,33 @@
 - Documentation : dépannage, installation derrière un proxy ou hors ligne, instance unique, procédure de secours.
 - Actions d'intégration continue mises à jour.
 
-## [1.0.0] - 2026-09-25
-
 ### English
 
-First public release.
+#### Added
 
-#### Scoping and diagnosis
+- Recovery command for a locked-out administrator, run on the server: `python -m app.recover "Account name"`.
+- Directory: Active Directory nested groups, sign-in as `DOMAIN\user` or `user@company.com`, internal certificate authority, allowed group by name or DN.
+- Account search in the administration space.
+- Request size limit and throttling of guest sessions.
 
-- Scoping against the GDPR, NIS2 (detailed by ANSSI's ReCyF v2.5), DORA, the Cyber Resilience Act and the AI Act: 35 questions, each verdict justified article by article, with caveats and maximum penalties.
-- Before / after comparator: obligations that enter or leave the scope when an answer changes.
-- Corpus of 95 obligations and 348 elementary requirements; 40 unified requirements on the crosswalk map (overlaps, divergences, precedence) and a "Shared actions" view.
-- ReCyF measures under the NIS2 requirements, filtered by entity category (important or essential).
-- Three-state assessment (in place, partial, missing), overall and per-text score, adjustable prioritisation and a roadmap in four phases, from 0 to 3 months to beyond 12 months.
-- Interactive regulatory timeline.
+#### Fixed
 
-#### Optional ISO/IEC 27001:2022 module
+- First start of `start.bat` on a new Windows computer.
+- `start.sh`: executable, clear message when `python3-venv` is missing, automatic choice of a recent Python.
+- Docker image: runs with any user ID (OpenShift), clear message when the data folder is not writable.
+- A person moved in the directory keeps their account.
+- Deadlines shown one day early outside mainland France (French Caribbean, French Polynesia, Quebec).
+- "Copy" buttons over plain HTTP on a local network.
+- Stability under load with many simultaneous users.
+- Clear messages for an expired directory password and a damaged encryption key.
+- Accessibility of the effort indicator.
 
-- Optional question at the end of scoping (certified, compliant without certification, partial, no initiative), with validity date and scope.
-- For a certified or compliant entity, pre-filling of the matching NIS2, DORA and CRA requirements, flagged and editable.
-- The 93 Annex A controls, Statement of Applicability import, alerts on excluded controls, ISO column on the crosswalk map.
+#### Maintenance
 
-#### Incident notification readiness
+- Documentation: troubleshooting, proxy and offline installation, single instance, recovery.
+- Continuous integration actions updated.
 
-- Authorities to notify and deadlines per regime (GDPR, NIS2, DORA, CRA, AI Act), including DORA's precedence for financial entities.
-- Internal escalation chain, optional deadline simulation.
-- Technical response support: incident response provider (ANSSI PRIS qualification), regional CSIRT, 17Cyber, role of CERT-FR, complaint within 72 hours for cyber insurance.
-
-#### Reporting
-
-- Executive summary (2 pages), full scoping report and incident quick-reference sheet, as PDF.
-- Trust Center: read-only view by revocable link, with no sensitive data (local for now).
-
-#### Accounts and security
-
-- Password-protected profiles (bcrypt), server-side sessions with a configurable lifetime, throttling of sign-in attempts, protection against cross-site requests.
-- Optional two-factor authentication (TOTP) per user, with QR code and single-use recovery codes.
-- Sign-in through an LDAP directory (Active Directory, OpenLDAP), enabled by an administrator, with a step-by-step connection test.
-- Single sign-on through OpenID Connect (Microsoft Entra ID, Google Workspace, Okta, Keycloak), with PKCE, full token validation, and optional restriction by email domain and group.
-- Separate administration space: accounts, temporary passwords, suspension, administrator role, unlocking of two-factor authentication, LDAP directory, single sign-on, settings, backup and log. The first profile created is the administrator; an administrator never sees other people's entities. The role is checked by the server on every route.
-- Sessions stored server-side that survive a restart; security secrets encrypted at rest; HSTS behind HTTPS.
-
-#### Integration and deployment
-
-- REST API described in OpenAPI (`/api/openapi.json`) and personal API tokens (off by default), limited to their owner's entities.
-- Team deployment with Docker Compose and Caddy (automatic HTTPS), for on-premises, cloud or hybrid setups.
-- Built-in backup (download or scheduled command) with restore instructions.
-- Full documentation: usage, security model, configuration, integrations, adaptation.
-
-#### Workspace
-
-- English and French interface, light and dark themes.
-- Multiple entities per profile (client or internal scoping), entity profile, interview notes and log.
-- Guided tour at first sign-in, and a dedicated tour for the administration space.
-- Global search (Ctrl + K), built-in feedback (pre-filled GitHub issue, no scoping data attached).
-- Local FastAPI + SQLite server; installation with Docker Compose, a portable archive or from source.
-
-#### Regulatory corpus
-
-- Official texts in French and English (Official Journal of the EU) and the ReCyF v2.5 (ANSSI) in the `texts/` folder.
-- State of the law as of 24 September 2026.
+## [1.0.0] - 2026-09-25
 
 ### Français
 
@@ -180,3 +121,62 @@ Première version publique.
 
 [1.1.0]: https://github.com/raymondboustany/scopeo/releases/tag/v1.1.0
 [1.0.0]: https://github.com/raymondboustany/scopeo/releases/tag/v1.0.0
+
+### English
+
+First public release.
+
+#### Scoping and diagnosis
+
+- Scoping against the GDPR, NIS2 (detailed by ANSSI's ReCyF v2.5), DORA, the Cyber Resilience Act and the AI Act: 35 questions, each verdict justified article by article, with caveats and maximum penalties.
+- Before / after comparator: obligations that enter or leave the scope when an answer changes.
+- Corpus of 95 obligations and 348 elementary requirements; 40 unified requirements on the crosswalk map (overlaps, divergences, precedence) and a "Shared actions" view.
+- ReCyF measures under the NIS2 requirements, filtered by entity category (important or essential).
+- Three-state assessment (in place, partial, missing), overall and per-text score, adjustable prioritisation and a roadmap in four phases, from 0 to 3 months to beyond 12 months.
+- Interactive regulatory timeline.
+
+#### Optional ISO/IEC 27001:2022 module
+
+- Optional question at the end of scoping (certified, compliant without certification, partial, no initiative), with validity date and scope.
+- For a certified or compliant entity, pre-filling of the matching NIS2, DORA and CRA requirements, flagged and editable.
+- The 93 Annex A controls, Statement of Applicability import, alerts on excluded controls, ISO column on the crosswalk map.
+
+#### Incident notification readiness
+
+- Authorities to notify and deadlines per regime (GDPR, NIS2, DORA, CRA, AI Act), including DORA's precedence for financial entities.
+- Internal escalation chain, optional deadline simulation.
+- Technical response support: incident response provider (ANSSI PRIS qualification), regional CSIRT, 17Cyber, role of CERT-FR, complaint within 72 hours for cyber insurance.
+
+#### Reporting
+
+- Executive summary (2 pages), full scoping report and incident quick-reference sheet, as PDF.
+- Trust Center: read-only view by revocable link, with no sensitive data (local for now).
+
+#### Accounts and security
+
+- Password-protected profiles (bcrypt), server-side sessions with a configurable lifetime, throttling of sign-in attempts, protection against cross-site requests.
+- Optional two-factor authentication (TOTP) per user, with QR code and single-use recovery codes.
+- Sign-in through an LDAP directory (Active Directory, OpenLDAP), enabled by an administrator, with a step-by-step connection test.
+- Single sign-on through OpenID Connect (Microsoft Entra ID, Google Workspace, Okta, Keycloak), with PKCE, full token validation, and optional restriction by email domain and group.
+- Separate administration space: accounts, temporary passwords, suspension, administrator role, unlocking of two-factor authentication, LDAP directory, single sign-on, settings, backup and log. The first profile created is the administrator; an administrator never sees other people's entities. The role is checked by the server on every route.
+- Sessions stored server-side that survive a restart; security secrets encrypted at rest; HSTS behind HTTPS.
+
+#### Integration and deployment
+
+- REST API described in OpenAPI (`/api/openapi.json`) and personal API tokens (off by default), limited to their owner's entities.
+- Team deployment with Docker Compose and Caddy (automatic HTTPS), for on-premises, cloud or hybrid setups.
+- Built-in backup (download or scheduled command) with restore instructions.
+- Full documentation: usage, security model, configuration, integrations, adaptation.
+
+#### Workspace
+
+- English and French interface, light and dark themes.
+- Multiple entities per profile (client or internal scoping), entity profile, interview notes and log.
+- Guided tour at first sign-in, and a dedicated tour for the administration space.
+- Global search (Ctrl + K), built-in feedback (pre-filled GitHub issue, no scoping data attached).
+- Local FastAPI + SQLite server; installation with Docker Compose, a portable archive or from source.
+
+#### Regulatory corpus
+
+- Official texts in French and English (Official Journal of the EU) and the ReCyF v2.5 (ANSSI) in the `texts/` folder.
+- State of the law as of 24 September 2026.

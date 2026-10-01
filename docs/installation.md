@@ -1,137 +1,6 @@
-# Installation guide
-
-**English** · [Français](#guide-dinstallation)
-
-This guide is for everyone, including people with no technical background. Just follow the steps in order. Allow **10 to 15 minutes** for a first install.
-
-The platform runs **on your computer**: no data is sent over the internet. Once started, it is used in your browser (Chrome, Edge, Firefox…) at **http://localhost:8000**.
-
-Two methods are offered:
-
-| | Method A: Docker | Method B: portable archive |
-|---|---|---|
-| Recommended for | Most users, teams | Computers where Docker is not allowed |
-| Software to install once | Docker Desktop | Python |
-| Updates | One command | Download the new archive |
-
-> **Work computer**: installing Docker Desktop or Python may require administrator rights. If you are blocked, contact your IT department.
-
----
-
-## Method A: Docker (recommended)
-
-Docker is the standard way to run applications like this one. It is the method used by most open source cybersecurity and GRC platforms.
-
-### 1. Install Docker Desktop
-
-1. Download **Docker Desktop** from [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/) and install it.
-2. On Windows, accept the activation of **WSL 2** if the installer offers it, then restart the computer.
-3. Open Docker Desktop and wait for the indicator at the bottom left to turn green ("Engine running").
-
-### 2. Get the configuration file
-
-1. Create a folder, for example `Documents\Scopeo`.
-2. Download the file [`compose.yaml`](https://raw.githubusercontent.com/raymondboustany/scopeo/main/compose.yaml) (right-click the link, "Save link as…") and put it in that folder.
-
-### 3. Start the platform
-
-1. Open a terminal **in that folder**:
-   - **Windows**: in File Explorer, right-click inside the folder, then "Open in Terminal".
-   - **macOS**: right-click the folder, then "New Terminal at Folder".
-2. Type the following command, then press Enter:
-
-   ```
-   docker compose up -d
-   ```
-
-3. On the first launch, Docker downloads the platform (one or two minutes). Then open **http://localhost:8000** in your browser.
-
-The platform restarts on its own with Docker Desktop: there is nothing to relaunch next time.
-
-### Useful commands
-
-To type in a terminal opened in the same folder:
-
-| Action | Command |
-|---|---|
-| Stop | `docker compose down` |
-| Restart | `docker compose up -d` |
-| Update to the latest version | `docker compose pull` then `docker compose up -d` |
-
-Your data is kept when you stop and when you update.
-
----
-
-## Method B: portable archive (no Docker)
-
-### 1. Install Python
-
-1. Download **Python** (version 3.11 or later) from [python.org/downloads](https://www.python.org/downloads/).
-2. **Windows**: on the first screen of the installer, be sure to tick **"Add python.exe to PATH"**, then "Install Now".
-
-### 2. Download the platform
-
-1. Go to the [published releases](https://github.com/raymondboustany/scopeo/releases/latest) page.
-2. Under **Assets**, download `scopeo-vX.Y.Z-portable.zip`.
-3. Right-click the archive, then "Extract all".
-
-### 3. Start the platform
-
-- **Windows**: open the extracted folder and double-click **`start.bat`**.
-  If Windows shows a security warning, confirm the run ("Run", or "More info" then "Run anyway"). This message appears for any script downloaded from the internet.
-- **macOS / Linux**: open a terminal in the extracted folder and type `./start.sh`.
-
-On the first launch, a command window installs the necessary components (about a minute), then the browser opens on the platform.
-
-**To stop the platform**, close the command window. **To start it again**, double-click `start.bat` again (or type `./start.sh` on macOS and Linux).
-
-**To update**, download the new archive and copy the `server/data` folder of the old version into it: it holds your data.
-
----
-
-## First steps
-
-1. At first launch, the home page only offers **Create the administrator profile**: name, role and password (12 characters minimum with lowercase, uppercase, digits and special characters, typed twice). This first profile manages accounts and settings in the **Administration** space (profile menu), and uses the platform like everyone else.
-2. Create an entity: a client, or your own organisation. A short guided tour opens at first sign-in; the question mark in the top bar replays it.
-3. To discover the platform without an account, **Guest mode** opens the demo company *Finexa*; the guest session is erased on sign-out.
-4. Next time, sign in with the profile name and password. **Sign out** (profile menu) closes the session.
-5. Recommended: turn on **two-factor authentication** in **Profile and data**, with an app such as Microsoft Authenticator, Google Authenticator or FreeOTP.
-6. Follow the steps shown on the dashboard: scope, assess, prioritise, prepare notification, report.
-
-## Sharing Scopeo with a team
-
-In the **Administration** space:
-
-- **Accounts**: create an account with a temporary password (the person replaces it at first sign-in), suspend an account, appoint another administrator, or turn off two-factor authentication for someone who lost their phone.
-- **LDAP directory**: connect Scopeo to Active Directory or OpenLDAP (address, service account, search base, filter, optional group). The **Test** button checks each step; once switched on, a directory tab appears on the sign-in page.
-- **Single sign-on**: let people sign in with their Microsoft, Google Workspace, Okta or Keycloak account.
-- **Settings**: close self-service profile creation, disable guest mode, set the session length.
-- **Log**: administration actions and account security changes.
-
-Serving Scopeo to several people requires a server and HTTPS: follow the [deployment guide](deployment.md). Everything else is described in the [documentation](documentation.md).
-
-## Backing up your data
-
-- One entity: **Profile and data**, then **Export**. The resulting file can be re-imported on another computer.
-- Everything: **Administration → Settings → Download a backup**, or copy the data folder (`server/data`, or the `scopeo-data` Docker volume). It holds the database `scopeo.db` and the key `secret.key`, which encrypts security secrets: keep them together.
-
-## Troubleshooting
-
-| Symptom | Solution |
-|---|---|
-| The "The local server is not responding" page appears | The platform is not started: run `start.bat` or `docker compose up -d` again. |
-| `docker` is not recognised | Docker Desktop is not running, or the terminal was opened before it was installed: restart the terminal. |
-| `start.bat` says Python is required | Reinstall Python, ticking "Add python.exe to PATH". |
-| `./start.sh` answers "Permission denied" | Type `sh start.sh` instead, or run `chmod +x start.sh` once. |
-| `start.sh` asks for `python3-venv` | On Debian or Ubuntu, run `sudo apt install python3-venv`, then start again. |
-| The first start fails with a network error | The first start downloads the server components: check the internet connection. Behind a company proxy, set `HTTPS_PROXY` (see the [deployment guide](deployment.md#good-to-know)). |
-| Port 8000 is already in use | Another application uses that port: close it, or see the advanced configuration in the README. |
-
-For any other problem, [open an issue](https://github.com/raymondboustany/scopeo/issues/new/choose) describing the installation method you used, or use the feedback button in the platform.
-
----
-
 # Guide d'installation
+
+**Français** · [English](#installation-guide)
 
 Ce guide s'adresse à tous les profils, y compris sans connaissance technique. Il suffit de suivre les étapes dans l'ordre. Comptez **10 à 15 minutes** pour une première installation.
 
@@ -259,3 +128,134 @@ Servir Scopeo à plusieurs personnes suppose un serveur et du HTTPS : suivez le 
 | Le port 8000 est déjà utilisé | Une autre application occupe ce port : fermez-la, ou reportez-vous à la configuration avancée du README. |
 
 Pour tout autre problème, [ouvrez une issue](https://github.com/raymondboustany/scopeo/issues/new/choose) en décrivant la méthode d'installation utilisée, ou utilisez le bouton de signalement de la plateforme.
+
+---
+
+# Installation guide
+
+This guide is for everyone, including people with no technical background. Just follow the steps in order. Allow **10 to 15 minutes** for a first install.
+
+The platform runs **on your computer**: no data is sent over the internet. Once started, it is used in your browser (Chrome, Edge, Firefox…) at **http://localhost:8000**.
+
+Two methods are offered:
+
+| | Method A: Docker | Method B: portable archive |
+|---|---|---|
+| Recommended for | Most users, teams | Computers where Docker is not allowed |
+| Software to install once | Docker Desktop | Python |
+| Updates | One command | Download the new archive |
+
+> **Work computer**: installing Docker Desktop or Python may require administrator rights. If you are blocked, contact your IT department.
+
+---
+
+## Method A: Docker (recommended)
+
+Docker is the standard way to run applications like this one. It is the method used by most open source cybersecurity and GRC platforms.
+
+### 1. Install Docker Desktop
+
+1. Download **Docker Desktop** from [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/) and install it.
+2. On Windows, accept the activation of **WSL 2** if the installer offers it, then restart the computer.
+3. Open Docker Desktop and wait for the indicator at the bottom left to turn green ("Engine running").
+
+### 2. Get the configuration file
+
+1. Create a folder, for example `Documents\Scopeo`.
+2. Download the file [`compose.yaml`](https://raw.githubusercontent.com/raymondboustany/scopeo/main/compose.yaml) (right-click the link, "Save link as…") and put it in that folder.
+
+### 3. Start the platform
+
+1. Open a terminal **in that folder**:
+   - **Windows**: in File Explorer, right-click inside the folder, then "Open in Terminal".
+   - **macOS**: right-click the folder, then "New Terminal at Folder".
+2. Type the following command, then press Enter:
+
+   ```
+   docker compose up -d
+   ```
+
+3. On the first launch, Docker downloads the platform (one or two minutes). Then open **http://localhost:8000** in your browser.
+
+The platform restarts on its own with Docker Desktop: there is nothing to relaunch next time.
+
+### Useful commands
+
+To type in a terminal opened in the same folder:
+
+| Action | Command |
+|---|---|
+| Stop | `docker compose down` |
+| Restart | `docker compose up -d` |
+| Update to the latest version | `docker compose pull` then `docker compose up -d` |
+
+Your data is kept when you stop and when you update.
+
+---
+
+## Method B: portable archive (no Docker)
+
+### 1. Install Python
+
+1. Download **Python** (version 3.11 or later) from [python.org/downloads](https://www.python.org/downloads/).
+2. **Windows**: on the first screen of the installer, be sure to tick **"Add python.exe to PATH"**, then "Install Now".
+
+### 2. Download the platform
+
+1. Go to the [published releases](https://github.com/raymondboustany/scopeo/releases/latest) page.
+2. Under **Assets**, download `scopeo-vX.Y.Z-portable.zip`.
+3. Right-click the archive, then "Extract all".
+
+### 3. Start the platform
+
+- **Windows**: open the extracted folder and double-click **`start.bat`**.
+  If Windows shows a security warning, confirm the run ("Run", or "More info" then "Run anyway"). This message appears for any script downloaded from the internet.
+- **macOS / Linux**: open a terminal in the extracted folder and type `./start.sh`.
+
+On the first launch, a command window installs the necessary components (about a minute), then the browser opens on the platform.
+
+**To stop the platform**, close the command window. **To start it again**, double-click `start.bat` again (or type `./start.sh` on macOS and Linux).
+
+**To update**, download the new archive and copy the `server/data` folder of the old version into it: it holds your data.
+
+---
+
+## First steps
+
+1. At first launch, the home page only offers **Create the administrator profile**: name, role and password (12 characters minimum with lowercase, uppercase, digits and special characters, typed twice). This first profile manages accounts and settings in the **Administration** space (profile menu), and uses the platform like everyone else.
+2. Create an entity: a client, or your own organisation. A short guided tour opens at first sign-in; the question mark in the top bar replays it.
+3. To discover the platform without an account, **Guest mode** opens the demo company *Finexa*; the guest session is erased on sign-out.
+4. Next time, sign in with the profile name and password. **Sign out** (profile menu) closes the session.
+5. Recommended: turn on **two-factor authentication** in **Profile and data**, with an app such as Microsoft Authenticator, Google Authenticator or FreeOTP.
+6. Follow the steps shown on the dashboard: scope, assess, prioritise, prepare notification, report.
+
+## Sharing Scopeo with a team
+
+In the **Administration** space:
+
+- **Accounts**: create an account with a temporary password (the person replaces it at first sign-in), suspend an account, appoint another administrator, or turn off two-factor authentication for someone who lost their phone.
+- **LDAP directory**: connect Scopeo to Active Directory or OpenLDAP (address, service account, search base, filter, optional group). The **Test** button checks each step; once switched on, a directory tab appears on the sign-in page.
+- **Single sign-on**: let people sign in with their Microsoft, Google Workspace, Okta or Keycloak account.
+- **Settings**: close self-service profile creation, disable guest mode, set the session length.
+- **Log**: administration actions and account security changes.
+
+Serving Scopeo to several people requires a server and HTTPS: follow the [deployment guide](deployment.md). Everything else is described in the [documentation](documentation.md).
+
+## Backing up your data
+
+- One entity: **Profile and data**, then **Export**. The resulting file can be re-imported on another computer.
+- Everything: **Administration → Settings → Download a backup**, or copy the data folder (`server/data`, or the `scopeo-data` Docker volume). It holds the database `scopeo.db` and the key `secret.key`, which encrypts security secrets: keep them together.
+
+## Troubleshooting
+
+| Symptom | Solution |
+|---|---|
+| The "The local server is not responding" page appears | The platform is not started: run `start.bat` or `docker compose up -d` again. |
+| `docker` is not recognised | Docker Desktop is not running, or the terminal was opened before it was installed: restart the terminal. |
+| `start.bat` says Python is required | Reinstall Python, ticking "Add python.exe to PATH". |
+| `./start.sh` answers "Permission denied" | Type `sh start.sh` instead, or run `chmod +x start.sh` once. |
+| `start.sh` asks for `python3-venv` | On Debian or Ubuntu, run `sudo apt install python3-venv`, then start again. |
+| The first start fails with a network error | The first start downloads the server components: check the internet connection. Behind a company proxy, set `HTTPS_PROXY` (see the [deployment guide](deployment.md#good-to-know)). |
+| Port 8000 is already in use | Another application uses that port: close it, or see the advanced configuration in the README. |
+
+For any other problem, [open an issue](https://github.com/raymondboustany/scopeo/issues/new/choose) describing the installation method you used, or use the feedback button in the platform.

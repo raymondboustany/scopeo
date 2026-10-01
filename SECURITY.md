@@ -1,56 +1,6 @@
-# Security policy
-
-**English** · [Français](#politique-de-sécurité)
-
-## Usage model
-
-Scopeo runs **on the user's machine**, or on a server of the organisation behind a reverse proxy. The server listens on `127.0.0.1` by default.
-
-### Accounts
-
-- Each local profile is protected by a password (12 characters minimum, with lowercase, uppercase, digits and special characters), hashed with **bcrypt** and never stored in clear.
-- **Two-factor authentication (TOTP)** can be turned on by each user: QR code, six-digit code at every sign-in, ten single-use recovery codes. A code already accepted cannot be replayed; attempts are limited.
-- **LDAP directory** (optional): the directory checks the password, Scopeo never stores it. Lookup uses an escaped filter, an empty password is refused, and access can be restricted to one group. Use `ldaps://` or StartTLS. An account follows the directory's immutable identifier (`objectGUID`, `entryUUID`): a person moved in the directory keeps their account, and a newcomer who reuses the name of someone who left does not inherit it.
-- **Single sign-on** (optional, OpenID Connect): authorization code flow with PKCE, state bound to the browser by a short-lived cookie, nonce, and full ID token validation (signature against the provider's keys, issuer, audience, expiry). Access can be restricted to email domains and a group. Accounts are never matched to an existing account by email alone.
-- **Personal API tokens** (off by default): stored as SHA-256 digests, optional expiry, limited to their owner's entities, without access to administration or account security. Requests authenticated by token do not use cookies.
-- Secrets kept in the database (TOTP seeds, LDAP service account password, SSO client secret) are **encrypted** (Fernet). The key is read from `SCOPEO_SECRET_KEY` or, failing that, from `secret.key`, created at first start in the data folder. Back it up with the database; without it, two-factor authentication must be reset by an administrator. A damaged key file stops start-up with an explicit message instead of silently creating a new key.
-
-### Administration
-
-- The first profile created becomes administrator. Administrators manage accounts, the directory, global settings and the log in a separate space.
-- The role is **checked by the server** on every `/api/admin` route. An administrator never reads or changes other people's entities.
-- At least one active administrator always remains; an administrator cannot remove their own rights.
-- Administration actions and account security changes are recorded in a log.
-- If the only administrator is locked out, `python -m app.recover "Account name"` run on the server restores access. It requires access to the server itself and is recorded in the log.
-
-### Sessions and requests
-
-- Sign-in opens a **server-side session**: the browser only holds a random token in an `HttpOnly`, `SameSite=Strict` cookie; the server stores only its SHA-256 digest. The session expires after the length set by the administrator (12 hours by default) or on sign-out, and survives a server restart. Suspending an account or resetting its security closes its sessions.
-- Repeated failed sign-ins are throttled. Write requests require a dedicated header, which blocks cross-site requests.
-- Requests are limited to 2 MB (5 MB for a Statement of Applicability) and refused before being read. Guest sessions are limited to 20 per address every 15 minutes.
-- An entity can only be read or changed by the profile that owns it. The demo entity is read-only.
-- Security headers (CSP, `X-Frame-Options`, `Referrer-Policy`, `X-Content-Type-Options`, and HSTS when `SCOPEO_COOKIE_SECURE=1`) are sent on every response.
-- **Backups** (Administration → Settings, or `python -m app.backup`) contain the database and the encryption key: keep them encrypted, off the server. Each download is logged.
-
-Scoping data (qualification, gaps, escalation contacts) describes an organisation's weaknesses. Treat the data folder (`server/data/`, or the `scopeo-data` Docker volume) as sensitive information.
-
-**Do not expose the server on a network** without a reverse proxy providing TLS: follow the [deployment guide](docs/deployment.md) and its security checklist. Behind HTTPS, set `SCOPEO_COOKIE_SECURE=1` so the session cookie is only sent over an encrypted connection. The Trust Center is a demo feature: its public link opens without an account for anyone who can reach the server.
-
-## Supported versions
-
-| Version | Security fixes |
-|---|---|
-| 1.x | Yes |
-
-## Reporting a vulnerability
-
-Do not disclose a vulnerability in a public issue. Use **GitHub private reporting**: *Security* tab of the repository, then *Report a vulnerability*.
-
-Please include the affected version, reproduction steps and estimated impact. An acknowledgement is sent within seven days; the fix and disclosure are coordinated with the reporter.
-
----
-
 # Politique de sécurité
+
+**Français** · [English](#security-policy)
 
 ## Modèle d'usage
 
@@ -97,3 +47,53 @@ Les données de cadrage décrivent les faiblesses d'une organisation. Traitez le
 Ne publiez pas de vulnérabilité dans une issue publique. Utilisez le **signalement privé de GitHub** : onglet *Security* du dépôt, puis *Report a vulnerability*.
 
 Indiquez la version concernée, les étapes pour reproduire et l'impact estimé. Un accusé de réception est adressé sous sept jours ; le correctif et la publication sont coordonnés avec la personne qui signale.
+
+---
+
+# Security policy
+
+## Usage model
+
+Scopeo runs **on the user's machine**, or on a server of the organisation behind a reverse proxy. The server listens on `127.0.0.1` by default.
+
+### Accounts
+
+- Each local profile is protected by a password (12 characters minimum, with lowercase, uppercase, digits and special characters), hashed with **bcrypt** and never stored in clear.
+- **Two-factor authentication (TOTP)** can be turned on by each user: QR code, six-digit code at every sign-in, ten single-use recovery codes. A code already accepted cannot be replayed; attempts are limited.
+- **LDAP directory** (optional): the directory checks the password, Scopeo never stores it. Lookup uses an escaped filter, an empty password is refused, and access can be restricted to one group. Use `ldaps://` or StartTLS. An account follows the directory's immutable identifier (`objectGUID`, `entryUUID`): a person moved in the directory keeps their account, and a newcomer who reuses the name of someone who left does not inherit it.
+- **Single sign-on** (optional, OpenID Connect): authorization code flow with PKCE, state bound to the browser by a short-lived cookie, nonce, and full ID token validation (signature against the provider's keys, issuer, audience, expiry). Access can be restricted to email domains and a group. Accounts are never matched to an existing account by email alone.
+- **Personal API tokens** (off by default): stored as SHA-256 digests, optional expiry, limited to their owner's entities, without access to administration or account security. Requests authenticated by token do not use cookies.
+- Secrets kept in the database (TOTP seeds, LDAP service account password, SSO client secret) are **encrypted** (Fernet). The key is read from `SCOPEO_SECRET_KEY` or, failing that, from `secret.key`, created at first start in the data folder. Back it up with the database; without it, two-factor authentication must be reset by an administrator. A damaged key file stops start-up with an explicit message instead of silently creating a new key.
+
+### Administration
+
+- The first profile created becomes administrator. Administrators manage accounts, the directory, global settings and the log in a separate space.
+- The role is **checked by the server** on every `/api/admin` route. An administrator never reads or changes other people's entities.
+- At least one active administrator always remains; an administrator cannot remove their own rights.
+- Administration actions and account security changes are recorded in a log.
+- If the only administrator is locked out, `python -m app.recover "Account name"` run on the server restores access. It requires access to the server itself and is recorded in the log.
+
+### Sessions and requests
+
+- Sign-in opens a **server-side session**: the browser only holds a random token in an `HttpOnly`, `SameSite=Strict` cookie; the server stores only its SHA-256 digest. The session expires after the length set by the administrator (12 hours by default) or on sign-out, and survives a server restart. Suspending an account or resetting its security closes its sessions.
+- Repeated failed sign-ins are throttled. Write requests require a dedicated header, which blocks cross-site requests.
+- Requests are limited to 2 MB (5 MB for a Statement of Applicability) and refused before being read. Guest sessions are limited to 20 per address every 15 minutes.
+- An entity can only be read or changed by the profile that owns it. The demo entity is read-only.
+- Security headers (CSP, `X-Frame-Options`, `Referrer-Policy`, `X-Content-Type-Options`, and HSTS when `SCOPEO_COOKIE_SECURE=1`) are sent on every response.
+- **Backups** (Administration → Settings, or `python -m app.backup`) contain the database and the encryption key: keep them encrypted, off the server. Each download is logged.
+
+Scoping data (qualification, gaps, escalation contacts) describes an organisation's weaknesses. Treat the data folder (`server/data/`, or the `scopeo-data` Docker volume) as sensitive information.
+
+**Do not expose the server on a network** without a reverse proxy providing TLS: follow the [deployment guide](docs/deployment.md) and its security checklist. Behind HTTPS, set `SCOPEO_COOKIE_SECURE=1` so the session cookie is only sent over an encrypted connection. The Trust Center is a demo feature: its public link opens without an account for anyone who can reach the server.
+
+## Supported versions
+
+| Version | Security fixes |
+|---|---|
+| 1.x | Yes |
+
+## Reporting a vulnerability
+
+Do not disclose a vulnerability in a public issue. Use **GitHub private reporting**: *Security* tab of the repository, then *Report a vulnerability*.
+
+Please include the affected version, reproduction steps and estimated impact. An acknowledgement is sent within seven days; the fix and disclosure are coordinated with the reporter.
