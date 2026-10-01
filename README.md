@@ -4,317 +4,16 @@
 
 # Scopeo
 
-**Know what applies, and where to start.**
-
-Open source regulatory scoping and gap assessment platform for the **GDPR**, **NIS2**, **DORA**, the **Cyber Resilience Act** and the **AI Act**. Self-hosted, on your computer or your organisation's server: your data stays with you.
-
-[![CI](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/github/v/release/raymondboustany/scopeo?label=version)](https://github.com/raymondboustany/scopeo/releases/latest)
-[![MIT licence](https://img.shields.io/badge/licence-MIT-6d4aed)](LICENSE)
-[![Corpus](https://img.shields.io/badge/corpus-24%20Sept%202026-111827)](CHANGELOG.md)
-
-**English** · [Français](#français)
-
-[How it works](#how-it-works) · [Quick start](#quick-start) · [Features](#features) · [Security](#privacy-and-security) · [Documentation](docs/documentation.md) · [Contributing](CONTRIBUTING.md)
-
-<br>
-
-<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, regulatory corpus, assessment, ISO 27001, prioritisation, incident notification, reports, administration, dark theme" width="100%">
-
-</div>
-
----
-
-## Why
-
-Five European texts now govern the security, data and AI systems of organisations. They overlap, sometimes diverge, and in some cases one overrides another (DORA over NIS2 for financial entities, for instance). Before committing a compliance budget, an organisation has to answer four questions:
-
-1. **Which texts apply**, and in what capacity?
-2. **What exactly do they require**?
-3. **Where does a single action satisfy several of them**?
-4. **Where to start**?
-
-Scopeo answers them in a few hours of interviews, with reasoning that can be checked article by article, and produces the deliverables a management team expects.
-
-> **A scoping aid, not legal advice.** Conclusions rest on the information declared and on the state of the law at the corpus date.
->
-> **Applied to France.** NIS2 is read through ANSSI's Référentiel Cyber France (ReCyF), and the authorities named are the French ones (CNIL, ANSSI, ACPR, AMF).
-
----
-
-## How it works
-
-Scopeo follows the course of a scoping engagement, from the first interview to the deliverables.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/en/flow-dark.svg">
-    <img src="docs/assets/en/flow-light.svg" alt="Scope, Assess, Prioritise, Prepare reporting, Report" width="100%">
-  </picture>
-</p>
-
-The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI Act); each following step builds on that result. The optional ISO 27001 module, offered at the end of the first step, can pre-fill part of the assessment.
-
-## Who it is for
-
-| Profile | What the platform brings |
-|---|---|
-| Consultants | Scope a client in a few interviews, with reasoning that holds up article by article, and deliver board-ready reports. |
-| CISOs | See which obligations apply to the organisation, prioritise measures and justify the roadmap to management. |
-| GRC teams | See which texts apply, where one action covers several of them, and where to start. |
-| Management | A two-page summary: exposure, priorities and decisions to take. |
-| Legal counsel | The legal basis of every verdict, official quotations and caveats. |
-
----
-
-## Features
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### Scoping, article by article
-Up to 34 questions depending on the answers, each tied to the article it relies on. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
-
-</td>
-<td width="50%"><img src="docs/assets/en/qualification.jpg" alt="Scoping and before / after comparator"></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/assets/en/dashboard.jpg" alt="Dashboard"></td>
-<td width="50%" valign="top">
-
-### Diagnosis at a glance
-Overall and per-text coverage, a five-step scoping path, alerts on upcoming regulatory deadlines, priorities and weaknesses by domain.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### Shared requirements
-40 unified requirements link the obligations of the five texts. The **Shared actions** view shows which combinations of texts a single action covers; divergences and precedence are named, with the rule that prevails.
-
-</td>
-<td width="50%"><img src="docs/assets/en/mutualisation.jpg" alt="Shared actions view of the crosswalk"></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/assets/en/iso-overlap.jpg" alt="ISO 27001 module: excluded controls and overlap by text"></td>
-<td width="50%" valign="top">
-
-### Optional ISO 27001 module
-An optional question at the end of scoping records the entity's ISO 27001 status. For a certified or compliant entity, the matching NIS2, DORA and CRA requirements can be pre-filled; they are flagged as such and remain editable. A dedicated module covers the 93 Annex A controls, Statement of Applicability import and alerts on excluded controls; the crosswalk map shows the ISO controls next to each requirement.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### The full regulatory corpus
-**95 obligations** from the five texts, each with its link to the official text, the evidence expected in an audit, its deadline and penalty tier, and broken down into **348 elementary requirements**. The key obligations carry the verbatim quotation of the article. The view can be filtered to the entity's scope. NIS2 is detailed by the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category.
-
-</td>
-<td width="50%"><img src="docs/assets/en/corpus.jpg" alt="Regulatory corpus"></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/assets/en/signalement.jpg" alt="Who to notify in case of an incident"></td>
-<td width="50%" valign="top">
-
-### Incident notification readiness
-Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, points to technical support (PRIS-qualified provider, regional CSIRT, 17Cyber) and produces a one- to two-page **incident quick-reference sheet**.
-
-</td>
-</tr>
-</table>
-
-**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in phases whose number and length you set (the platform proposes four: 3, 3, 6 and 12 months) · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes.
-
-### Accounts, administration and integration
-
-It works on a single computer or can be shared by a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP) or **single sign-on** (OpenID Connect: Microsoft Entra ID, Google Workspace, Okta, Keycloak), settings, backups and a log. Each user can turn on **two-factor authentication** (TOTP). An administrator never sees other people's entities, and the role is checked by the server on every request. For integrations: REST API described in OpenAPI, personal API tokens, JSON export.
-
-<details>
-<summary>Dark theme preview</summary>
-<br>
-<img src="docs/assets/en/dashboard-dark.jpg" alt="Dashboard in dark theme">
-<br><br>
-<img src="docs/assets/en/croisements-dark.jpg" alt="Crosswalk map in dark theme">
-</details>
-
----
-
-## Sample reports
-
-Three PDF deliverables, generated from the fictitious demo entity *Finexa*:
-
-| Document | Audience | Length |
-|---|---|---|
-| [Executive summary](docs/samples/executive-summary-finexa.pdf) | Management, executive committee | 2 pages |
-| [Full scoping report](docs/samples/scoping-report-finexa.pdf) | Counsel, CISO, DPO, project team | 6 to 12 pages |
-| [Incident quick-reference sheet](docs/samples/incident-quick-reference-finexa.pdf) | Internal distribution | 1 to 2 pages |
-
----
-
-## Quick start
-
-> **First install?** The [step-by-step installation guide](docs/installation.md) covers every step, with no technical prerequisite. **For a team** (shared server, HTTPS, directory, single sign-on), follow the [deployment guide](docs/deployment.md).
-
-### Docker Compose (recommended)
-
-Prerequisite: [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-
-```bash
-mkdir scopeo && cd scopeo
-curl -o compose.yaml https://raw.githubusercontent.com/raymondboustany/scopeo/main/compose.yaml
-docker compose up -d
-```
-
-Then open **http://localhost:8000**. Data is kept in the `scopeo-data` Docker volume.
-
-### Without Docker
-
-Prerequisite: [Python 3.11+](https://www.python.org/downloads/).
-
-1. Download `scopeo-vX.Y.Z-portable.zip` from the [latest release](https://github.com/raymondboustany/scopeo/releases/latest) and unzip it.
-2. Run `start.bat` (Windows, double-click) or `./start.sh` (macOS, Linux).
-
-### From source
-
-Prerequisites: Node.js 20.19+ (22 recommended), Python 3.11+, Git.
-
-```bash
-git clone https://github.com/raymondboustany/scopeo.git
-cd scopeo
-npm install
-npm run setup      # Python environment for the server
-npm run dev        # http://localhost:5173, with hot reload
-```
-
-<details>
-<summary>Commands and configuration</summary>
-<br>
-
-| Command | Purpose |
-|---|---|
-| `npm run dev` | API with reload and Vite interface, stopped together |
-| `npm start` | Build, then serve the platform on http://127.0.0.1:8000 |
-| `npm test` · `npm run test:server` | Engine tests (Vitest) · API tests (pytest) |
-| `npm run lint` · `npm run typecheck` | Static checks |
-| `npm run demo:build` | Regenerate the demo entity |
-
-| Environment variable | Default | Purpose |
-|---|---|---|
-| `SCOPEO_PORT` | `8000` | Server port |
-| `SCOPEO_HOST` | `127.0.0.1` | Listening address |
-| `SCOPEO_DATA_DIR` | `server/data` (`/data` under Docker) | SQLite database folder |
-| `SCOPEO_COOKIE_SECURE` | off | Mark the session cookie `Secure` when served over HTTPS |
-| `SCOPEO_SECRET_KEY` | `secret.key` file in the data folder | Key encrypting security secrets (two-factor seeds, LDAP and SSO secrets) |
-| `SCOPEO_PUBLIC_URL` | address of the request | Public `https://` address, needed for single sign-on |
-
-Full reference: [documentation](docs/documentation.md#6-configuration-reference).
-
-</details>
-
-### First steps
-
-At first launch, the home page only offers to create the **administrator profile**. Afterwards, **Guest mode** opens the *Finexa* demo (a 50-person payment institution, already scoped and assessed); it is erased on sign-out. To scope your own organisation or a client, create an entity from your profile; a short guided tour opens at first sign-in.
-
----
-
-## Reference
-
-| | |
-|---|---|
-| Texts | GDPR, NIS2 (ReCyF), DORA, CRA, AI Act |
-| Obligations | 95 (GDPR 21, NIS2 22, DORA 22, CRA 12, AI Act 18), with expected evidence, deadline and penalty tier |
-| Elementary requirements | 348 |
-| Unified requirements | 40, including 7 divergences and 1 precedence rule |
-| NIS2 detail (ReCyF v2.5) | 20 objectives, 152 measures |
-| ISO/IEC 27001:2022 | 93 Annex A controls (public titles only), mapped by theme |
-| Scoping questions | Up to 34 depending on the answers, each tied to the article it relies on |
-
-<details>
-<summary>Status of the texts and notification deadlines</summary>
-<br>
-
-| Text | Reference | Status on 24 September 2026 |
-|---|---|---|
-| GDPR | Regulation (EU) 2016/679 | Applicable since 25 May 2018 |
-| NIS2 | Directive (EU) 2022/2555 | Not yet transposed in France; resilience bill debated from 7 October 2026. Requirements detailed by the ReCyF v2.5, a working document that may change before the implementing decree |
-| DORA | Regulation (EU) 2022/2554 | Applicable since 17 January 2025 |
-| CRA | Regulation (EU) 2024/2847 | Reporting (Art. 14) since 11 September 2026; full application on 11 December 2027 |
-| AI Act | Regulation (EU) 2024/1689, amended by Regulation (EU) 2026/1744 | Prohibitions and AI literacy since 2 February 2025; general application since 2 August 2026; high-risk systems on 2 December 2027 (Annex III) and 2 August 2028 (Annex I) |
-
-| Regime | Deadlines | Basis |
-|---|---|---|
-| GDPR | 72 h after awareness | Art. 33 |
-| NIS2 | early warning 24 h · notification 72 h · final report 1 month | Art. 23(4) |
-| DORA | initial notification 4 h after classification as major, at the latest 24 h after detection · intermediate report 72 h · final report 1 month | Art. 19, Delegated Regulation (EU) 2025/301 |
-| CRA | early warning 24 h · notification 72 h · final report 14 days after a fix (vulnerability) or 1 month (incident) | Art. 14 |
-| AI Act | serious incident: 15 days, 10 days in case of death, 2 days for a widespread infringement or critical infrastructure | Art. 73 |
-
-</details>
-
-Official texts are kept as PDF, in French and in English, in [texts/](texts/README.md), with their reuse conditions. Corpus changes are recorded in the [changelog](CHANGELOG.md).
-
----
-
-## Architecture
-
-```
-┌──────────────────────────────┐        ┌───────────────────────────┐
-│ Interface: React, TypeScript │  /api  │ Server: FastAPI           │
-│ Regulatory engines           │ ─────► │ SQLite persistence        │
-│ PDF reports                  │        │ Accounts, LDAP, SSO, API  │
-└──────────────────────────────┘        └───────────────────────────┘
-```
-
-All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) runs in the interface from the stored answers, so a corpus update applies at once to every existing entity. The server stores data and handles authentication.
-
-**Stack:** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt, pyotp, ldap3, cryptography · Vitest, pytest.
-
----
-
-## Privacy and security
-
-Scoping data describes an organisation's weaknesses. Scopeo is built accordingly.
-
-- **Your data stays with you**: on your computer or your organisation's server. No telemetry, no mandatory cloud service; the directory or identity provider, when enabled, only receives identity requests.
-- **Strong authentication**: bcrypt passwords, optional two-factor authentication (TOTP) with recovery codes, LDAP directory or single sign-on (OpenID Connect with PKCE); sign-in throttling.
-- **Controlled access**: each entity is private to its owner; the administrator role is checked by the server on every request and never gives access to scoping content; API tokens are limited to their owner's entities.
-- **Protected sessions and secrets**: server-side sessions in an `HttpOnly`, `SameSite=Strict` cookie, with a lifetime set by the administrator; security secrets encrypted at rest; security headers, HSTS behind HTTPS.
-- **Traceability and recovery**: log of administration and account security events; built-in and scheduled backups.
-- The server listens on `127.0.0.1` by default. To share it, follow the [deployment guide](docs/deployment.md) (HTTPS required) and [SECURITY.md](SECURITY.md).
-- The Trust Center is still a demo feature: its public link only works for people who can reach your server.
-
----
-
-## Feedback
-
-To report a problem or suggest an improvement, use the feedback button in the platform's top bar. Choose the type of report (problem, idea, error in the regulatory content), review the message, then open a pre-filled GitHub issue or copy it to send through another channel. Nothing is sent automatically and no scoping data is attached. Security vulnerabilities must be reported privately, as described in [SECURITY.md](SECURITY.md).
-
----
-
-## Contributing
-
-Contributions are welcome, especially **corpus updates**, to be reported with an official source through the "Regulatory update" issue template. Every change proposed by a contributor goes through a pull request reviewed and approved by the maintainer. See the [contributing guide](CONTRIBUTING.md).
-
-## Licence
-
-Code released under the [MIT](LICENSE) licence. Regulatory texts remain the property of their authors; their reuse conditions are listed in [texts/README.md](texts/README.md). ISO/IEC 27001 control titles are cited as publicly documented; the text of the standard is not reproduced.
-
----
-
-<a id="français"></a>
-
-<div align="center">
-
-# Scopeo (français)
-
 **Savoir ce qui s'applique, et par quoi commencer.**
 
 Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD**, **NIS2**, **DORA**, le **Cyber Resilience Act** et l'**AI Act**. Auto-hébergée, sur votre poste ou le serveur de votre organisation : vos données restent chez vous.
 
-[English](#scopeo) · **Français**
+[![CI](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/github/v/release/raymondboustany/scopeo?label=version)](https://github.com/raymondboustany/scopeo/releases/latest)
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-6d4aed)](LICENSE)
+[![Corpus](https://img.shields.io/badge/corpus-24%20sept.%202026-111827)](CHANGELOG.md)
+
+**Français** · [English](#english)
 
 [Comment ça marche](#comment-ça-marche) · [Démarrage rapide](#démarrage-rapide) · [Fonctionnalités](#fonctionnalités) · [Sécurité](#confidentialité-et-sécurité) · [Documentation](docs/documentation.md#documentation-de-scopeo) · [Contribuer](CONTRIBUTING.md)
 
@@ -602,3 +301,304 @@ Les contributions sont bienvenues, en particulier les **mises à jour du corpus*
 ## Licence
 
 Code publié sous licence [MIT](LICENSE). Les textes réglementaires restent la propriété de leurs auteurs ; leurs conditions de réutilisation figurent dans [texts/README.md](texts/README.md). Les intitulés des contrôles ISO/IEC 27001 sont cités tels qu'ils sont documentés publiquement ; le texte de la norme n'est pas reproduit.
+
+---
+
+<a id="english"></a>
+
+<div align="center">
+
+# Scopeo (English)
+
+**Know what applies, and where to start.**
+
+Open source regulatory scoping and gap assessment platform for the **GDPR**, **NIS2**, **DORA**, the **Cyber Resilience Act** and the **AI Act**. Self-hosted, on your computer or your organisation's server: your data stays with you.
+
+[Français](#scopeo) · **English**
+
+[How it works](#how-it-works) · [Quick start](#quick-start) · [Features](#features) · [Security](#privacy-and-security) · [Documentation](docs/documentation.md) · [Contributing](CONTRIBUTING.md)
+
+<br>
+
+<img src="docs/assets/tour-en.webp" alt="Walkthrough: sign-in, dashboard, scoping, crosswalk, shared actions, regulatory corpus, assessment, ISO 27001, prioritisation, incident notification, reports, administration, dark theme" width="100%">
+
+</div>
+
+---
+
+## Why
+
+Five European texts now govern the security, data and AI systems of organisations. They overlap, sometimes diverge, and in some cases one overrides another (DORA over NIS2 for financial entities, for instance). Before committing a compliance budget, an organisation has to answer four questions:
+
+1. **Which texts apply**, and in what capacity?
+2. **What exactly do they require**?
+3. **Where does a single action satisfy several of them**?
+4. **Where to start**?
+
+Scopeo answers them in a few hours of interviews, with reasoning that can be checked article by article, and produces the deliverables a management team expects.
+
+> **A scoping aid, not legal advice.** Conclusions rest on the information declared and on the state of the law at the corpus date.
+>
+> **Applied to France.** NIS2 is read through ANSSI's Référentiel Cyber France (ReCyF), and the authorities named are the French ones (CNIL, ANSSI, ACPR, AMF).
+
+---
+
+## How it works
+
+Scopeo follows the course of a scoping engagement, from the first interview to the deliverables.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/en/flow-dark.svg">
+    <img src="docs/assets/en/flow-light.svg" alt="Scope, Assess, Prioritise, Prepare reporting, Report" width="100%">
+  </picture>
+</p>
+
+The first step determines which texts apply (GDPR, NIS2 (ReCyF), DORA, CRA, AI Act); each following step builds on that result. The optional ISO 27001 module, offered at the end of the first step, can pre-fill part of the assessment.
+
+## Who it is for
+
+| Profile | What the platform brings |
+|---|---|
+| Consultants | Scope a client in a few interviews, with reasoning that holds up article by article, and deliver board-ready reports. |
+| CISOs | See which obligations apply to the organisation, prioritise measures and justify the roadmap to management. |
+| GRC teams | See which texts apply, where one action covers several of them, and where to start. |
+| Management | A two-page summary: exposure, priorities and decisions to take. |
+| Legal counsel | The legal basis of every verdict, official quotations and caveats. |
+
+---
+
+## Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Scoping, article by article
+Up to 34 questions depending on the answers, each tied to the article it relies on. Every verdict shows its conditions, caveats and maximum penalty. The **before / after comparator** shows which obligations enter or leave the scope when an answer changes.
+
+</td>
+<td width="50%"><img src="docs/assets/en/qualification.jpg" alt="Scoping and before / after comparator"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/en/dashboard.jpg" alt="Dashboard"></td>
+<td width="50%" valign="top">
+
+### Diagnosis at a glance
+Overall and per-text coverage, a five-step scoping path, alerts on upcoming regulatory deadlines, priorities and weaknesses by domain.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### Shared requirements
+40 unified requirements link the obligations of the five texts. The **Shared actions** view shows which combinations of texts a single action covers; divergences and precedence are named, with the rule that prevails.
+
+</td>
+<td width="50%"><img src="docs/assets/en/mutualisation.jpg" alt="Shared actions view of the crosswalk"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/en/iso-overlap.jpg" alt="ISO 27001 module: excluded controls and overlap by text"></td>
+<td width="50%" valign="top">
+
+### Optional ISO 27001 module
+An optional question at the end of scoping records the entity's ISO 27001 status. For a certified or compliant entity, the matching NIS2, DORA and CRA requirements can be pre-filled; they are flagged as such and remain editable. A dedicated module covers the 93 Annex A controls, Statement of Applicability import and alerts on excluded controls; the crosswalk map shows the ISO controls next to each requirement.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### The full regulatory corpus
+**95 obligations** from the five texts, each with its link to the official text, the evidence expected in an audit, its deadline and penalty tier, and broken down into **348 elementary requirements**. The key obligations carry the verbatim quotation of the article. The view can be filtered to the entity's scope. NIS2 is detailed by the **152 measures of ANSSI's ReCyF** (v2.5, March 2026 working version), filtered by entity category.
+
+</td>
+<td width="50%"><img src="docs/assets/en/corpus.jpg" alt="Regulatory corpus"></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/en/signalement.jpg" alt="Who to notify in case of an incident"></td>
+<td width="50%" valign="top">
+
+### Incident notification readiness
+Notification duties apply before compliance work is done. The platform names the authorities (CNIL, ANSSI, ACPR or AMF, ENISA, market surveillance for AI), their deadlines and the internal escalation chain, points to technical support (PRIS-qualified provider, regional CSIRT, 17Cyber) and produces a one- to two-page **incident quick-reference sheet**.
+
+</td>
+</tr>
+</table>
+
+**Also included:** three-state assessment (in place, partial, missing) · adjustable prioritisation · roadmap in phases whose number and length you set (the platform proposes four: 3, 3, 6 and 12 months) · regulatory timeline · entity profile · interview notes · read-only Trust Center (local for now) · global search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) · English and French interface · light and dark themes.
+
+### Accounts, administration and integration
+
+It works on a single computer or can be shared by a team. The first profile created is the administrator: in a separate space, it manages accounts (temporary passwords, suspension, administrator role), sign-in through the organisation's **LDAP directory** (Active Directory, OpenLDAP) or **single sign-on** (OpenID Connect: Microsoft Entra ID, Google Workspace, Okta, Keycloak), settings, backups and a log. Each user can turn on **two-factor authentication** (TOTP). An administrator never sees other people's entities, and the role is checked by the server on every request. For integrations: REST API described in OpenAPI, personal API tokens, JSON export.
+
+<details>
+<summary>Dark theme preview</summary>
+<br>
+<img src="docs/assets/en/dashboard-dark.jpg" alt="Dashboard in dark theme">
+<br><br>
+<img src="docs/assets/en/croisements-dark.jpg" alt="Crosswalk map in dark theme">
+</details>
+
+---
+
+## Sample reports
+
+Three PDF deliverables, generated from the fictitious demo entity *Finexa*:
+
+| Document | Audience | Length |
+|---|---|---|
+| [Executive summary](docs/samples/executive-summary-finexa.pdf) | Management, executive committee | 2 pages |
+| [Full scoping report](docs/samples/scoping-report-finexa.pdf) | Counsel, CISO, DPO, project team | 6 to 12 pages |
+| [Incident quick-reference sheet](docs/samples/incident-quick-reference-finexa.pdf) | Internal distribution | 1 to 2 pages |
+
+---
+
+## Quick start
+
+> **First install?** The [step-by-step installation guide](docs/installation.md) covers every step, with no technical prerequisite. **For a team** (shared server, HTTPS, directory, single sign-on), follow the [deployment guide](docs/deployment.md).
+
+### Docker Compose (recommended)
+
+Prerequisite: [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+```bash
+mkdir scopeo && cd scopeo
+curl -o compose.yaml https://raw.githubusercontent.com/raymondboustany/scopeo/main/compose.yaml
+docker compose up -d
+```
+
+Then open **http://localhost:8000**. Data is kept in the `scopeo-data` Docker volume.
+
+### Without Docker
+
+Prerequisite: [Python 3.11+](https://www.python.org/downloads/).
+
+1. Download `scopeo-vX.Y.Z-portable.zip` from the [latest release](https://github.com/raymondboustany/scopeo/releases/latest) and unzip it.
+2. Run `start.bat` (Windows, double-click) or `./start.sh` (macOS, Linux).
+
+### From source
+
+Prerequisites: Node.js 20.19+ (22 recommended), Python 3.11+, Git.
+
+```bash
+git clone https://github.com/raymondboustany/scopeo.git
+cd scopeo
+npm install
+npm run setup      # Python environment for the server
+npm run dev        # http://localhost:5173, with hot reload
+```
+
+<details>
+<summary>Commands and configuration</summary>
+<br>
+
+| Command | Purpose |
+|---|---|
+| `npm run dev` | API with reload and Vite interface, stopped together |
+| `npm start` | Build, then serve the platform on http://127.0.0.1:8000 |
+| `npm test` · `npm run test:server` | Engine tests (Vitest) · API tests (pytest) |
+| `npm run lint` · `npm run typecheck` | Static checks |
+| `npm run demo:build` | Regenerate the demo entity |
+
+| Environment variable | Default | Purpose |
+|---|---|---|
+| `SCOPEO_PORT` | `8000` | Server port |
+| `SCOPEO_HOST` | `127.0.0.1` | Listening address |
+| `SCOPEO_DATA_DIR` | `server/data` (`/data` under Docker) | SQLite database folder |
+| `SCOPEO_COOKIE_SECURE` | off | Mark the session cookie `Secure` when served over HTTPS |
+| `SCOPEO_SECRET_KEY` | `secret.key` file in the data folder | Key encrypting security secrets (two-factor seeds, LDAP and SSO secrets) |
+| `SCOPEO_PUBLIC_URL` | address of the request | Public `https://` address, needed for single sign-on |
+
+Full reference: [documentation](docs/documentation.md#6-configuration-reference).
+
+</details>
+
+### First steps
+
+At first launch, the home page only offers to create the **administrator profile**. Afterwards, **Guest mode** opens the *Finexa* demo (a 50-person payment institution, already scoped and assessed); it is erased on sign-out. To scope your own organisation or a client, create an entity from your profile; a short guided tour opens at first sign-in.
+
+---
+
+## Reference
+
+| | |
+|---|---|
+| Texts | GDPR, NIS2 (ReCyF), DORA, CRA, AI Act |
+| Obligations | 95 (GDPR 21, NIS2 22, DORA 22, CRA 12, AI Act 18), with expected evidence, deadline and penalty tier |
+| Elementary requirements | 348 |
+| Unified requirements | 40, including 7 divergences and 1 precedence rule |
+| NIS2 detail (ReCyF v2.5) | 20 objectives, 152 measures |
+| ISO/IEC 27001:2022 | 93 Annex A controls (public titles only), mapped by theme |
+| Scoping questions | Up to 34 depending on the answers, each tied to the article it relies on |
+
+<details>
+<summary>Status of the texts and notification deadlines</summary>
+<br>
+
+| Text | Reference | Status on 24 September 2026 |
+|---|---|---|
+| GDPR | Regulation (EU) 2016/679 | Applicable since 25 May 2018 |
+| NIS2 | Directive (EU) 2022/2555 | Not yet transposed in France; resilience bill debated from 7 October 2026. Requirements detailed by the ReCyF v2.5, a working document that may change before the implementing decree |
+| DORA | Regulation (EU) 2022/2554 | Applicable since 17 January 2025 |
+| CRA | Regulation (EU) 2024/2847 | Reporting (Art. 14) since 11 September 2026; full application on 11 December 2027 |
+| AI Act | Regulation (EU) 2024/1689, amended by Regulation (EU) 2026/1744 | Prohibitions and AI literacy since 2 February 2025; general application since 2 August 2026; high-risk systems on 2 December 2027 (Annex III) and 2 August 2028 (Annex I) |
+
+| Regime | Deadlines | Basis |
+|---|---|---|
+| GDPR | 72 h after awareness | Art. 33 |
+| NIS2 | early warning 24 h · notification 72 h · final report 1 month | Art. 23(4) |
+| DORA | initial notification 4 h after classification as major, at the latest 24 h after detection · intermediate report 72 h · final report 1 month | Art. 19, Delegated Regulation (EU) 2025/301 |
+| CRA | early warning 24 h · notification 72 h · final report 14 days after a fix (vulnerability) or 1 month (incident) | Art. 14 |
+| AI Act | serious incident: 15 days, 10 days in case of death, 2 days for a widespread infringement or critical infrastructure | Art. 73 |
+
+</details>
+
+Official texts are kept as PDF, in French and in English, in [texts/](texts/README.md), with their reuse conditions. Corpus changes are recorded in the [changelog](CHANGELOG.md).
+
+---
+
+## Architecture
+
+```
+┌──────────────────────────────┐        ┌───────────────────────────┐
+│ Interface: React, TypeScript │  /api  │ Server: FastAPI           │
+│ Regulatory engines           │ ─────► │ SQLite persistence        │
+│ PDF reports                  │        │ Accounts, LDAP, SSO, API  │
+└──────────────────────────────┘        └───────────────────────────┘
+```
+
+All regulatory logic (scoping, scope, prioritisation, deadlines, ISO mapping) runs in the interface from the stored answers, so a corpus update applies at once to every existing entity. The server stores data and handles authentication.
+
+**Stack:** React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, TanStack Query, @react-pdf/renderer · FastAPI, SQLModel, SQLite, bcrypt, pyotp, ldap3, cryptography · Vitest, pytest.
+
+---
+
+## Privacy and security
+
+Scoping data describes an organisation's weaknesses. Scopeo is built accordingly.
+
+- **Your data stays with you**: on your computer or your organisation's server. No telemetry, no mandatory cloud service; the directory or identity provider, when enabled, only receives identity requests.
+- **Strong authentication**: bcrypt passwords, optional two-factor authentication (TOTP) with recovery codes, LDAP directory or single sign-on (OpenID Connect with PKCE); sign-in throttling.
+- **Controlled access**: each entity is private to its owner; the administrator role is checked by the server on every request and never gives access to scoping content; API tokens are limited to their owner's entities.
+- **Protected sessions and secrets**: server-side sessions in an `HttpOnly`, `SameSite=Strict` cookie, with a lifetime set by the administrator; security secrets encrypted at rest; security headers, HSTS behind HTTPS.
+- **Traceability and recovery**: log of administration and account security events; built-in and scheduled backups.
+- The server listens on `127.0.0.1` by default. To share it, follow the [deployment guide](docs/deployment.md) (HTTPS required) and [SECURITY.md](SECURITY.md).
+- The Trust Center is still a demo feature: its public link only works for people who can reach your server.
+
+---
+
+## Feedback
+
+To report a problem or suggest an improvement, use the feedback button in the platform's top bar. Choose the type of report (problem, idea, error in the regulatory content), review the message, then open a pre-filled GitHub issue or copy it to send through another channel. Nothing is sent automatically and no scoping data is attached. Security vulnerabilities must be reported privately, as described in [SECURITY.md](SECURITY.md).
+
+---
+
+## Contributing
+
+Contributions are welcome, especially **corpus updates**, to be reported with an official source through the "Regulatory update" issue template. Every change proposed by a contributor goes through a pull request reviewed and approved by the maintainer. See the [contributing guide](CONTRIBUTING.md).
+
+## Licence
+
+Code released under the [MIT](LICENSE) licence. Regulatory texts remain the property of their authors; their reuse conditions are listed in [texts/README.md](texts/README.md). ISO/IEC 27001 control titles are cited as publicly documented; the text of the standard is not reproduced.
