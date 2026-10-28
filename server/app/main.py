@@ -15,7 +15,7 @@ import json
 import secrets
 import threading
 from contextlib import asynccontextmanager
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from urllib.parse import quote
 
@@ -122,7 +122,7 @@ CSRF_HEADER = "x-scopeo"
 
 
 def _utc(value: datetime) -> datetime:
-    return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+    return value if value.tzinfo else value.replace(tzinfo=UTC)
 
 
 def _error(code: int, detail: str) -> HTTPException:
@@ -154,7 +154,7 @@ def seed_demo() -> None:
         entity = session.get(Entity, DEMO_ENTITY_ID)
         data = seed["entity"]
         if entity is None:
-            entity = Entity(id=DEMO_ENTITY_ID, user_id=DEMO_USER_ID, name=data["name"], share_token="demo")
+            entity = Entity(id=DEMO_ENTITY_ID, user_id=DEMO_USER_ID, name=data["name"], share_token="demo")  # noqa: S106 (lien public voulu de la démonstration)
             session.add(entity)
         entity.name = data["name"]
         entity.scope_note = data.get("scope_note", "")
@@ -255,9 +255,9 @@ async def security_middleware(request: Request, call_next):
     # Un jeton porté par l'en-tête Authorization ne peut pas être posé par un site
     # tiers : l'en-tête anti-CSRF n'est exigé que des requêtes authentifiées par cookie.
     bearer = request.headers.get("authorization", "").lower().startswith("bearer ")
-    if request.url.path.startswith("/api/") and request.method in {"POST", "PUT", "PATCH", "DELETE"} and not bearer:
-        if request.headers.get(CSRF_HEADER) != "1":
-            return JSONResponse({"detail": "csrf"}, status_code=status.HTTP_403_FORBIDDEN)
+    unsafe = request.method in {"POST", "PUT", "PATCH", "DELETE"}
+    if request.url.path.startswith("/api/") and unsafe and not bearer and request.headers.get(CSRF_HEADER) != "1":
+        return JSONResponse({"detail": "csrf"}, status_code=status.HTTP_403_FORBIDDEN)
     response = await call_next(request)
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
     response.headers.setdefault("X-Frame-Options", "DENY")
@@ -495,12 +495,12 @@ def ldap_login(payload: LdapLoginPayload, request: Request, response: Response, 
         if exc.code in {"invalid_credentials", "ldap_not_in_group"}:
             throttle.fail(key)
         if exc.code == "ldap_disabled":
-            raise _error(status.HTTP_404_NOT_FOUND, "ldap_disabled")
+            raise _error(status.HTTP_404_NOT_FOUND, "ldap_disabled") from None
         if exc.code in {"ldap_unreachable", "ldap_tls_failed", "ldap_service_bind_failed"}:
-            raise _error(status.HTTP_502_BAD_GATEWAY, "ldap_unavailable")
+            raise _error(status.HTTP_502_BAD_GATEWAY, "ldap_unavailable") from None
         if exc.code == "ldap_password_expired":
-            raise _error(status.HTTP_401_UNAUTHORIZED, "ldap_password_expired")
-        raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
+            raise _error(status.HTTP_401_UNAUTHORIZED, "ldap_password_expired") from None
+        raise _error(status.HTTP_401_UNAUTHORIZED, "invalid_credentials") from None
     user = _ldap_account(session, found)
     if user.disabled:
         session.commit()

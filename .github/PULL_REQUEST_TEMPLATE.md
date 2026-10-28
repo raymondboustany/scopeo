@@ -14,6 +14,7 @@
 
 - [ ] `npm run lint`, `npm run typecheck` et `npm test` réussissent / pass
 - [ ] `npm run test:server` réussit / passes
+- [ ] `npm run security` réussit (dépendances et règles de sécurité) / passes (dependencies and security rules)
 - [ ] Captures d'écran jointes pour tout changement visible / Screenshots attached for any visible change
 - [ ] Modification décrite ci-dessus (le mainteneur met à jour `CHANGELOG.md` à la publication) / Change described above (the maintainer updates `CHANGELOG.md` on release)
 - [ ] Aucune donnée réelle d'entreprise ni donnée personnelle / No real company data or personal data

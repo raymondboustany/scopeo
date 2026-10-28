@@ -358,7 +358,7 @@ def download_backup(admin: User = Depends(admin_user), session: Session = Depend
     try:
         data, name = backup.build_archive()
     except RuntimeError:
-        raise error(status.HTTP_409_CONFLICT, "backup_unsupported")
+        raise error(status.HTTP_409_CONFLICT, "backup_unsupported") from None
     audit(session, admin, "backup_downloaded", "", name)
     session.commit()
     return Response(content=data, media_type="application/zip", headers={"Content-Disposition": f'attachment; filename="{name}"'})

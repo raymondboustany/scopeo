@@ -6,7 +6,7 @@ Merci de l'intérêt que vous portez à Scopeo. Les contributions sont bienvenue
 
 ## Comment les modifications sont intégrées
 
-La branche `main` est protégée. Seul le mainteneur y pousse directement : toute modification proposée par un contributeur passe par une **pull request** qui doit réussir l'intégration continue et être **relue et approuvée par le mainteneur** avant d'être fusionnée. Forkez le dépôt, travaillez sur une branche, puis ouvrez une pull request.
+La branche `main` est protégée. Seul le mainteneur y pousse directement : toute modification proposée par un contributeur passe par une **pull request** qui doit réussir l'intégration continue et être **relue et approuvée par le mainteneur** avant d'être fusionnée. Forkez le dépôt, travaillez sur une branche, puis ouvrez une pull request. Chaque pull request déclenche les contrôles automatiques décrits dans [SECURITY.md](SECURITY.md) : qualité (CI), sécurité (secrets, dépendances, image Docker, analyse dynamique) et analyse du code (CodeQL).
 
 ## Périmètre du projet
 
@@ -32,6 +32,9 @@ npm run dev       # API (:8000) + interface avec rechargement (:5173)
 | `npm run typecheck` | TypeScript strict |
 | `npm test` | Tests des moteurs réglementaires (Vitest) |
 | `npm run test:server` | Tests de l'API (pytest) |
+| `npm run test:coverage` | Tests de l'interface avec mesure de couverture (seuils minimaux) |
+| `npm run lint:server` | Analyse du code Python (ruff) |
+| `npm run security` | Contrôles de sécurité locaux : dépendances (npm audit, pip-audit) et règles de sécurité du code Python |
 | `npm run demo:build` | Régénère l'entité de démonstration après une modification du corpus |
 
 ## Organisation du code
@@ -75,7 +78,7 @@ Thank you for your interest in Scopeo. Contributions are welcome: code, correcti
 
 ## How changes are accepted
 
-The `main` branch is protected. Nobody but the maintainer pushes to it directly: every change proposed by a contributor goes through a **pull request** that must pass continuous integration and be **reviewed and approved by the maintainer** before it is merged. Fork the repository, work on a branch, then open a pull request.
+The `main` branch is protected. Nobody but the maintainer pushes to it directly: every change proposed by a contributor goes through a **pull request** that must pass continuous integration and be **reviewed and approved by the maintainer** before it is merged. Fork the repository, work on a branch, then open a pull request. Every pull request triggers the automated checks described in [SECURITY.md](SECURITY.md#security-policy): quality (CI), security (secrets, dependencies, Docker image, dynamic analysis) and code analysis (CodeQL).
 
 ## Project scope
 
@@ -101,6 +104,9 @@ npm run dev       # API (:8000) + interface with hot reload (:5173)
 | `npm run typecheck` | Strict TypeScript |
 | `npm test` | Regulatory engine tests (Vitest) |
 | `npm run test:server` | API tests (pytest) |
+| `npm run test:coverage` | Interface tests with coverage measurement (minimum thresholds) |
+| `npm run lint:server` | Python code analysis (ruff) |
+| `npm run security` | Local security checks: dependencies (npm audit, pip-audit) and Python security rules |
 | `npm run demo:build` | Regenerate the demo entity after a corpus change |
 
 ## Code layout

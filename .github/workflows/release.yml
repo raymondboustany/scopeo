@@ -1,32 +1,50 @@
 name: Release
 
-# To publish a version: update CHANGELOG.md (English and French) and the version in
-# package.json and src/lib/feedback.ts, then push a tag:  git tag -a vX.Y.Z && git push origin vX.Y.Z
-# Publier une version : mettre à jour CHANGELOG.md (anglais et français) et la version
-# de package.json et de src/lib/feedback.ts, puis pousser une étiquette.
+# Publier une version : mettre à jour CHANGELOG.md (français et anglais) et la version
+# de package.json et de src/lib/feedback.ts, puis pousser une étiquette :
+#   git tag -a vX.Y.Z -m "Scopeo X.Y.Z" && git push origin vX.Y.Z
+# To publish a version: update CHANGELOG.md (French and English) and the version in
+# package.json and src/lib/feedback.ts, then push a tag.
+#
+# Chaque fichier publié est signé sans clé (Sigstore) et accompagné de son empreinte
+# SHA-256 ; l'image Docker porte une attestation de provenance et un inventaire (SBOM).
+# Every published file is signed keylessly (Sigstore) and comes with its SHA-256
+# checksum; the Docker image carries a provenance attestation and an SBOM.
 
 on:
   push:
     tags: ['v*.*.*']
 
-permissions:
-  contents: write
-  packages: write
+# Aucun droit par défaut : chaque tâche reçoit uniquement ce dont elle a besoin.
+# No permission by default: each job only gets what it needs.
+permissions: {}
+
+# Deux publications ne se chevauchent jamais. / Two releases never overlap.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   portable:
-    name: Portable archive and release notes / Archive portable et note de version
+    name: Archive portable et note de version / Portable archive and release notes
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # créer la release / create the release
+      id-token: write # signature Sigstore / Sigstore signing
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Une version publiée se construit sans cache, à partir de zéro.
+      # A published version is built from scratch, without any cache.
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
-          cache: npm
+          package-manager-cache: false
       - run: npm ci
       - run: npx vite build
 
-      - name: Assemble the portable archive / Assembler l'archive portable
+      - name: Assembler l'archive portable / Assemble the portable archive
         run: |
           NAME=scopeo-${GITHUB_REF_NAME}
           mkdir -p release/$NAME/server
@@ -37,41 +55,81 @@ jobs:
           find release -name '__pycache__' -type d -prune -exec rm -rf {} +
           (cd release && zip -qr $NAME-portable.zip $NAME)
 
-      - name: Extract release notes from the CHANGELOG / Extraire la note de version du CHANGELOG
+      - name: Inventaire des composants / Software bill of materials (SBOM)
+        uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
+        with:
+          path: release/scopeo-${{ github.ref_name }}
+          format: spdx-json
+          output-file: release/scopeo-${{ github.ref_name }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+
+      - name: Empreintes et signature / Checksums and signature
+        run: |
+          NAME=scopeo-${GITHUB_REF_NAME}
+          cd release
+          sha256sum "$NAME-portable.zip" "$NAME.spdx.json" > SHA256SUMS.txt
+          cosign sign-blob --yes --bundle "$NAME-portable.zip.sigstore.json" "$NAME-portable.zip"
+
+      - name: Extraire la note de version du CHANGELOG / Extract release notes from the CHANGELOG
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           awk -v v="$VERSION" '/^## \[/{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > release/notes.md
-          test -s release/notes.md || echo "See CHANGELOG.md. / Voir CHANGELOG.md." > release/notes.md
+          test -s release/notes.md || echo "Voir CHANGELOG.md. / See CHANGELOG.md." > release/notes.md
 
-      - uses: softprops/action-gh-release@v3
-        with:
-          body_path: release/notes.md
-          files: release/*-portable.zip
+      - name: Créer la release / Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          NAME=scopeo-${GITHUB_REF_NAME}
+          gh release create "${GITHUB_REF_NAME}" --verify-tag --title "${GITHUB_REF_NAME}" --notes-file release/notes.md             "release/${NAME}-portable.zip" "release/${NAME}-portable.zip.sigstore.json"             "release/${NAME}.spdx.json" release/SHA256SUMS.txt
 
   image:
-    name: Docker image (GHCR) / Image Docker (GHCR)
+    name: Image Docker (GHCR) / Docker image (GHCR)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # publier sur GHCR / publish to GHCR
+      id-token: write # signature Sigstore / Sigstore signing
     steps:
-      - uses: actions/checkout@v7
-      - uses: docker/setup-buildx-action@v4
-      - uses: docker/login-action@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - id: meta
-        uses: docker/metadata-action@v6
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value=latest
-      - uses: docker/build-push-action@v7
+      - id: build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          provenance: mode=max
+          sbom: true
+          no-cache: true
+
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+
+      - name: Signer l'image / Sign the image
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          images=""
+          for tag in ${TAGS}; do images="${images} ${tag}@${DIGEST}"; done
+          cosign sign --yes ${images}

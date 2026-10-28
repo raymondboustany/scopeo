@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Rapports de couverture et caches d'analyse
+coverage/
+.coverage
+.ruff_cache/
+
 # Serveur local (Python)
 server/.venv/
 server/data/

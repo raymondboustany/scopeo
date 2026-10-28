@@ -3,14 +3,13 @@ from __future__ import annotations
 import uuid
 
 import pytest
-
 from fastapi.testclient import TestClient
+from sqlmodel import Session
 
 from app.auth import sessions, throttle
 from app.db import engine
 from app.main import DEMO_ENTITY_ID, app
 from app.models import User
-from sqlmodel import Session, select
 
 PASSWORD = "Correct-Horse-Battery-7"
 HEADERS = {"X-Scopeo": "1"}
@@ -287,7 +286,7 @@ def test_fiche_notes_et_controles_iso_sont_enregistres(client):
 def test_la_declaration_d_applicabilite_se_depose_se_relit_et_se_retire(client):
     user = register(client)
     e = client.post(f"/api/users/{user['id']}/entities", json={"name": "SoA"}).json()
-    content = "Contrôle;Applicable\nA.5.1;Oui\n".encode("utf-8")
+    content = "Contrôle;Applicable\nA.5.1;Oui\n".encode()
     r = client.put(f"/api/entities/{e['id']}/soa", params={"name": "../../soa.csv"}, content=content, headers={"Content-Type": "text/csv"})
     assert r.status_code == 200
     assert "/" not in r.json()["name"]
