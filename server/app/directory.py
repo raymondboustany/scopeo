@@ -14,8 +14,9 @@ Déroulé classique « rechercher puis lier » :
 from __future__ import annotations
 
 import ssl
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any
 from urllib.parse import urlparse
 
 from ldap3 import BASE, NONE, SUBTREE, Connection, Server, Tls

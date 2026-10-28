@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import os
-from datetime import timezone
+from datetime import UTC
 from typing import Any
 
 from fastapi import Depends, HTTPException, Request, Response, status
@@ -25,7 +25,7 @@ _PASSWORD_CHANGE_ALLOWED = {"/api/auth/me", "/api/auth/password", "/api/auth/log
 # l'administration, ni la gestion du compte (mot de passe, second facteur, jetons).
 _TOKEN_FORBIDDEN_PREFIXES = ("/api/admin", "/api/auth/")
 _TOKEN_ALLOWED = {"/api/auth/me"}
-TOKEN_PREFIX = "scp_"
+TOKEN_PREFIX = "scp_"  # noqa: S105 (préfixe public des jetons, pas un secret)
 
 AUDIT_KEEP = 1000
 
@@ -185,13 +185,13 @@ def _token_user(request: Request, session: Session, token: str) -> User:
         raise error(status.HTTP_401_UNAUTHORIZED, "unauthenticated")
     row = session.exec(select(ApiToken).where(ApiToken.token_hash == token_digest(token))).first()
     current = now()
-    if row is None or (row.expires_at is not None and row.expires_at.replace(tzinfo=row.expires_at.tzinfo or timezone.utc) < current):
+    if row is None or (row.expires_at is not None and row.expires_at.replace(tzinfo=row.expires_at.tzinfo or UTC) < current):
         raise error(status.HTTP_401_UNAUTHORIZED, "unauthenticated")
     user = session.get(User, row.user_id)
     if user is None or user.is_demo or user.is_guest or user.disabled or user.must_change_password:
         raise error(status.HTTP_401_UNAUTHORIZED, "unauthenticated")
     # Dernier usage, à la minute près : sans écriture à chaque requête.
-    last = row.last_used_at.replace(tzinfo=row.last_used_at.tzinfo or timezone.utc) if row.last_used_at else None
+    last = row.last_used_at.replace(tzinfo=row.last_used_at.tzinfo or UTC) if row.last_used_at else None
     if last is None or (current - last).total_seconds() > 60:
         row.last_used_at = current
         session.add(row)

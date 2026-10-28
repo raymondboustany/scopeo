@@ -1,0 +1,15 @@
+# Analyse statique du code Python : qualité (lint) et règles de sécurité (famille S, équivalent de Bandit).
+# Static analysis of the Python code: quality (lint) and security rules (S family, Bandit equivalent).
+target-version = "py312"
+line-length = 200
+
+[lint]
+select = ["E4", "E7", "E9", "F", "B", "UP", "I", "SIM", "RUF", "S"]
+# B008 : FastAPI déclare ses dépendances par Depends() en valeur par défaut, c'est le fonctionnement prévu.
+# B008: FastAPI declares its dependencies with Depends() as a default value, which is the intended usage.
+ignore = ["B008"]
+
+[lint.per-file-ignores]
+# Les tests utilisent assert et des mots de passe fictifs.
+# Tests use assert and dummy passwords.
+"tests/*" = ["S101", "S105", "S106"]

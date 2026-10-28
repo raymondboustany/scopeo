@@ -2,7 +2,7 @@
 
 **Français** · [English](#scopeo-documentation)
 
-Tout Scopeo au même endroit : ce qu'il fait, comment l'utiliser, comment il est sécurisé, comment le configurer, l'intégrer et l'adapter. Guides associés : [installation](installation.md) (un poste), [déploiement](deployment.md) (serveur d'équipe), [politique de sécurité](../SECURITY.md), [contribuer](../CONTRIBUTING.md).
+Tout Scopeo au même endroit : ce qu'il fait, comment l'utiliser, comment il est sécurisé, comment le configurer, l'intégrer et l'adapter. Guides associés : [installation](installation.md) (un poste), [déploiement](deployment.md) (serveur d'équipe), [politique de sécurité](../SECURITY.md), [modèle de menaces](threat-model.md), [contribuer](../CONTRIBUTING.md).
 
 ## Sommaire
 
@@ -216,7 +216,7 @@ Les migrations de la base s'exécutent automatiquement au démarrage (colonnes a
 
 # Scopeo documentation
 
-Everything about Scopeo in one place: what it does, how to use it, how it is secured, how to configure, integrate and adapt it. Related guides: [installation](installation.md) (one computer), [deployment](deployment.md) (team server), [security policy](../SECURITY.md), [contributing](../CONTRIBUTING.md).
+Everything about Scopeo in one place: what it does, how to use it, how it is secured, how to configure, integrate and adapt it. Related guides: [installation](installation.md) (one computer), [deployment](deployment.md) (team server), [security policy](../SECURITY.md#security-policy), [threat model](threat-model.md#threat-model), [contributing](../CONTRIBUTING.md).
 
 ## Contents
 

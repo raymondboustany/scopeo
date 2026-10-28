@@ -24,8 +24,9 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
 
 import jwt
 
@@ -76,7 +77,7 @@ def _http_json(url: str, data: dict[str, str] | None = None) -> dict[str, Any]:
     if not url.startswith("https://") and not url.startswith("http://localhost") and not url.startswith("http://127.0.0.1"):
         raise SsoError("sso_insecure_url", url)
     body = urllib.parse.urlencode(data).encode("ascii") if data is not None else None
-    request = urllib.request.Request(url, data=body, headers={"Accept": "application/json", "User-Agent": "Scopeo"})
+    request = urllib.request.Request(url, data=body, headers={"Accept": "application/json", "User-Agent": "Scopeo"})  # noqa: S310 (schéma contrôlé ci-dessus)
     try:
         with urllib.request.urlopen(request, timeout=TIMEOUT) as response:  # noqa: S310 (schéma contrôlé ci-dessus)
             return json.loads(response.read().decode("utf-8"))

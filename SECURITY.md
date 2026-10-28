@@ -36,6 +36,30 @@ Les données de cadrage décrivent les faiblesses d'une organisation. Traitez le
 
 **N'exposez pas le serveur sur un réseau** sans mandataire inverse assurant le chiffrement (TLS) : suivez le [guide de déploiement](docs/deployment.md#déployer-scopeo-pour-une-équipe) et ses points de contrôle. Derrière HTTPS, définissez `SCOPEO_COOKIE_SECURE=1` pour que le cookie de session ne circule que sur une connexion chiffrée. Le Trust Center est une fonction de démonstration : son lien public s'ouvre sans compte pour qui peut joindre le serveur.
 
+## Chaîne de développement
+
+Chaque modification passe par des contrôles automatiques avant d'être intégrée : analyse statique du code (CodeQL, règles de sécurité de ruff), recherche de secrets sur tout l'historique (gitleaks), audit des dépendances (npm audit, pip-audit), analyse de l'image Docker (Grype) et analyse dynamique de l'application démarrée (OWASP ZAP). Ces analyses tournent aussi chaque semaine. Les risques pris en compte sont décrits dans le [modèle de menaces](docs/threat-model.md).
+
+### Vérifier une version publiée
+
+À partir de la prochaine version (les versions 1.0 et 1.1 ne sont pas signées), chaque archive et chaque image Docker sont signées sans clé avec [Sigstore](https://www.sigstore.dev/) par le workflow de publication du dépôt. Pour vérifier avec [cosign](https://docs.sigstore.dev/cosign/system_config/installation/) :
+
+```bash
+# Archive portable : empreinte, puis signature
+sha256sum -c SHA256SUMS.txt --ignore-missing
+cosign verify-blob scopeo-vX.Y.Z-portable.zip \
+  --bundle scopeo-vX.Y.Z-portable.zip.sigstore.json \
+  --certificate-identity-regexp '^https://github\.com/raymondboustany/scopeo/\.github/workflows/release\.yml@refs/tags/v' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+
+# Image Docker
+cosign verify ghcr.io/raymondboustany/scopeo:X.Y.Z \
+  --certificate-identity-regexp '^https://github\.com/raymondboustany/scopeo/\.github/workflows/release\.yml@refs/tags/v' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+```
+
+Chaque version fournit aussi l'inventaire de ses composants (SBOM, format SPDX) ; l'image Docker porte une attestation de provenance.
+
 ## Versions maintenues
 
 | Version | Correctifs de sécurité |
@@ -85,6 +109,30 @@ Scopeo runs **on the user's machine**, or on a server of the organisation behind
 Scoping data (qualification, gaps, escalation contacts) describes an organisation's weaknesses. Treat the data folder (`server/data/`, or the `scopeo-data` Docker volume) as sensitive information.
 
 **Do not expose the server on a network** without a reverse proxy providing TLS: follow the [deployment guide](docs/deployment.md) and its security checklist. Behind HTTPS, set `SCOPEO_COOKIE_SECURE=1` so the session cookie is only sent over an encrypted connection. The Trust Center is a demo feature: its public link opens without an account for anyone who can reach the server.
+
+## Development pipeline
+
+Every change goes through automated checks before it is merged: static code analysis (CodeQL, ruff security rules), secret scanning over the whole history (gitleaks), dependency audit (npm audit, pip-audit), Docker image scanning (Grype) and dynamic analysis of the running application (OWASP ZAP). These checks also run every week. The risks taken into account are described in the [threat model](docs/threat-model.md#threat-model).
+
+### Verifying a published version
+
+From the next version on (versions 1.0 and 1.1 are not signed), every archive and Docker image is signed keylessly with [Sigstore](https://www.sigstore.dev/) by the repository's release workflow. To verify with [cosign](https://docs.sigstore.dev/cosign/system_config/installation/):
+
+```bash
+# Portable archive: checksum, then signature
+sha256sum -c SHA256SUMS.txt --ignore-missing
+cosign verify-blob scopeo-vX.Y.Z-portable.zip \
+  --bundle scopeo-vX.Y.Z-portable.zip.sigstore.json \
+  --certificate-identity-regexp '^https://github\.com/raymondboustany/scopeo/\.github/workflows/release\.yml@refs/tags/v' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+
+# Docker image
+cosign verify ghcr.io/raymondboustany/scopeo:X.Y.Z \
+  --certificate-identity-regexp '^https://github\.com/raymondboustany/scopeo/\.github/workflows/release\.yml@refs/tags/v' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+```
+
+Each version also ships a software bill of materials (SBOM, SPDX format); the Docker image carries a provenance attestation.
 
 ## Supported versions
 

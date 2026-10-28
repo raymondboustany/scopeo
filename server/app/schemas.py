@@ -6,7 +6,7 @@ le jeton de partage et les horodatages restent sous le contrôle du serveur.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, SecretStr
@@ -15,8 +15,8 @@ from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, SecretStr
 def _as_utc(value: datetime) -> str:
     # SQLite restitue des dates sans fuseau : on les réaffirme en UTC pour que
     # le client ne les interprète pas en heure locale.
-    aware = value if value.tzinfo else value.replace(tzinfo=timezone.utc)
-    return aware.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+    aware = value if value.tzinfo else value.replace(tzinfo=UTC)
+    return aware.astimezone(UTC).isoformat().replace("+00:00", "Z")
 
 
 UTCDateTime = Annotated[datetime, PlainSerializer(_as_utc, return_type=str)]

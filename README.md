@@ -9,6 +9,9 @@
 Plateforme open source de cadrage et de diagnostic réglementaire pour le **RGPD**, **NIS2**, **DORA**, le **Cyber Resilience Act** et l'**AI Act**. Auto-hébergée, sur votre poste ou le serveur de votre organisation : vos données restent chez vous.
 
 [![CI](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/ci.yml)
+[![Sécurité](https://github.com/raymondboustany/scopeo/actions/workflows/security.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/security.yml)
+[![CodeQL](https://github.com/raymondboustany/scopeo/actions/workflows/codeql.yml/badge.svg)](https://github.com/raymondboustany/scopeo/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/raymondboustany/scopeo/badge)](https://scorecard.dev/viewer/?uri=github.com/raymondboustany/scopeo)
 [![Version](https://img.shields.io/github/v/release/raymondboustany/scopeo?label=version)](https://github.com/raymondboustany/scopeo/releases/latest)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-6d4aed)](LICENSE)
 [![Corpus](https://img.shields.io/badge/corpus-24%20sept.%202026-111827)](CHANGELOG.md)
@@ -285,6 +288,24 @@ Les données de cadrage décrivent les faiblesses d'une organisation. Scopeo est
 - **Traçabilité et reprise** : journal des actions d'administration et des événements de sécurité des comptes ; sauvegardes intégrées et planifiables.
 - Le serveur écoute sur `127.0.0.1` par défaut. Pour le partager, suivez le [guide de déploiement](docs/deployment.md#déployer-scopeo-pour-une-équipe) (HTTPS obligatoire) et [SECURITY.md](SECURITY.md).
 - Le Trust Center reste une fonction de démonstration : son lien public ne fonctionne que pour qui peut joindre votre serveur.
+
+---
+
+## Chaîne de développement sécurisée
+
+Chaque modification est vérifiée automatiquement avant d'être intégrée, et chaque version est publiée de façon vérifiable.
+
+| Étape | Contrôles |
+|---|---|
+| Qualité | Lint et types TypeScript, analyse du code Python (ruff), 214 tests avec seuil de couverture, construction et démarrage de l'image Docker |
+| Code | Analyse statique CodeQL (TypeScript, Python, workflows) et règles de sécurité de ruff |
+| Secrets | Recherche de secrets sur tout l'historique du dépôt (gitleaks) |
+| Dépendances | npm audit et pip-audit, bloquants pour les dépendances livrées |
+| Image et application | Vulnérabilités de l'image (Grype), analyse dynamique de l'application démarrée (OWASP ZAP) |
+| Chaîne d'approvisionnement | Actions GitHub épinglées par empreinte, droits minimaux par tâche, audit OpenSSF Scorecard |
+| Publication | Archive et image signées sans clé (Sigstore), empreintes SHA-256, inventaire des composants (SBOM), attestation de provenance |
+
+Les analyses de sécurité tournent aussi chaque semaine, pour détecter les failles publiées entre deux modifications. Le [modèle de menaces](docs/threat-model.md) décrit les risques pris en compte ; [SECURITY.md](SECURITY.md) explique comment vérifier la signature d'une version.
 
 ---
 
@@ -586,6 +607,24 @@ Scoping data describes an organisation's weaknesses. Scopeo is built accordingly
 - **Traceability and recovery**: log of administration and account security events; built-in and scheduled backups.
 - The server listens on `127.0.0.1` by default. To share it, follow the [deployment guide](docs/deployment.md) (HTTPS required) and [SECURITY.md](SECURITY.md).
 - The Trust Center is still a demo feature: its public link only works for people who can reach your server.
+
+---
+
+## Secure development pipeline
+
+Every change is checked automatically before it is merged, and every version is published in a verifiable way.
+
+| Stage | Checks |
+|---|---|
+| Quality | TypeScript lint and types, Python code analysis (ruff), 214 tests with a coverage threshold, Docker image build and startup |
+| Code | CodeQL static analysis (TypeScript, Python, workflows) and ruff security rules |
+| Secrets | Secret scanning over the whole repository history (gitleaks) |
+| Dependencies | npm audit and pip-audit, blocking for shipped dependencies |
+| Image and application | Image vulnerabilities (Grype), dynamic analysis of the running application (OWASP ZAP) |
+| Supply chain | GitHub Actions pinned by digest, least-privilege permissions per job, OpenSSF Scorecard audit |
+| Release | Archive and image signed keylessly (Sigstore), SHA-256 checksums, software bill of materials (SBOM), provenance attestation |
+
+Security checks also run every week, to catch vulnerabilities published between two changes. The [threat model](docs/threat-model.md#threat-model) describes the risks taken into account; [SECURITY.md](SECURITY.md#security-policy) explains how to verify a version's signature.
 
 ---
 

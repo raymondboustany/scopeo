@@ -22,10 +22,11 @@ import secrets
 import threading
 import time
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import bcrypt
-from sqlmodel import Session as DbSession, delete
+from sqlmodel import Session as DbSession
+from sqlmodel import delete
 
 from .db import engine
 from .models import UserSession
@@ -91,7 +92,7 @@ class Session:
 
 
 def _utc(value: datetime) -> datetime:
-    return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+    return value if value.tzinfo else value.replace(tzinfo=UTC)
 
 
 class SessionStore:
@@ -111,7 +112,7 @@ class SessionStore:
 
     def create(self, user_id: str) -> str:
         token = secrets.token_urlsafe(32)
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         expires = now + timedelta(seconds=self.max_age) if self.max_age else None
         with DbSession(engine) as db:
             db.add(UserSession(token_hash=self._digest(token), user_id=user_id, created_at=now, expires_at=expires))
@@ -125,7 +126,7 @@ class SessionStore:
             row = db.get(UserSession, self._digest(token))
             if row is None:
                 return None
-            if row.expires_at is not None and _utc(row.expires_at) < datetime.now(timezone.utc):
+            if row.expires_at is not None and _utc(row.expires_at) < datetime.now(UTC):
                 db.delete(row)
                 db.commit()
                 return None
@@ -155,7 +156,7 @@ class SessionStore:
 
     def purge_expired(self) -> None:
         with DbSession(engine) as db:
-            db.exec(delete(UserSession).where(UserSession.expires_at < datetime.now(timezone.utc)))
+            db.exec(delete(UserSession).where(UserSession.expires_at < datetime.now(UTC)))
             db.commit()
 
     def clear(self) -> None:

@@ -18,7 +18,7 @@ import os
 import sqlite3
 import tempfile
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from .db import DATA_DIR, DATABASE_URL
@@ -50,7 +50,7 @@ def build_archive() -> tuple[bytes, str]:
     source = sqlite_path()
     if source is None or not source.exists():
         raise RuntimeError("backup_unsupported")
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    stamp = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
     with tempfile.TemporaryDirectory() as tmp:
         copy = Path(tmp) / "scopeo.db"
         # API de sauvegarde SQLite : copie cohérente, sans interrompre le service.

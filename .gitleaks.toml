@@ -1,0 +1,17 @@
+# Recherche de secrets (gitleaks) : règles officielles, avec des exceptions limitées aux
+# données fictives des tests, aux empreintes des dépendances et aux fichiers binaires.
+# Secret scanning (gitleaks): official rules, with exceptions limited to the tests' dummy
+# data, dependency checksums and binary files.
+title = "Scopeo"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Données fictives des tests, empreintes et fichiers binaires / Test dummy data, checksums and binary files"
+paths = [
+  '''^server/tests/''',
+  '''\.test\.ts$''',
+  '''^package-lock\.json$''',
+  '''\.(pdf|png|jpe?g|webp|gif|ico|woff2?)$''',
+]

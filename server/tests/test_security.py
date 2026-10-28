@@ -4,13 +4,12 @@ from __future__ import annotations
 
 import time
 import uuid
+from datetime import UTC, datetime
 
 import pyotp
 import pytest
 from fastapi.testclient import TestClient
 from ldap3 import MOCK_SYNC, Connection, Server
-from datetime import datetime, timezone
-
 from sqlmodel import Session, delete, select, update
 
 from app import directory
@@ -196,7 +195,7 @@ def test_une_session_expire_apres_la_duree_fixee(client):
     token = client.cookies.get("scopeo_session")
     assert sessions.get(token) is not None
     with Session(engine) as session:
-        session.exec(update(UserSession).values(expires_at=datetime(2000, 1, 1, tzinfo=timezone.utc)))
+        session.exec(update(UserSession).values(expires_at=datetime(2000, 1, 1, tzinfo=UTC)))
         session.commit()
     assert sessions.get(token) is None
     assert client.get("/api/auth/me").status_code == 401
