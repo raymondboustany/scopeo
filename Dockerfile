@@ -23,7 +23,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app/server
 COPY server/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# pip ne sert qu'à l'installation : il est retiré de l'image finale.
+RUN pip install --no-cache-dir -r requirements.txt \
+ && pip uninstall --yes pip
 
 COPY server/app ./app
 COPY --from=web /build/dist /app/dist

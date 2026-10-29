@@ -30,17 +30,27 @@ import { tr } from '@/i18n'
 import { ROLE_SHORT, USER_ROLES as ROLES } from '@/components/auth/roles'
 
 
+/** Entier aléatoire uniforme dans [0, n) : masque binaire puis rejet, sans le biais d'un modulo. */
+function randomBelow(n: number): number {
+  const mask = 2 ** Math.ceil(Math.log2(n)) - 1
+  const byte = new Uint8Array(1)
+  for (;;) {
+    crypto.getRandomValues(byte)
+    const v = byte[0] & mask
+    if (v < n) return v
+  }
+}
+
 /** Mot de passe provisoire lisible, sans caractères ambigus, conforme à la politique (majuscule, minuscule, chiffre, tirets). */
 function temporaryPassword(): string {
   const lower = 'abcdefghjkmnpqrstuvwxyz'
   const upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
   const digits = '23456789'
   const pool = lower + upper + digits
-  const bytes = crypto.getRandomValues(new Uint8Array(32))
-  const pick = (set: string, i: number) => set[bytes[i] % set.length]
-  const chars = [pick(lower, 0), pick(upper, 1), pick(digits, 2), ...Array.from({ length: 13 }, (_, i) => pick(pool, i + 3))]
+  const pick = (set: string) => set[randomBelow(set.length)]
+  const chars = [pick(lower), pick(upper), pick(digits), ...Array.from({ length: 13 }, () => pick(pool))]
   for (let i = chars.length - 1; i > 0; i--) {
-    const j = bytes[16 + (i % 16)] % (i + 1)
+    const j = randomBelow(i + 1)
     ;[chars[i], chars[j]] = [chars[j], chars[i]]
   }
   const raw = chars.join('')
