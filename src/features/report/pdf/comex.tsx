@@ -172,7 +172,7 @@ export function ComexReport({ d }: { d: ReportData }) {
               <View key={n.regulation} wrap={false} style={[S.row, { gap: 6, marginBottom: 4 }]}>
                 <Text style={{ width: 60, fontSize: 7.8, fontFamily: 'Helvetica-Bold', color: REG_HEX[n.regulation] }}>{REG_NAME[n.regulation]}</Text>
                 <Text style={{ flex: 1, fontSize: 7.8 }}>
-                  {clean(n.viaDora ? tr('Notifié au titre de DORA', 'Reported under DORA') : `${n.authority.split(' (')[0].split(',')[0]} · ${tr('dès', 'from')} ${n.steps[0].delay.replace('*', '')}`)}
+                  {clean(n.viaDora ? tr('Notifié au titre de DORA', 'Reported under DORA') : `${n.authority.split(' (')[0].split(',')[0]} · ${tr('dès', 'from')} ${n.steps[0].delay.replaceAll('*', '')}`)}
                 </Text>
               </View>
             ))}
